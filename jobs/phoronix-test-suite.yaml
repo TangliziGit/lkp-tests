@@ -49,7 +49,7 @@ phoronix-test-suite:
       # - Test All Options
   - test:
     - build-apache-1.6.1
-    - build-clash-1.0.2
+    # - build-clash-1.0.2 # wait for newer version
     - build-eigen-1.1.0
     # - build-firefox-1.0.0 # wait for newer version
     - build-ffmpeg-1.0.2
