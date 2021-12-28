@@ -721,6 +721,15 @@ run_test()
 			fixup_sqlite $test || die "failed to fixup test $test"
 			;;
 		cyclictest-*|parboil-*|cp2k-*|llvm-test-suite-*|blender-*|svt-av1-*|helsing-*|build-gcc-*|core-latency-*|jxrendermark-*|renaissance-*)
+			# 96 cpu, 128G memory tbox, run once cost about
+			# cyclictest-1.0.0: 2m
+			# cp2k-1.2.0: 30m
+			# renaissance-1.1.1: 6m
+			# llvm-test-suite-1.0.0: 15m
+			#
+			# 12 cpu, 16G memory tbox, run once cost about
+			# jxrendermark-1.2.4: 3m
+			# blender-1.9.0: 14m
 			reduce_runtimes $test || die "failed to reduce run times when run $test"
 			;;
 		blogbench-*)
