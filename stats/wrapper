@@ -63,7 +63,6 @@ check_empty_output()
 {
 	[[ -s $log ]] && return
 
-	[[ $program = 'tcrypt' ]] && return
 	[[ $program = 'kernel-size' ]] && return
 	[[ $program = 'perf-profile' ]] && return
 	[[ $program = 'dmesg' && -s $RESULT_ROOT/kmsg ]] && return
@@ -146,7 +145,7 @@ fi
 kmsg_log=$RESULT_ROOT/kmsg
 
 # extract kmsg for kmsg related stats
-if [[ $log =~ ^"$RESULT_ROOT"/(boot-memory|boot-time|tcrypt|dmesg)$ ]]; then
+if [[ $log =~ ^"$RESULT_ROOT"/(boot-memory|boot-time|dmesg)$ ]]; then
 	[ -f $kmsg_log.xz ] && xzcat $kmsg_log.xz > $kmsg_log
 fi
 

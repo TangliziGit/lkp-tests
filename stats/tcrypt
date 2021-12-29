@@ -5,12 +5,9 @@ LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAM
 require 'fileutils'
 require "#{LKP_SRC}/lib/statistics"
 
-RESULT_ROOT = ENV['RESULT_ROOT']
 results = {}
 results['test'] = ''
 results['val'] = []
-
-exit unless File.exist?("#{RESULT_ROOT}/kmsg")
 
 def show_one(new_test, results)
   printf "%s: %d\n", results['test'], results['val'].average unless results['test'].empty? || results['val'].empty?
@@ -18,7 +15,7 @@ def show_one(new_test, results)
   results['val'] = []
 end
 
-File.foreach("#{RESULT_ROOT}/kmsg", :encoding => 'utf-8') do |line|
+while (line = $stdin.gets)
   case line
   when /testing speed of (.*)$/
     show_one($1.tr(' ', '.'), results)
