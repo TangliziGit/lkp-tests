@@ -54,8 +54,10 @@ rescue StandardError => e
 end
 
 def bash(cmd)
-  `bash -c #{Shellwords.escape(cmd)}`
-  raise $CHILD_STATUS.exitstatus unless $CHILD_STATUS.exitstatus.zero?
+  output = `bash -c #{Shellwords.escape(cmd)}`
+  puts output unless output.empty?
+
+  raise "bash exitstatus: #{$CHILD_STATUS.exitstatus}" unless $CHILD_STATUS.exitstatus.zero?
 end
 
 desc 'Run syntax check'
@@ -67,6 +69,15 @@ task :syntax do
   bash "grep -s -l '^#!/bin/sh$' #{executables} | xargs -n1 dash -n"
 
   puts 'syntax OK'
+end
+
+desc 'Run shellcheck'
+task :shellcheck do
+  executables = `find -type f -executable ! -path "./.git*" ! -size +100k | xargs grep -s -l -e '^#!/.*bash$' -e '^#!/bin/sh$'`.split("\n").join(' ')
+
+  format = ENV['format'] || 'tty'
+
+  bash "shellcheck -S warning -f #{format} #{executables} || echo"
 end
 
 desc 'Run code check'
