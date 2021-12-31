@@ -49,6 +49,14 @@ generate_exclude_files()
 	do
 		wget -O $benchmark_path/tests/exclude/$fs https://git.kernel.org/pub/scm/fs/ext2/xfstests-bld.git/plain/kvm-xfstests/test-appliance/files/root/fs/$fs/exclude || return
 	done
+
+	# In xfstests-dev/tests/generic/605 generic/606 generic/607 generic/608 mount options is "dax=always"
+	# _require_scratch_dax_mountopt "dax=always"
+	# ext2 do not support -o dax=always, so ignore these test cases
+	cd $benchmark_path/tests
+	grep "dax=always" generic -R | cut -d':' -f1 | sort -u >> $benchmark_path/tests/exclude/ext2
+	cd -
+
 	# cifs exclude files, https://wiki.samba.org/index.php/Xfstesting-cifs
 	wget https://wiki.samba.org/images/d/db/Xfstests.exclude.very-slow.txt -O $benchmark_path/tests/cifs/exclude.very-slow.txt || return
 	wget https://wiki.samba.org/images/b/b0/Xfstests.exclude.incompatible-smb3.txt -O $benchmark_path/tests/cifs/exclude.incompatible-smb3.txt || return
