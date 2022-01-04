@@ -1,0 +1,20 @@
+short_description: >
+ FxMark is a filesystem benchmark that test multicore scalability.
+
+description: |
+ FxMark is a filesystem benchmark that test multicore scalability.
+ It implements 19 microbenchmarks to stress specific components of
+ each file system and includes three application benchmarks to measure
+ the macroscopic scalability behavior.
+
+homepage: https://github.com/sslab-gatech/fxmark
+
+parameters:
+ disk:
+ media:
+ test:
+ fstype: [ext4, ext4_no_jnl, xfs, btrfs, f2fs]
+ directio: [bufferedio, directio]
+
+results:
+ fxmark.works/sec: number of works per sec.
