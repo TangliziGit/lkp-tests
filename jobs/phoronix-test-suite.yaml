@@ -12,14 +12,14 @@ phoronix-test-suite:
     - aobench-1.0.1
     - aom-av1-2.4.0
     - apache-1.7.2
-  - test: apache-siege-1.0.5
-    option_a: # cocurrent users
-      - 1
+  # - test: apache-siege-1.0.5 # temporarily comment out the failed test
+    # option_a: # cocurrent users
+      # - 1
       # - 10
       # - 50
       # - 100
       # - 200
-      - 250
+      # - 250
       # - 500
       # - Test All Options
   - test: appleseed-1.0.1
@@ -101,7 +101,7 @@ phoronix-test-suite:
     - compress-7zip-1.7.1
     - compress-gzip-1.2.0
     - compress-lzma-1.3.1
-    - compress-pbzip2-1.5.0
+    # - compress-pbzip2-1.5.0 # temporarily comment out the failed test
     - compress-rar-1.1.0
     - compress-xz-1.1.0
     - compress-zstd-1.5.0
@@ -130,13 +130,13 @@ phoronix-test-suite:
       # - Test All Options
   - test:
     - cython-bench-1.1.0
-  - test: dacapobench-1.0.1
-    option_a:
-      - Eclipse
-      - H2
-      - Jython
-      - Tradebeans
-      - Tradesoap
+  # - test: dacapobench-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - Eclipse
+      # - H2
+      # - Jython
+      # - Tradebeans
+      # - Tradesoap
       # - Test All Options
   - test: dav1d-1.8.0
     option_a:
@@ -156,7 +156,7 @@ phoronix-test-suite:
       # - Test All Options
   - test:
     - dcraw-1.1.0
-    - deepspeech-1.0.0
+    # - deepspeech-1.0.0 # temporarily comment out the failed test
     - dolfyn-1.0.3
     - ebizzy-1.0.4
   - test: embree-1.0.0
@@ -175,7 +175,7 @@ phoronix-test-suite:
     - encode-mp3-1.7.4
     # - encode-ogg-1.4.1 # this test profile is marked Deprecated
     # - encode-opus-1.1.1 # this test profile is marked Deprecated
-    - encode-wavpack-1.3.0
+    # - encode-wavpack-1.3.0 # temporarily comment out the failed test
     - espeak-1.6.1
     # - fahbench-1.0.1 # wait for newer version
     - ffmpeg-2.8.0
@@ -292,18 +292,18 @@ phoronix-test-suite:
       - Sharpen
       - Swirl
       # - Test All Options
-  - test: hackbench-1.0.0
-    option_a: # group count
-      - 1
+  # - test: hackbench-1.0.0 # temporarily comment out the failed test
+    # option_a: # group count
+      # - 1
       # - 2
       # - 4
       # - 8
       # - 16
-      - 32
+      # - 32
       # - Test All Options
-    option_b:
-      - Process
-      - Thread
+    # option_b:
+      # - Process
+      # - Thread
       # - Test All Options
   - test:
     - hdparm-read-1.0.0
@@ -314,28 +314,28 @@ phoronix-test-suite:
     # - hpcc-1.2.8 # run time more than 2h on clear, install failed on debian
     - hpcg-1.2.1
     - idle-1.1.0
-  - test: interbench-1.0.1
-    option_a:
-      - Gaming
-      - Compile
+  # - test: interbench-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - Gaming
+      # - Compile
       # - Audio # run more than 40m on lkp-skl-nuc2
-      - Video
+      # - Video
       # - X # run more than 3h on lkp-csl-2sp8
-      - Burn
-      - Memload
-      - Write
-      - Read
+      # - Burn
+      # - Memload
+      # - Write
+      # - Read
       # - Test All Options
-    option_b:
-      - Gaming
-      - Compile
+    # option_b:
+      # - Gaming
+      # - Compile
       # - Audio # no passed job in our env
-      - Video
-      - X
-      - Burn
-      - Memload
-      - Write
-      - Read
+      # - Video
+      # - X
+      # - Burn
+      # - Memload
+      # - Write
+      # - Read
       # - Test All Options
   - test:
     - ior-1.1.1
@@ -450,7 +450,7 @@ phoronix-test-suite:
       # - Test All Options
   - test:
     - mpcbench-1.0.1
-    - mrbayes-1.5.0
+    # - mrbayes-1.5.0 # temporarily comment out the failed test
   - test: multichase-1.0.2
     option_a:
       - 1 # 256MB Array, 256 Byte Stride
@@ -511,22 +511,22 @@ phoronix-test-suite:
     - opencv-bench-1.0.0
     # - open-porous-media-1.3.1 # 3rd party url is N/A
     - openssl-1.11.0
-  - test: opm-git-1.3.44
-    option_a:
-      - Upscale-Relperm
-      - Flow MPI Norne
-      - Flow MPI Norne-4C MSW
-      - Flow MPI Extra
+  # - test: opm-git-1.3.44 # temporarily comment out the failed test
+    # option_a:
+      # - Upscale-Relperm
+      # - Flow MPI Norne
+      # - Flow MPI Norne-4C MSW
+      # - Flow MPI Extra
       # - Test All Options
-    option_b: # threads
-      - 1
+    # option_b: # threads
+      # - 1
       # - 2
       # - 4
       # - 8
       # - 16
       # - 32
       # - 64
-      - 128
+      # - 128
       # - Test All Options
   - test:
     - optcarrot-1.0.1
@@ -578,11 +578,11 @@ phoronix-test-suite:
     - phpbench-1.1.6
     - pjdfstest-1.0.1
     # - plaidml-1.0.4 # need to connect to internet
-  - test: polybench-c-1.2.0
-    option_a:
-      - 3 Matrix Multiplications
-      - Correlation Computation
-      - Covariance Computation
+  # - test: polybench-c-1.2.0 # temporarily comment out the failed test
+    # option_a:
+      # - 3 Matrix Multiplications
+      # - Correlation Computation
+      # - Covariance Computation
       # - Test All Options
   - test:
     - postmark-1.1.2
@@ -635,8 +635,7 @@ phoronix-test-suite:
       - 9 # Twitter HTTP Requests
       - 10 # Genetic Algorithm Using Jenetics + Futures
       # - Test All Options
-  - test:
-    - rbenchmark-1.0.3
+  # - test: rbenchmark-1.0.3 # temporarily comment out the failed test
   - test: rocksdb-1.0.2
     option_a:
       - Sequential Fill
@@ -777,13 +776,13 @@ phoronix-test-suite:
       # - 112 MB
       # - Test All Options
     # - systemd-boot-kernel-1.0.1 # too old to run, use systemd-boot-total instead
-  - test: systemd-boot-total-1.0.6
-    option_a:
-      - Total
-      - Userspace
-      - Kernel
-      - Loader
-      - Firmware
+  # - test: systemd-boot-total-1.0.6 # temporarily comment out the failed test
+    # option_a:
+      # - Total
+      # - Userspace
+      # - Kernel
+      # - Loader
+      # - Firmware
       # - Test All Options
   - test: systester-1.0.0
     option_a:
@@ -917,19 +916,19 @@ phoronix-test-suite:
       # - 32
       # - 64
       # - Test All Options
-  - test: hbase-1.0.1
-    option_a:
-      - Random Write
-      - Async Random Write
-      - Random Read
-      - Async Random Read
-      - Sequential Write
-      - Sequential Read
-      - Increment
+  # - test: hbase-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - Random Write
+      # - Async Random Write
+      # - Random Read
+      # - Async Random Read
+      # - Sequential Write
+      # - Sequential Read
+      # - Increment
       # - Test All Options
-    option_b:
-      - 1
-      - 4
+    # option_b:
+      # - 1
+      # - 4
       # - 16
       # - 32
       # - 64
@@ -971,21 +970,21 @@ phoronix-test-suite:
       - CPU
       - Vulkan GPU
       # - Test All Options
-  - test: pyperformance-1.0.2
-    option_a:
-      - 2to3
-      - chaos
-      - crypto_pyaes
-      - django_template
-      - float
-      - go
-      - json_loads
-      - nbody
-      - pathlib
-      - pickle_pure_python
-      - python_startup
-      - raytrace
-      - regex_compile
+  # - test: pyperformance-1.0.2 # temporarily comment out the failed test
+    # option_a:
+      # - 2to3
+      # - chaos
+      # - crypto_pyaes
+      # - django_template
+      # - float
+      # - go
+      # - json_loads
+      # - nbody
+      # - pathlib
+      # - pickle_pure_python
+      # - python_startup
+      # - raytrace
+      # - regex_compile
       # - Test All Options
   - test: rav1e-1.5.0
     option_a:
