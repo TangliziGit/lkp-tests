@@ -151,7 +151,7 @@ kmsg_denylist = File.read(File.join(LKP_SRC, 'etc', 'kmsg-denylist')).split "\n"
       index = i
     end
     str = strs[index]
-    if index > 0
+    if index.positive?
       str[0] = '' while str =~ /^[-0-9.#*lLzZth]/
       if str[0] =~ /[iudsxXpPco]/
         str[0] = ''

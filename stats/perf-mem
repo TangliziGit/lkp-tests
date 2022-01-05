@@ -73,13 +73,13 @@ def output_result(event_name, weight, samples)
   weight.each_key do |mem_access|
     total_weight += weight[mem_access]
     total_samples += samples[mem_access]
-    if samples[mem_access] > 0
+    if samples[mem_access].positive?
       avg_weight_per_mem_access = weight[mem_access].to_f / samples[mem_access]
       puts "#{event_name}.#{mem_access}.#{unit}: #{avg_weight_per_mem_access}"
     end
   end
 
-  if total_samples > 0
+  if total_samples.positive?
     overall_avg_weight = total_weight.to_f / total_samples
     puts "#{event_name}.overall_avg_#{unit}: #{overall_avg_weight}"
   end
