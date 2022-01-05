@@ -1,0 +1,47 @@
+#!/bin/sh
+# - aggr_interval
+# - min_nr_regions
+# - max_nr_regions
+# - min_age
+# - monitor_region_start
+# - monitor_region_end
+# - wmarks_high
+# - wmarks_low
+# - wmarks_mid
+# - quota_ms
+# - quota_sz
+# - quota_reset_interval_ms
+
+. $LKP_SRC/lib/reproduce-log.sh
+. $LKP_SRC/lib/common.sh
+. $LKP_SRC/lib/unit.sh
+. $LKP_SRC/lib/debug.sh
+
+
+#[ -d "/sys/module/damon_reclaim" ] || die "No damon_reclaim module in system"
+[ -d "/sys/module/damon_reclaim" ] || exit 0
+
+cd /sys/module/damon_reclaim/parameters/
+
+[ -n "$aggr_interval" ] && echo $aggr_interval > aggr_interval
+[ -n "$min_nr_regions" ] && echo min_nr_regions$ >  min_nr_regions
+[ -n "$max_nr_regions" ] && echo max_nr_regions$ >  max_nr_regions
+[ -n "$min_age" ] && echo $min_age > min_age
+[ -n "$monitor_region_start" ] && echo $monitor_region_start > monitor_region_start
+[ -n "$monitor_region_end" ] && echo $monitor_region_end > monitor_region_end
+
+# watermark settings
+[ -n "$wmarks_high" ] && echo $wmarks_high > wmarks_high
+[ -n "$wmarks_low" ] && echo $wmarks_low > wmarks_low
+[ -n "$wmarks_mid" ] && echo $wmarks_mid> wmarks_mid
+
+# quota settings
+[ -n "$quota_ms" ] && echo $quota_ms > quota_ms
+[ -n "$quota_sz" ] && echo $quota_sz > quota_sz
+[ -n "$quota_reset_interval_ms" ] && echo $quota_reset_interval_ms > quota_reset_interval_ms
+
+grep .  /sys/module/damon_reclaim/parameters/*
+#[ -n "$" ] && echo $ >
+
+grep .  /sys/module/damon_reclaim/parameters/*  > $TMP_RESULT_ROOT/damon-reclaim-settings
+
