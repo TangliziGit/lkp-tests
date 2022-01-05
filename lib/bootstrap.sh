@@ -382,14 +382,14 @@ cleanup_pkg_cache()
 
 wait_load_disk()
 {
-	# set the max time of wait is 30s
+	# set the max time of wait is 150s
 	for i in $(seq 30)
 	do
 		# eg: /dev/disk/by-id/ata-WDC_WD1002FAEX-00Z3A0_WD-WCATRC577623-part2
 		ls $rootfs_partition >/dev/null 2>&1 && return
 		# eg: LABEL=LKP-ROOTFS
 		blkid | grep -q ${rootfs_partition#*=} && return
-		sleep 1
+		sleep 5
 	done
 
 	return 1
