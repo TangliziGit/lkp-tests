@@ -105,11 +105,16 @@ warn_empty_stats()
 	log_warn "$program: empty stats" "$log"
 }
 
-check_empty_json()
+get_testcase()
 {
-	local testcase=$(echo $RESULT_ROOT | cut -f3 -d"/")
+	local testcase=$(echo "$RESULT_ROOT" | cut -f3 -d"/")
 	testcase=${testcase#kvm:}
 
+	echo "$testcase"
+}
+
+check_empty_json()
+{
 	[[ $testcase = 'borrow' ]] && return
 	[[ $testcase = 'boot' ]] && return
 
@@ -154,6 +159,34 @@ dmesg_log=$RESULT_ROOT/dmesg
 # extract dmesg for dmesg related stats
 if [[ $log =~ ^"$RESULT_ROOT"/kmsg$ ]]; then
 	[ -f $dmesg_log.xz ] && xzcat $dmesg_log.xz > $dmesg_log
+fi
+
+generate_log_from_serial()
+{
+	[[ -f $dmesg_log.xz ]] && xzcat "$dmesg_log".xz > "$dmesg_log"
+	[[ -f $kmsg_log.xz ]] && xzcat "$kmsg_log".xz > "$kmsg_log"
+
+	# remove [xxx][xxx] at the beginning of each line
+	# vi $RESULT_ROOT/dmesg.xz
+	# [    0.000000][    T0] x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
+	# [    0.000000][    T0] x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256
+	# [    0.000000][    T0] x86/fpu: Enabled xstate features 0x7, context size is 832 bytes, using 'standard' format.
+	# [    0.000000][    T0] signal: max sigframe size: 1776
+	# [    0.000000][    T0] BIOS-provided physical RAM map:
+	# [    0.000000][    T0] BIOS-e820: [mem 0x0000000000000100-0x000000000009ebff] usable
+	if [[ -f $dmesg_log ]]; then
+		perl -pe 's/^(\[.*?\])* *//g' < "$dmesg_log" > "$log"
+	elif [[ -f $kmsg_log ]]; then
+		perl -pe 's/^(\[.*?\])* *//g' < "$kmsg_log" > "$log"
+	fi
+}
+
+testcase=$(get_testcase)
+
+category=$(grep "^category" "$RESULT_ROOT"/job.yaml | awk '{print $2}')
+
+if [[ "$program" = "$testcase" ]] && [[ -f "$LKP_SRC/tests/$program" ]] && [[ ! -f $log ]] && [[ "$category" = functional ]]; then
+	generate_log_from_serial
 fi
 
 check_incomplete_run $log
