@@ -399,21 +399,27 @@ mount_rootfs()
 {
 	if [ -n "$rootfs_partition" ]; then
 		# wait for the machine to load the disk
-		wait_load_disk || {
-			# skipping following test if disk can't be load
-			echo "can't load the disk $rootfs_partition, skip testing..."
+		if wait_load_disk; then
+			ROOTFS_DIR=/opt/rootfs
+			mkdir -p $ROOTFS_DIR
+
+			mount $rootfs_partition $ROOTFS_DIR || {
+				mkfs.btrfs -f $rootfs_partition
+				mount $rootfs_partition $ROOTFS_DIR
+			}
+
+			mkdir -p $ROOTFS_DIR/tmp
+			CACHE_DIR=$ROOTFS_DIR/tmp
+			cleanup_pkg_cache $CACHE_DIR
+		else
+			# rli9 FIXME: continue the test unless the test requires to use rootfs
+			# on the rootfs_partition
+			echo "can't load the disk $rootfs_partition, try to continue the testing..."
 			set_job_state 'load_disk_fail'
-			return 1
-		}
-		ROOTFS_DIR=/opt/rootfs
-		mkdir -p $ROOTFS_DIR
-		mount $rootfs_partition $ROOTFS_DIR || {
-			mkfs.btrfs -f $rootfs_partition
-			mount $rootfs_partition $ROOTFS_DIR
-		}
-		mkdir -p $ROOTFS_DIR/tmp
-		CACHE_DIR=$ROOTFS_DIR/tmp
-		cleanup_pkg_cache $CACHE_DIR
+
+			CACHE_DIR=/tmp/cache
+			mkdir -p $CACHE_DIR
+		fi
 	else
 		CACHE_DIR=/tmp/cache
 		mkdir -p $CACHE_DIR
