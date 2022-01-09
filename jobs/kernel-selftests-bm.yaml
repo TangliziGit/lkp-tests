@@ -16,15 +16,6 @@ kernel-selftests:
   group:
   - net
   test:
-  - fib_nexthops.sh
-
-timeout: 1h
-
----
-kernel-selftests:
-  group:
-  - net
-  test:
   - tls
 
 ---

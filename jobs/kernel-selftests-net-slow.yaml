@@ -1,0 +1,13 @@
+suite: kernel-selftests
+testcase: kernel-selftests
+category: functional
+
+kconfig: x86_64-rhel-8.3-kselftests
+
+kernel-selftests:
+  group:
+  - net
+  test:
+  - fib_nexthops.sh
+
+timeout: 1h
