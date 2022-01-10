@@ -24,7 +24,7 @@ describe 'lkp-split-job' do
     FileUtils.rm_rf @tmp_dir
   end
 
-  it "split job['split-job']['test'] only" do
+  xit "split job['split-job']['test'] only" do
     Dir.chdir(@tmp_src_dir) do
       `LKP_SRC=#{@tmp_src_dir} #{@tmp_src_dir}/bin/lkp split-job -t lkp-tbox -o #{@tmp_dir} spec/split-job/1.yaml`
 
@@ -38,7 +38,7 @@ describe 'lkp-split-job' do
     end
   end
 
-  it "split job['split-job']['test'] and job['split-job']['group']" do
+  xit "split job['split-job']['test'] and job['split-job']['group']" do
     Dir.chdir(@tmp_src_dir) do
       `LKP_SRC=#{@tmp_src_dir} #{@tmp_src_dir}/bin/lkp split-job -t lkp-tbox -o #{@tmp_dir} spec/split-job/2.yaml`
       Dir[File.join(@tmp_dir, '2-*.yaml')].each do |actual_yaml|
@@ -51,7 +51,7 @@ describe 'lkp-split-job' do
     end
   end
 
-  it "split job['fs'] only" do
+  xit "split job['fs'] only" do
     Dir.chdir(@tmp_src_dir) do
       `LKP_SRC=#{@tmp_src_dir} #{@tmp_src_dir}/bin/lkp split-job -t lkp-tbox -o #{@tmp_dir} spec/split-job/3.yaml`
       Dir[File.join(@tmp_dir, '3-*.yaml')].each do |actual_yaml|
