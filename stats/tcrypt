@@ -16,6 +16,8 @@ def show_one(new_test, results)
 end
 
 while (line = $stdin.gets)
+  line = line.resolve_invalid_bytes
+
   case line
   when /testing speed of (.*)$/
     show_one($1.tr(' ', '.'), results)
