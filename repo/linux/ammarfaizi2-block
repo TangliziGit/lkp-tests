@@ -1,1 +1,4 @@
 url: https://github.com/ammarfaizi2/linux-block
+notify_build_success_branch: testing/.*
+owner: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+mail_cc: GNU/Weeb Mailing List <gwml@gnuweeb.org>
