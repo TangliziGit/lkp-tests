@@ -33,9 +33,10 @@ else
 	setup_params
 fi
 
-affinity_config=" "
-[ -n "$no_affinity" ] && affinity_config=" -n "
+disable_affinity=0
+
+[ -n "$no_affinity" ] && disable_affinity=1
 
 ulimit -n 65536
 
-log_cmd /lkp/benchmarks/python3/bin/python3 ./runtest.py $test $duration $mode $threads_to_iterate $affinity_config
+log_cmd /lkp/benchmarks/python3/bin/python3 ./runtest.py $test $duration $mode $disable_affinity $threads_to_iterate

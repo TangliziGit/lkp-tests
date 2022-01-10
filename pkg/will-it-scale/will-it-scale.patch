@@ -1,18 +1,17 @@
-From c15900e2ec8854bc2115ce8a6c54aeaec3b31ed6 Mon Sep 17 00:00:00 2001
+From 26684da5c9c095063fb99d69fbdda99ca55f8b33 Mon Sep 17 00:00:00 2001
 From: root <root@lkp-haiyan.sh.intel.com>
-Date: Wed, 24 Nov 2021 18:50:35 +0800
+Date: Mon, 10 Jan 2022 14:21:55 +0800
 Subject: [PATCH] update runtest.py
 
-* 2021/11, add 'affinity' parameter
+* 2021/11, add 'affinity' parameter (Feng)
 
 Signed-off-by: root <root@lkp-haiyan.sh.intel.com>
-Signed-off-by: Feng Tang <feng.tang@intel.com>
 ---
  runtest.py | 87 +++++++++++++++++++++++++++++-------------------------
  1 file changed, 46 insertions(+), 41 deletions(-)
 
 diff --git a/runtest.py b/runtest.py
-index 8bda393..395e952 100755
+index 8bda393..878b592 100755
 --- a/runtest.py
 +++ b/runtest.py
 @@ -48,12 +48,18 @@ class linux_stat():
@@ -23,18 +22,18 @@ index 8bda393..395e952 100755
 -
 -if len(sys.argv) != 2:
 -	print('Usage: runtest.py <testcase>', file=sys.stderr)
-+if len(sys.argv) < 5:
-+	print('Usage: runtest.py <testcase> <duration> <mode> <threads...>', file=sys.stderr)
++if len(sys.argv) < 6:
++	print('Usage: runtest.py <testcase> <duration> <mode> <no_affinity> <threads...>', file=sys.stderr)
  	sys.exit(1)
  cmd = sys.argv[1]
 +duration = int(sys.argv[2])
 +mode = sys.argv[3]
-+threads = sys.argv[4:]
 +
-+# Optional feature for "-n" option, which will disable cpu bindings for test tasks
 +affinity = "  "
-+if len(sys.argv) == 6:
-+	affinity = sys.argv[5]
++if int(sys.argv[4]) == 1:
++	affinity = " -n "
++
++threads = sys.argv[5:]
  
  nr_cores=0
  r = re.compile('^processor')
