@@ -26,13 +26,22 @@ class Stater
 
         # selftests: pstore: pstore_tests
         # not ok 2 selftests: pstore: pstore_post_reboot_tests # SKIP
-        stats.add "#{@test}.#{$3}", 'skip'
+
+        # add "duplicate key" check to avoid below duplication
+        # 1908 ok 1 selftests: lkdtm: PANIC.sh # SKIP
+        # 3109 ok 1 selftests: lkdtm: PANIC.sh # SKIP
+        # 9951 ok 1 selftests: lkdtm: PANIC.sh # SKIP
+        stats.add "#{@test}.#{$3}", 'skip' unless stats.key? "#{@test}.#{$3}"
       else
         # not ok 46 selftests: net: vrf_route_leaking.sh # exit=1
         # ok 1 selftests: vm: run_vmtests
         # ok 1 selftests: memory-hotplug: mem-on-off-test.sh
         # ok 1..1 selftests: capabilities: test_execve [PASS]
-        stats.add "#{@test}.#{$3}", $1
+
+        # add "duplicate key" check to avoid below duplication
+        # 2618 ok 2 selftests: lkdtm: BUG.sh # SKIP
+        # 7668 ok 2 selftests: lkdtm: BUG.sh # SKIP
+        stats.add "#{@test}.#{$3}", $1 unless stats.key? "#{@test}.#{$3}"
       end
     when /: recipe for target.+failed$/, /^make: \*\*\* (.*) (Error \d+|Stop\.)$/
       # Makefile:47: recipe for target 'sysret_ss_attrs_64' failed
