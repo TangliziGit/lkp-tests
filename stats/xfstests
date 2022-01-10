@@ -43,19 +43,11 @@ while (line = $stdin.gets)
     # because in 'Ran' case don't need stats_type and shouldn't call select method
     summary_ran_cases = $1.tr('/', '.').split
     stats_ran_cases = stats.select { |_key, value| value != 'expunged' }.keys
-    unless summary_ran_cases == stats_ran_cases
-      log_error 'summarized ran != stats ran'
-      exit 1
-    end
   when /^(Failures|Not run): (.*)/
     stats_type = $1.include?('Failures') ? 'fail' : 'skip'
     summary_cases = $2.tr('/', '.').split
     stats_cases = stats.select { |_key, value| value == stats_type }.keys
     # select method will return an empty hash when there is no matched value, won't return nil
-    unless summary_cases == stats_cases
-      log_error "summarized #{stats_type} != stats #{stats_type}"
-      exit 1
-    end
   end
 end
 
