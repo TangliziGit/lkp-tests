@@ -937,7 +937,11 @@ while (line = $stdin.gets)
     stater = TCTestingStater.new($1, $2)
   when /^LKP SKIP (.*)/
     # LKP SKIP net.l2tp.sh
-    stats.add $1.to_s, 'skip'
+    # add "duplicate key" check to avoid below duplication
+    # 1718 LKP SKIP USERCOPY_STACK_FRAME_TO
+    # 2884 LKP SKIP USERCOPY_STACK_FRAME_TO
+    # 9853 LKP SKIP USERCOPY_STACK_FRAME_TO
+    stats.add $1.to_s, 'skip' unless stats.key? $1.to_s
   when /^# selftests: (.+): (.+)/
     stater = Stater.new($1, $2)
   when %r{make: Entering directory .*/(.*)'}
