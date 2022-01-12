@@ -1,0 +1,27 @@
+# selftests: vm: protection_keys_64
+2022-01-12 03:06:10 vm/protection_keys_64
+has pkeys: 1
+startup pkey_reg: 0000000055555550
+...
+test 19 PASSED (iteration 21)
+test  0 PASSED (iteration 22)
+test  1 PASSED (iteration 22)
+test  2 PASSED (iteration 22)
+test  3 PASSED (iteration 22)
+test  4 PASSED (iteration 22)
+test  5 PASSED (iteration 22)
+test  6 PASSED (iteration 22)
+test  7 PASSED (iteration 22)
+test  8 PASSED (iteration 22)
+test  9 PASSED (iteration 22)
+test 10 PASSED (iteration 22)
+test 11 PASSED (iteration 22)
+test 12 PASSED (iteration 22)
+test 13 PASSED (iteration 22)
+test 14 PASSED (iteration 22)
+test 15 PASSED (iteration 22)
+test 16 PASSED (iteration 22)
+test 17 PASSED (iteration 22)
+test 18 PASSED (iteration 22)
+test 19 PASSED (iteration 22)
+done (all tests OK)

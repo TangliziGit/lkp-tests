@@ -844,6 +844,19 @@ class VmallocStater < Stater
   end
 end
 
+class ProtectionKeysStater < Stater
+  def stat(line, stats)
+    case line
+    when /done \(all tests OK\)/
+      stats.add @test_prefix.to_s, 'pass'
+    when /protection_keys\.c:.* Assertion /, /assert\(\) at protection_keys.c:/
+      stats.add @test_prefix.to_s, 'fail'
+    when /running PKEY tests for unsupported CPU\/OS/
+      stats.add @test_prefix.to_s, 'skip'
+    end
+  end
+end
+
 while (line = $stdin.gets)
   line = line.resolve_invalid_bytes
 
@@ -851,6 +864,8 @@ while (line = $stdin.gets)
   when /^# selftests: (net): (.*)/
     # selftests: net: reuseport_addr_any.sh
     stater = NetStater.new($1, $2)
+  when /^# selftests: vm: (protection_keys.*)/
+    stater = ProtectionKeysStater.new('vm', $1)
   when /^# selftests: (vm): (.+)/
     # selftests: vm: run_vmtests
     stater = VmStater.new($1, $2)
