@@ -243,7 +243,7 @@ need_kconfig:
 - NET_FOU_IP_TUNNELS: y
 - NET_L3_MASTER_DEV: y
 - NET_SCH_NETEM
-- NET_VRF: y # Depends on: IP_MULTIPLE_TABLES [: y]
+- NET_VRF: y, v4.3-rc1 # Depends on: IP_MULTIPLE_TABLES [: y]
 - NFT_OBJREF: m, v4.10-rc1
 - NF_FLOW_TABLE: m, v4.16-rc1
 - NF_FLOW_TABLE_INET: m, v4.16-rc1
