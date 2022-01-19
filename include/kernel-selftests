@@ -217,7 +217,6 @@ need_kconfig:
 - LIRC: y # Depends on: RC_CORE [: m]
 - LKDTM: y
 - NOTIFIER_ERROR_INJECTION: y
-- PREEMPT: y
 - SECURITYFS: y
 - TEST_BITMAP
 - TEST_KMOD: m, v4.13-rc1
