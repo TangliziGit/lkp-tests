@@ -1,0 +1,8 @@
+Decompressing Linux... Parsing ELF... No relocation needed... done.
+Booting the kernel.
+Linux version 5.16.0-rc8-07935-g07992521665d (kbuild@2656c69c87df) (gcc-9 (Debian 9.3.0-22) 9.3.0, GNU ld (GNU Binutils for Debian) 2.35.2) #1 SMP Thu Jan 13 07:11:21 CST 2022
+Booting paravirtualized kernel on bare hardware
+x86: Booting SMP configuration:
+clocksource: tsc: mask: 0xffffffffffffffff max_cycles: 0x23f30c707d3, max_idle_ns: 440795252535 ns
+clocksource: Switched to clocksource tsc
+Freeing initrd memory: 263080K
