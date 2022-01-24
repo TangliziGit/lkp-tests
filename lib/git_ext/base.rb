@@ -44,6 +44,10 @@ module Git
       !command('branch', ['--list', '-a', pattern]).empty?
     end
 
+    def branch_exist_in_remote?(remote_url, branch)
+      command("ls-remote -h #{remote_url} #{branch}").split.include?("refs/heads/#{branch}")
+    end
+
     def kernel_branch?(branch)
       return false unless command_lines('show', "#{branch}:").include?('Makefile')
       return false unless command('show', "#{branch}:Makefile").include?('KERNELRELEASE')
