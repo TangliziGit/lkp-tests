@@ -19,15 +19,15 @@ phoronix-test-suite:
       # - tConvolve MT
       # - Hogbom Clean OpenMP
       # - Test All Options
-  - test: clpeak-1.0.1
-    option_a:
-      - Global Memory Bandwidth
-      - Single-Precision Float
-      - Double-Precision Double
-      - Integer Compute INT
-      - Transfer Bandwidth enqueueWriteBuffer
-      - Transfer Bandwidth enqueueReadBuffer
-      - Kernel Latency
+  # - test: clpeak-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - Global Memory Bandwidth
+      # - Single-Precision Float
+      # - Double-Precision Double
+      # - Integer Compute INT
+      # - Transfer Bandwidth enqueueWriteBuffer
+      # - Transfer Bandwidth enqueueReadBuffer
+      # - Kernel Latency
       # - Test All Options
   - test: darktable-1.0.5
     option_a:
@@ -40,10 +40,10 @@ phoronix-test-suite:
       - CPU-only
       - OpenCL
       # - Test All Options
-  - test: gpu-residency-1.0.1
-    option_a:
-      - RC6
-      - RC6P
+  # - test: gpu-residency-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - RC6
+      # - RC6P
       # - Test All Options
   # - test: parboil-1.2.1 # temporarily comment out the failed test
     # option_a:

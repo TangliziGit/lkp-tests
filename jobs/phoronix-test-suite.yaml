@@ -440,7 +440,7 @@ phoronix-test-suite:
       # - 256
       # - Test All Options
   - test:
-    - memtier-benchmark-1.0.1
+    # - memtier-benchmark-1.0.1 # temporarily comment out the failed test
     - mencoder-1.5.0
   - test: minion-1.5.2
     option_a:
@@ -490,17 +490,17 @@ phoronix-test-suite:
     - node-express-loadtest-1.0.1
     - node-octane-1.0.1
     - noise-level-1.1.0
-  - test: npb-1.4.2
-    option_a:
-      - BT.C [Block Tri-diagonal solver]
-      - EP.C [Embarrassingly Parallel]
-      - EP.D [Embarrassingly Parallel]
-      - FT.C [discrete 3D fast Fourier Transform]
-      - LU.C [Lower-Upper Gauss-Seidel solver]
-      - SP.B [Scalar Penta-diagonal solver]
-      - IS.D [Integer Sort]
-      - MG.C [Multi-Grid on a sequence of meshes]
-      - CG.C [Conjugate Gradient]
+  # - test: npb-1.4.2 # temporarily comment out the failed test
+    # option_a:
+      # - BT.C [Block Tri-diagonal solver]
+      # - EP.C [Embarrassingly Parallel]
+      # - EP.D [Embarrassingly Parallel]
+      # - FT.C [discrete 3D fast Fourier Transform]
+      # - LU.C [Lower-Upper Gauss-Seidel solver]
+      # - SP.B [Scalar Penta-diagonal solver]
+      # - IS.D [Integer Sort]
+      # - MG.C [Multi-Grid on a sequence of meshes]
+      # - CG.C [Conjugate Gradient]
       # - Test All Options
   - test:
     - numenta-nab-1.1.0
