@@ -2,3 +2,4 @@ url: https://github.com/Rust-for-Linux/linux
 owner: Miguel Ojeda <ojeda@kernel.org>
 branch_allowlist: rust|rust-next
 branch_denylist: .*
+no_merge_branch: .*

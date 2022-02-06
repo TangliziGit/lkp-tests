@@ -1,3 +1,4 @@
 url: https://github.com/ojeda/linux.git
 owner: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
 branch_denylist: rust-test-ci
+no_merge_branch: .*
