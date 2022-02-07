@@ -4,7 +4,18 @@
 file=$(basename $0)
 file=${file#proc-}
 
-[ -f /proc/$file ] || exit
+get_sysfs_path()
+{
+	local sysfs_path
+	if [ $file = 'sched_debug' ]; then
+		sysfs_path="/sys/kernel/debug/sched/debug"
+	else
+		sysfs_path="/proc/$file"
+	fi
+	echo "$sysfs_path"
+}
+
+[ -f $(get_sysfs_path) ] || exit
 
 if [ -z "$interval" ]; then
 	case $file in
@@ -28,6 +39,6 @@ fi
 while :
 do
 	echo time: $(date +%s)
-	cat /proc/$file
+	cat $(get_sysfs_path)
 	wait_timeout $interval
 done
