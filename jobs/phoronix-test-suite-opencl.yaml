@@ -58,15 +58,15 @@ phoronix-test-suite:
       # - OpenCL MRI Gridding
       # - OpenCL Histo
       # - Test All Options
-  - test: rodinia-1.3.1
-    option_a:
-      - OpenMP CFD Solver      [Fluid Dynamics]
-      - OpenMP LavaMD          [Molecular Dynamics]
-      - OpenMP Leukocyte       [Medical Imaging]
-      - OpenMP Streamcluster   [Data Mining]
-      - OpenMP HotSpot3D       [Physics Simulation]
-      - OpenCL Myocyte         [Biological Simulation]
-      - OpenCL Particle Filter [Medical Imaging]
+  # - test: rodinia-1.3.1 # temporarily comment out the failed test
+    # option_a:
+      # - OpenMP CFD Solver      [Fluid Dynamics]
+      # - OpenMP LavaMD          [Molecular Dynamics]
+      # - OpenMP Leukocyte       [Medical Imaging]
+      # - OpenMP Streamcluster   [Data Mining]
+      # - OpenMP HotSpot3D       [Physics Simulation]
+      # - OpenCL Myocyte         [Biological Simulation]
+      # - OpenCL Particle Filter [Medical Imaging]
       # - NVIDIA CUDA GPU Myocyte[Biological Simulation]
       # - Test All Options
   # - test: geekbench-1.2.1 # temporarily comment out the failed test

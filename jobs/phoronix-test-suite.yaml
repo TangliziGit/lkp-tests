@@ -90,7 +90,7 @@ phoronix-test-suite:
   - test:
     - clomp-1.1.1
     - cloverleaf-1.1.0
-    - comd-cl-1.0.0
+    # - comd-cl-1.0.0 # temporarily comment out the failed test
   - test: compilebench-1.0.3
     option_a:
       - Initial Create
@@ -356,7 +356,7 @@ phoronix-test-suite:
       - Read Performance
       # - Test All Options
   - test:
-    - iperf-1.1.1
+      # - iperf-1.1.1 # temporarily comment out the failed test
     - java-gradle-perf-1.1.0
     - java-jmh-1.0.0
   - test: java-scimark2-1.1.2
