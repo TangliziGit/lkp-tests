@@ -1,0 +1,122 @@
+2022-01-27 19:24:07 build/tests/i915_pm_rps --run-subtest reset
+IGT-Version: 1.26-g0d559158 (x86_64) (Linux: 5.17.0-rc1-wt-ath-05457-ge683abad5269 x86_6
+4)
+Starting subtest: reset
+(i915_pm_rps:1591) igt_dummyload-CRITICAL: Test assertion failure function igt_spin_fact
+ory, file ../lib/igt_dummyload.c:490:
+(i915_pm_rps:1591) igt_dummyload-CRITICAL: Failed assertion: gem_bo_busy(fd, spin->handl
+e)
+Subtest reset failed.
+**** DEBUG ****
+(i915_pm_rps:1591) i915/gem_context-DEBUG: Test requirement passed: has_ban_period || ha
+s_bannable
+(i915_pm_rps:1591) igt_debugfs-DEBUG: Opening debugfs directory '/sys/kernel/debug/dri/0
+'
+(i915_pm_rps:1591) igt_gt-DEBUG: Test requirement passed: igt_params_set(fd, "reset", "%
+d", allow_reset)
+(i915_pm_rps:1591) igt_gt-DEBUG: Test requirement passed: has_gpu_reset(fd)
+(i915_pm_rps:1591) DEBUG: Test requirement passed: origfreqs[RP0] > origfreqs[RPn]
+(i915_pm_rps:1591) drmtest-DEBUG: Test requirement passed: is_i915_device(fd)
+(i915_pm_rps:1591) igt_debugfs-DEBUG: Opening debugfs directory '/sys/kernel/debug/dri/0
+'
+(i915_pm_rps:1591) i915/gem-DEBUG: Test requirement passed: dir >= 0
+(i915_pm_rps:1591) igt_sysfs-DEBUG: Condition fd < 0 occurred in function igt_sysfs_writ
+e, file ../lib/igt_sysfs.c:124
+(i915_pm_rps:1591) igt_debugfs-DEBUG: Opening debugfs directory '/sys/kernel/debug/dri/0
+'
+(i915_pm_rps:1591) igt_debugfs-DEBUG: Opening debugfs directory '/sys/kernel/debug/dri/0
+'
+(i915_pm_rps:1591) i915/gem-DEBUG: Test requirement passed: err == 0
+(i915_pm_rps:1591) DEBUG: Apply low load...
+(i915_pm_rps:1591) DEBUG: gt freq (MHz):  act=350  cur=350  min=350  max=1200  RP0=1200
+ RP1=350  RPn=350  boost=1200
+(i915_pm_rps:1591) DEBUG: gt freq (MHz):  act=350  cur=350  min=350  max=1200  RP0=1200
+ RP1=350  RPn=350  boost=1200
+(i915_pm_rps:1591) igt_debugfs-DEBUG: Opening debugfs directory '/sys/kernel/debug/dri/0
+'
+(i915_pm_rps:1591) igt_debugfs-DEBUG: i915_rps_boost_info:
+RPS enabled? yes
+RPS active? yes
+GPU busy? yes
+Boosts outstanding? 0
+Interactive? 0
+Frequency requested 350, actual 350
+  min hard:350, soft:350; max soft:1200, hard:1200
+  idle:350, efficient:500, boost:1200
+Wait boosts: 0
+(i915_pm_rps:1591) DEBUG: Waited 0 msec to stabilize cur
+(i915_pm_rps:1591) DEBUG: Reset gpu...
+(i915_pm_rps:1591) igt_gt-DEBUG: Triggering GPU reset
+(i915_pm_rps:1591) igt_debugfs-DEBUG: Opening debugfs directory '/sys/kernel/debug/dri/0
+'
+(i915_pm_rps:1591) igt_dummyload-DEBUG: Test requirement passed: nengine
+(i915_pm_rps:1591) igt_dummyload-CRITICAL: Test assertion failure function igt_spin_fact
+ory, file ../lib/igt_dummyload.c:490:
+(i915_pm_rps:1591) igt_dummyload-CRITICAL: Failed assertion: gem_bo_busy(fd, spin->handl
+e)
+(i915_pm_rps:1591) igt_core-INFO: Stack trace:
+(i915_pm_rps:1591) igt_core-INFO:   #0 ../lib/igt_core.c:1752 __igt_fail_assert()
+(i915_pm_rps:1591) igt_core-INFO:   #1 ../lib/igt_dummyload.c:472 igt_spin_factory()
+(i915_pm_rps:1591) igt_core-INFO:   #2 ../tests/i915/i915_pm_rps.c:556 waitboost()
+(i915_pm_rps:1591) igt_core-INFO:   #3 ../tests/i915/i915_pm_rps.c:690 __igt_unique____r
+eal_main633()
+(i915_pm_rps:1591) igt_core-INFO:   #4 ../tests/i915/i915_pm_rps.c:633 main()
+(i915_pm_rps:1591) igt_core-INFO:   #5 [__libc_start_main+0xeb]
+(i915_pm_rps:1591) igt_core-INFO:   #6 [_start+0x2a]
+****  END  ****
+Stack trace:
+  #0 ../lib/igt_core.c:1752 __igt_fail_assert()
+  #1 ../lib/igt_dummyload.c:472 igt_spin_factory()
+  #2 ../tests/i915/i915_pm_rps.c:556 waitboost()
+  #3 ../tests/i915/i915_pm_rps.c:690 __igt_unique____real_main633()
+  #4 ../tests/i915/i915_pm_rps.c:633 main()
+  #5 [__libc_start_main+0xeb]
+  #6 [_start+0x2a]
+Subtest reset: FAIL (2.276s)
+i915_pm_rps: ../lib/igt_core.c:2126: igt_exit: Assertion `waitpid(-1, &tmp, WNOHANG) ==
+-1 && errno == ECHILD' failed.
+Received signal SIGABRT.
+Stack trace:
+ #0 [fatal_sig_handler+0xd6]
+ #1 [killpg+0x40]
+ #2 [gsignal+0x10b]
+ #3 [abort+0x121]
+ #4 [<unknown>+0x121]
+ #5 [__assert_fail+0x42]
+ #6 [igt_exit+0x181]
+ #7 [main+0x2c]
+ #8 [__libc_start_main+0xeb]
+ #9 [_start+0x2a]
+(i915_pm_rps:1591) CRITICAL: Test assertion failure function load_helper_stop, file ../t
+ests/i915/i915_pm_rps.c:330:
+(i915_pm_rps:1591) CRITICAL: Failed assertion: igt_wait_helper(&lh.igt_proc) == 0
+(i915_pm_rps:1591) CRITICAL: Last errno: 10, No child processes
+Test i915_pm_rps failed.
+**** DEBUG ****
+(i915_pm_rps:1591) igt_core-INFO: Subtest reset: FAIL (2.276s)
+(i915_pm_rps:1591) igt_core-DEBUG: Exiting with status code 98
+(i915_pm_rps:1591) CRITICAL: Test assertion failure function load_helper_stop, file ../t
+ests/i915/i915_pm_rps.c:330:
+(i915_pm_rps:1591) CRITICAL: Failed assertion: igt_wait_helper(&lh.igt_proc) == 0
+(i915_pm_rps:1591) CRITICAL: Last errno: 10, No child processes
+(i915_pm_rps:1591) igt_core-INFO: Stack trace:
+(i915_pm_rps:1591) igt_core-INFO:   #0 ../lib/igt_core.c:1752 __igt_fail_assert()
+(i915_pm_rps:1591) igt_core-INFO:   #1 [load_helper_stop+0x4f]
+(i915_pm_rps:1591) igt_core-INFO:   #2 ../tests/i915/i915_pm_rps.c:630 pm_rps_exit_handl
+er()
+(i915_pm_rps:1591) igt_core-INFO:   #3 ../lib/igt_core.c:2530 call_exit_handlers()
+(i915_pm_rps:1591) igt_core-INFO:   #4 ../lib/igt_core.c:2599 fatal_sig_handler()
+(i915_pm_rps:1591) igt_core-INFO:   #5 [killpg+0x40]
+(i915_pm_rps:1591) igt_core-INFO:   #6 [gsignal+0x10b]
+(i915_pm_rps:1591) igt_core-INFO:   #7 [abort+0x121]
+(i915_pm_rps:1591) igt_core-INFO:   #8 [<unknown>+0xafcf540f]
+(i915_pm_rps:1591) igt_core-INFO:   #9 [__assert_fail+0x42]
+(i915_pm_rps:1591) igt_core-INFO:   #10 ../lib/igt_core.c:2106 igt_exit()
+(i915_pm_rps:1591) igt_core-INFO:   #11 [main+0x2c]
+(i915_pm_rps:1591) igt_core-INFO:   #12 [__libc_start_main+0xeb]
+(i915_pm_rps:1591) igt_core-INFO:   #13 [_start+0x2a]
+****  END  ****
+failing test is only allowed in fixtures, subtests and igt_simple_mainplease refer to li
+b/igt_core documentation
+i915_pm_rps: ../lib/igt_core.c:363: internal_assert: Assertion `0' failed.
+Aborted

@@ -78,7 +78,7 @@ while (line = $stdin.gets)
       exit 1
     end
 
-    if test_name == 'gem_shrink'
+    if %w(gem_shrink i915_pm_rps).include? test_name
       # some subtests of gem_shrink has duplication issue since v5.11-rc2
       # Subtest execbuf1-oom: CRASH (0.021s)
       #  #1 [killpg+0x40]
@@ -90,6 +90,14 @@ while (line = $stdin.gets)
       #  #4 [__libc_start_main+0xeb]
       #  #5 [_start+0x2a]
       # Subtest execbuf1-oom: CRASH (0.021s)
+
+      # avoid duplication of reset and waitboost
+      # 2022-01-27 19:24:07 build/tests/i915_pm_rps --run-subtest reset
+      # Subtest reset: FAIL (2.276s)
+      # (i915_pm_rps:1591) igt_core-INFO: Subtest reset: FAIL (2.276s)
+      # 2022-01-27 19:24:10 build/tests/i915_pm_rps --run-subtest waitboost
+      # Subtest waitboost: FAIL (1.258s)
+      # (i915_pm_rps:1623) igt_core-INFO: Subtest waitboost: FAIL (1.258s)
       stats.add "#{test_name}.#{$1}", $2 unless stats.key? "#{test_name}.#{$1}"
     else
       stats.add "#{test_name}.#{$1}", $2
