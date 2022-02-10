@@ -208,8 +208,9 @@ need_kconfig:
 - EFIVAR_FS: y
 - EMBEDDED: y
 - EXPERT: y
-- GPIOLIB: y
-- GPIO_MOCKUP: v4.9-rc1
+- GPIOLIB: y, v4.12-rc1
+- GPIO_MOCKUP: m, v4.9-rc1
+- GPIO_SIM: m, v5.17-rc1
 - IMA_APPRAISE: y
 - IMA_ARCH_POLICY: y, v5.0-rc1
 - IR_IMON_DECODER: m, v4.17-rc1
