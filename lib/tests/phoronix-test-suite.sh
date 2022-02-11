@@ -509,6 +509,7 @@ fixup_x264_opencl_install()
 patch_to_detect_wrong_test_option()
 {
 	local target=/usr/share/phoronix-test-suite/pts-core/objects/pts_user_io.php
+	sed -i '/lkp_count/d' $target
 	sed -i "277a \$lkp_count = 1;" "$target"
 	sed -i "281a if (\$lkp_count > 2) {echo 'Wrong test option' . PHP_EOL;exit;}" "$target"
 	sed -i "282a \$lkp_count++;" "$target"
