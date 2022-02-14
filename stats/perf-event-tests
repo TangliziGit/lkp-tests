@@ -18,7 +18,7 @@ while (line = $stdin.gets)
   when /\.\.\.\s+(.+)$/
     #     Testing \"branch-misses\" generalized event...               PASSED
     #     Testing PERF_FLAG_FD_OUTPUT flag...                        KNOWN KERNEL BUG
-    if testcase != ''
+    if testcase && testcase != ''
       stats.add testcase, $1
       testcase = ''
     end
