@@ -6,6 +6,8 @@ need_memory: 1G
 
 disk: 1HDD
 
+force_reboot: 1
+
 mdadm-selftests:
   test_prefix:
   - '00'
