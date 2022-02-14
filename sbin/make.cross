@@ -184,6 +184,31 @@ setup_gcc_exec()
 	gcc_exec=${gcc_exec[-1]}
 }
 
+update_path_env_for_parisc()
+{
+	local gcc_arch=$1
+	local gcc_exec
+	setup_gcc_exec || return
+	gcc_path=$(dirname $gcc_exec)
+	[[ $PATH =~ $gcc_path ]] || export PATH=$gcc_path:$PATH
+}
+
+setup_compiler_for_parisc()
+{
+	local gcc_arch=hppa-linux
+	update_path_env_for_parisc $gcc_arch || return
+	if grep -s -q 'CONFIG_64BIT=y' $BUILD_DIR/.config; then
+		# 64bit build needs both hppa-linux and hppa64-linux
+		# > Assembler messages:
+		# > ../arch/parisc/kernel/vdso32/sigtramp.S:39: Error: unknown pseudo-op: `.proc'
+		# > ../arch/parisc/kernel/vdso32/restart_syscall.S:16: Error: bad or irreducible absolute expression
+		# > ../arch/parisc/kernel/vdso32/sigtramp.S:40: Error: unknown pseudo-op: `.callinfo'
+		gcc_arch=hppa64-linux
+		update_path_env_for_parisc $gcc_arch || return
+	fi
+	echo "PATH=$PATH"
+}
+
 setup_compiler_for_xtensa()
 {
 	local variant
@@ -248,12 +273,8 @@ setup_crosstool_gcc()
 		sh)
 			gcc_arch=sh4-linux
 			;;
-		parisc)
-			if grep -s -q 'CONFIG_64BIT=y' $SRC_ROOT/arch/parisc/configs/$config; then
-				gcc_arch=hppa64-linux
-			else
-				gcc_arch=hppa-linux
-			fi
+		parisc|parisc64)
+			setup_compiler_for_parisc || return
 			;;
 		openrisc)
 			gcc_arch=or1k-linux
