@@ -166,6 +166,24 @@ install_cross_compiler()
 	install_packages && install_crosstool
 }
 
+setup_gcc_exec()
+{
+	gcc_exec=($COMPILER_INSTALL_PATH/${COMPILER}*/${gcc_arch}/bin/${gcc_arch}-gcc)
+	[[ -x $gcc_exec ]] || install_cross_compiler || {
+		echo "Install gcc cross compiler failed"
+		return 1
+	}
+
+	gcc_exec=($COMPILER_INSTALL_PATH/${COMPILER}*/${gcc_arch}/bin/${gcc_arch}-gcc)
+	[[ -x $gcc_exec ]] || {
+		echo "No cross compiler for $ARCH"
+		return 1
+	}
+
+	# use highest available version
+	gcc_exec=${gcc_exec[-1]}
+}
+
 setup_compiler_for_xtensa()
 {
 	local variant
@@ -268,21 +286,7 @@ setup_crosstool_gcc()
 	esac
 
 	if [[ $gcc_arch ]]; then
-		gcc_exec=($COMPILER_INSTALL_PATH/${COMPILER}*/${gcc_arch}/bin/${gcc_arch}-gcc)
-		[[ -x $gcc_exec ]] || install_cross_compiler || {
-			echo "Install gcc cross compiler failed"
-			return 1
-		}
-
-		gcc_exec=($COMPILER_INSTALL_PATH/${COMPILER}*/${gcc_arch}/bin/${gcc_arch}-gcc)
-		[[ -x $gcc_exec ]] || {
-			echo "No cross compiler for $ARCH"
-			return 1
-		}
-
-		# use highest available version
-		gcc_exec=${gcc_exec[-1]}
-
+		setup_gcc_exec || return
 		opt_cross="CROSS_COMPILE=${gcc_exec%gcc}"
 
 		# load build-in depends libs
