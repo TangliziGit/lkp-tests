@@ -203,9 +203,11 @@ show_mac_addr()
 
 echo_to_tty()
 {
+	echo "LKP: stdout: $$: $@"
+
 	for ttys in ttyS0 ttyS1 ttyS2 ttyS3
 	do
-		echo "LKP: $ttys: $1" > /dev/$ttys 2>/dev/null
+		echo "LKP: $ttys: $$: $@" > /dev/$ttys 2>/dev/null
 	done
 }
 
@@ -215,7 +217,7 @@ announce_bootup()
 	local release="$(cat /proc/sys/kernel/osrelease 2>/dev/null)"
 	local mac="$(show_mac_addr)"
 
-	echo 'Kernel tests: Boot OK!'
+	echo_to_tty 'Kernel tests: Boot OK!'
 
 	# make sure to output something if serial console is not ttyS0
 	# this helps diagnose serial console connections
@@ -224,8 +226,15 @@ announce_bootup()
 
 redirect_stdout_stderr()
 {
-	[ -c /dev/kmsg ] || return
-	has_cmd tail || return
+	[ -c /dev/kmsg ] || {
+		echo_to_tty "/dev/kmsg doesn't exist"
+		return 1
+	}
+
+	has_cmd tail || {
+		echo_to_tty "tail cmd doesn't exist"
+		return 1
+	}
 
 	exec  > /tmp/stdout
 	exec 2> /tmp/stderr
