@@ -201,6 +201,14 @@ show_mac_addr()
 	fi
 }
 
+echo_to_tty()
+{
+	for ttys in ttyS0 ttyS1 ttyS2 ttyS3
+	do
+		echo "LKP: $ttys: $1" > /dev/$ttys 2>/dev/null
+	done
+}
+
 announce_bootup()
 {
 	local version="$(cat /proc/sys/kernel/version 2>/dev/null| cut -f1 -d' ' | cut -c2-)"
@@ -211,10 +219,7 @@ announce_bootup()
 
 	# make sure to output something if serial console is not ttyS0
 	# this helps diagnose serial console connections
-	for ttys in ttyS0 ttyS1 ttyS2 ttyS3
-	do
-		echo "LKP: HOSTNAME $HOSTNAME, MAC $mac, kernel $release $version, serial console /dev/$ttys" > /dev/$ttys 2>/dev/null
-	done
+	echo_to_tty "HOSTNAME $HOSTNAME, MAC $mac, kernel $release $version"
 }
 
 redirect_stdout_stderr()
