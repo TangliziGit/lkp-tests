@@ -376,7 +376,7 @@ phoronix-test-suite:
   - test:
     - keydb-1.2.0
     - lammps-1.3.2
-    - llvm-test-suite-1.0.0
+    - llvm-test-suite-1.0.1
   - test: luajit-1.1.0
     option_a:
       - Composite
