@@ -11,6 +11,9 @@ leaking_number = 0
 
 while (line = $stdin.gets)
   case line
+  when /^\[\d+ modules\] .+(Live|Loading|Unloading) .+/
+    # skip the line about kernel modules
+    next
   when /Total number of results.*: (.*)/
     total_number = $1
   when /^\[ +([\d.]+)\] (.*)/
