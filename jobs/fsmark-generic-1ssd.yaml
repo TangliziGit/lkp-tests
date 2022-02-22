@@ -19,7 +19,7 @@ fs2:
 - 
 
 fsmark:
-  filesize: 4M
+  filesize: 8K
   test_size: 60G
   sync_method:
   - NoSync
