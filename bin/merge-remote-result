@@ -1,0 +1,101 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'fileutils'
+require 'tmpdir'
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/job"
+require "#{LKP_SRC}/lib/result_root"
+require "#{LKP_SRC}/lib/common"
+require "#{LKP_SRC}/lib/log"
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: merge-remote-result [-r REMOTE] RESULT_ROOT'
+
+  opts.separator ''
+  opts.separator 'options:'
+
+  opts.on('-r [REMOTE]', '--remote [REMOTE]', 'remote host name') do |remote|
+    $opt_remote = remote
+  end
+
+  opts.on('-f', '--force', 'force to overwrite') do
+    $opt_force = true
+  end
+
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+end
+
+argv = if ARGV == []
+         ['-h']
+       else
+         ARGV
+       end
+opt_parser.parse!(argv)
+
+result_root_dir = ARGV[0]
+unless result_root_dir
+  log_error 'No result root specified'
+  exit 1
+end
+
+tmp_dir = ''
+if $opt_remote
+  tmp_dir = Dir.mktmpdir
+  sync_cmd = "rsync -azh --info=progress2 --delete #{$opt_remote}:#{result_root_dir}/ #{tmp_dir}"
+  puts sync_cmd
+  system(sync_cmd)
+  unless $CHILD_STATUS.success?
+    log_error 'Failed to sync result root from remote'
+    FileUtils.rm_rf(tmp_dir)
+    exit 1
+  end
+  result_root_dir = tmp_dir
+else
+  unless Dir.exist?(result_root_dir)
+    log_error "No result root in local, please run with '--remote' to copy from remote"
+    exit 1
+  end
+end
+
+ret = 0
+begin
+  rts = Dir["#{result_root_dir}/**/[0-9]*/job.yaml"].map { |f| File.realpath(File.dirname(File.dirname(f))) }.sort.uniq
+  rts.each_with_index do |source, i|
+    job_file = Dir[File.join(source, '*', 'job.yaml')].first
+    job = Job.open(job_file)
+
+    target = job._result_root
+    unless source.sub(/\/$/, '') == target.sub(/\/$/, '')
+      if Dir.exist?(target)
+        unless $opt_force
+          log_warn "Stop merging: #{target} exists in local, please run with '--force'"
+          ret = 1
+          break
+        end
+        FileUtils.rm_rf(target)
+      end
+      FileUtils.mkdir_p(File.dirname(target))
+      FileUtils.mv(source, target)
+    end
+
+    MResultRootTableSet.create_tables_layout
+    convert_mrt(target)
+
+    user = ENV['USER']
+    Dir[File.join(target, '*', 'job.yaml')].each { |path| save_paths(File.dirname(path), user) }
+
+    puts "Result root ##{i + 1}: #{target}"
+  end
+rescue StandardError => e
+  log_error "Failed to merge: #{e.message}"
+  ret = 1
+end
+
+FileUtils.rm_rf(tmp_dir)
+exit ret
