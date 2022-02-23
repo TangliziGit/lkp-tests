@@ -993,11 +993,6 @@ phoronix-test-suite:
       - 5  [Mid-Speed]
       - 1  [Slowest / Best Quality]
       # - Test All Options
-  - test: selenium-top-sites-1.0.3
-    option_a:
-      - Firefox
-      - Google Chrome
-      # - Test All Options
   - test: webp2-1.0.0
     option_a:
       - Default

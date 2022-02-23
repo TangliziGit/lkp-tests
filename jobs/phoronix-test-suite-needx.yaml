@@ -198,6 +198,11 @@ phoronix-test-suite:
     - render-bench-1.1.2
     # - smokin-guns-1.2.2 # need 32bit libs (libjpeg62:i386 etc), runtime > 1h
     # - specviewperf9-1.1.1 # need csh or tcsh
+  - test: selenium-top-sites-1.0.3
+    option_a:
+      - Firefox
+      - Google Chrome
+      # - Test All Options
   - test: supertuxkart-1.5.2
     option_a:
       - 1024 x 768
