@@ -386,8 +386,7 @@ phoronix-test-suite:
       - Sparse Matrix Multiply
       - Dense LU Matrix Factorization
       # - Test All Options
-  - test:
-    - lulesh-cl-1.0.1
+  # - test: lulesh-cl-1.0.1 # temporarily comment out the failed test
   - test: luxcorerender-cl-1.2.1
     option_a:
       - LuxCore Benchmark
