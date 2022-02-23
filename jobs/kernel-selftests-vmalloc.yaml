@@ -12,12 +12,13 @@ kernel-selftests:
 
 ---
 # vmalloc stress test, nr_threads=1 and iterations=1 used 30-40s
+# vmalloc stress test, nr_threads=4 and iterations=3 used 1700-1900s
 nr_threads:
 - 1
 - 4
 iterations:
 - 1
-- 5
+- 3
 
 kernel-selftests:
   group:
