@@ -782,7 +782,7 @@ class Job
     @job.include?(k)
   end
 
-  def has_key?(k)
+  def key?(k)
     @job.include?(k)
   end
 

@@ -38,7 +38,7 @@ module LKP
     end
 
     def latency?
-      @latency ||= is_latency(stat)
+      @latency ||= latency_stat?(stat)
     end
 
     def change?

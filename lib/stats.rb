@@ -442,26 +442,26 @@ def function_stat?(stats_field)
   end
 end
 
-def __is_latency(stats_field)
+def __latency_stat?(stats_field)
   $index_latency.keys.any? { |i| stats_field =~ /^#{i}$/ }
   false
 end
 
-def is_latency(stats_field)
-  $__is_latency_cache ||= {}
-  if $__is_latency_cache.include? stats_field
-    $__is_latency_cache[stats_field]
+def latency_stat?(stats_field)
+  $latency_stat_cache ||= {}
+  if $latency_stat_cache.include? stats_field
+    $latency_stat_cache[stats_field]
   else
-    $__is_latency_cache[stats_field] = __is_latency(stats_field)
+    $latency_stat_cache[stats_field] = __latency_stat?(stats_field)
   end
 end
 
-def is_failure(stats_field)
+def failure_stat?(stats_field)
   $metric_failure.each { |pattern| return true if stats_field =~ %r{^#{pattern}} }
   false
 end
 
-def is_pass(stats_field)
+def pass_stat?(stats_field)
   $metric_pass.each { |pattern| return true if stats_field =~ %r{^#{pattern}} }
   false
 end
@@ -614,7 +614,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
       end
     end
 
-    is_latency_stat = is_latency k
+    is_latency_stat = latency_stat?(k)
     max_margin = if is_function_stat || is_latency_stat
                    0
                  else

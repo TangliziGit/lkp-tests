@@ -627,6 +627,7 @@ end
 
 def show_delta(stat, key_g)
   is_fail = function_stat?(stat)
+  is_latency = latency_stat?(stat)
 
   dims = []
   $cases.values.each { |v| dims += v.keys }
@@ -638,7 +639,7 @@ def show_delta(stat, key_g)
   $cases.delete_if do |_rt, value|
     next true if value.size < 2
     next false if is_fail
-    next false if is_latency stat
+    next false if is_latency
     next false if $opt_no_hide_noises
 
     noisy = false
