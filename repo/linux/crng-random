@@ -1,4 +1,5 @@
 url: git://git.kernel.org/pub/scm/linux/kernel/git/crng/random.git
+owner: Jason A. Donenfeld <Jason@zx2c4.com>
+git_am_branch: master
 mail_cc: zx2c4@kernel.org
 notify_build_success_branch: .*
-
