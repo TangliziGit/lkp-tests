@@ -15,7 +15,6 @@
 ^perf-stat.
 ^proc-vmstat.
 ^sched_debug.
-^softirqs.
 ^time.
 ^turbostat.
 ^uptime.
