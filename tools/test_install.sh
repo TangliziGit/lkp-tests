@@ -48,14 +48,14 @@ do
 	lkp install "$job" > "$job_log_file" 2>&1
 
 	err=$(grep -E "(No package)|(locate package)" "$job_log_file")
-	[ ! -z "$err" ] && {
+	[ -n "$err" ] && {
 		echo "$err" >> "$_wrong_pkg"
 		msg "leak some packages" "$result_log"
 		is_failed=1
 	}
 
 	err=$(grep -E -w -n -r "error|E:|fatal|wrong|fail|failed" "$job_log_file")
-	[ ! -z "$err" ] && {
+	[ -n "$err" ] && {
 		echo "$err" > "$error_path/${job_name%%.*}.log"
 		is_failed=1
 	}

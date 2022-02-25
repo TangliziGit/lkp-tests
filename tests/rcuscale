@@ -9,7 +9,7 @@
 . $LKP_SRC/lib/reproduce-log.sh
 
 args=""
-[ ! -z "$scale_type" ] && args="$args scale_type=$scale_type"
+[ -n "$scale_type" ] && args="$args scale_type=$scale_type"
 
 log_cmd modprobe rcuscale $args ||
 die "failed to load rcuscale module, try to enable CONFIG_RCU_SCALE_TEST as module and build rcuscale.ko"

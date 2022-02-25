@@ -122,7 +122,7 @@ do
 
 	#upload and delete previous test results to save ramdisk space
 	f_result=$(ls ./ | grep "suspend-")
-	if [ ! -z $f_result ]
+	if [ -n $f_result ]
 	then
 		echo $(date +%T): uploading test result $f_result ... >> $f_log
 		upload_files -t result $f_result

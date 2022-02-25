@@ -7,7 +7,7 @@
 
 RESCTRL_MNT=/resctrl
 
-if [ ! -n "$schemata" ]; then
+if [ -z "$schemata" ]; then
 	echo "schemata not specified" >&2
 	exit 1
 fi

@@ -41,7 +41,7 @@ then
 	fi
 fi
 
-if [ ! -z "$pm_test" ]
+if [ -n "$pm_test" ]
 then
 	echo "pm_test set to $pm_test"
 	echo $pm_test > /sys/power/pm_test

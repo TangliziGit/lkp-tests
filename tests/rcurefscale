@@ -12,11 +12,11 @@
 . $LKP_SRC/lib/reproduce-log.sh
 
 args=""
-[ ! -z "$scale_type" ] && args="$args scale_type=$scale_type"
-[ ! -z "$nr_threads" ] && args="$args nreaders=$nr_threads"
-[ ! -z "$loops" ] && args="$args loops=$loops"
-[ ! -z "$readdelay" ] && args="$args readdelay=$readdelay"
-[ ! -z "$nruns" ] && args="$args nruns=$nruns"
+[ -n "$scale_type" ] && args="$args scale_type=$scale_type"
+[ -n "$nr_threads" ] && args="$args nreaders=$nr_threads"
+[ -n "$loops" ] && args="$args loops=$loops"
+[ -n "$readdelay" ] && args="$args readdelay=$readdelay"
+[ -n "$nruns" ] && args="$args nruns=$nruns"
 
 # since we will pass nr_thread to the test, so the test duration
 # depends on the cpu number. It's known that:

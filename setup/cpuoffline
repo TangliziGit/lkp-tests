@@ -29,7 +29,7 @@ echo $TMP_RESULT_ROOT/post-run.cpuoffline created
 cat $TMP_RESULT_ROOT/post-run.cpuoffline
 
 # online_cpus overrides the denied list
-if [ ! -z "$online_cpus" ]
+if [ -n "$online_cpus" ]
 then
 	echo Online CPUs: $online_cpus
 
@@ -66,7 +66,7 @@ then
 	exit 0
 fi
 
-if [ ! -z "$online_cores" ]
+if [ -n "$online_cores" ]
 then
 	echo Online Cores: $online_cores
 	for cpu_dir in /sys/devices/system/cpu/cpu[0-9]*
@@ -107,7 +107,7 @@ then
 fi
 
 
-if [ ! -z "$noht" ]
+if [ -n "$noht" ]
 then
 	echo Disabling HT
 	# Poking smt/control interface is not safe
@@ -131,7 +131,7 @@ then
 	done
 fi
 
-if [ ! -z "$offline_cpus" ]
+if [ -n "$offline_cpus" ]
 then
 	echo Offline CPUs: $offline_cpus
 	for i in $offline_cpus
@@ -146,7 +146,7 @@ then
 	done
 fi
 
-if [ ! -z "$offline_package" ]
+if [ -n "$offline_package" ]
 then
 	echo Offline Package: $offline_package
 	for cpu_dir in /sys/devices/system/cpu/cpu[0-9]*
