@@ -33,7 +33,7 @@ setup_wakeup_timer()
 	fi
 	ctl='/proc/acpi/alarm'
 	if [ -f "$ctl" ]; then
-		echo $(date '+%F %T' -d '+ '$timeout' seconds') >"$ctl"
+		date '+%F %T' -d '+ '$timeout' seconds' >"$ctl"
 		return 0
 	fi
 

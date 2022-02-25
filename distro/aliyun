@@ -106,7 +106,7 @@ pack_benchmark_deps()
 
 		check_shared_package $BM_NAME
 
-		packages=$(echo $(get_dependency_packages $DISTRO $BM_NAME))
+		packages=$(get_dependency_packages $DISTRO $BM_NAME)
 
 		local ocfs2_tools_name=$(echo "$packages" | grep 'ocfs2-tools')
 		[ -n "$ocfs2_tools_name" ] && download_ocfs2_tools "$ocfs2_tools_name"
