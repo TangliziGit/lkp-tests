@@ -2,4 +2,6 @@ suite: kunit
 testcase: kunit
 category: functional
 
+kconfig: x86_64-rhel-8.3-kunit
+
 kunit:
