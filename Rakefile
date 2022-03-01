@@ -77,7 +77,10 @@ task :shellcheck do
 
   format = ENV['format'] || 'tty'
 
-  bash "shellcheck -S warning -f #{format} #{executables} || echo"
+  base_cmd = "shellcheck -S warning -f #{format}"
+  base_cmd += " -i #{ENV['code']}" if ENV['code']
+
+  bash "#{base_cmd} #{executables} || echo"
 end
 
 desc 'Run code check'
