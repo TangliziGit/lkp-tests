@@ -478,7 +478,7 @@ phoronix-test-suite:
   - test: neatbench-1.0.4
     option_a:
       - CPU
-      - GPU
+      # - GPU # need CUDA compatible hardware
       - All (CPU + GPU)
       # - Test All Options
   - test:
