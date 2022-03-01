@@ -16,6 +16,8 @@ need_kconfig:
 - PERF_EVENTS: y
 % elsif ___.test == "ima"
 - IMA_WRITE_POLICY: y
+% elsif ___.test == "watchqueue"
+- WATCH_QUEUE: y, v5.8-rc1
 % end
 - BLK_DEV_LOOP
 - CAN: m

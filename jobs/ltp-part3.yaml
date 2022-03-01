@@ -17,3 +17,4 @@ ltp:
   - smoketest
   - uevent
   # - s390x_tests # designed to be executed in s390x environment (zVM or LPAR)
+  # - watchqueue # test broken
