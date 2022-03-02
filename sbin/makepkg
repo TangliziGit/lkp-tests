@@ -174,13 +174,13 @@ clean_up() {
 			if (( PKGFUNC )); then
 				rm -f "${pkgbase}-${fullver}-${CARCH}-package.log"*
 			elif (( SPLITPKG )); then
-				for pkg in ${pkgname[@]}; do
+				for pkg in "${pkgname[@]}"; do
 					rm -f "${pkgbase}-${fullver}-${CARCH}-package_${pkg}.log"*
 				done
 			fi
 
 			# clean up dangling symlinks to packages
-			for pkg in ${pkgname[@]}; do
+			for pkg in "${pkgname[@]}"; do
 				for file in ${pkg}-*-*-*{${PKGEXT},${SRCEXT}}; do
 					if [[ -h $file && ! -e $file ]]; then
 						rm -f "$file"
@@ -950,7 +950,7 @@ get_pkg_arch() {
 #          127 - not found
 ##
 check_option() {
-	in_opt_array "$1" ${options[@]}
+	in_opt_array "$1" "${options[@]}"
 	case $? in
 		0) # assert enabled
 			[[ $2 = y ]]
@@ -961,7 +961,7 @@ check_option() {
 	esac
 
 	# fall back to makepkg.conf options
-	in_opt_array "$1" ${OPTIONS[@]}
+	in_opt_array "$1" "${OPTIONS[@]}"
 	case $? in
 		0) # assert enabled
 			[[ $2 = y ]]
@@ -985,7 +985,7 @@ check_option() {
 #          127 - not found
 ##
 check_buildenv() {
-	in_opt_array "$1" ${BUILDENV[@]}
+	in_opt_array "$1" "${BUILDENV[@]}"
 	case $? in
 		0) # assert enabled
 			[[ $2 = "y" ]]
@@ -1155,7 +1155,7 @@ remove_deps() {
 
 	msg "Removing installed dependencies..."
 	# exit cleanly on failure to remove deps as package has been built successfully
-	if ! run_pacman -Rn ${deplist[@]}; then
+	if ! run_pacman -Rn "${deplist[@]}"; then
 		warning "$(gettext "Failed to remove installed dependencies.")"
 		return 0
 	fi
@@ -1817,7 +1817,7 @@ strip_file() {
 		fi
 	fi
 
-	strip $@ "$binary"
+	strip "$@" "$binary"
 }
 
 tidy_install() {
@@ -1829,7 +1829,7 @@ tidy_install() {
 
 	if check_option "docs" "n" && [[ -n ${DOC_DIRS[*]} ]]; then
 		msg2 "$(gettext "Removing doc files...")"
-		rm -rf -- ${DOC_DIRS[@]}
+		rm -rf -- "${DOC_DIRS[@]}"
 	fi
 
 	if check_option "purge" "y" && [[ -n ${PURGE_TARGETS[*]} ]]; then
@@ -1885,7 +1885,7 @@ tidy_install() {
 		local file files inode link
 		while read -rd ' ' inode; do
 			read file
-			find ${MAN_DIRS[@]} -type l 2>/dev/null |
+			find "${MAN_DIRS[@]}" -type l 2>/dev/null |
 			while read -r link ; do
 				if [[ "${file}" -ef "${link}" ]] ; then
 					rm -f "$link" "${link}.gz"
@@ -1904,7 +1904,7 @@ tidy_install() {
 				ln "${files[$inode]}.gz" "${file}.gz"
 				chmod 644 "${file}.gz"
 			fi
-		done < <(find ${MAN_DIRS[@]} -type f \! -name "*.gz" \! -name "*.bz2" \
+		done < <(find "${MAN_DIRS[@]}" -type f \! -name "*.gz" \! -name "*.bz2" \
 			-exec stat -c '%i %n' '{}' + 2>/dev/null)
 	fi
 
@@ -2329,12 +2329,12 @@ create_package() {
 	# Disable bsdtar compression and use gzip -n for now.
 	LANG=C bsdtar -cf - "${comp_files[@]}" * |
 	case "$PKGEXT" in
-		*tar.gz)  ${COMPRESSGZ[@]:-gzip -c -f -n} ;;
-		*tar.bz2) ${COMPRESSBZ2[@]:-bzip2 -c -f} ;;
-		*tar.xz)  ${COMPRESSXZ[@]:-xz -c -z -} ;;
-		*tar.lrz) ${COMPRESSLRZ[@]:-lrzip -q} ;;
-		*tar.lzo) ${COMPRESSLZO[@]:-lzop -q} ;;
-		*tar.Z)   ${COMPRESSZ[@]:-compress -c -f} ;;
+		*tar.gz)  "${COMPRESSGZ[@]:-gzip -c -f -n}" ;;
+		*tar.bz2) "${COMPRESSBZ2[@]:-bzip2 -c -f}" ;;
+		*tar.xz)  "${COMPRESSXZ[@]:-xz -c -z -}" ;;
+		*tar.lrz) "${COMPRESSLRZ[@]:-lrzip -q}" ;;
+		*tar.lzo) "${COMPRESSLZO[@]:-lzop -q}" ;;
+		*tar.Z)   "${COMPRESSZ[@]:-compress -c -f}" ;;
 		*tar)     cat ;;
 		*) warning "$(gettext "'%s' is not a valid archive extension.")" \
 			"$PKGEXT"; cat ;;
@@ -2511,7 +2511,7 @@ install_package() {
 	(( ASDEPS )) && pkglist+=('--asdeps')
 	(( NEEDED )) && pkglist+=('--needed')
 
-	for pkg in ${pkgname[@]}; do
+	for pkg in "${pkgname[@]}"; do
 		fullver=$(get_full_version)
 		pkgarch=$(get_pkg_arch $pkg)
 		pkglist+=("$PKGDEST/${pkg}-${fullver}-${pkgarch}${PKGEXT}")
@@ -2992,7 +2992,7 @@ check_vcs_software() {
 	done
 
 	get_all_sources_for_arch 'all_sources'
-	for netfile in ${all_sources[@]}; do
+	for netfile in "${all_sources[@]}"; do
 		local proto=$(get_protocol "$netfile")
 
 		case $proto in
@@ -3005,7 +3005,7 @@ check_vcs_software() {
 					uninstalled="$(set +E; check_deps $client)" || exit 1
 					# if not installed, check presence in depends or makedepends
 					if [[ -n "$uninstalled" ]] && (( ! NODEPS || ( VERIFYSOURCE && !DEP_BIN ) )); then
-						if ! in_array "$client" ${all_deps[@]}; then
+						if ! in_array "$client" "${all_deps[@]}"; then
 							error "$(gettext "Cannot find the %s package needed to handle %s sources.")" \
 									"$client" "${proto%%+*}"
 							ret=1
@@ -3139,7 +3139,7 @@ check_build_status() {
 	else
 		allpkgbuilt=1
 		somepkgbuilt=0
-		for pkg in ${pkgname[@]}; do
+		for pkg in "${pkgname[@]}"; do
 			fullver=$(get_full_version)
 			pkgarch=$(get_pkg_arch $pkg)
 			if [[ -f $PKGDEST/${pkg}-${fullver}-${pkgarch}${PKGEXT} ]]; then
@@ -3170,7 +3170,7 @@ check_build_status() {
 
 backup_package_variables() {
 	local var
-	for var in ${splitpkg_overrides[@]}; do
+	for var in "${splitpkg_overrides[@]}"; do
 		local indirect="${var}_backup"
 		eval "${indirect}=(\"\${$var[@]}\")"
 	done
@@ -3178,7 +3178,7 @@ backup_package_variables() {
 
 restore_package_variables() {
 	local var
-	for var in ${splitpkg_overrides[@]}; do
+	for var in "${splitpkg_overrides[@]}"; do
 		local indirect="${var}_backup"
 		if [[ -n ${!indirect} ]]; then
 			eval "${var}=(\"\${$indirect[@]}\")"
@@ -3190,7 +3190,7 @@ restore_package_variables() {
 
 run_split_packaging() {
 	local pkgname_backup=${pkgname[@]}
-	for pkgname in ${pkgname_backup[@]}; do
+	for pkgname in "${pkgname_backup[@]}"; do
 		pkgdir="$pkgdirbase/$pkgname"
 		mkdir "$pkgdir"
 		backup_package_variables
@@ -3835,7 +3835,7 @@ else
 	deperr=0
 
 	msg "$(gettext "Checking runtime dependencies...")"
-	resolve_deps ${depends[@]} || deperr=1
+	resolve_deps "${depends[@]}" || deperr=1
 
 	if (( RMDEPS && INSTALL )); then
 		original_pkglist=($(run_pacman -Qq))    # required by remove_dep
