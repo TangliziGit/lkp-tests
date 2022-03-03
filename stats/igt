@@ -48,7 +48,7 @@ while (line = $stdin.gets)
 
     subtest_name = $1
     has_dynamic_subtest = false
-  when /Subtest (.+): (SUCCESS|FAIL|CRASH)/
+  when /Subtest (.+): (SUCCESS|FAIL|CRASH|SKIP)/
     # [thread:4146] Subtest thread-performance-write: CRASH (0.580s)
     #
     # Subtest invalid-buffer: SUCCESS (0.000s)
@@ -73,7 +73,14 @@ while (line = $stdin.gets)
     # should ignore the 'Subtest default' results from 980 and 1521 to avoid duplicated stats
     next if test_name.nil? || has_dynamic_subtest
 
-    if subtest_name != $1
+    # for SKIP test, no need start with "Starting subtest:"
+    # Starting subtest: pipe-C-256x256-bottom-edge
+    # Subtest pipe-C-256x256-bottom-edge: SUCCESS (3.159s)
+    # ...
+    # Subtest pipe-D-64x64-left-edge: SKIP
+    # Subtest pipe-D-64x64-right-edge: SKIP
+    # Subtest pipe-D-64x64-top-edge: SKIP
+    if subtest_name != $1 && $2 != 'SKIP'
       log_warn "subtest_name [#{subtest_name}] != $1 [#{$1}]"
       exit 1
     end
@@ -112,6 +119,9 @@ while (line = $stdin.gets)
     has_dynamic_subtest = true
 
     stats.add "#{test_name}.#{subtest_name}.dynamic.#{$1}", $2
+  when /^LKP SKIP igt@(.*)@(.*)$/
+    # LKP SKIP igt@gem_streaming_writes@batch-cpu
+    stats.add "#{$1}.#{$2}", 'skip' unless stats.key? "#{$1}.#{$2}"
   end
 end
 
