@@ -1,0 +1,3 @@
+url: https://github.com/Jakob-Koschel/linux.git
+owner: Jakob Koschel <j.koschel@vu.nl>
+notify_build_success_branch: .*
