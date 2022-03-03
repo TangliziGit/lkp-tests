@@ -11,7 +11,6 @@ vm.test_vmalloc.sh.stress.worker0.fix_align_alloc_test.usec_per_loop: 39971808
 vm.test_vmalloc.sh.stress.worker0.fix_align_alloc_test.pass: 1
 vm.test_vmalloc.sh.stress.worker0.random_size_align_alloc_test.usec_per_loop: 41200361
 vm.test_vmalloc.sh.stress.worker0.random_size_align_alloc_test.pass: 1
-vm.test_vmalloc.sh.stress.worker0.align_shift_alloc_test.usec_per_loop: 444556
 vm.test_vmalloc.sh.stress.worker0.align_shift_alloc_test.fail: 1
 vm.test_vmalloc.sh.stress.worker0.pcpu_alloc_test.usec_per_loop: 426632
 vm.test_vmalloc.sh.stress.worker0.pcpu_alloc_test.pass: 1
@@ -31,7 +30,6 @@ vm.test_vmalloc.sh.stress.worker1.fix_align_alloc_test.usec_per_loop: 39521071
 vm.test_vmalloc.sh.stress.worker1.fix_align_alloc_test.pass: 1
 vm.test_vmalloc.sh.stress.worker1.random_size_align_alloc_test.usec_per_loop: 40911839
 vm.test_vmalloc.sh.stress.worker1.random_size_align_alloc_test.pass: 1
-vm.test_vmalloc.sh.stress.worker1.align_shift_alloc_test.usec_per_loop: 432962
 vm.test_vmalloc.sh.stress.worker1.align_shift_alloc_test.fail: 1
 vm.test_vmalloc.sh.stress.worker1.pcpu_alloc_test.usec_per_loop: 434386
 vm.test_vmalloc.sh.stress.worker1.pcpu_alloc_test.pass: 1
@@ -51,7 +49,6 @@ vm.test_vmalloc.sh.stress.worker2.fix_align_alloc_test.usec_per_loop: 38875362
 vm.test_vmalloc.sh.stress.worker2.fix_align_alloc_test.pass: 1
 vm.test_vmalloc.sh.stress.worker2.random_size_align_alloc_test.usec_per_loop: 40876999
 vm.test_vmalloc.sh.stress.worker2.random_size_align_alloc_test.pass: 1
-vm.test_vmalloc.sh.stress.worker2.align_shift_alloc_test.usec_per_loop: 433240
 vm.test_vmalloc.sh.stress.worker2.align_shift_alloc_test.fail: 1
 vm.test_vmalloc.sh.stress.worker2.pcpu_alloc_test.usec_per_loop: 477025
 vm.test_vmalloc.sh.stress.worker2.pcpu_alloc_test.pass: 1
@@ -71,7 +68,6 @@ vm.test_vmalloc.sh.stress.worker3.fix_align_alloc_test.usec_per_loop: 39148715
 vm.test_vmalloc.sh.stress.worker3.fix_align_alloc_test.pass: 1
 vm.test_vmalloc.sh.stress.worker3.random_size_align_alloc_test.usec_per_loop: 40492778
 vm.test_vmalloc.sh.stress.worker3.random_size_align_alloc_test.pass: 1
-vm.test_vmalloc.sh.stress.worker3.align_shift_alloc_test.usec_per_loop: 455359
 vm.test_vmalloc.sh.stress.worker3.align_shift_alloc_test.fail: 1
 vm.test_vmalloc.sh.stress.worker3.pcpu_alloc_test.usec_per_loop: 489140
 vm.test_vmalloc.sh.stress.worker3.pcpu_alloc_test.pass: 1

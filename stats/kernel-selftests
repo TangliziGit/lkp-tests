@@ -830,9 +830,12 @@ class VmallocStater < Stater
     # [  223.187358] Summary: kvfree_rcu_2_arg_vmalloc_test passed: 1 failed: 0 repeat: 1 loops: 1000000 avg: 6333619 usec
     # [  223.198414] All test took worker0=441656368064 cycles
     when /Summary: (.+) passed: (.+) failed: (.+) repeat: (.+) loops: (.+) avg: (.+) usec/
-      @tmp_stats["#{$1}.usec_per_loop"] = $6.to_i
-      @tmp_stats["#{$1}.pass"] = $2.to_i if $2.to_i.positive?
-      @tmp_stats["#{$1}.fail"] = $3.to_i if $3.to_i.positive?
+      if $3.to_i.positive?
+        @tmp_stats[$1] = 'fail'
+      elsif $2.to_i.positive?
+        @tmp_stats["#{$1}.usec_per_loop"] = $6.to_i
+        @tmp_stats[$1] = 'pass'
+      end
     when /All test took (.+)=(.+) cycles/
       raise "unexpected summary: #{@test_prefix}.#{$1}" if @tmp_stats.empty?
 

@@ -1,0 +1,17 @@
+2022-02-10 06:42:15 vm/test_vmalloc.sh stress
+Run stability tests. In order to stress vmalloc subsystem all
+available test cases are run by NUM_CPUS workers simultaneously.
+It will take time, so be patient.
+Done.
+Check the kernel ring buffer to see the summary.
+[ 1640.572134] Summary: fix_size_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 16766237 usec
+[ 1640.584671] Summary: full_fit_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 20486099 usec
+[ 1640.597219] Summary: long_busy_list_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 118147970 usec
+[ 1640.610421] Summary: random_size_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 57222705 usec
+[ 1640.623284] Summary: fix_align_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 25056212 usec
+[ 1640.635988] Summary: random_size_align_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 25116698 usec
+[ 1640.649411] Summary: align_shift_alloc_test passed: 0 failed: 5 repeat: 5 loops: 1000000 avg: 151846 usec
+[ 1640.662198] Summary: pcpu_alloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 185848 usec
+[ 1640.674382] Summary: kvfree_rcu_1_arg_vmalloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 17780257 usec
+[ 1640.687977] Summary: kvfree_rcu_2_arg_vmalloc_test passed: 5 failed: 0 repeat: 5 loops: 1000000 avg: 16851049 usec
+[ 1640.701569] All test took worker0=4752386129717 cycles
