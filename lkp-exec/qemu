@@ -118,7 +118,9 @@ replace_script_partition_val()
 create_job_initrd()
 {
 	local job_sh=$CACHE_DIR/${job_file%.yaml}.sh
-	[[ -d $CACHE_DIR/$job_initrd_dir ]] && rm -rf "$CACHE_DIR/$job_initrd_dir"
+	[[ -d $CACHE_DIR/$job_initrd_dir ]] && {
+		rm -rf "${CACHE_DIR:?}/$job_initrd_dir" || return
+	}
 	mkdir -p $CACHE_DIR/$job_initrd_dir
 	cp $job_script $job_sh
 	chmod +x $job_sh

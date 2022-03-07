@@ -15,4 +15,4 @@ $task
 
 mntpoint=${mount_points%% *}
 # Remove all files/directories created by test
-rm -rf $mntpoint/*
+rm -rf ${mntpoint:?}/*
