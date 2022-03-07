@@ -16,10 +16,10 @@
 . $LKP_SRC/lib/common.sh
 . $LKP_SRC/lib/debug.sh
 
-: ${interval_ms:=1000}
-: ${delay:=0}
-: ${duration:=0}
-: ${metric_only:=0}
+: "${interval_ms:=1000}"
+: "${delay:=0}"
+: "${duration:=0}"
+: "${metric_only:=0}"
 
 set_perf_path "/lkp/benchmarks/perf/perf"
 export perf

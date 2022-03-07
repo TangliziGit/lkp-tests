@@ -4,7 +4,7 @@
 . "$LKP_SRC"/lib/debug.sh
 . "$LKP_SRC"/lib/reproduce-log.sh
 
-: ${nr_instance:=1}
+: "${nr_instance:=1}"
 
 linux_src="$BENCHMARK_ROOT/kbuild/linux"
 kbuild_work_dirs=

@@ -33,21 +33,21 @@
 test_size=$(to_byte $test_size)
 size=$((test_size / nr_task))
 
-: ${bs:=4k}
-: ${ioengine:=sync}
-: ${runtime:=300}
-: ${rw:=write}
-: ${iodepth:=32}
-: ${direct:=0}
-: ${fallocate:=posix}
-: ${invalidate:=1}
-: ${nr_task:=1}
-: ${nr_files:=1}
-: ${filesize:=$size}
-: ${io_size:=$size}
-: ${file_service_type:=roundrobin}
-: ${random_distribution:=random}
-: ${pre_read:=0}
+: "${bs:=4k}"
+: "${ioengine:=sync}"
+: "${runtime:=300}"
+: "${rw:=write}"
+: "${iodepth:=32}"
+: "${direct:=0}"
+: "${fallocate:=posix}"
+: "${invalidate:=1}"
+: "${nr_task:=1}"
+: "${nr_files:=1}"
+: "${filesize:=$size}"
+: "${io_size:=$size}"
+: "${file_service_type:=roundrobin}"
+: "${random_distribution:=random}"
+: "${pre_read:=0}"
 
 direct=$(parse_bool $direct)
 raw_disk=$(parse_bool $raw_disk)

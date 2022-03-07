@@ -8,8 +8,8 @@
 . $LKP_SRC/lib/job-init.sh
 . $LKP_SRC/lib/sysinfo.sh
 
-: ${timeout:=200}
-: ${interval:=900}
+: "${timeout:=200}"
+: "${interval:=900}"
 
 setup_wait
 

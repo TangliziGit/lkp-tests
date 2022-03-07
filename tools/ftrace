@@ -446,7 +446,7 @@ ftrace_run()
 	[ "$1" = "--" ] || usage
 	shift
 
-	: ${output:=$(normalize "$@").trace}
+	: "${output:=$(normalize "$@").trace}"
 
 	do_ftrace_on
 	"$@"

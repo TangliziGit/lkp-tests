@@ -12,8 +12,8 @@ set_perf_path "/lkp/benchmarks/perf/perf"
 
 is_virt && exit 0
 
-: ${duration:=10}
-: ${ldlat:=50}
+: "${duration:=10}"
+: "${ldlat:=50}"
 
 if [ -z "$delay" ]; then
 	if [ -n "$runtime" ]; then

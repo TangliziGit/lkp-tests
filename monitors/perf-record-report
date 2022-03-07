@@ -11,9 +11,9 @@
 
 . $LKP_SRC/lib/env.sh
 
-: ${delay:=0}
-: ${duration:=10}
-: ${gap:=10}
+: "${delay:=0}"
+: "${duration:=10}"
+: "${gap:=10}"
 
 set_perf_path "/lkp/benchmarks/perf/perf"
 

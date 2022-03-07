@@ -2,7 +2,7 @@
 # - when
 # - files
 
-: ${when:=post_test}
+: "${when:=post_test}"
 
 . $LKP_SRC/lib/wait.sh
 setup_wait

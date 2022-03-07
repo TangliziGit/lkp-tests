@@ -10,7 +10,7 @@
 
 cd $BENCHMARK_ROOT/$testcase || die "can not enter $BENCHMARK_ROOT/$testcase"
 
-: ${duration:=50}
+: "${duration:=50}"
 
 loopdev=$(losetup -f)
 

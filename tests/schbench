@@ -9,10 +9,10 @@
 
 cd $BENCHMARK_ROOT/schbench || die "no $BENCHMARK_ROOT/schbench"
 
-: ${worker_threads:=16}
-: ${runtime:=300}
-: ${sleeptime_us:=30000}
-: ${cputime_us:=30000}
+: "${worker_threads:=16}"
+: "${runtime:=300}"
+: "${sleeptime_us:=30000}"
+: "${cputime_us:=30000}"
 
 # to avoid "core dumped", set message_threads to default 2 if message_threads
 # is 0 because message_threads is used as denominator in schbench command.

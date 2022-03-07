@@ -26,11 +26,11 @@ default_events()
 	echo cycles
 }
 
-: ${events:=$(default_events)}
-: ${duration:=10}
-: ${period:=1000003}
-: ${children:=yes}
-: ${callgraph:=folded,0.5,callee}
+: "${events:=$(default_events)}"
+: "${duration:=10}"
+: "${period:=1000003}"
+: "${children:=yes}"
+: "${callgraph:=folded,0.5,callee}"
 
 if [ -z "$delay" ]; then
 	if [ -n "$runtime" ]; then

@@ -2,9 +2,9 @@
 # - raid_level
 # - raid_chunk
 
-: ${raid_level:=JBOD}
-: ${raid_chunk:=256}
-: ${mdadm_mode:=create}
+: "${raid_level:=JBOD}"
+: "${raid_chunk:=256}"
+: "${mdadm_mode:=create}"
 
 . $LKP_SRC/lib/fs_ext.sh
 

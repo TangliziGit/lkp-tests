@@ -19,9 +19,9 @@ default_events()
 	echo cycles
 }
 
-: ${events:=$(default_events)}
-: ${duration:=10}
-: ${delay:=100}
+: "${events:=$(default_events)}"
+: "${duration:=10}"
+: "${delay:=100}"
 
 [ -n "$freq" ] &&
 opt_freq="--freq=$freq"

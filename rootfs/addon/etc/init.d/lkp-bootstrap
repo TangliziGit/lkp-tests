@@ -62,7 +62,7 @@ fi
 . $job_script
 export_top_env
 
-: ${user:=lkp}
+: "${user:=lkp}"
 export LKP_USER=$user
 export LKP_SRC=/lkp/$user/src
 

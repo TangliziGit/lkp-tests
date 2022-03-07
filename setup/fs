@@ -143,7 +143,7 @@ case $fs in
 
 
 	tmpfs)
-		: ${nr_tmpfs:=1}
+		: "${nr_tmpfs:=1}"
 		mount_tmpfs $nr_tmpfs
 		;;
 

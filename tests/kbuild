@@ -9,8 +9,8 @@
 
 ## Build linux kernel
 
-: ${runtime:=300}
-: ${build_kconfig:=defconfig}
+: "${runtime:=300}"
+: "${build_kconfig:=defconfig}"
 
 [ -n "$target" ] || target=vmlinux
 
@@ -47,7 +47,7 @@ run_kbuild()
 linux_src="$BENCHMARK_ROOT/kbuild/linux"
 [ -d "$linux_src" ] || die "no kernel source code in $BENCHMARK_ROOT/kbuild/linux"
 
-: ${kbuild_work_dirs:=$linux_src}
+: "${kbuild_work_dirs:=$linux_src}"
 
 kbuild_tmp_dir="$TMP/kbuild"
 i=0

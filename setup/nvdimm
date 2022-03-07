@@ -6,8 +6,8 @@
 
 . "$LKP_SRC"/lib/nvdimm.sh
 
-: ${mode:=dax}
-: ${part_type:=-}
+: "${mode:=dax}"
+: "${part_type:=-}"
 
 keep_quiet()
 {
@@ -30,7 +30,7 @@ __probe_devs()
 			;;
 	esac
 	rnr_dev=$(echo $rdevs | wc -w)
-	: ${nr_dev:=$rnr_dev}
+	: "${nr_dev:=$rnr_dev}"
 
 	if [ "$rnr_dev" -eq 0 ]; then
 		keep_quiet || echo "No $mode devices found!" >&2

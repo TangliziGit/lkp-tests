@@ -10,8 +10,8 @@
 sadc="/lkp/benchmarks/sysstat/usr/local/lib/sa/sadc"
 sadf="/lkp/benchmarks/sysstat/usr/local/bin/sadf"
 
-: ${activity:=ALL}
-: ${interval:=1}
+: "${activity:=ALL}"
+: "${interval:=1}"
 
 sar_data="$TMP_RESULT_ROOT"/sar.data
 

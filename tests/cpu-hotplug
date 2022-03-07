@@ -13,7 +13,7 @@ CPUPATH="/sys/devices/system/cpu"
 
 NUMBER_OF_CPUS=$(ls -d $CPUPATH/cpu[0-9]* | wc -l)
 
-: ${runtime:=300}
+: "${runtime:=300}"
 
 do_test()
 {

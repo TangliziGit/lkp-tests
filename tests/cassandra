@@ -4,10 +4,10 @@
 # - insert
 # - simple1
 
-: ${nr_threads:=1}
-: ${duration:=300}
-: ${insert:=0}
-: ${simple1:=0}
+: "${nr_threads:=1}"
+: "${duration:=300}"
+: "${insert:=0}"
+: "${simple1:=0}"
 
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/tests/cassandra.sh

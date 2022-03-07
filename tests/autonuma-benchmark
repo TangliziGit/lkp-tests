@@ -8,7 +8,7 @@ export PATH=$PATH:/lkp/benchmarks/autonuma-benchmark
 ln -sf /usr/bin/gnuplot-qt /usr/bin/gnuplot
 
 # If test is not specified, will test all available tests.
-: ${test:=all}
+: "${test:=all}"
 case "$test" in
     "all")
         option="-A"
