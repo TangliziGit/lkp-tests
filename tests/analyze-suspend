@@ -49,7 +49,7 @@ case $options in
 	*) result_mem=$((5 * 1024));;
 esac
 
-ftrace_mem=$(($total_mem - $process_mem - $result_mem))
+ftrace_mem=$((total_mem - process_mem - result_mem))
 
 echo $option | grep "\-f" > /dev/null
 if [ $? -eq 0 ]

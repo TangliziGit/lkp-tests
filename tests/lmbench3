@@ -27,7 +27,7 @@
 ## Miscellanious
 ##   Processor clock rate calculation
 
-test_memory_size=$(($test_memory_size/1024/1024))
+test_memory_size=$((test_memory_size/1024/1024))
 
 # The bigger test memory range, the more accurate the results, but larger sizes
 # take somewhat longer to run the benchmark.

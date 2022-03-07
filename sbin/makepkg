@@ -1485,7 +1485,7 @@ check_pgpsigs() {
 		fingerprint=
 		trusted=
 		parse_gpg_statusfile "$statusfile"
-		if (( ! $success )); then
+		if (( ! success )); then
 			printf '%s' "$(gettext "FAILED")" >&2
 			case "$status" in
 				"missingkey")
@@ -1686,7 +1686,7 @@ run_function() {
 			local i=1
 			while true; do
 				if [[ -f $BUILDLOG.$i ]]; then
-					i=$(($i +1))
+					i=$((i +1))
 				else
 					break
 				fi

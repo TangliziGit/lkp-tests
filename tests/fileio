@@ -51,7 +51,7 @@ prepare_fallocate()
 run()
 {
 	# permit more files open in system
-	ulimit -n $(($filenum + 2048))
+	ulimit -n $((filenum + 2048))
 	log_cmd sysbench fileio ${args} run
 }
 

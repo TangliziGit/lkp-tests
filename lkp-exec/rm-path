@@ -114,7 +114,7 @@ while getopts "y" opt; do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 for path; do
 	path=$(abs_path "$path")

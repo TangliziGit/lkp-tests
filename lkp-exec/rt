@@ -39,7 +39,7 @@ do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 [[ $opt_date =~ [0-9]+d$ ]] && opt_date=${opt_date%d}
 [[ $opt_date =~ [0-9]+w$ ]] && opt_date=$((${opt_date%w} * 7))

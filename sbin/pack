@@ -58,7 +58,7 @@ do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 BM_NAME=$1
 LINK_NAME=$BM_NAME
 [[ $BM_NAME ]] || usage

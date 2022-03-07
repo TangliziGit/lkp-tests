@@ -17,7 +17,7 @@
 
 if [ -z "$runtime" ]
 then
-	runtime=$(( $iterations * 120))
+	runtime=$(( iterations * 120))
 fi
 
 rtcwake_file=/sys/class/rtc/rtc0/wakealarm
@@ -76,7 +76,7 @@ do
 		[ $? -eq 0 ] && break
 		echo network not ready
 		echo network not ready >> $log_file
-		retry=$(($retry - 1))
+		retry=$((retry - 1))
 		[ $retry -eq 0 ] && break
 	done
 

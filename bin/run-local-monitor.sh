@@ -46,7 +46,7 @@ do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 job_script=$1
 [ -n "$job_script" ] || usage
 [[ $job_script =~ '/'  ]] || {

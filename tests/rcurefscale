@@ -24,7 +24,7 @@ args=""
 # 384 cpus cost 950 seconds
 duration=300
 if [ $nr_threads ]; then
-	cpu_duration=$(($nr_threads * 3))
+	cpu_duration=$((nr_threads * 3))
 	[ $cpu_duration -gt 300 ] && duration=$cpu_duration
 	[ $cpu_duration -gt 1800 ] && duration=1800
 fi

@@ -26,7 +26,7 @@ then
 	while [ -d /sys/devices/system/cpu/cpu0/cpuidle/state$cstate ]
 	do
 		fb_list="$fb_list $cstate"
-		cstate=$(($cstate + 1))
+		cstate=$((cstate + 1))
 	done
 
 fi
