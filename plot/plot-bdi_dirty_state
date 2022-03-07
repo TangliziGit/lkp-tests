@@ -89,7 +89,7 @@ do
 
 	plot $trace-$bdi -$bdi
 	plot $trace-$bdi-300 -$bdi-300
-	let n=n+1
+	(( n=n+1 ))
 	[[ $n -ge 3 ]] && break
 done
 
