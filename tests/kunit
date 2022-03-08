@@ -6,7 +6,7 @@ test_array=("bitfield_kunit" "cmdline_kunit" "ext4-inode-test" "kunit" "mptcp_cr
 
 run_kunit_tests()
 {
-	for i in "${test_array[@]}"; do
+	for i in ${test_array[@]}; do
 		log_cmd modprobe $i
 		log_cmd rmmod $i
 	done
