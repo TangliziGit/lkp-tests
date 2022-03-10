@@ -164,7 +164,7 @@ test_setting()
 		export P11_USER_PWD="HELLO7"
 		export NEW_P11_USER_PWD="HELLO8"
 		;;
-	ltp-aiodio.part[24]|dio-0*|io)
+	ltp-aiodio.part[24]-0*|dio-0*|io)
 		specify_tmpdir || exit
 		;;
 	syscalls-ipc-msgstress)

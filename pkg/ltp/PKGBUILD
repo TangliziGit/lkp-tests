@@ -196,6 +196,12 @@ split_tests()
 	$LKP_SRC/tools/split-tests scsi_debug.part1 4 scsi_debug.part1-
 	hide scsi_debug.part1
 
+	$LKP_SRC/tools/split-tests ltp-aiodio.part2 2 ltp-aiodio.part2-
+	hide ltp-aiodio.part2
+
+	$LKP_SRC/tools/split-tests ltp-aiodio.part4 2 ltp-aiodio.part4-
+	hide ltp-aiodio.part4
+
 	# net_stress.appl
 	grep "ssh" net_stress.appl > net_stress.appl-ssh || return
 	grep "dns" net_stress.appl > net_stress.appl-dns || return
