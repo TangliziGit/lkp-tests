@@ -8,6 +8,7 @@ require 'set'
 require 'fileutils'
 require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/log"
+require "#{LKP_SRC}/lib/lkp_path"
 
 MIN_MSG_LEN = 18
 
@@ -139,7 +140,7 @@ count = {}
 nr_too_short = 0
 nr_line_short = 0
 
-kmsg_denylist = File.read(File.join(LKP_SRC, 'etc', 'kmsg-denylist')).split "\n"
+kmsg_denylist = File.read(LKP::Path.src('etc', 'kmsg-denylist')).split "\n"
 
 `git grep -A1 -E '(#{PRINTK_PATTERNS})' #{options[:kernel]} -- #{DIRS_TO_GREP} | grep -o '".*"'`.each_line do |line|
   line = line[1..-3]
