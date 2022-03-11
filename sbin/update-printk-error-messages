@@ -124,6 +124,7 @@ OptionParser.new do |opts|
   end
 
   opts.on('--output file', 'output path') { |f| options[:output] = f }
+  opts.on('--kernel', 'kernel version') { |k| options[:kernel] = k }
 
   opts.on_tail('-h', '--help', 'show this message') do
     puts opts
@@ -140,7 +141,7 @@ nr_line_short = 0
 
 kmsg_denylist = File.read(File.join(LKP_SRC, 'etc', 'kmsg-denylist')).split "\n"
 
-`git grep -A1 -E '(#{PRINTK_PATTERNS})' -- #{DIRS_TO_GREP} | grep -o '".*"'`.each_line do |line|
+`git grep -A1 -E '(#{PRINTK_PATTERNS})' #{options[:kernel]} -- #{DIRS_TO_GREP} | grep -o '".*"'`.each_line do |line|
   line = line[1..-3]
   next if line =~ /"/
 
