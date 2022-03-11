@@ -185,7 +185,7 @@ end
 FileUtils.mkdir_p(Dir.dirname(options[:output]))
 
 File.open(options[:output], 'w') do |file|
-  file.puts errids.to_a
+  file.puts errids.to_a.sort
 end
 
 if $opt_verbose
