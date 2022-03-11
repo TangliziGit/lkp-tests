@@ -10,7 +10,7 @@ require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/log"
 
 MIN_MSG_LEN = 18
-OUTPUT_FILE = "#{KTEST_USER_GENERATED_DIR}/printk-error-messages".freeze
+
 DIRS_TO_GREP = 'arch block crypto drivers firmware fs include init ipc kernel lib mm net security sound virt'.freeze
 PRINTK_PATTERNS = %w(
   KERN_EMERG
@@ -111,6 +111,8 @@ PRINTK_PATTERNS = %w(
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
+options = {}
+
 OptionParser.new do |opts|
   opts.banner = 'Usage: update-printk-error-messages [-v] [-h]'
 
@@ -121,11 +123,15 @@ OptionParser.new do |opts|
     $opt_verbose = true
   end
 
+  opts.on('--output file', 'output path') { |f| options[:output] = f }
+
   opts.on_tail('-h', '--help', 'show this message') do
     puts opts
     exit
   end
 end.parse!
+
+options[:output] ||= File.join(Dir.tmpdir, 'printk-error-messages')
 
 errids = Set.new
 count = {}
@@ -175,9 +181,9 @@ kmsg_denylist = File.read(File.join(LKP_SRC, 'etc', 'kmsg-denylist')).split "\n"
   end
 end
 
-FileUtils.mkdir_p(KTEST_USER_GENERATED_DIR)
+FileUtils.mkdir_p(Dir.dirname(options[:output]))
 
-File.open(OUTPUT_FILE, 'w') do |file|
+File.open(options[:output], 'w') do |file|
   file.puts errids.to_a
 end
 
