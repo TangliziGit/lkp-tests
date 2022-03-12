@@ -125,7 +125,7 @@ OptionParser.new do |opts|
   end
 
   opts.on('--output file', 'output path') { |f| options[:output] = f }
-  opts.on('--kernel', 'kernel version') { |k| options[:kernel] = k }
+  opts.on('--kernel kernel', 'kernel version') { |k| options[:kernel] = k }
 
   opts.on_tail('-h', '--help', 'show this message') do
     puts opts
@@ -183,7 +183,7 @@ kmsg_denylist = File.read(LKP::Path.src('etc', 'kmsg-denylist')).split "\n"
   end
 end
 
-FileUtils.mkdir_p(Dir.dirname(options[:output]))
+FileUtils.mkdir_p(File.dirname(options[:output]))
 
 File.open(options[:output], 'w') do |file|
   file.puts errids.to_a.sort
