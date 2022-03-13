@@ -213,3 +213,84 @@ File: /fs/scratch/file PID:
 toshiba: not a supported Toshiba laptop
 leds_apu: No PC Engines APUv1 board detected
 disabled by BIOS
+  ActivityState =                                                                                                                                                              [82/1969]
+ : Bad Header Length
+ SecondaryExec=
+ already in use
+ already in use!
+ callbacks suppressed
+ failed to register
+ failed to register (
+ is already running
+ qualification=
+ register failed 
+ register failed.
+ register failed: 
+) attempted a POSIX timer syscall 
+) failed to register, 
+*** Control State ***
+*** Guest State ***
+, calibration failed!
+, irqs_disabled(): 
+3ware Storage Controller device driver for Linux v
+: Config bitmap uninitialized
+: No default platform config file found
+: Please update your BIOS to support active channels
+: a legacy watchdog module is probably present.
+: calibration failed
+: cannot allocate 
+: cannot grant exclusive access for device 
+: enable CONFIG_FB_LITTLE_ENDIAN to 
+: failed to register 
+: insufficient parameters supplied
+: journal block not found 
+: misc_register failed
+: misc_register failed 
+: recovery action for 
+: register failed 
+ACPI BIOS Error (bug): 
+APIC calibration not consistent 
+APIC: NR_CPUS/possible_cpus limit of 
+Aborting journal on device 
+Buffer I/O error on dev 
+DRHD: handling fault status reg 
+Falling back to sysfs fallback for: 
+HPET/PMTIMER calibration failed
+IDTVectoring: info=
+Loaded IR protocol module                                                                                                                                                      [38/1969]
+Optimal transfer size 
+Page cache invalidation failure on direct I/O.  Possible data corruption due to collision with buffered I/O!
+TSC_DEADLINE disabled due to Errata; 
+Unable to calibrate against PIT
+VMEntry: intr_info=
+VMExit: intr_info=
+Virtual processor ID = 0x
+calibration failed
+crypto_comp_decompress failed, ret = 
+error getting hardware information
+failed to register
+failed to register 
+failed to register misc dev: 
+failed to register misc device
+failed to register misc device!
+failed to register: 
+find_next_and_bit:  
+hrtimer: interrupt took 
+insufficient parameters supplied
+loop: Write error at byte offset 
+misc_register failed
+rejecting I/O to dead device
+sendbytes: NAK bailout.
+support this framebuffer
+while CONFIG_POSIX_TIMERS is not set
+workqueue: round-robin CPU selection forced, expect performance impact
+Unexpected SPCR Access Width.  Defaulting to byte size
+: Failed to get platform config, falling back to sub-optimal default file
+' is NAND, please consider using UBI block devices instead.
+ignoring the deprecated load_ramdisk= option
+:  Start-test grace-period state: g
+: Callback-invocation histogram 
+ has no spi_device_id for 
+: Starting forward-progress test 
+mem_dump_obj(vmalloc 
+mem_dump_obj(kmalloc
