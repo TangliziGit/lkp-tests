@@ -48,7 +48,7 @@ while (line = $stdin.gets)
 
     subtest_name = $1
     has_dynamic_subtest = false
-  when /Subtest (.+): (SUCCESS|FAIL|CRASH|SKIP)/
+  when /(^|\[.*\] )Subtest (.+): (SUCCESS|FAIL|CRASH|SKIP)/
     # [thread:4146] Subtest thread-performance-write: CRASH (0.580s)
     #
     # Subtest invalid-buffer: SUCCESS (0.000s)
@@ -80,8 +80,8 @@ while (line = $stdin.gets)
     # Subtest pipe-D-64x64-left-edge: SKIP
     # Subtest pipe-D-64x64-right-edge: SKIP
     # Subtest pipe-D-64x64-top-edge: SKIP
-    if subtest_name != $1 && $2 != 'SKIP'
-      log_warn "subtest_name [#{subtest_name}] != $1 [#{$1}]"
+    if subtest_name != $2 && $3 != 'SKIP'
+      log_warn "subtest_name [#{subtest_name}] != $2 [#{$2}]"
       exit 1
     end
 
@@ -105,9 +105,9 @@ while (line = $stdin.gets)
       # 2022-01-27 19:24:10 build/tests/i915_pm_rps --run-subtest waitboost
       # Subtest waitboost: FAIL (1.258s)
       # (i915_pm_rps:1623) igt_core-INFO: Subtest waitboost: FAIL (1.258s)
-      stats.add "#{test_name}.#{$1}", $2 unless stats.key? "#{test_name}.#{$1}"
+      stats.add "#{test_name}.#{$2}", $3 unless stats.key? "#{test_name}.#{$2}"
     else
-      stats.add "#{test_name}.#{$1}", $2
+      stats.add "#{test_name}.#{$2}", $3
     end
   when /^Dynamic subtest (.*): (SUCCESS|FAIL|CRASH)/
     # a 'dynamic subtest' is such like a 2nd level subtest under 'subtest' as below
