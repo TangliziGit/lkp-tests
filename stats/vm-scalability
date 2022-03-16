@@ -65,19 +65,15 @@ add_one_sample(kbps_fault, throughput_fault, median_fault, ret)
 exit if throughput.empty?
 
 def cal_stddev(throughput, kbps)
-  if throughput.size > 1
-    return throughput.standard_deviation / throughput.average
-  else
-    return kbps.standard_deviation * kbps.size / kbps.average
-  end
+  return throughput.standard_deviation / throughput.average if throughput.size > 1
+
+  kbps.standard_deviation * kbps.size / kbps.average
 end
 
 def cal_median_stddev(median)
-  if median.size > 1
-    return median.standard_deviation / median.average
-  else
-    return 0
-  end
+  return median.standard_deviation / median.average if median.size > 1
+
+  0
 end
 
 # Relative standard deviation
@@ -96,7 +92,7 @@ printf "median: %d\n", median.average
 printf "median_stddev%%: %g\n", median_stddev * 100
 printf "workload: %.2f\n", bytes.to_f / 1024
 
-if !throughput_fault.empty?
+unless throughput_fault.empty?
   printf "throughput_fault: %d\n", throughput_fault.average
   stddev = cal_stddev(throughput_fault, kbps_fault)
   printf "stddev_fault%%:   %g\n", stddev * 100
