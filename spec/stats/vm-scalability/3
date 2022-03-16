@@ -1,0 +1,28 @@
+2022-02-28 13:52:50  ./case-truncate-seq
+2022-02-28 13:52:50  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-1 -s 4196614144
+2022-02-28 13:52:51  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-2 -s 4196614144
+2022-02-28 13:52:52  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-3 -s 4196614144
+2022-02-28 13:52:52  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-4 -s 4196614144
+16786456576 bytes faulted in 1646027573.516036361-1646027570.635570483 seconds
+16786456576 bytes truncated in 1646027574.142081742-1646027573.516504878 seconds
+2022-02-28 13:52:54  ./case-truncate-seq
+2022-02-28 13:52:54  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-1 -s 4196614144
+2022-02-28 13:52:54  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-2 -s 4196614144
+2022-02-28 13:52:55  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-3 -s 4196614144
+2022-02-28 13:52:56  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-4 -s 4196614144
+16786456576 bytes faulted in 1646027577.027223050-1646027574.148343690 seconds
+16786456576 bytes truncated in 1646027577.651759096-1646027577.027642165 seconds
+2022-02-28 13:52:57  ./case-truncate-seq
+2022-02-28 13:52:57  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-1 -s 4196614144
+2022-02-28 13:52:58  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-2 -s 4196614144
+2022-02-28 13:52:59  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-3 -s 4196614144
+2022-02-28 13:52:59  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-4 -s 4196614144
+16786456576 bytes faulted in 1646027580.502602157-1646027577.657867507 seconds
+16786456576 bytes truncated in 1646027581.125493812-1646027580.503061699 seconds
+2022-02-28 13:53:01  ./case-truncate-seq
+2022-02-28 13:53:01  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-1 -s 4196614144
+2022-02-28 13:53:01  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-2 -s 4196614144
+2022-02-28 13:53:02  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-3 -s 4196614144
+2022-02-28 13:53:03  truncate /tmp/vm-scalability-tmp/vm-scalability/sparse-truncate-seq-4 -s 4196614144
+16786456576 bytes faulted in 1646027584.000497182-1646027581.132119750 seconds
+16786456576 bytes truncated in 1646027584.643722282-1646027584.002294114 seconds
