@@ -485,3 +485,38 @@ def ignore_lkdtm_dmesg?(result_root)
 
   File.foreach(last_state).grep(/^is_incomplete_run: 1/).empty?
 end
+
+def stat_unittest(unittests)
+  found_unitest = false
+  unittests.each do |line|
+    if line =~ /### dt-test ### start of unittest/
+      found_unitest = true
+      next
+    end
+
+    next unless found_unitest
+    break if line =~ /### dt-test ### end of unittest - (\d+) passed, (\d+) failed/
+
+    # ### dt-test ### FAIL of_unittest_overlay_high_level():2475 overlay_base_root not initialized
+    if line =~ /(.*)### dt-test ### FAIL (.*)/
+      e = $2.gsub(/:|\d+/, '').gsub(' ', '_')
+      puts "unittest.#{e}.fail: 1"
+    end
+  end
+end
+
+# check possibly misplaced serial log
+def verify_serial_log(dmesg_lines)
+  return unless $PROGRAM_NAME =~ /dmesg/
+  return if RESULT_ROOT.nil? || RESULT_ROOT.empty?
+
+  dmesg_lines.grep(/RESULT_ROOT=/) do |line|
+    next if line =~ /(^|[0-9]\] )kexec -l | --initrd=| --append=|"$/
+    next unless line =~ / RESULT_ROOT=([A-Za-z0-9.,;_\/+%:@=-]+) /
+
+    rt = $1
+    next unless Dir.exist? rt # serial console is often not reliable
+
+    log_error "RESULT_ROOT mismatch in dmesg: #{RESULT_ROOT} #{rt}" if rt != RESULT_ROOT
+  end
+end
