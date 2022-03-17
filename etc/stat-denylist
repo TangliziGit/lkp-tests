@@ -121,6 +121,13 @@
 ^kmsg.veth[0-9]*:Failed_to_cycle_device_veth
 ^kmsg.Writes:Total:#Max/Min:#Fail
 ^kmsg\.rcu_torture_fwd_prog_nr:\#Duration\#cver\#gps
+^kmsg\.mem_dump_obj\(\#\):\#\-page_vmalloc_region_starting_at\#allocated_at_copy_process
+^kmsg\.test_bitmap:bitmap_print_to_pagebuf:input_is
+^kmsg\.Hardware_name:Dell_Inc\.OptiPlex\#/\#DNKMN,BIOS_A05
+^kmsg\.Hardware_name:HP_HP_Z238_Microtower_Workstation,BIOS_N51_Ver
+^kmsg\.Hardware_name:Dell_Inc\.OptiPlex\#/\#Y7WYT,BIOS
+^kmsg\.blk_update_request:I/O_error,dev_fd\#,sector\#op\#:\(READ\)flags\#phys_seg\#prio_class
+^kmsg\.mem_dump_obj\(\#\):slab
 ^kvm-unit-tests-qemu\.apic
 ^last_state\..+\.exit_code
 ^last_state\.running

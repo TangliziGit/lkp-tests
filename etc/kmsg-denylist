@@ -294,3 +294,11 @@ ignoring the deprecated load_ramdisk= option
 : Starting forward-progress test 
 mem_dump_obj(vmalloc 
 mem_dump_obj(kmalloc
+mem_dump_obj(NULL):
+mem_dump_obj(ZERO_SIZE_PTR):
+hgafb: HGA card not detected.
+: no device found
+Kernel not compiled with retpoline; no mitigation available!
+FAIL (uninit bytes: 
+skipping plain 'p' tests
+Motherboard not recognized (You could try the module's force-parameter)
