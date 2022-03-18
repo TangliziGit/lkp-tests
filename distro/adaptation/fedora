@@ -84,6 +84,7 @@ libhwloc-dev: hwloc-devel
 libiberty-dev: binutils-devel
 libibverbs-dev: libibverbs-devel
 libjson-c-dev: json-c-devel
+libjpeg-dev: libjpeg-turbo-devel
 libklibc-dev:
 libkmod2: kmod-libs
 libkmod-dev: kmod-devel
