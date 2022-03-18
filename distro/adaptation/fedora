@@ -189,6 +189,7 @@ libunwind8: libunwind
 libipc-run-perl: perl-IPC-Run
 libapparmor1:
 libapparmor-dev:
+libasound2-dev: alsa-lib-devel
 libbsd0: libbsd
 libbsd-dev: libbsd-devel
 libgcrypt20: libgcrypt
