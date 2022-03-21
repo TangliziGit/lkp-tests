@@ -3,3 +3,6 @@ owner: Miguel Ojeda <ojeda@kernel.org>
 branch_allowlist: rust|rust-next
 branch_denylist: .*
 notify_build_success_branch: .*
+mail_cc:
+- Miguel Ojeda <ojeda@kernel.org>
+- Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
