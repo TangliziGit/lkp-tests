@@ -21,7 +21,12 @@ fi
 
 if [ -z "$interval" ]; then
 	case $file in
-		*)		interval=1  ;;
+		memory.numa_stat)
+			interval=10
+			;;
+		*)
+			interval=1
+			;;
 	esac
 fi
 
