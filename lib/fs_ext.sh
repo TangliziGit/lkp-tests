@@ -48,7 +48,7 @@ start_o2cb()
 	# Usage: /etc/init.d/o2cb {start|stop|status|restart|try-restart|force-reload}
 	o2cb remove-cluster ocfs2single >/dev/null 2>&1
 	o2cb add-cluster ocfs2single || return
-	o2cb add-node --ip 127.0.0.1 --port 7777 --number 1 ocfs2single `hostname` || return
+	o2cb add-node --ip 127.0.0.1 --port 7777 --number 1 ocfs2single $(hostname) || return
 	o2cb register-cluster ocfs2single || return
 	o2cb start-heartbeat ocfs2single || return
 	service o2cb force-reload || return

@@ -15,7 +15,7 @@ if [ $file = 'vmstat' ]; then
 	}
 fi
 
-NODES=`grep ^Node /proc/zoneinfo | awk '{print $2}' | sed -e 's/,//' | sort | uniq`
+NODES=$(grep ^Node /proc/zoneinfo | awk '{print $2}' | sed -e 's/,//' | sort | uniq)
 while :
 do
 	echo time: $(date +%s.%N)

@@ -9,6 +9,6 @@
 
 # yay not support root to build package
 # Use regular user to do this
-regular_user=`grep 1000 /etc/passwd | awk -F':' '{ print $1 }'`
+regular_user=$(grep 1000 /etc/passwd | awk -F':' '{ print $1 }')
 
 sudo -u $regular_user yay -S --noconfirm --needed $*

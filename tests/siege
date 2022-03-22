@@ -69,7 +69,7 @@ spinner = true
 unique = true
 EOF
 
-for ITER in `seq 1 $iterations`; do
+for ITER in $(seq 1 $iterations); do
 	log_cmd siege -b -t ${iter_time}s \
 			-c $nr_threads \
 			http://localhost/siege.html 2>&1

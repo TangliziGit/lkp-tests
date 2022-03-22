@@ -3,8 +3,8 @@
 total_time=0
 while read line
 do
-	utime=`echo $line| cut -d " " -f 14`
-	stime=`echo $line| cut -d " " -f 15`
+	utime=$(echo $line| cut -d " " -f 14)
+	stime=$(echo $line| cut -d " " -f 15)
 	total_time=$((total_time + utime + stime))
 	[ $utime -gt 0 ] && echo $line
 done

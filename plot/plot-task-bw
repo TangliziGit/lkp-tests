@@ -3,7 +3,7 @@
 plot_lines() {
 	colors=(red gold web-blue cyan magenta slategray)
 	echo -n plot
-	for i in `seq 0 5`
+	for i in $(seq 0 5)
 	do
 		[[ -f task-bw-${dd[$i]}$suffix ]] || break
 		[[ $i != 0 ]] && echo -n ,

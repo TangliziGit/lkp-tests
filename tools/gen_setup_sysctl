@@ -4,9 +4,9 @@ output=$LKP_SRC/setup/sysctl
 echo "#!/bin/sh" > $output
 
 # params
-for i in `find /proc/sys -maxdepth 2 -type f |sort -u`
+for i in $(find /proc/sys -maxdepth 2 -type f |sort -u)
 do
-	j=`basename $i | sed -r 's/-/_/g'`
+	j=$(basename $i | sed -r 's/-/_/g')
 	echo "# - sc_$j" >> $output
 done
 
@@ -17,9 +17,9 @@ cat >> "$output" <<EOF
 EOF
 
 # set
-for i in `find /proc/sys -maxdepth 2 -type f| sort -u`
+for i in $(find /proc/sys -maxdepth 2 -type f| sort -u)
 do
-	j=`basename $i | sed -r 's/-/_/g'`
+	j=$(basename $i | sed -r 's/-/_/g')
 	cat >> $output << EOF
 [ -n "\$sc_$j" ] && log_eval "echo '\$sc_$j' > '$i'"
 EOF

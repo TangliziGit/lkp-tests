@@ -186,7 +186,7 @@ for storage in $storages; do
 		storage_setup="directory=$storage"
 	fi
         if [ "$ioengine" = "sg" ]; then
-                dev_src=`findmnt $storage -no source`
+                dev_src=$(findmnt $storage -no source)
                 storage_setup="filename=$dev_src\nallow_mounted_write=1"
         fi
 	create_task="\

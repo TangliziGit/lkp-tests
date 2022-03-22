@@ -71,7 +71,7 @@ set_repeat_count()
 	echo "repeat count: $repeat"
 }
 
-cur=`date +%s`
+cur=$(date +%s)
 
 if [ -n "$size" ]; then
 	set_repeat_count
@@ -79,7 +79,7 @@ if [ -n "$size" ]; then
 	do
 		log_test "./case-$test"
 		[ "$i" -le "$repeat" ] && {
-			now=`date +%s`
+			now=$(date +%s)
 			[ "$((now - cur))" -gt "$runtime" ] && {
 				echo "runtime exceeded, consider adjust size configuration"
 				break
