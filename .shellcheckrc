@@ -40,3 +40,4 @@ disable=SC2125 # Brace expansions and globs are literal in assignments. Quote it
 disable=SC2090 # Quotes/backslashes in this variable will not be respected.
 disable=SC2054 # Use spaces, not commas, to separate array elements.
 disable=SC2089 # Quotes/backslashes will be treated literally. Use an array.
+disable=SC2039 # In POSIX sh, something is undefined.
