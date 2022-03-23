@@ -1,0 +1,21 @@
+time: 1647937563
+cgroup: pmbench.1
+anon N0=94208 N1=474624000 N2=0 N3=576684032
+file N0=0 N1=0 N2=0 N3=4096
+kernel_stack N0=32768 N1=16384 N2=0 N3=0
+pagetables N0=53248 N1=2146304 N2=0 N3=0
+shmem N0=0 N1=0 N2=0 N3=4096
+file_mapped N0=0 N1=0 N2=0 N3=0
+file_dirty N0=0 N1=0 N2=0 N3=0
+file_writeback N0=0 N1=0 N2=0 N3=0
+swapcached N0=0 N1=0 N2=0 N3=0
+anon_thp N0=0 N1=0 N2=0 N3=0
+file_thp N0=0 N1=0 N2=0 N3=0
+shmem_thp N0=0 N1=0 N2=0 N3=0
+inactive_anon N0=86016 N1=474607616 N2=0 N3=576675840
+active_anon N0=8192 N1=16384 N2=0 N3=0
+inactive_file N0=0 N1=0 N2=0 N3=0
+active_file N0=0 N1=0 N2=0 N3=0
+unevictable N0=0 N1=0 N2=0 N3=0
+slab_reclaimable N0=3064 N1=2424 N2=0 N3=0
+slab_unreclaimable N0=57704 N1=46624 N2=0 N3=0

@@ -1,0 +1,10 @@
+time: 1636689892
+cgroup: pmbench.1
+total=257274 N0=0 N1=143104 N2=0 N3=114170
+file=0 N0=0 N1=0 N2=0 N3=0
+anon=257274 N0=0 N1=143104 N2=0 N3=114170
+unevictable=0 N0=0 N1=0 N2=0 N3=0
+hierarchical_total=257259 N0=0 N1=143104 N2=0 N3=114155
+hierarchical_file=0 N0=0 N1=0 N2=0 N3=0
+hierarchical_anon=257259 N0=0 N1=143104 N2=0 N3=114155
+hierarchical_unevictable=0 N0=0 N1=0 N2=0 N3=0
