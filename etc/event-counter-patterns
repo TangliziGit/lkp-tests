@@ -1,0 +1,4 @@
+numa-vmstat.node[0-9]+.nr_dirtied
+numa-vmstat.node[0-9]+.nr_vmscan_immediate_reclaim
+numa-vmstat.node[0-9]+.nr_written
+numa-vmstat.node[0-9]+.numa_
