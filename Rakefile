@@ -84,4 +84,4 @@ task :shellcheck do
 end
 
 desc 'Run code check'
-task code: %i[syntax spec rubocop]
+task code: %i[syntax shellcheck rubocop spec]
