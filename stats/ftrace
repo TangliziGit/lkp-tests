@@ -45,7 +45,7 @@ def normlize_record(event, record, key_prefix_items, records)
 
   records['last_recorded_time'][key_prefix] = record['time']
 
-  records['yaml_files'][key_prefix] ||= File.new(RESULT_ROOT + '/' + "ftrace.#{key_prefix}.yaml", 'w', 0o664)
+  records['yaml_files'][key_prefix] ||= File.new("#{RESULT_ROOT}/ftrace.#{key_prefix}.yaml", 'w', 0o664)
 
   record.each do |k, v|
     next if key_prefix_items.include? k
