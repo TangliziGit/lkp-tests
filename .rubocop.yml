@@ -3,6 +3,12 @@ AllCops:
   NewCops: disable
   SuggestExtensions: false
 
+Metrics:
+  Enabled: false
+
+Style/EvalWithLocation:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
