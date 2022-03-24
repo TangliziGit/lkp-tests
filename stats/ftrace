@@ -8,7 +8,7 @@ require "#{LKP_SRC}/lib/lkp_path"
 
 RESULT_ROOT = ENV['RESULT_ROOT']
 TIME_DELTA  = YAML.load_file("#{RESULT_ROOT}/job.yaml")['time_delta'].to_f
-FMT_DIR     = "#{RESULT_ROOT}/trace_event/"
+FMT_DIR     = "#{RESULT_ROOT}/trace_event/".freeze
 
 KEY_PREFIX_MAPPING = YAML.load_file(LKP::Path.src('etc', 'ftrace_key_prefix'))
 BDI_DEV_MAPPING = YAML.load_file("#{RESULT_ROOT}/bdi_dev_mapping") if File.exist? "#{RESULT_ROOT}/bdi_dev_mapping"

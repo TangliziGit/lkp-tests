@@ -14,7 +14,7 @@ require "#{LKP_SRC}/lib/distro_info"
 require "#{LKP_SRC}/lib/install"
 require "#{LKP_SRC}/lib/constant"
 
-TMP = "#{LKP_SRC}/tmp"
+TMP = "#{LKP_SRC}/tmp".freeze
 
 if `whoami`.chomp != 'root'
   puts 'Please run as root to install packages'
