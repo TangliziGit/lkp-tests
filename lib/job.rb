@@ -74,14 +74,12 @@ def string_or_hash_key(h)
   end
 end
 
-def for_each_in(ah, set, pk = nil)
+def for_each_in(ah, set, pk = nil, &block)
   ah.each do |k, v|
     yield pk, ah, k, v if set.include?(k)
     next unless v.is_a?(Hash)
 
-    for_each_in(v, set, k) do |pk, h, k, v|
-      yield pk, h, k, v
-    end
+    for_each_in(v, set, k, &block)
   end
 end
 
@@ -450,18 +448,16 @@ class Job
     @dims_to_expand.merge @program_options.keys
   end
 
-  def expand_each_in(ah, set)
+  def expand_each_in(ah, set, &block)
     ah.each do |k, v|
       yield ah, k, v if set.include?(k) || (v.is_a?(String) && v =~ /{{(.*)}}/m)
       next unless v.is_a?(Hash)
 
-      expand_each_in(v, set) do |h, k, v|
-        yield h, k, v
-      end
+      expand_each_in(v, set, &block)
     end
   end
 
-  def each_job
+  def each_job(&block)
     expand_each_in(@job, @dims_to_expand) do |h, k, v|
       if v.is_a?(String) && v =~ /^(.*){{(.*)}}(.*)$/m
         head = $1.lstrip
@@ -474,13 +470,13 @@ class Job
                else
                  "#{head}#{expr}#{tail}"
                end
-        each_job { |job| yield job }
+        each_job(&block)
         h[k] = v
         return
       elsif v.is_a?(Array)
         v.each do |vv|
           h[k] = vv
-          each_job { |job| yield job }
+          each_job(&block)
         end
         h[k] = v
         return
@@ -638,7 +634,7 @@ class Job
     hash[key] = replace_symbol_keys(output) if output
   end
 
-  def evaluate_param(hash, _key, val, script)
+  def evaluate_param(_hash, _key, val, script)
     hash = @jobx.merge(___: val)
     expr = File.read script
     expand_expression(hash, expr, script)

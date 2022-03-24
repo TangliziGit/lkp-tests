@@ -220,13 +220,17 @@ class Job2sh < Job
 
   def parse_hash(ancestors, hash)
     nr_bg = 0
-    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_EXPORT_ENV) }
-    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_NEW_SCRIPT) }
-    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_RUN_SETUP) }
-    # run monitors after setup:
-    # monitors/iostat etc. depends on ENV variables by setup scripts
-    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_RUN_MONITORS) }
-    hash.each { |key, val| nr_bg += 1 if parse_one(ancestors, key, val, :PASS_RUN_COMMANDS) == :action_background_function }
+    hash.each do |key, val|
+      parse_one(ancestors, key, val, :PASS_EXPORT_ENV)
+      parse_one(ancestors, key, val, :PASS_NEW_SCRIPT)
+      parse_one(ancestors, key, val, :PASS_RUN_SETUP)
+
+      # run monitors after setup:
+      # monitors/iostat etc. depends on ENV variables by setup scripts
+      parse_one(ancestors, key, val, :PASS_RUN_MONITORS)
+
+      nr_bg += 1 if parse_one(ancestors, key, val, :PASS_RUN_COMMANDS) == :action_background_function
+    end
 
     # Disabled -- this will wait for the background monitors
     # started by run_monitor, while the monitors will wait for

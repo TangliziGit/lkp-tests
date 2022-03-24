@@ -73,7 +73,7 @@ module Property
       check_prop_for_set prop
     end
 
-    prop_val_list.each_slice(2) do |prop, val|
+    prop_val_list.each_slice(2) do |prop, val| # rubocop:disable Style/CombinableLoops
       send :"set_#{prop}", val
     end
   end
@@ -83,7 +83,7 @@ module Property
       check_prop_for_unset prop
     end
 
-    props.each do |prop|
+    props.each do |prop| # rubocop:disable Style/CombinableLoops
       send :"unset_#{prop}"
     end
   end

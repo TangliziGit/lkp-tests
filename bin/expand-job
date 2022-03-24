@@ -28,7 +28,7 @@ def expand_one
 
     last_item = ''
     for_each(v) { |kk, _vv| last_item = kk }
-    for_each(v) do |kk, vv|
+    for_each(v) do |kk, vv| # rubocop:disable Style/CombinableLoops
       if (vv.instance_of?(Array) || vv.instance_of?(Hash)) && vv.size > 1
         copy = deepcopy(vv)
         for_each(copy) do |kkk, _vvv|

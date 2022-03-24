@@ -108,8 +108,5 @@ end
 
 $results_total.each do |key, vals|
   puts "total_#{key}: #{vals.inject(0.0, :+)}"
-end
-
-$results_total.each do |key, vals|
   puts "avg_#{key}: #{vals.inject(0.0, :+) / vals.length}"
 end

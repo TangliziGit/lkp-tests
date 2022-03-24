@@ -258,7 +258,7 @@ class NetStater < Stater
         # TEST: IPv6 nexthop with IPv4 route                                  [ OK ]
         # TEST: IPv4 route with mixed v4-v6 multipath route                   [ OK ]
         # TEST: IPv6 nexthop with IPv4 route                                  [ OK ]
-        if @test_prefix == "net.ioam6.sh"
+        if @test_prefix == 'net.ioam6.sh'
           subcase_ioam6 = $1.strip
           subcase_stat = $2
           if subcase_ioam6 =~ /(inline mode|encap mode)/

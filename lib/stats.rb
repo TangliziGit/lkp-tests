@@ -583,9 +583,11 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
   expand_matrix(b, options)
 
   b_monitors = {}
-  b.keys.each { |k| b_monitors[stat_key_base(k)] = true }
+  b.each_key do |k|
+    b_monitors[stat_key_base(k)] = true
 
-  b.keys.each { |k| a[k] = [0] * cols_a unless a.include?(k) }
+    a[k] = [0] * cols_a unless a.include?(k)
+  end
 
   a.each do |k, v|
     log_verbose k
@@ -601,8 +603,8 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
       # base rt stats should contain 'packetdrill.packetdrill/gtests/net/tcp/mtu_probe/basic-v6_ipv6.pass'
       stat_base = k.sub(/\.[^.]*$/, '')
       # only consider pass and fail temporarily
-      next if k =~ /\.fail$/ && !b.keys.any? { |stat| stat == "#{stat_base}.pass" }
-      next if k =~ /\.pass$/ && !b.keys.any? { |stat| stat == "#{stat_base}.fail" }
+      next if k =~ /\.fail$/ && b.keys.none? { |stat| stat == "#{stat_base}.pass" }
+      next if k =~ /\.pass$/ && b.keys.none? { |stat| stat == "#{stat_base}.fail" }
     end
 
     is_allowed_stat = false

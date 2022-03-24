@@ -372,7 +372,7 @@ def setup_changed_stats
       matrix2 = load_json matrix_file2
       expand_matrix(matrix2, 'stat' => $opt_field)
       $all_index.each do |stat, weight|
-        next if stat.index('iostat\.') && !(k =~ /\/(dd-write)\//)
+        next if stat.index('iostat\.') && k !~ /\/(dd-write)\//
 
         avg1 = get_valid_average matrix1, stat
         next unless avg1
@@ -584,7 +584,7 @@ def show_test_group(key)
   end
 
   puts
-  $dims.keys.each do |dim|
+  $dims.each_key do |dim|
     width = (dim == $first_dim ? ABS_WIDTH + ERR_WIDTH : REL_WIDTH + ABS_WIDTH + ERR_WIDTH)
     printf "#{'-' * width}  "
   end
@@ -630,7 +630,7 @@ def show_delta(stat, key_g)
   is_latency = latency_stat?(stat)
 
   dims = []
-  $cases.values.each { |v| dims += v.keys }
+  $cases.each_value { |v| dims += v.keys }
   if dims.uniq.size == 1
     puts "error: same dim #{dims.first} used, please use -d/--dimension"
     exit 1
@@ -669,7 +669,7 @@ def show_delta(stat, key_g)
       puts 'testcase/testparams/testbox'
     end
 
-    $dims.keys.each do |dim|
+    $dims.each_key do |dim|
       width = (dim == $first_dim ? ABS_WIDTH + ERR_WIDTH : REL_WIDTH + ABS_WIDTH + ERR_WIDTH)
       printf "#{'-' * width}  "
     end
@@ -682,11 +682,11 @@ def show_delta(stat, key_g)
     value.each do |_k, v|
       case v
       when Array
-        v.each { |vv| is_float = true if vv.abs < 100 && vv != 0 && vv.is_a?(Float) }
-        v.each { |vv| is_exp   = true if vv.abs >= 100_000_000 }
+        is_float = v.any? { |vv| is_float = true if vv.abs < 100 && vv != 0 && vv.is_a?(Float) }
+        is_exp = v.any? { |vv| vv.abs >= 100_000_000 }
       else
         is_float = true if v.abs < 100 && v != 0 && v.is_a?(Float)
-        is_exp   = true if v.abs >= 100_000_000
+        is_exp = true if v.abs >= 100_000_000
       end
     end
   end
@@ -698,12 +698,12 @@ def show_delta(stat, key_g)
     result_path.parse_result_root(_rt)
     test = result_path.test_desc $opt_dimension, $dim_not_a_param
 
-    next if $group_by_test && !(test == key_g)
+    next if $group_by_test && test != key_g
 
     show_header(is_fail) unless $header_shown[is_fail]
 
     v0, v0_stddev = get_v_and_stddev value, $first_dim, is_fail
-    $dims.each do |dim, v|
+    $dims.each do |dim, _v|
       v, v_stddev = get_v_and_stddev value, dim, is_fail
 
       show_one_diff stat, dim, v0, v, v0_stddev, v_stddev, is_float, is_exp, is_fail

@@ -20,8 +20,8 @@ def event_counter?(name)
     return true if name.index(prefix) == 0
   end
   $event_counter_patterns ||= load_regular_expressions("#{LKP_SRC_ETC}/event-counter-patterns")
-  return true if name =~ $event_counter_patterns
-  false
+
+  name =~ $event_counter_patterns
 end
 
 def independent_counter?(name)

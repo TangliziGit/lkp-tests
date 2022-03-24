@@ -53,11 +53,11 @@ def get_array_result(prefix, array, results)
   array.each do |item|
     next unless item.instance_of?(Hash)
 
-    key_0, value_0 = item.first
+    key0, value0 = item.first
     item.each_key do |k_|
-      next if k_ == key_0
+      next if k_ == key0
 
-      key = "#{prefix}.#{value_0}.#{k_}"
+      key = "#{prefix}.#{value0}.#{k_}"
       key = "#{key}%" if prefix == 'cpu-load'
       results[key] = item[k_]
     end

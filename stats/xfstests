@@ -30,24 +30,6 @@ while (line = $stdin.gets)
   when /^#{TEST_PATTERN}\s+(\d+)s/
     # btrfs/011        3434s
     stats.add "#{$1}.#{$2}", 'pass'
-  # Ran: ext4/001 ext4/003 ext4/005 ext4/007 ext4/010 ext4/012 ext4/014 ext4/016 ext4/018 ext4/020 ext4/022 ext4/024 ext4/026
-  # Failures: ext4/007 ext4/045
-  # Not run: xfs/161 xfs/426
-  # Above summarized lines only occur once in the end, which will be used to check
-  # possible logic issue. And use detail line to analyze test status, in case the
-  # summarized line is not existed due to issue like soft timeout or panic
-
-  when /^Ran: (.*)/
-    # Ran includes all the cases no matter it is 'pass', 'fail' or 'skip'
-    # Cannot merge with next 'when'
-    # because in 'Ran' case don't need stats_type and shouldn't call select method
-    summary_ran_cases = $1.tr('/', '.').split
-    stats_ran_cases = stats.select { |_key, value| value != 'expunged' }.keys
-  when /^(Failures|Not run): (.*)/
-    stats_type = $1.include?('Failures') ? 'fail' : 'skip'
-    summary_cases = $2.tr('/', '.').split
-    stats_cases = stats.select { |_key, value| value == stats_type }.keys
-    # select method will return an empty hash when there is no matched value, won't return nil
   end
 end
 

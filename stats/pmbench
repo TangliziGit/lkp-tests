@@ -97,7 +97,7 @@ percentiles = percentile_strs.map(&:to_f)
   pi = 0
   hist_cum = 0
   (0..23).each do |i|
-    next if sum == 0.0
+    next if sum == 0.0 # rubocop:disable Lint/FloatComparison
 
     res = histo[i] / sum * 100
     gen_output(mode, i, res)

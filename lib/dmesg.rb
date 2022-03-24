@@ -29,7 +29,7 @@ def fixup_dmesg(line)
   # break up mixed messages
   case line
   when /^<[0-9]>|^(kern  |user  |daemon):......: /
-    line = line
+    # line keeps no change
   when /(.+)(\[ *[0-9]{1,6}\.[0-9]{6}\] .*)/
     line = "#{$1}\n#{$2}"
   end

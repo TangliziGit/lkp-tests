@@ -15,9 +15,9 @@ LKP_SRC_ETC ||= LKP::Path.src('etc')
 
 module Gnuplot
   # fallback to v2.4.1 to avoid circular dependency and potential dead lock
-  def self.open(persist = true)
+  def self.open(persist = true, &block)
     (cmd = Gnuplot.gnuplot(persist)) || raise('gnuplot not found')
-    IO.popen(cmd, 'w') { |io| yield io }
+    IO.popen(cmd, 'w', &block)
   end
 end
 

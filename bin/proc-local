@@ -57,7 +57,7 @@ rescue StandardError
 end
 
 _result_root = job._result_root
-if ! $not_unite && _result_root != File.dirname(result_root)
+if !$not_unite && _result_root != File.dirname(result_root)
   log_warn "_rt doesn't match rt: #{_result_root} vs. #{result_root}"
   exit 1
 end
