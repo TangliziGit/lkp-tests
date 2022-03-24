@@ -87,6 +87,10 @@ Security/YAMLLoad:
 Style/FormatStringToken:
   Enabled: false
 
+Style/FloatDivision:
+  Exclude:
+    - 'stats/pmbench'
+
 Naming/AccessorMethodName:
   Exclude:
     - 'lib/compare.rb'
