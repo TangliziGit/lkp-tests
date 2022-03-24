@@ -87,6 +87,14 @@ Security/YAMLLoad:
 Style/FormatStringToken:
   Enabled: false
 
+Naming/AccessorMethodName:
+  Exclude:
+    - 'lib/compare.rb'
+    - 'lib/data_store.rb'
+    - 'lib/nresult_root.rb'
+    - 'lib/property.rb'
+    - 'lib/result_root.rb'
+
 Naming/MethodParameterName:
   Enabled: false
 
