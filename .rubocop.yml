@@ -105,5 +105,3 @@ Naming/MethodParameterName:
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
-Layout/HeredocIndentation:
-  Enabled: false
