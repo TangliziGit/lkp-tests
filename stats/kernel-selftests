@@ -683,7 +683,11 @@ class NetfilterStater < Stater
       stats.add "#{@test_prefix}.#{$2}_#{$3}", $1 unless stats.key? "#{@test_prefix}.#{$2}_#{$3}"
     when /^# (PASS|FAIL|SKIP): (.*)/
       # PASS: ipsec tunnel mode for ns1/ns2
-      stats.add "#{@test_prefix}.#{$2}", $1
+
+      # 46 # selftests: netfilter: nft_flowtable.sh
+      # 52 # FAIL: file mismatch for ns1 -> ns2
+      # 78 # FAIL: file mismatch for ns1 -> ns2
+      stats.add "#{@test_prefix}.#{$2}", $1 unless stats.key? "#{@test_prefix}.#{$2}"
     else
       super(line, stats)
     end

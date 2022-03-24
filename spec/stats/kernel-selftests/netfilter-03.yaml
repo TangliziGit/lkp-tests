@@ -1,0 +1,3 @@
+netfilter.nft_flowtable.sh.file_mismatch_for_ns1_->_ns2.fail: 1
+netfilter.nft_flowtable.sh.file_mismatch_for_ns1_<-_ns2.fail: 1
+netfilter.nft_flowtable.sh.fail: 1
