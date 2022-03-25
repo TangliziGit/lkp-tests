@@ -80,7 +80,9 @@ task :shellcheck do
   base_cmd = "shellcheck -S warning -f #{format}"
   base_cmd += " -i #{ENV['code']}" if ENV['code']
 
-  bash "#{base_cmd} #{executables} || echo"
+  bash "#{base_cmd} #{executables}"
+
+  puts 'shellcheck OK'
 end
 
 desc 'Run code check'
