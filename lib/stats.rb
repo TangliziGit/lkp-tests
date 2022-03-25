@@ -827,7 +827,7 @@ def add_stats_to_matrix(stats, matrix)
   matrix
 end
 
-def matrix_from_stats_files(stats_files, add_source = true, stats_field = nil)
+def matrix_from_stats_files(stats_files, stats_field = nil, add_source: true)
   matrix = {}
   stats_files.each do |stats_file|
     stats = load_json stats_file

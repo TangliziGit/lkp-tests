@@ -269,7 +269,7 @@ def add_stats(path)
   end
 
   result_path = ResultPath.new
-  return unless result_path.parse_result_root(File.realpath(path), local_run?)
+  return unless result_path.parse_result_root(File.realpath(path), is_local_run: local_run?)
 
   if $dim_not_a_param
     dim = result_path[$opt_dimension]
@@ -510,7 +510,7 @@ def setup_dims
   end
 end
 
-def show_one_diff(stat, dim, v0, v, v0_stddev, v_stddev, is_float, is_exp, is_fail = false)
+def show_one_diff(stat, dim, v0, v, v0_stddev, v_stddev, is_float:, is_exp:, is_fail: false)
   if dim == $first_dim
     buf = ''
   else
@@ -706,7 +706,7 @@ def show_delta(stat, key_g)
     $dims.each do |dim, _v|
       v, v_stddev = get_v_and_stddev value, dim, is_fail
 
-      show_one_diff stat, dim, v0, v, v0_stddev, v_stddev, is_float, is_exp, is_fail
+      show_one_diff stat, dim, v0, v, v0_stddev, v_stddev, is_float: is_float, is_exp: is_exp, is_fail: is_fail
       if is_fail
         $sum[dim] += v
       elsif v.positive?
@@ -742,7 +742,7 @@ def show_delta(stat, key_g)
   v0 = $sum[$first_dim]
   v0_stddev = $stddev[$first_dim]
   $sum.each do |dim, v|
-    show_one_diff stat, dim, v0, v, v0_stddev, $stddev[dim], is_float, is_exp, is_fail
+    show_one_diff stat, dim, v0, v, v0_stddev, $stddev[dim], is_float: is_float, is_exp: is_exp, is_fail: is_fail
   end
   if is_fail
     puts "TOTAL #{$opt_field}"

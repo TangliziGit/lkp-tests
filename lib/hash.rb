@@ -2,7 +2,7 @@
 
 require 'set'
 
-def lookup_hash(hash, path, create_missing = false)
+def lookup_hash(hash, path, create_missing: false)
   keys = path.split('.')
   parent = hash
   pkey = keys.first
@@ -71,7 +71,7 @@ end
 # "overwrite_top_keys = true" will have the same semantics with
 # original.update(revisions) except for the special *+, *-, a.b.c
 # notions and accumulative keys.
-def revise_hash(original, revisions, overwrite_top_keys = true)
+def revise_hash(original, revisions, overwrite_top_keys: true)
   # deal with empty YAML files gracefully
   original ||= {}
   revisions ||= {}
@@ -119,7 +119,7 @@ def revise_hash(original, revisions, overwrite_top_keys = true)
       next false
     when '+'
       kk = k.chomp '+'
-      _parent, _pkey, hash, key, _keys = lookup_hash(original, kk, true)
+      _parent, _pkey, hash, key, _keys = lookup_hash(original, kk, create_missing: true)
       merge_v = merge_accumulative(hash[key], v)
       merge_v.uniq! if merge_v.instance_of? Array
       hash[key] = merge_v
@@ -128,7 +128,7 @@ def revise_hash(original, revisions, overwrite_top_keys = true)
 
     next true unless k.index('.')
 
-    _parent, _pkey, hash, key, _keys = lookup_hash(original, k, true)
+    _parent, _pkey, hash, key, _keys = lookup_hash(original, k, create_missing: true)
     hash[key] = v if overwrite_top_keys || hash.object_id != original.object_id || hash[key].nil?
     next false if hash.object_id != original.object_id
 

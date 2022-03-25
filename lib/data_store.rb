@@ -59,7 +59,7 @@ module DataStore
     prop_reader :maps
     prop_accessor :compress_matrix
 
-    def initialize(path, create_new = false)
+    def initialize(path, create_new: false)
       @path = path
       if create_new
         @maps = []
@@ -243,7 +243,7 @@ module DataStore
 
     def create_new(path)
       path = canonicalize_path path
-      cached_new path, path, true
+      cached_new path, path, create_new: true
     end
 
     def exist?(path)
@@ -294,7 +294,7 @@ module DataStore
 
     include DirObject
 
-    def initialize(path, create_new = false)
+    def initialize(path, create_new: false)
       @path = path
       load_config unless create_new
     end
@@ -626,7 +626,7 @@ module DataStore
       @create_time
     end
 
-    def index(force = false)
+    def index(force: false)
       indexed_file = path(INDEXED_FILE)
       FileUtils.rm_f(indexed_file) if force
       indexed = File.exist? indexed_file

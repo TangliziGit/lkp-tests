@@ -53,7 +53,7 @@ class ResultPath < Hash
     end
   end
 
-  def parse_result_root(rt, is_local_run = false)
+  def parse_result_root(rt, is_local_run: false)
     dirs = rt.sub(/#{RESULT_ROOT_DIR}/, '').split('/')
     dirs.shift if dirs[0] == ''
 

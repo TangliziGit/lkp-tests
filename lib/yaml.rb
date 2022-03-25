@@ -156,7 +156,7 @@ def dot_file(path)
   "#{File.dirname(path)}/.#{File.basename(path)}"
 end
 
-def save_yaml(object, file, compress = false)
+def save_yaml(object, file, compress: false)
   temp_file = File.join('/tmp', ".#{File.basename(file)}-#{tmpname}")
   File.open(temp_file, 'w') do |f|
     f.write(YAML.dump(object))
@@ -169,16 +169,16 @@ def save_yaml(object, file, compress = false)
   compress_file(file)
 end
 
-def save_yaml_with_flock(object, file, timeout = nil, compress = false)
+def save_yaml_with_flock(object, file, timeout = nil, compress: false)
   lock_file = "#{file}.lock"
 
   if timeout
     with_flock_timeout(lock_file, timeout) do
-      save_yaml object, file, compress
+      save_yaml object, file, compress: compress
     end
   else
     with_flock(lock_file) do
-      save_yaml object, file, compress
+      save_yaml object, file, compress: compress
     end
   end
 end
@@ -186,7 +186,7 @@ end
 $json_cache = {}
 $json_mtime = {}
 
-def load_json(file, cache = false)
+def load_json(file, cache: false)
   file += '.gz' if file =~ /.json$/ && File.exist?("#{file}.gz")
   if file =~ /.json(\.gz)?$/ && File.exist?(file)
     begin
@@ -221,7 +221,7 @@ def load_json(file, cache = false)
   end
 end
 
-def save_json(object, file, compress = false)
+def save_json(object, file, compress: false)
   temp_file = dot_file(file) + "-#{tmpname}"
   File.open(temp_file, 'w') do |file|
     file.write(JSON.pretty_generate(object, allow_nan: true))

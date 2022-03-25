@@ -121,4 +121,4 @@ end
 exit if result.empty?
 exit if result.values[0].size.zero?
 exit if result.values[-1].size.zero?
-save_json(result, "#{RESULT_ROOT}/#{monitor}.json", result.size * min_cols > 1000)
+save_json(result, "#{RESULT_ROOT}/#{monitor}.json", compress: result.size * min_cols > 1000)

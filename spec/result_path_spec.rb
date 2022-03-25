@@ -342,7 +342,7 @@ describe ResultPath do
         result_path = described_class.new
 
   # The commit name is kernel version in local run.
-        expect(result_path.parse_result_root("#{RESULT_ROOT_DIR}/will-it-scale/process-100%-brk1/shao2-debian/debian/x86_64-rhel-7.6/gcc-7/4.19.0-4-amd64/0", true)).to be true
+        expect(result_path.parse_result_root("#{RESULT_ROOT_DIR}/will-it-scale/process-100%-brk1/shao2-debian/debian/x86_64-rhel-7.6/gcc-7/4.19.0-4-amd64/0", is_local_run: true)).to be true
         expect(result_path['testcase']).to eq 'will-it-scale'
         expect(result_path['path_params']).to eq 'process-100%-brk1'
         expect(result_path['ucode']).to eq nil

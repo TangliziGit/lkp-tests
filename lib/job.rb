@@ -199,7 +199,7 @@ class Job
     comment_to_symbol file.sub("#{lkp_src}/", '')
   end
 
-  def load(jobfile, expand_template = false)
+  def load(jobfile, expand_template: false)
     yaml = File.read jobfile
     # give a chance
     if yaml.size.zero? && !File.size(jobfile).zero?
@@ -282,8 +282,8 @@ class Job
     return nil unless File.exist? file
 
     context_hash = deepcopy(@defaults)
-    revise_hash(context_hash, job, true)
-    revise_hash(context_hash, @overrides, true)
+    revise_hash(context_hash, job, overwrite_top_keys: true)
+    revise_hash(context_hash, @overrides, overwrite_top_keys: true)
     begin
       defaults = load_yaml(file, context_hash)
     rescue KeyError
@@ -291,14 +291,14 @@ class Job
     end
     if defaults.is_a?(Hash) && !defaults.empty?
       @defaults[source_file_symkey(file)] = nil
-      revise_hash(@defaults, defaults, true)
+      revise_hash(@defaults, defaults, overwrite_top_keys: true)
     end
     true
   end
 
-  def load_defaults(first_time = true)
+  def load_defaults(first_time: true)
     if @job.include? :no_defaults
-      merge_defaults first_time
+      merge_defaults first_time: first_time
       return
     end
 
@@ -310,14 +310,14 @@ class Job
 
     i = include_files
     job = deepcopy(@job)
-    revise_hash(job, deepcopy(@job2), true)
-    revise_hash(job, deepcopy(@overrides), true)
+    revise_hash(job, deepcopy(@job2), overwrite_top_keys: true)
+    revise_hash(job, deepcopy(@overrides), overwrite_top_keys: true)
     job['___'] = nil
     expand_each_in(job, @dims_to_expand) do |h, k, v|
       h.delete(k) if v.is_a?(Array)
     end
     @jobx = job
-    expand_params(false)
+    expand_params(run_scripts: false)
     @jobx = nil
     for_each_in(job, i.keys) do |_pk, _h, k, v|
       job['___'] = v
@@ -365,23 +365,23 @@ class Job
       load_one['ALL']
     end
 
-    merge_defaults first_time
+    merge_defaults first_time: first_time
   end
 
-  def merge_defaults(first_time = true)
-    revise_hash(@job, @defaults, false)
+  def merge_defaults(first_time: true)
+    revise_hash(@job, @defaults, overwrite_top_keys: false)
     @defaults = {}
 
     return unless first_time
 
-    revise_hash(@job, @job2, true)
+    revise_hash(@job, @job2, overwrite_top_keys: true)
 
     return if @overrides.empty?
 
     key = comment_to_symbol('user overrides')
     @job.delete key
     @job[key] = nil
-    revise_hash(@job, @overrides, true)
+    revise_hash(@job, @overrides, overwrite_top_keys: true)
   end
 
   def save(jobfile)
@@ -483,7 +483,7 @@ class Job
       end
     end
     job = deepcopy self
-    job.load_defaults false
+    job.load_defaults first_time: false
     job.delete :no_defaults
     yield job
   end
@@ -668,7 +668,7 @@ class Job
     raise Job::ParamError, "#{script}: exitstatus #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus && $CHILD_STATUS.exitstatus != 0
   end
 
-  def expand_params(run_scripts = true)
+  def expand_params(run_scripts: true)
     @jobx ||= deepcopy @job
     maps, ruby_scripts, misc_scripts = param_files
     begin
@@ -822,9 +822,9 @@ class JobEval < Job
 end
 
 class << Job
-  def open(jobfile, expand_template = false)
+  def open(jobfile, expand_template: false)
     j = new
-    j.load(jobfile, expand_template) && j
+    j.load(jobfile, expand_template: expand_template) && j
   end
 end
 

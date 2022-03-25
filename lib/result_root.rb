@@ -349,7 +349,7 @@ def convert_one_mresult_root(_rt)
 end
 
 def create_mresult_root_tables
-  MResultRootTableSet.create_tables_layout(true)
+  MResultRootTableSet.create_tables_layout(force: true)
 end
 
 def convert_all_mresult_root(date_from_in = nil, date_to_in = nil)

@@ -233,7 +233,7 @@ class << MResultRootTable
     File.join self::MRESULT_ROOT_DIR, name
   end
 
-  def create_layout(name, force = false)
+  def create_layout(name, force: false)
     dir = table_dir name
     return if !force && DataStore::Layout.exist?(dir)
 
@@ -253,7 +253,7 @@ class LinuxMResultRootTable < MResultRootTable
 end
 
 class << LinuxMResultRootTable
-  def create_layout(name, force = false)
+  def create_layout(name, force: false)
     layout = super
     if layout
       layout.add_index(DataStore::AxisIndex, 'commit') do |index|
@@ -333,10 +333,10 @@ class MResultRootTableSet
   end
 
   class << self
-    def create_tables_layout(force = false)
-      MResultRootTable.create_layout(OTHER_TABLE, force)
-      LinuxMResultRootTable.create_layout(LINUX_TABLE, force)
-      LinuxMResultRootTable.create_layout(LINUX_PERF_TABLE, force)
+    def create_tables_layout(force: false)
+      MResultRootTable.create_layout(OTHER_TABLE, force: force)
+      LinuxMResultRootTable.create_layout(LINUX_TABLE, force: force)
+      LinuxMResultRootTable.create_layout(LINUX_PERF_TABLE, force: force)
     end
   end
 end

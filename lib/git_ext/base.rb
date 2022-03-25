@@ -188,12 +188,12 @@ module Git
       command('rev-list --reverse HEAD |head -1')
     end
 
-    def command(cmd, opts = [], chdir = true, redirect = '', &block)
-      lib.command(cmd, opts, chdir, redirect, &block)
+    def command(cmd, opts = [], redirect = '', chdir: true, &block)
+      lib.command(cmd, opts, redirect, chdir: chdir, &block)
     end
 
-    def command_lines(cmd, opts = [], chdir = true, redirect = '')
-      lib.command_lines(cmd, opts, chdir, redirect)
+    def command_lines(cmd, opts = [], redirect = '', chdir: true)
+      lib.command_lines(cmd, opts, redirect, chdir: chdir)
     end
   end
 end
