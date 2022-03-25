@@ -583,11 +583,9 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
   expand_matrix(b, options)
 
   b_monitors = {}
-  b.each_key do |k|
-    b_monitors[stat_key_base(k)] = true
+  b.each_key { |k| b_monitors[stat_key_base(k)] = true }
 
-    a[k] = [0] * cols_a unless a.include?(k)
-  end
+  b.each_key { |k| a[k] = [0] * cols_a unless a.include?(k) } # rubocop:disable Style/CombinableLoops
 
   a.each do |k, v|
     log_verbose k

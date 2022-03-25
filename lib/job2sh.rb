@@ -220,17 +220,13 @@ class Job2sh < Job
 
   def parse_hash(ancestors, hash)
     nr_bg = 0
-    hash.each do |key, val|
-      parse_one(ancestors, key, val, :PASS_EXPORT_ENV)
-      parse_one(ancestors, key, val, :PASS_NEW_SCRIPT)
-      parse_one(ancestors, key, val, :PASS_RUN_SETUP)
-
-      # run monitors after setup:
-      # monitors/iostat etc. depends on ENV variables by setup scripts
-      parse_one(ancestors, key, val, :PASS_RUN_MONITORS)
-
-      nr_bg += 1 if parse_one(ancestors, key, val, :PASS_RUN_COMMANDS) == :action_background_function
-    end
+    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_EXPORT_ENV) }
+    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_NEW_SCRIPT) } # rubocop:disable Style/CombinableLoops
+    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_RUN_SETUP) } # rubocop:disable Style/CombinableLoops
+    # run monitors after setup:
+    # monitors/iostat etc. depends on ENV variables by setup scripts
+    hash.each { |key, val| parse_one(ancestors, key, val, :PASS_RUN_MONITORS) } # rubocop:disable Style/CombinableLoops
+    hash.each { |key, val| nr_bg += 1 if parse_one(ancestors, key, val, :PASS_RUN_COMMANDS) == :action_background_function } # rubocop:disable Style/CombinableLoops
 
     # Disabled -- this will wait for the background monitors
     # started by run_monitor, while the monitors will wait for
