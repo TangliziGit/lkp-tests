@@ -470,6 +470,10 @@ fixup_bpf()
 	sed -i 's/test_lwt_seg6local.sh//' bpf/Makefile
 	echo "LKP SKIP bpf.test_lwt_seg6local.sh"
 
+	## /test_xsk.sh causes soft_timeout due to commit 710ad98c363a (veth: Do not record rx queue hint in veth_xmit)
+	sed -i 's/test_xsk.sh//' bpf/Makefile
+	echo "LKP SKIP bpf.test_xsk.sh"
+
 	# some sh scripts actually need bash
 	# ./test_libbpf.sh: 9: ./test_libbpf.sh: 0: not found
 	[ "$(cmd_path bash)" = '/bin/bash' ] && [ $(readlink -e /bin/sh) != '/bin/bash' ] &&
