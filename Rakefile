@@ -57,7 +57,7 @@ def bash(cmd)
   output = `bash -c #{Shellwords.escape(cmd)}`
   puts output unless output.empty?
 
-  raise "bash exitstatus: #{$CHILD_STATUS.exitstatus}" unless $CHILD_STATUS.exitstatus.zero?
+  raise "bash exitstatus: #{$CHILD_STATUS.exitstatus}" unless $CHILD_STATUS.success?
 end
 
 desc 'Run syntax check'
