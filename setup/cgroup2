@@ -32,11 +32,11 @@ clear_cgroup
 #clear cgroups and subsystem controllers mount point for v2 version
 clear_cgroup2
 
-create_one_cgroup2()
+setup_one_cgroup2()
 {
 	local cgname=$1
-	#Bind all the subsystem controller to a unified hierarchy, and create a cgroup
-	create_cgroup2 $CGROUP2_MNT $cgname
+
+	create_one_cgroup2 $CGROUP2_MNT $cgname
 
 	#Set the parameter defined in the jobfile and enable the cgroup
 	env | grep -F '_46_' |
@@ -60,9 +60,12 @@ create_one_cgroup2()
 	done
 }
 
+#Bind all the subsystem controller to a unified hierarchy
+init_cgroup2 $CGROUP2_MNT
+
 for i in $(seq 1 "$cg_count"); do
 	name="$testcase.$i"
-	create_one_cgroup2 $name
+	setup_one_cgroup2 $name
 	cgroup_names="$cgroup_names $name"
 done
 
