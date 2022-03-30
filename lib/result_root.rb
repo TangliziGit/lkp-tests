@@ -343,7 +343,7 @@ def convert_one_mresult_root(_rt)
     n.update_desc do |desc|
       desc.update(_rt.desc)
     end
-    n.index(true)
+    n.index(force: true)
     true
   end
 end
