@@ -71,7 +71,9 @@ class NetStater < Stater
     when /(IPv4 ping|IPv4\/TCP|IPv4\/UDP|IPv4 Netfilter)/,
          /(IPv6 ping|IPv6\/TCP|IPv6\/UDP|IPv6 Netfilter)/,
          /(IPv6 address binds|IPv4 address binds)/,
-         /(OUTPUT tests|INPUT tests)/
+         /(OUTPUT tests|INPUT tests)/,
+         /(Use cases)/,
+         /(Run time tests - ipv4)/
       # ##########################################################################
       # IPv4 ping
       # ##########################################################################
@@ -83,21 +85,17 @@ class NetStater < Stater
       # SYSCTL: net.ipv4.raw_l3mdev_accept=0
       #
       # TEST: ping out - ns-B IP                                        [ OK ]
-      @test_case = $1
-    when /^# (No VRF|With VRF)/
-      @test_subcase1 = $1
-    when /^# SYSCTL: (.*)/
-      @test_subcase2 = $1
-    when /(Run time tests - ipv4)/,
-         /(Run time tests - ipv6)/
+
       # ###########################################################################
       # Run time tests - ipv4
       # ###########################################################################
       #
       # TEST: Device delete with active traffic - ping in - ns-A IP     [ OK ]
       @test_case = $1
-      @test_subcase1 = @test_subcase2 = nil
-    when /(Use cases)/
+      @test_subcase1 = @test_subcase2 = nil if @test_case =~ /Run time tests - ipv(4|6)/
+    when /^# (No VRF|With VRF)/,
+         /(Device enslaved to bridge|Ping LLA with multiple interfaces)/,
+         /(TCP reset|ICMP unreachable)/
       # ###########################################################################
       # Use cases
       # ###########################################################################
@@ -107,9 +105,11 @@ class NetStater < Stater
       # Device enslaved to bridge
       #
       # TEST: Bridge into VRF - IPv4 ping out                           [ OK ]
-      @test_case = $1
-    when /(Device enslaved to bridge|Ping LLA with multiple interfaces)/
-      @test_subcase = $1
+      @test_subcase1 = $1
+      @test_subcase2 = nil if @test_subcase1 =~ /Device enslaved to bridge|Ping LLA with multiple interfaces
+                                                 TCP reset|ICMP unreachable/
+    when /^# SYSCTL: (.*)/
+      @test_subcase2 = $1
     # end for net.fcnal-test.sh
     when /^# TEST SECTION: (.*)/
       # selftests: net: fib-onlink-tests.sh
@@ -213,6 +213,25 @@ class NetStater < Stater
         stats.add "#{@test_prefix}.#{@test_case}.#{$1}", $2 unless @test_case == 'IPv4 route with IPv6 gateway tests' || stats.key?("#{@test_prefix}.#{@test_case}.#{$1}")
       end
     when /^# TEST: (.*) \[ ?(PASS|OK|FAIL|SKIP) ?\]/
+      # ##########################################################################
+      # IPv4 ping
+      # ##########################################################################
+      #
+      #
+      # ##########################################################################
+      # No VRF
+      #
+      # SYSCTL: net.ipv4.raw_l3mdev_accept=0
+      #
+      # TEST: ping out - ns-B IP                                        [ OK ]
+
+      # @test_case = IPv4 ping
+      # @test_subcase1 = No VRF
+      # @test_subcase2 = SYSCTL: ne.ipv4.raw_l3mdev_accept=0
+      # @test_subcase3 = TEST: ping out - ns-B IP
+      # @subcase_stat = OK
+      @test_subcase3 = $1
+      @subcase_stat = $2
       if @test_subcase2
         # ###########################################################################
         # IPv4 ping
@@ -225,10 +244,8 @@ class NetStater < Stater
         # SYSCTL: net.ipv4.raw_l3mdev_accept=0
         #
         # TEST: ping out - ns-B IP                                      [ OK ]
-        stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase1}.#{@test_subcase2}.#{$1}", $2 if @test_script == 'fcnal-test.sh'
+        stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase1}.#{@test_subcase2}.#{@test_subcase3}", @subcase_stat if @test_script == 'fcnal-test.sh'
       elsif @test_subcase1
-        stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase1}.#{$1}", $2 if @test_script == 'fcnal-test.sh'
-      elsif @test_subcase
         # ###########################################################################
         # Use cases
         # ###########################################################################
@@ -238,7 +255,7 @@ class NetStater < Stater
         # Device enslaved to bridge
         #
         # TEST: Bridge into VRF - IPv4 ping out                         [ OK ]
-        stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase}.#{$1}", $2 if @test_script == 'fcnal-test.sh'
+        stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase1}.#{@test_subcase3}", @subcase_stat if @test_script == 'fcnal-test.sh'
       elsif @test_case
         # selftests: net: vrf_route_leaking.sh
         #
@@ -259,16 +276,21 @@ class NetStater < Stater
         # TEST: IPv4 route with mixed v4-v6 multipath route                   [ OK ]
         # TEST: IPv6 nexthop with IPv4 route                                  [ OK ]
         if @test_prefix == 'net.ioam6.sh'
-          subcase_ioam6 = $1.strip
-          subcase_stat = $2
-          if subcase_ioam6 =~ /(inline mode|encap mode)/
-            stats.add "#{@test_prefix}.#{@test_case}.#{subcase_ioam6}", subcase_stat
+          # Here we use the mode of '11' as the mode of '12' to avoid duplication
+          # TEST: Trace type with bit 11 only (inline mode)                     [ OK ]
+          # TEST: Trace type with bit 12 only                                   [ OK ]
+          # ...
+          # TEST: Trace type with bit 11 only (encap mode)                      [ OK ]
+          # TEST: Trace type with bit 12 only                                   [ OK ]
+          if @test_subcase3 =~ /(inline mode|encap mode)/
+            stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase3}", @subcase_stat
             @old_mode = $1
           else
-            stats.add "#{@test_prefix}.#{@test_case}.#{subcase_ioam6} (#{@old_mode})", subcase_stat
+            stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase3} (#{@old_mode})", @subcase_stat
           end
+        else
+          stats.add "#{@test_prefix}.#{@test_case}.#{@test_subcase3}", @subcase_stat unless %w(fib_nexthops.sh).include? @test_script
         end
-        stats.add "#{@test_prefix}.#{@test_case}.#{$1}", $2 unless %w(fib_nexthops.sh ioam6.sh).include? @test_script
       else
         # selftests: net: pmtu.sh
         # TEST: ipv4: PMTU exceptions                                        [ OK ]
@@ -286,7 +308,7 @@ class NetStater < Stater
         #
         # TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
         # TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
-        stats.add "#{@test_prefix}.#{$1}", $2 unless @test_script == 'fib_nexthop_multiprefix.sh'
+        stats.add "#{@test_prefix}.#{@test_subcase3}", @subcase_stat unless @test_script == 'fib_nexthop_multiprefix.sh'
       end
     when /^# (UDP|TCP|DCCP) (.*) \.\.\. (pass|fail|skip)/
       # selftests: net: reuseport_addr_any.sh
