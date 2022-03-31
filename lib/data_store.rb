@@ -222,7 +222,7 @@ module DataStore
       dir = cons_index_path cls, name
       raise "Index already exist: #{dir}" if Dir.exist? dir
 
-      index = cls.new(dir, true)
+      index = cls.new(dir, create_new: true)
       yield index if block_given?
       index.save_config
     end
