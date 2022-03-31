@@ -95,7 +95,7 @@ end
 ARGV.each do |jobfile|
   jobs = Job.new
   jobfile = refine_job_file(jobfile) if @opt_compatible
-  jobs.load(jobfile, true) || next
+  jobs.load(jobfile, expand_template: true) || next
   jobs['kconfig'] = @opt_kconfig if @opt_kconfig
   jobs['commit'] = @opt_commit if @opt_commit
   jobs['testbox'] = @opt_testbox
