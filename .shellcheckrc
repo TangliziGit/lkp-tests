@@ -43,3 +43,4 @@ disable=SC2089 # Quotes/backslashes will be treated literally. Use an array.
 disable=SC2039 # In POSIX sh, something is undefined.
 disable=SC2048 # Use "$@" (with quotes) to prevent whitespace problems
 disable=SC2068 # Double quote array expansions to avoid re-splitting elements
+disable=SC2116 # Useless echo? Instead of 'cmd $(echo foo)', just use 'cmd foo'.
