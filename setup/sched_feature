@@ -1,0 +1,14 @@
+#!/bin/sh -e
+# - feature
+
+feature=$1
+[ -n "$feature" ] || exit 0
+
+file="/sys/kernel/debug/sched/features"
+[ -f $file ] || exit 0
+
+. $LKP_SRC/lib/reproduce-log.sh
+
+log_eval "echo $feature > $file"
+
+exit 0
