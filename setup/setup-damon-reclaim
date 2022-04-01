@@ -21,7 +21,7 @@
 #[ -d "/sys/module/damon_reclaim" ] || die "No damon_reclaim module in system"
 [ -d "/sys/module/damon_reclaim" ] || exit 0
 
-cd /sys/module/damon_reclaim/parameters/
+cd /sys/module/damon_reclaim/parameters/ || exit
 
 [ -n "$aggr_interval" ] && echo $aggr_interval > aggr_interval
 [ -n "$min_nr_regions" ] && echo min_nr_regions$ >  min_nr_regions

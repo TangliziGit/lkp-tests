@@ -262,7 +262,7 @@ pack_benchmark_deps()
 		}
 
 		work_dir=$(mktemp -d /tmp/pack-deps-$BM_NAME-XXXXXXXX)
-		cd $work_dir
+		cd $work_dir || exit
 
 		save_package_deps_info $BM_NAME
 

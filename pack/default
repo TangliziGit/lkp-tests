@@ -66,7 +66,7 @@ pack_deb()
 	Description: LKP dependent packages
 	EOF
 
-	cd /tmp
+	cd /tmp || return
 	dpkg-deb --build $pkg_name
 }
 

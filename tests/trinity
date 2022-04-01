@@ -72,7 +72,7 @@ has_cmd trinity || {
 
 start_time=$(date +%s)
 
-cd /tmp
+cd /tmp || exit
 if chroot --help 2>&1 | grep -q -- --userspec; then
 	log_cmd chroot --userspec nobody:nogroup / $cmd 2>&1 &
 else

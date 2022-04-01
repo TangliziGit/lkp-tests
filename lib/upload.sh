@@ -13,7 +13,7 @@ upload_files_rsync()
 
 		local current_dir=$(pwd)
 		local tmpdir=$(mktemp -d)
-		cd "$tmpdir"
+		cd "$tmpdir" || return
 		mkdir -p ${target_directory}
 
 		rsync -a --no-owner --no-group \
@@ -23,7 +23,7 @@ upload_files_rsync()
 
 		local JOB_RESULT_ROOT=$JOB_RESULT_ROOT/$target_directory
 
-		cd $current_dir
+		cd $current_dir || return
 		rm -fr "$tmpdir"
 	}
 
@@ -68,7 +68,7 @@ upload_one_curl()
 
 	if [ -d "$src" ]; then
 		(
-			cd $(dirname "$1")
+			cd $(dirname "$1") || exit
 			dir=$(basename "$1")
 			find "$dir" -type d -exec curl -sSf -X MKCOL "http://$LKP_SERVER$dest/{}" \;
 			find "$dir" -type f -size +0 -exec curl -sSf -T '{}' "http://$LKP_SERVER$dest/{}" \;

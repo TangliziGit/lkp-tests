@@ -75,7 +75,7 @@ download_extract()
 	local dir="$(basename $(dirname $URL))"
 
 	mkdir -p $dir || return
-	cd $dir
+	cd $dir || return
 
 	echo lftpget -c $URL
 	     lftpget -c $URL || return

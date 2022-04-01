@@ -17,6 +17,7 @@ mount_dev()
 
 	log_cmd mkdir -p $mnt
 	log_cmd mount $partition $mnt 2>/dev/null
+	# shellcheck disable=SC2164
 	cd $mnt
 }
 
@@ -57,7 +58,7 @@ set_for_class()
 		mount_dev
 		;;
 	"vm")
-		cd ${mount_points%% *}
+		cd ${mount_points%% *} || return
 		;;
 	*)
 		;;

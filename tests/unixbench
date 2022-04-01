@@ -24,7 +24,7 @@ iteration=$(( runtime / 10 ))
 
 [ -n "$nr_task" ] && other_params="-c $nr_task"
 
-cd UnixBench
+cd UnixBench || exit
 log_cmd ./Run $test $other_params -i $iteration || exit
 
 upload_files -t results $BENCHMARK_ROOT/unixbench/UnixBench/results/*

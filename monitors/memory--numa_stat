@@ -36,7 +36,7 @@ setup_wait
 while :
 do
 	echo time: $(date +%s)
-	cd "$cgdir"
+	cd "$cgdir" || exit
 	for cg in $cgname*; do
 		[ -f "$cg/$file" ] || continue
 		echo "cgroup: $cg"

@@ -26,7 +26,7 @@ git_clone_update()
 
 	if [ -d $dir/.git ]; then
 		(
-			cd $dir
+			cd $dir || exit
 			while [ $# != 0 ]; do
 				if [ "$1" = "--recursive" ]; then
 					git submodule update --init --recursive

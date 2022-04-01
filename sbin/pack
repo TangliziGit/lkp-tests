@@ -105,7 +105,7 @@ BUILD_DIR=$(get_build_dir $BM_NAME)
 [[ -f $LKP_SRC/pack/${BM_NAME}.patch ]] && [[ -d $BUILD_DIR ]] && \
 	rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
-cd $BUILD_DIR
+cd $BUILD_DIR || exit
 download || exit
 cd "$source_dir" || exit
 [[ -n "$sync_dest" ]] && commit=$(git rev-parse --short HEAD 2>/dev/null)

@@ -4,7 +4,7 @@
 ## execution in Open MPI. mpirun uses the Open Run-Time
 ## Environment (ORTE) to launch jobs.
 
-cd /tmp
+cd /tmp || exit
 cp -a /usr/share/doc/hpcc/examples/_hpccinf.txt hpccinf.txt
 
 log_cmd orterun --allow-run-as-root -np $nr_cpu hpcc

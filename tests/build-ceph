@@ -56,7 +56,7 @@ prepare_src()
 	rm -fr "$CEPH_SRC" 2>/dev/null
 	git_clone_update git://gitmirror/$ceph_remote $CEPH_SRC || die "failed clone ceph tree $ceph_remote"
 
-	cd "$CEPH_SRC"
+	cd "$CEPH_SRC" || return
 	log_cmd git checkout -q $ceph_commit || die "failed to checkout ceph commit $ceph_commit"
 
 	ceph_submodule_mirror
@@ -67,11 +67,11 @@ prepare_src()
 do_cmake()
 {
 	./do_cmake.sh
-	cd build
+	cd build || return
 	make
 	make_exit_status=$?
 	build_complete $make_exit_status
-	cd $CEPH_SRC
+	cd $CEPH_SRC || return
 	git reset --hard
 }
 
