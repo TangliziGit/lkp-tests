@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1087,SC2140,SC1007,SC2101
 #
 #   makepkg - make packages compatible for use with pacman
 #   Generated from makepkg.sh.in; do not edit by hand.
