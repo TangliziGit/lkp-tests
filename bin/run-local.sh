@@ -1,4 +1,6 @@
 #!/bin/sh
+# SC2174: When used with -p, -m only applies to the deepest directory
+# shellcheck disable=SC2174
 
 [ -n "$LKP_SRC" ] || export LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 export TMP=/tmp/lkp

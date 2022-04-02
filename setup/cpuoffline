@@ -81,7 +81,7 @@ then
 		cur_ids=$pkg_id-$die_id-$core_id
 
 		match=false
-		for id in "$online_cores"
+		for id in $online_cores
 		do
 			[ "$cur_ids" = "$id" ] && match=true
 		done

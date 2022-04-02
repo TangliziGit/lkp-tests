@@ -182,7 +182,7 @@ show_result()
 
 cd $BENCHMARK_ROOT/lmbench3 || {
 	echo "ERROR: lmbench benchmark has not been installed yet"
-	exit -1
+	exit 1
 }
 
 make 2>&1 || die "failed to build lmbench3"
@@ -194,7 +194,7 @@ case "$mode" in
 	'hardware') run_lmbench3_hardware ;;
 	'os') run_lmbench3_os ;;
 	'development') run_lmbench3_development ;;
-	*) echo "invalid running mode:$mode in lmbench3" && exit -1
+	*) echo "invalid running mode:$mode in lmbench3" && exit 1
 	esac
 
 show_result

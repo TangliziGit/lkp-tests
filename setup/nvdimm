@@ -11,7 +11,7 @@
 
 keep_quiet()
 {
-	[ -n "quiet_mode" ]
+	[ -n "$quiet_mode" ]
 }
 
 __probe_devs()

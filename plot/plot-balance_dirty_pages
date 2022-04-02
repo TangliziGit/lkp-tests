@@ -70,7 +70,7 @@ EOF
 
 [[ -f ftrace.gz ]] || exit
 
-trace=trace-balance_dirty_pages
+trace="trace-balance_dirty_pages"
 
 [ -s pid ] || {
 zcat ftrace.gz | grep -F balance_dirty_pages | awk '/(dd|tar|fio)-[0-9]+/{print $1; exit}'| sed 's/[^0-9]//g' > fio-pid

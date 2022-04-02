@@ -122,12 +122,12 @@ do
 
 	#upload and delete previous test results to save ramdisk space
 	f_result=$(ls ./ | grep "suspend-")
-	if [ -n $f_result ]
+	if [ -n "$f_result" ]
 	then
 		echo $(date +%T): uploading test result $f_result ... >> $f_log
 		upload_files -t result $f_result
 		rm -rf $f_result
-		echo $(date +%T): done ... >> $f_log
+		echo "$(date +%T): done ..." >> $f_log
 	fi
 
 	#commands to supend and resume
@@ -141,7 +141,7 @@ do
 	sleep $idle_time
 done
 
-echo analyze_suspend test done
+echo "analyze_suspend test done"
 
 rm $f_lkp_output
 upload_files -t result $f_log

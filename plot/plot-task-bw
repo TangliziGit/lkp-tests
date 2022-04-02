@@ -11,6 +11,7 @@ plot_lines() {
 	done
 }
 
+# shellcheck disable=SC2120 # plot references arguments, but none are ever passed
 plot() {
 suffix=$1
 gnuplot <<EOF

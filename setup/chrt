@@ -6,7 +6,7 @@
 
 [ -n "$sched_policy" ] || exit 0
 
-if [ "$sched_policy" = fifo ] || [ "$sched_policy" = rr]; then
+if [ "$sched_policy" = fifo ] || [ "$sched_policy" = rr ]; then
 	default_priority=1
 else
 	default_priority=0

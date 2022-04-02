@@ -130,7 +130,8 @@ get_build_dir()
 	echo "/tmp/build-$1"
 }
 
-build_depends_pkg() {
+build_depends_pkg()
+{
 	if [ "$1" = '-i' ]; then
 		# in recursion install the package with -i option
 		local INSTALL='-i'
@@ -189,14 +190,15 @@ build_depends_pkg() {
 	fi
 }
 
-parse_yaml() {
+parse_yaml()
+{
 	local s='[[:space:]]*'
 	local w='[a-zA-Z0-9_-]*'
 	local tmp_filter="$(mktemp /tmp/lkp-install-XXXXXXXXX)"
 
 	ls -LR $LKP_SRC/setup $LKP_SRC/monitors $LKP_SRC/tests $LKP_SRC/daemon > $tmp_filter
 	scripts=$(cat $1 | sed -ne "s|^\($s\):|\1|" \
-	         -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\2|p" \
+	         -e "s|^\($s\)\($w\)$s:${s}[\"']\(.*\)[\"']$s\$|\2|p" \
 	         -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\2|p" | grep -x -F -f \
 	         $tmp_filter | grep -v -e ':$' -e '^$' | sort -u)
 	rm "$tmp_filter"

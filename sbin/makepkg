@@ -1230,6 +1230,7 @@ generate_one_checksum() {
 	echo ")"
 }
 
+# shellcheck disable=SC2120
 generate_checksums() {
 	msg "$(gettext "Generating checksums for source files...")"
 

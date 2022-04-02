@@ -38,7 +38,7 @@ setup_cgroup()
 {
 	[ -z "$1" ] && return
 	[ "$1" = 'nocg' ] && return
-	[ -n $CGROUP_MNT ] || return
+	[ -n "$CGROUP_MNT" ] || return
 
 	if [ "$cgroup_ver" = 1 ]; then
 		local subsys_tasks

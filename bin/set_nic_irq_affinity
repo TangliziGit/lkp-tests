@@ -58,15 +58,15 @@ AFF=$1
 shift
 
 case "$AFF" in
-    remote)	[[ $1 =~ $num ]] && rnode=$1 && shift ;;
-    one)	[[ $1 =~ $num ]] && cnt=$1 && shift ;;
-    all)	;;
-    local)	;;
-    custom)	;;
-    [0-9]*)	;;
-    -h|--help)	usage ;;
-    "")		usage ;;
-    *)		IFACES=$AFF && AFF=all ;;	# Backwards compat mode
+	remote)    [[ $1 =~ $num ]] && rnode=$1 && shift ;;
+	one)       [[ $1 =~ $num ]] && cnt=$1 && shift ;;
+	all)       ;;
+	local)     ;;
+	custom)    ;;
+	[0-9]*)    ;;
+	-h|--help) usage ;;
+	"")        usage ;;
+	*)         IFACES=$AFF && AFF=all ;; # Backwards compat mode
 esac
 
 # append the interfaces listed to the string with spaces
@@ -114,15 +114,17 @@ set_affinity()
 
 # Allow usage of , or -
 #
-parse_range () {
-        RANGE=${@//,/ }
-        RANGE=${RANGE//-/..}
-        LIST=""
-        for r in $RANGE; do
+parse_range ()
+{
+	RANGE=${@//,/ }
+	RANGE=${RANGE//-/..}
+	LIST=""
+	for r in $RANGE; do
 		# eval lets us use vars in {#..#} range
-                [[ $r =~ '..' ]] && r="$(eval echo {$r})"
+		# shellcheck disable=SC1083 # This { is literal. Check expression (missing ;/\n?) or quote it
+		[[ $r =~ '..' ]] && r="$(eval echo {$r})"
 		LIST+=" $r"
-        done
+	done
 	echo $LIST
 }
 

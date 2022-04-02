@@ -244,7 +244,7 @@ create_lkp_src_initrd()
 	lkp_initrd=$CACHE_DIR/lkp-$arch-$src_sig.cgz
 	[[ -f $lkp_initrd ]] || {
 		archive="${CACHE_DIR}"
-		
+
 		# shellcheck disable=SC2164
 		pushd "$LKP_SRC/pkg/lkp-src"
 		LKP_USER="$user" PACMAN=true BUILDDIR=/tmp/$USER CARCH=$arch PKGEXT=.cgz CGZDEST="$CACHE_DIR/lkp-$arch.cgz" \

@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# SC2174: When used with -p, -m only applies to the deepest directory
+# shellcheck disable=SC2174
 
 require 'optparse'
 require 'ostruct'

@@ -41,6 +41,8 @@ expand_tag_to_commit()
 		git_tag=$BASH_REMATCH
 		git_tag="${git_tag%/*}"
 
+		# shellcheck disable=SC2098 # This expansion will not see the mentioned assignment
+		# shellcheck disable=SC2097 # This assignment is only seen by the forked process
 		commit=$(GIT_WORK_TREE="$GIT_ROOT_DIR/$project" GIT_DIR="$GIT_WORK_TREE/.git" \
 				git rev-list -n1 "$git_tag" 2>/dev/null) &&
 		[[ $commit ]] && param="${param/$git_tag/$commit}"

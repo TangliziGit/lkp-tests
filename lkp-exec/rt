@@ -95,7 +95,7 @@ cat "${files[@]}" >> $temp_file_unsort
 		done
 
 		if [[ "$flag_pattern" = "0" ]]; then
-			cmd="grep -h -E $pattern "${files[@]}""
+			cmd="grep -h -E $pattern ${files[@]}"
 			flag_pattern=1
 		else
 			cmd="$cmd | grep -E $pattern"

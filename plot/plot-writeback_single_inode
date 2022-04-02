@@ -45,7 +45,7 @@ EOF
 [[ -f trace || -f ftrace.gz ]] || exit
 [[ -f ls-files ]] || exit
 
-trace=trace-writeback_single_inode
+trace="trace-writeback_single_inode"
 
 # ino=$(cat trace | awk '/writeback_single_inode.*I_DIRTY/{if ($6 == "0:15:") continue; print $7; exit}')
 ino=$(awk '{print $1; exit}' ls-files)

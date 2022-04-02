@@ -102,6 +102,7 @@ use_local_modules_initrds()
 	}
 }
 
+# shellcheck disable=SC2120
 download_initrd()
 {
 	local _initrd=
