@@ -1,7 +1,7 @@
 url: https://github.com/Jakob-Koschel/linux.git
-owner: Jakob Koschel <j.koschel@vu.nl>
+owner: Jakob Koschel <jakobkoschel@gmail.com>
 branch_allowlist: lkp-.*
 branch_denylist: .*
 notify_build_success_branch: .*
 private_report_branch: .*
-mail_to: Jakob Koschel <j.koschel@vu.nl>
+mail_to: Jakob Koschel <jakobkoschel@gmail.com>
