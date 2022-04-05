@@ -65,9 +65,8 @@ class LinuxTestcasesTableSet
        perf-test stress-ng fxmark kvm-kernel-boot-test bkc_ddt
        xfstests packetdrill avocado v4l2 vmem perf-stat-tests cgroup2-test].freeze
   OTHER_TESTCASES =
-    %w[0day-boot-tests 0day-kbuild-tests build-dpdk build-nvml
-       build-qemu convert-lkpdoc-to-html convert-lkpdoc-to-html-css rsync-rootfs
-       health-stats hwinfo internal-lkp-service ipmi-setup debug
+    %w[build-dpdk build-nvml build-qemu convert-lkpdoc-to-html convert-lkpdoc-to-html-css rsync-rootfs
+       health-stats hwinfo ipmi-setup debug
        lkp-bug lkp-install-run lkp-services lkp-src pack lkp-qemu
        pack-deps makepkg makepkg-deps borrow dpdk-dts mbtest build-acpica build-ltp
        bust-shm-exit build-llvm_project upgrade-trinity build-0day-crosstools deploy-clang kmemleak-test kunit].freeze
