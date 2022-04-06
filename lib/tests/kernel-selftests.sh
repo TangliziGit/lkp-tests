@@ -236,6 +236,13 @@ check_ignore_case()
 
 fixup_dma()
 {
+	[[ -f $linux_selftests_dir/include/linux/map_benchmark.h ]] && {
+		# /usr/include/linux/map_benchmark.h:19:2: error: unknown type name ‘__u64’
+		sed  -i '1i #include <linux/types.h>' $linux_selftests_dir/include/linux/map_benchmark.h
+		# dma_map_benchmark.c:13:10: fatal error: linux/map_benchmark.h: No such file or directory
+		cp $linux_selftests_dir/include/linux/map_benchmark.h /usr/include/linux
+	}
+
 	# need to bind a device to dma_map_benchmark driver
 	# for PCI devices
 	local name=$(ls /sys/bus/pci/devices/ | head -1)

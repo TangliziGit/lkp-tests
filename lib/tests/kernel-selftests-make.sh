@@ -78,9 +78,9 @@ run_tests()
 		check_subtest || continue
 
 		(
-		check_makefile $subtest || log_cmd make TARGETS=$subtest 2>&1
-
 		fixup_subtest $subtest || exit
+
+		check_makefile $subtest || log_cmd make TARGETS=$subtest 2>&1
 
 		make_group_tests
 
