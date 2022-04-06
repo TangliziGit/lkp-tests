@@ -187,7 +187,7 @@ def common_error_id(line)
       .gsub(/^\ /, '')
       .gsub(/\  _/, '_')
       .tr(' ', '_')
-      .gsub(/[-_.,;:#!\[(]+$/, '')
+      .gsub(/[-_.,;:#!*\[(]+$/, '')
 end
 
 # # <4>[  256.557393] [ INFO: possible circular locking dependency detected ]

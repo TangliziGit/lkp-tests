@@ -1,0 +1,14 @@
+<0>[    4.741667][    T1] *************************************************************
+<0>[    4.742666][    T1] **     NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE    **
+<0>[    4.743666][    T1] **                                                         **
+<0>[    4.744667][    T1] **  IOMMU DebugFS SUPPORT HAS BEEN ENABLED IN THIS KERNEL  **
+<0>[    4.745667][    T1] **                                                         **
+<0>[    4.746668][    T1] ** This means that this kernel is built to expose internal **
+<0>[    4.747668][    T1] ** IOMMU data structures, which may compromise security on **
+<0>[    4.748669][    T1] ** your system.                                            **
+<0>[    4.749667][    T1] **                                                         **
+<0>[    4.750668][    T1] ** If you see this message and you are not debugging the   **
+<0>[    4.751666][    T1] ** kernel, report this immediately to your vendor!         **
+<0>[    4.752667][    T1] **                                                         **
+<0>[    4.753670][    T1] **     NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE    **
+<0>[    4.754668][    T1] *************************************************************
