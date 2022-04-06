@@ -172,23 +172,22 @@ def grep_printk_errors(kmsg_file, kmsg)
 end
 
 def common_error_id(line)
-  line = line.chomp
-  line.gsub!(/\b[3-9]\.[0-9]+[-a-z0-9.]+/, '#') # linux version: 3.17.0-next-20141008-g099669ed
-  line.gsub!(/\b[1-9][0-9]-[A-Z][a-z]+-[0-9]{4}\b/, '#') # Date: 28-Dec-2013
-  line.gsub!(/\b0x[0-9a-f]+\b/, '#') # hex number
-  line.gsub!(/\b[a-f0-9]{40}\b/, '#') # SHA-1
-  line.gsub!(/\b[0-9][0-9.]*/, '#') # number
-  line.gsub!(/#x\b/, '0x')
-  line.gsub!(/[\\"$]/, '~')
-  line.gsub!(/[ \t]/, ' ')
-  line.gsub!(/\ \ +/, ' ')
-  line.gsub!(/([^a-zA-Z0-9])\ /, '\1')
-  line.gsub!(/\ ([^a-zA-Z])/, '\1')
-  line.gsub!(/^\ /, '')
-  line.gsub!(/\  _/, '_')
-  line.tr!(' ', '_')
-  line.gsub!(/[-_.,;:#!\[(]+$/, '')
-  line
+  line.chomp
+      .gsub(/\b[3-9]\.[0-9]+[-a-z0-9.]+/, '#') # linux version: 3.17.0-next-20141008-g099669ed
+      .gsub(/\b[1-9][0-9]-[A-Z][a-z]+-[0-9]{4}\b/, '#') # Date: 28-Dec-2013
+      .gsub(/\b0x[0-9a-f]+\b/, '#') # hex number
+      .gsub(/\b[a-f0-9]{40}\b/, '#') # SHA-1
+      .gsub(/\b[0-9][0-9.]*/, '#') # number
+      .gsub(/#x\b/, '0x')
+      .gsub(/[\\"$]/, '~')
+      .gsub(/[ \t]/, ' ')
+      .gsub(/\ \ +/, ' ')
+      .gsub(/([^a-zA-Z0-9])\ /, '\1')
+      .gsub(/\ ([^a-zA-Z])/, '\1')
+      .gsub(/^\ /, '')
+      .gsub(/\  _/, '_')
+      .tr(' ', '_')
+      .gsub(/[-_.,;:#!\[(]+$/, '')
 end
 
 # # <4>[  256.557393] [ INFO: possible circular locking dependency detected ]
