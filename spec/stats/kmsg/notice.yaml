@@ -1,44 +1,44 @@
 
-# NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE
-NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE: 1
-message:NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE: <0>[    4.742666][    T1] **     NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE    **
-pattern:NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE: NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE
+# NOTICE
+NOTICE: 1
+message:NOTICE: <0>[    4.742666][    T1] **     NOTICE     **
+pattern:NOTICE: NOTICE
 
-# IOMMU DebugFS SUPPORT HAS BEEN ENABLED IN THIS KERNEL
-IOMMU_DebugFS_SUPPORT_HAS_BEEN_ENABLED_IN_THIS_KERNEL: 1
-message:IOMMU_DebugFS_SUPPORT_HAS_BEEN_ENABLED_IN_THIS_KERNEL: <0>[    4.744667][    T1] **  IOMMU DebugFS SUPPORT HAS BEEN ENABLED IN THIS KERNEL  **
-pattern:IOMMU_DebugFS_SUPPORT_HAS_BEEN_ENABLED_IN_THIS_KERNEL: IOMMU DebugFS SUPPORT HAS BEEN ENABLED IN THIS KERNEL
+# IOMMU DebugFS
+IOMMU_DebugFS: 1
+message:IOMMU_DebugFS: <0>[    4.744667][    T1] **  IOMMU DebugFS   **
+pattern:IOMMU_DebugFS: IOMMU DebugFS
 
-# This means that this kernel is built to expose internal
-This_means_that_this_kernel_is_built_to_expose_internal: 1
-message:This_means_that_this_kernel_is_built_to_expose_internal: <0>[    4.746668][    T1] ** This means that this kernel is built to expose internal **
-pattern:This_means_that_this_kernel_is_built_to_expose_internal: This means that this kernel is built to expose internal
+# This means that
+This_means_that: 1
+message:This_means_that: <0>[    4.746668][    T1] ** This means that  **
+pattern:This_means_that: This means that
 
-# IOMMU data .* which may compromise security on
-IOMMU_data_structures,which_may_compromise_security_on: 1
-message:IOMMU_data_structures,which_may_compromise_security_on: <0>[    4.747668][    T1] ** IOMMU data structures, which may compromise security on **
-pattern:IOMMU_data_structures,which_may_compromise_security_on: IOMMU data .* which may compromise security on
+# IOMMU data structures
+IOMMU_data_structures: 1
+message:IOMMU_data_structures: <0>[    4.747668][    T1] ** IOMMU data structures **
+pattern:IOMMU_data_structures: IOMMU data structures
 
-# your system.
-your_system: 1
-message:your_system: <0>[    4.748669][    T1] ** your system.                                            **
-pattern:your_system: your system.
+# system.
+system: 1
+message:system: <0>[    4.748669][    T1] ** system.                                            **
+pattern:system: system.
 
-# If you see this message and you are not debugging the
-If_you_see_this_message_and_you_are_not_debugging_the: 1
-message:If_you_see_this_message_and_you_are_not_debugging_the: <0>[    4.750668][    T1] ** If you see this message and you are not debugging the   **
-pattern:If_you_see_this_message_and_you_are_not_debugging_the: If you see this message and you are not debugging the
+# If you see this message
+If_you_see_this_message: 1
+message:If_you_see_this_message: <0>[    4.750668][    T1] ** If you see this message   **
+pattern:If_you_see_this_message: If you see this message
 
 # report this immediately to your vendor!
-kernel,report_this_immediately_to_your_vendor: 1
-message:kernel,report_this_immediately_to_your_vendor: <0>[    4.751666][    T1] ** kernel, report this immediately to your vendor!         **
-pattern:kernel,report_this_immediately_to_your_vendor: report this immediately to your vendor!
+report_this_immediately_to_your_vendor: 1
+message:report_this_immediately_to_your_vendor: <0>[    4.751666][    T1] ** report this immediately to your vendor!         **
+pattern:report_this_immediately_to_your_vendor: report this immediately to your vendor!
 
 timestamp:last: 4.754668
-timestamp:NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE_NOTICE: 4.742666
-timestamp:IOMMU_DebugFS_SUPPORT_HAS_BEEN_ENABLED_IN_THIS_KERNEL: 4.744667
-timestamp:This_means_that_this_kernel_is_built_to_expose_internal: 4.746668
-timestamp:IOMMU_data_structures,which_may_compromise_security_on: 4.747668
-timestamp:your_system: 4.748669
-timestamp:If_you_see_this_message_and_you_are_not_debugging_the: 4.750668
-timestamp:kernel,report_this_immediately_to_your_vendor: 4.751666
+timestamp:NOTICE: 4.742666
+timestamp:IOMMU_DebugFS: 4.744667
+timestamp:This_means_that: 4.746668
+timestamp:IOMMU_data_structures: 4.747668
+timestamp:system: 4.748669
+timestamp:If_you_see_this_message: 4.750668
+timestamp:report_this_immediately_to_your_vendor: 4.751666
