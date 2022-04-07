@@ -302,3 +302,15 @@ Kernel not compiled with retpoline; no mitigation available!
 FAIL (uninit bytes: 
 skipping plain 'p' tests
 Motherboard not recognized (You could try the module's force-parameter)
+The ksmbd server is experimental
+Unable to run on non-Dell system
+TSC synchronization [CPU#
+ audit_backlog_limit=
+] attempts to use CLI/STI, pretending it's a NOP, ip:
+**     NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE    **
+**  IOMMU DebugFS SUPPORT HAS BEEN ENABLED IN THIS KERNEL  **
+** This means that this kernel is built to expose internal **
+** IOMMU data structures, which may compromise security on **
+** your system.                                            **
+** If you see this message and you are not debugging the   **
+** kernel, report this immediately to your vendor!         **
