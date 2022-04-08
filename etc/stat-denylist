@@ -173,3 +173,6 @@
 ^zoneinfo.*
 ^kmsg\.nvme\#:Admin_Cmd\(\#\),I/O_Error\(sct\#/sc\#\)MORE
 ^kmsg\.serial\#:\#:PM:dpm_run_callback\(\):pnp_bus_resume_returns
+^kmsg\.attempting_acpi
+^kmsg\.driver_probe_device
+^kmsg\.obsolete_checksetup

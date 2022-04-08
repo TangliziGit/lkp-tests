@@ -314,3 +314,17 @@ TSC synchronization [CPU#
 ** your system.                                            **
 ** If you see this message and you are not debugging the   **
 ** kernel, report this immediately to your vendor!         **
+** might reduce the security of your system.            **
+ attempting to enable ADq, but hasn't properly negotiated that capability
+ attempting to register as slave dev when 
+ attempting to stop endpoint 
+: attempting to delete a log item that is not in the AIL
+attempting to add another ref for an existing ref on a tree block
+attempting to clear filter table
+attempting to continue...
+attempting to destroy daemon; 
+attempting to restore a incompatible measurement list
+attempting to restore a template name that is too long
+attempting to restore too many measurements
+attempting to skcipher_request_alloc for 
+attempting to use an MTD device as a block device
