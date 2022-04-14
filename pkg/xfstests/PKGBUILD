@@ -47,7 +47,7 @@ generate_exclude_files()
 	# ext2/exclude  ext3/exclude  ext4/exclude  local/exclude  nfs/exclude  reiserfs/exclude  tmpfs/exclude
 	for fs in ext2 ext4
 	do
-		wget -O $benchmark_path/tests/exclude/$fs https://git.kernel.org/pub/scm/fs/ext2/xfstests-bld.git/plain/kvm-xfstests/test-appliance/files/root/fs/$fs/exclude || return
+		wget --no-check-certificate -O $benchmark_path/tests/exclude/$fs https://git.kernel.org/pub/scm/fs/ext2/xfstests-bld.git/plain/kvm-xfstests/test-appliance/files/root/fs/$fs/exclude || return
 	done
 
 	# In xfstests-dev/tests/generic/605 generic/606 generic/607 generic/608 mount options is "dax=always"
@@ -115,7 +115,7 @@ package()
 	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
 	cp -af $srcdir/xfstests-dev/* $benchmark_path
 
-	wget -O $benchmark_path/tools/find-api-violations.sh https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git/plain/tools/find-api-violations.sh || return
+	wget --no-check-certificate -O $benchmark_path/tools/find-api-violations.sh https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git/plain/tools/find-api-violations.sh || return
 
 	generate_exclude_files || return
 
