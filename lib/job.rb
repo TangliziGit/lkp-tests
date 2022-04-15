@@ -665,7 +665,7 @@ class Job
   def run_filter(_hash, _key, _val, script)
     system @filter_env, script, unsetenv_others: true
 
-    raise Job::ParamError, "#{script}: exitstatus #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus && $CHILD_STATUS.exitstatus != 0
+    raise Job::ParamError, "#{script}: exitstatus #{$CHILD_STATUS.exitstatus}" unless $CHILD_STATUS.success?
   end
 
   def expand_params(run_scripts: true)
