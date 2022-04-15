@@ -27,7 +27,8 @@ build_rusers()
 
 	# below url was from http://sourceforge.net/projects/rstatd/
 	# in SPECS/rusers.spec
-	wget --no-check-certificate -c "https://newcontinuum.dl.sourceforge.net/project/rstatd/rstatd/4.0.1/rpc.rstatd-4.0.1.tar.gz" -O - | tar -xz || exit 1
+
+	wget --no-check-certificate -c "https://sourceforge.net/projects/rstatd/files/rstatd/4.0.1/rpc.rstatd-4.0.1.tar.gz/download" -O - | tar -xz || exit 1
 
 	for p in $(grep ^Patch SPECS/rusers.spec | awk '{print $2}')
 	do
