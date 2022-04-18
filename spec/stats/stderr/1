@@ -1,0 +1,7 @@
+creating libmap_rtree.a
+creating libctree_map.a
+creating libmap_hashmap_tx.a
+creating libhashmap_tx.a
+creating libmap_hashmap_atomic.a
+^../../src/../src/libpmem2/deep_flush_other.c
+ generated.
