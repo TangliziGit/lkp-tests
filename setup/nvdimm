@@ -3,6 +3,8 @@
 # - nr_dev
 # - nr_part
 # - part_type
+# - ns_id
+# - ns_mode
 
 . "$LKP_SRC"/lib/nvdimm.sh
 
