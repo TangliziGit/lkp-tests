@@ -102,7 +102,7 @@ if ignore_lkdtm_dmesg?(RESULT_ROOT)
   exit
 end
 
-stat_unittest(lines) if $PROGRAM_NAME =~ /kmsg/
+stat_unittest(lines) if $PROGRAM_NAME =~ /dmesg/
 
 oops_map.each do |bug_to_bisect, line|
   line.chomp!
