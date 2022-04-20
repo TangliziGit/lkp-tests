@@ -2,6 +2,8 @@ suite: suspend
 testcase: suspend
 category: functional
 
+force_reboot: 1
+
 runtime: 30s
 iterations: 3x
 
