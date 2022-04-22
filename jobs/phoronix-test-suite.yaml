@@ -387,13 +387,6 @@ phoronix-test-suite:
       - Dense LU Matrix Factorization
       # - Test All Options
   # - test: lulesh-cl-1.0.1 # temporarily comment out the failed test
-  - test: luxcorerender-cl-1.2.1
-    option_a:
-      - LuxCore Benchmark
-      - DLSC
-      - Rainbow Colors and Prism
-      - Food
-      # - Test All Options
   - test: lzbench-1.1.1
     option_a:
       - Zstd 1

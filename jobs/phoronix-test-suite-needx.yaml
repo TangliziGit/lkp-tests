@@ -147,6 +147,13 @@ phoronix-test-suite:
       # - 512x512
       - 1024x1024
       # - Test All Options
+  - test: luxcorerender-cl-1.2.1
+    option_a:
+      - LuxCore Benchmark
+      - DLSC
+      - Rainbow Colors and Prism
+      - Food
+      # - Test All Options
   - test: nexuiz-1.6.1
     option_a:
       - 1024 x 768
