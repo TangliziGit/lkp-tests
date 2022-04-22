@@ -7,14 +7,14 @@ Subject: [PATCH] update runtest.py
 
 Signed-off-by: root <root@lkp-haiyan.sh.intel.com>
 ---
- runtest.py | 87 +++++++++++++++++++++++++++++-------------------------
- 1 file changed, 46 insertions(+), 41 deletions(-)
+ runtest.py | 91 ++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 50 insertions(+), 41 deletions(-)
 
 diff --git a/runtest.py b/runtest.py
-index 8bda393..878b592 100755
+index 8bda393..d7188ea 100755
 --- a/runtest.py
 +++ b/runtest.py
-@@ -48,12 +48,18 @@ class linux_stat():
+@@ -48,12 +48,22 @@ class linux_stat():
  		return 1.0 * idle / (idle + busy)
  
  
@@ -23,7 +23,7 @@ index 8bda393..878b592 100755
 -if len(sys.argv) != 2:
 -	print('Usage: runtest.py <testcase>', file=sys.stderr)
 +if len(sys.argv) < 6:
-+	print('Usage: runtest.py <testcase> <duration> <mode> <no_affinity> <threads...>', file=sys.stderr)
++	print('Usage: runtest.py <testcase> <duration> <mode> <no_affinity> <smt> <threads...>', file=sys.stderr)
  	sys.exit(1)
  cmd = sys.argv[1]
 +duration = int(sys.argv[2])
@@ -33,11 +33,15 @@ index 8bda393..878b592 100755
 +if int(sys.argv[4]) == 1:
 +	affinity = " -n "
 +
-+threads = sys.argv[5:]
++smt = "  "
++if int(sys.argv[5]) == 1:
++	smt = " -m "
++
++threads = sys.argv[6:]
  
  nr_cores=0
  r = re.compile('^processor')
-@@ -87,43 +93,42 @@ if arch == 'ppc64':
+@@ -87,43 +97,42 @@ if arch == 'ppc64':
  print('tasks,processes,processes_idle,threads,threads_idle,linear')
  print('0,0,100,0,100,0')
  
@@ -84,7 +88,7 @@ index 8bda393..878b592 100755
 +	processes_avg = 0
 +	processes_idle = 0
 +	if mode == 'process' or mode == 'both':
-+		c = './%s_processes -t %d -s %d %s ' % (cmd, i, duration, affinity)
++		c = './%s_processes -t %d -s %d %s %s ' % (cmd, i, duration, affinity, smt)
 +		before = linux_stat()
 +		pipe = subprocess.Popen(setarch + ' ' + c, shell=True, stdout=subprocess.PIPE, text=True).stdout
 +		for line in pipe.readlines():
@@ -104,7 +108,7 @@ index 8bda393..878b592 100755
 +	threads_avg = 0
 +	threads_idle = 0
 +	if mode == 'thread' or mode == 'both':
-+		c = './%s_threads -t %d -s %d %s ' % (cmd, i, duration, affinity)
++		c = './%s_threads -t %d -s %d %s %s ' % (cmd, i, duration, affinity, smt)
 +		before = linux_stat()
 +		pipe = subprocess.Popen(setarch + ' ' + c, shell=True, stdout=subprocess.PIPE, text=True).stdout
 +		for line in pipe.readlines():

@@ -4,6 +4,7 @@
 # - mode
 # - nr_task
 # - no_affinity  /* Do not do the CPU bindings for test tasks */
+# - smt
 
 ## It Scale takes a testcase and runs it from 1 through to n
 ## parallel copies to see if the testcase will scale. It
@@ -21,6 +22,7 @@ setup_params()
 
 [ -n "$mode" ] || mode='both'
 [ -n "$runtime" ] || runtime=300
+[ -n "$smt" ] || smt=0
 WARMUP_ITERATIONS=5 # defined in will-it-scale/main.c
 
 if [ -n "$nr_task" ]; then
@@ -39,4 +41,4 @@ disable_affinity=0
 
 ulimit -n 65536
 
-log_cmd /lkp/benchmarks/python3/bin/python3 ./runtest.py $test $duration $mode $disable_affinity $threads_to_iterate
+log_cmd /lkp/benchmarks/python3/bin/python3 ./runtest.py $test $duration $mode $disable_affinity $smt $threads_to_iterate
