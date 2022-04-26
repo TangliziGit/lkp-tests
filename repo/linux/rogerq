@@ -1,5 +1,7 @@
 url: https://github.com/rogerq/linux
 owner: Roger Quadros <rogerq@ti.com>
+notify_build_success_branch: .*
+mail_cc: Roger Quadros <rogerq@ti.com>
 subsystems:
 - usb
 - arm
