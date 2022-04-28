@@ -4,6 +4,9 @@ category: functional
 
 kconfig: x86_64-rhel-8.3-kselftests
 
+sysctl:
+  sc_nr_hugepages: 2
+
 kernel-selftests:
   group:
   - vm
