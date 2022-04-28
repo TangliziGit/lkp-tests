@@ -12,6 +12,8 @@ require "#{LKP_SRC}/lib/log"
 require 'set'
 
 monitor = ARGV[0]
+monitor_file = ARGV[1]
+monitor_file ||= "#{RESULT_ROOT}/#{monitor}.json"
 
 def warn_stat(msg, monitor, k, v)
   log_warn event: msg, detail: "#{RESULT_ROOT}/#{monitor}: #{k}:#{v}"
@@ -112,7 +114,7 @@ UNSTRUCTURED_MONITORS = %w(ftrace).to_set
 if min_cols < max_cols && !UNSTRUCTURED_MONITORS.include?(monitor)
   if min_cols == max_cols - 1
     result.each { |_k, y| y.pop if y.size == max_cols }
-    puts "Last record seems incomplete. Truncated #{RESULT_ROOT}/#{monitor}.json"
+    puts "Last record seems incomplete. Truncated #{monitor_file}"
   else
     warn_stat 'not a matrix with different value size', monitor, "#{min_cols_stat} [#{min_cols}]", "#{max_cols_stat} [#{max_cols}]"
   end
@@ -121,4 +123,4 @@ end
 exit if result.empty?
 exit if result.values[0].size.zero?
 exit if result.values[-1].size.zero?
-save_json(result, "#{RESULT_ROOT}/#{monitor}.json", compress: result.size * min_cols > 1000)
+save_json(result, monitor_file, compress: result.size * min_cols > 1000)

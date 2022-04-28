@@ -227,8 +227,9 @@ dump_stat()
 {
 	local stats_group=$1
 	local file=$2
+	local stat_file=$3
 
-	$LKP_SRC/sbin/dump-stat $stats_group < $file || { log_error "failed to dump-stat $program" "errno: $?\nfile: $file"; exit 1; }
+	$LKP_SRC/sbin/dump-stat $stats_group $stat_file < $file || { log_error "failed to dump-stat $program" "errno: $?\nfile: $file"; exit 1; }
 	rm $file
 }
 
@@ -243,13 +244,14 @@ if [[ $program = 'ftrace' ]]; then
 	for file in $RESULT_ROOT/$program.*.yaml
 	do
 		stats_group=$(basename $file .yaml)
-		dump_stat $stats_group $file
+		dump_stat $stats_group $file $stat_file
 	done
 else
-	dump_stat $stats_group $tmpfile
+	dump_stat $stats_group $tmpfile $stat_file
 fi
 
-check_empty_json
+# don't need to check empty json if save stat json to new place
+[[ $stat_file ]] || check_empty_json
 
 if [ -f $log.gz ]; then
 	rm $log
