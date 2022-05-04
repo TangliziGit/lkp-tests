@@ -4,3 +4,4 @@ owner: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 mail_cc: GNU/Weeb Mailing List <gwml@vger.gnuweeb.org>
 mail_to: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 private_report_branch: google/android/.*
+branch_denylist: axboe/linux-block/sock-nolock.2
