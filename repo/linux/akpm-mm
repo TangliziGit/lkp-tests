@@ -1,0 +1,7 @@
+url: https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git
+owner: Andrew Morton <akpm@linux-foundation.org>
+priority: high
+git_am_branch: mm-everything
+patch_based_on_branch:
+  '\] mm(:|\/|,)': mm-everything
+  '\[.+ (-mm)( .+)?\]': mm-everything
