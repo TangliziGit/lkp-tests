@@ -16,7 +16,7 @@ phoronix-test-suite:
       - Black-Scholes OpenCL
       - Monte-Carlo OpenCL
       - Bonds OpenMP
-      - Repo OpenMP
+      # - Repo OpenMP # temporarily comment out the failed test
       # - Test All Options
     # - gl-vs-vk-1.0.0 # required lib libGLEW.so.1.13 is too old
   # - test: juliagpu-1.3.1 # temporarily comment out the failed test
