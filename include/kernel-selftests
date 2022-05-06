@@ -35,6 +35,9 @@ need_kconfig:
 % elsif ___.group == "vm"
 - GUP_BENCHMARK: y, v4.15-rc1, <= v5.10
 - GUP_TEST: y, v5.11-rc1
+# conflict with group-01 EMBEDDED
+# - SECRETMEM: y, v5.14-rc1
+# - ARCH_HAS_SET_DIRECT_MAP: y, v5.14-rc1
 % elsif ___.group == "bpf"
 - BPF: y
 - BPF_EVENTS: y, v4.1-rc1
