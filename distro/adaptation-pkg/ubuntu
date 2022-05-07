@@ -113,5 +113,6 @@ toplev: pmu-tools
 kvm-kernel-boot-test::
 vmem::
 phoronix-test-suite::
+bpftrace::
 kernbench::
 rt-app::

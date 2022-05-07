@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# - one_liner_cmd
+# - delay
+
+. "$LKP_SRC"/lib/reproduce-log.sh
+. "$LKP_SRC"/lib/wait.sh
+
+export PATH="$BENCHMARK_ROOT/bpftrace/:$PATH"
+
+: ${delay:=30}
+
+bpftrace -V
+sleep $delay
+log_echo $one_liner_cmd
+if [ -n "$one_liner_cmd" ]; then
+	bpftrace -e "$one_liner_cmd"
+elif [ -f "$TMP_RESULT_ROOT/latency.bt" ]; then
+	bpftrace $TMP_RESULT_ROOT/latency.bt
+fi
