@@ -1,1 +1,7 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/chanwoo/linux.git
+owner: Chanwoo Choi <cw00.choi@samsung.com>
+git_am_branch: devfreq-testing
+mail_cc:
+- linux-pm@vger.kernel.org
+subsystems:
+- devfreq
