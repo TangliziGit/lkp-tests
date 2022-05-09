@@ -144,3 +144,5 @@ do
 	[[ ! "$opt_file" || -e "$path/$opt_file" ]] &&
 	show_one_path "$path/$opt_file"
 done < $temp_file_sort
+
+exit 0
