@@ -19,7 +19,8 @@ class Stater
 
   def stat(line, stats)
     case line
-    when /^(ok|not ok).*selftests: (\S*): (\S*)( # SKIP)?( \[)?/
+    when /^(ok|not ok).*selftests: (\S*): (\S*)( # SKIP)?( \[)?/,
+         /^Test \d+ (ok|not ok) - selftests: (\S*): (\S*)( # SKIP)?( \[)?/
       if $4
         # make: Entering directory .*/android'
         # not ok 1 selftests: android: run.sh # SKIP
@@ -31,6 +32,8 @@ class Stater
         # 1908 ok 1 selftests: lkdtm: PANIC.sh # SKIP
         # 3109 ok 1 selftests: lkdtm: PANIC.sh # SKIP
         # 9951 ok 1 selftests: lkdtm: PANIC.sh # SKIP
+
+        # Test 6 ok - selftests: cgroup: test_cpu # SKIP
         stats.add "#{@test}.#{$3}", 'skip' unless stats.key? "#{@test}.#{$3}"
       else
         # not ok 46 selftests: net: vrf_route_leaking.sh # exit=1
@@ -41,6 +44,8 @@ class Stater
         # add "duplicate key" check to avoid below duplication
         # 2618 ok 2 selftests: lkdtm: BUG.sh # SKIP
         # 7668 ok 2 selftests: lkdtm: BUG.sh # SKIP
+
+        # Test 1 ok - selftests: x86: single_step_syscall_32
         stats.add "#{@test}.#{$3}", $1 unless stats.key? "#{@test}.#{$3}"
       end
     when /: recipe for target.+failed$/, /^make: \*\*\* (.*) (Error \d+|Stop\.)$/
