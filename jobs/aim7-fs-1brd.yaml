@@ -19,7 +19,7 @@ aim7:
   - disk_rr
   - disk_rw
   - disk_cp
-  - disk_wrt
+  #- disk_wrt
   load: {{
           if fs == 'btrfs'
                   aim7.test == 'disk_src' ? 500 : 1500
