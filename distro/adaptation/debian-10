@@ -8,10 +8,6 @@
 binutils/unstable: binutils
 bsdtar: libarchive-tools
 btrfs-tools: btrfs-progs/unstable
-# install gcc-8 and link gcc executable to it
-gcc: gcc-8 gcc
-g++: g++-8
-gcc-multilib: gcc-8-multilib
 lib32gcc-dev: lib32gcc-8-dev
 libx32gcc-dev: libx32gcc-8-dev
 lib64gcc-dev: lib64gcc-8-dev
