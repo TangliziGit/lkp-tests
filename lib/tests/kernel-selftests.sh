@@ -571,8 +571,6 @@ fixup_vm()
 		sed -i "s#needmem=262144#needmem=$memory#" vm/$run_vmtests
 	}
 
-	sed -i 's/.\/compaction_test/echo -n LKP SKIP #.\/compaction_test/' vm/$run_vmtests
-
 	# /usr/include/bits/mman-linux.h:# define MADV_PAGEOUT     21/* Reclaim these pages.  */
 	# it doesn't exist in a old glibc<=2.28
 	grep -qw MADV_PAGEOUT /usr/include/x86_64-linux-gnu/bits/mman-linux.h 2>/dev/null || {
