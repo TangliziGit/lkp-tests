@@ -14,3 +14,4 @@ btrfs-tools: btrfs-progs
 libreadline5: readline-common
 libntfs: libntfs-3g883
 libtirpc: libtirpc-common
+libicu: libicu67
