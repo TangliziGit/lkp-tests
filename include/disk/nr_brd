@@ -1,4 +1,4 @@
 need_kconfig:
-- BLK_DEV_RAM
+- BLK_DEV_RAM: m
 - BLK_DEV: y
 - BLOCK: y
