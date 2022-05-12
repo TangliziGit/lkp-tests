@@ -15,3 +15,7 @@ libreadline5: readline-common
 libntfs: libntfs-3g883
 libtirpc: libtirpc-common
 libicu: libicu67
+python-pip: python3-pip
+python-setuptools: python3-setuptools
+python-wheel: python3-wheel
+python-docutils: python3-docutils

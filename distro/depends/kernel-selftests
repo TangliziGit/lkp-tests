@@ -67,7 +67,7 @@ lib64asan3 (i386)
 libc6-amd64 (i386)
 libc6-dev-amd64 (i386)
 lib64gcc-dev (i386)
-python3-docutils
+python-docutils
 jq
 socat
 netsniff-ng
