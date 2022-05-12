@@ -5,7 +5,7 @@ libc6-dev
 libc-bin
 libc6-dev-i386 (x86_64)
 libc6-dev-x32
-libc6/unstable
+libc6
 lib32gcc-dev
 libx32gcc-dev
 libc6-i386
@@ -43,7 +43,7 @@ iproute2
 ethtool
 uuid-runtime
 libdrm-dev
-linux-libc-dev/unstable
+linux-libc-dev
 linux-libc-dev-amd64-cross
 net-tools
 netcat-openbsd
@@ -52,7 +52,7 @@ libhugetlbfs-dev
 g++
 libssl-dev
 libasound2-dev
-libc-dev-bin/unstable
+libc-dev-bin
 nftables
 ebtables
 sendip
@@ -64,8 +64,8 @@ lib64gomp1 (i386)
 lib64itm1 (i386)
 lib64atomic1 (i386)
 lib64asan3 (i386)
-libc6-amd64/unstable (i386)
-libc6-dev-amd64/unstable (i386)
+libc6-amd64 (i386)
+libc6-dev-amd64 (i386)
 lib64gcc-dev (i386)
 python3-docutils
 jq
