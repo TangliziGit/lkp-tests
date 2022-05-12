@@ -13,3 +13,4 @@ libx32gcc1: libx32gcc-s1
 btrfs-tools: btrfs-progs
 libreadline5: readline-common
 libntfs: libntfs-3g883
+libtirpc: libtirpc-common
