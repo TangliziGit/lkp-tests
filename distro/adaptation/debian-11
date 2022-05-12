@@ -12,3 +12,4 @@ lib64gcc-dev: lib64gcc-10-dev
 libx32gcc1: libx32gcc-s1
 btrfs-tools: btrfs-progs
 libreadline5: readline-common
+libntfs: libntfs-3g883
