@@ -4,6 +4,9 @@
 # 3. exist/valid packages, but its name needs to be adapted for other distro,
 #    mapping to a new package name, then the new package will be install later.
 
+# reason(1)
+winpdb:
+
 # reason(3)
 fsverity: fsverity
 lib32gcc-dev: lib32gcc-10-dev
