@@ -572,8 +572,6 @@ fixup_vm()
 	}
 
 	sed -i 's/.\/compaction_test/echo -n LKP SKIP #.\/compaction_test/' vm/$run_vmtests
-	# ./userfaultfd anon 128 32
-	sed -i 's/.\/userfaultfd anon .*$/echo -n LKP SKIP #.\/userfaultfd/' vm/$run_vmtests
 
 	# /usr/include/bits/mman-linux.h:# define MADV_PAGEOUT     21/* Reclaim these pages.  */
 	# it doesn't exist in a old glibc<=2.28
