@@ -6,3 +6,10 @@
 
 # reason(3)
 fsverity: fsverity
+gcc: gcc-10 gcc # install gcc-10 and link gcc executable to it
+g++: g++-10
+gcc-multilib: gcc-10-multilib
+lib32gcc-dev: lib32gcc-10-dev
+libx32gcc-dev: libx32gcc-10-dev
+lib64gcc-dev: lib64gcc-10-dev
+libx32gcc1: libx32gcc-s1
