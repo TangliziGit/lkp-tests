@@ -14,7 +14,8 @@ homepage: https://sourceforge.net/projects/aimbench/files/aim-suite7/
 
 parameters:
  test: micro test name
- load:
+ load: number of tasks to be run in parallel
+ nr_task: number of test tasks, but also take percentage level of CPU numbers (25%, 200% etc.)
 
 results:
  aim7.jobs-per-min:
