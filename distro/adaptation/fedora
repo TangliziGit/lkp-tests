@@ -40,10 +40,10 @@ libaudit-dev: audit-libs-devel
 libblas3: blas
 libblkid-dev: libblkid-devel
 libc6: glibc.x86_64
-libc6/unstable: glibc.x86_64
+libc6: glibc.x86_64
 libc6-dbg: glibc-debuginfo
 libc6-dev: glibc-devel glibc-static
-libc6-dev/unstable: glibc-devel glibc-static
+libc6-dev: glibc-devel glibc-static
 libc6-dev:i386: glibc-devel.i686 glibc-static.i686
 libc6-dev-x32:
 libcairo2-dev: cairo-devel
@@ -51,7 +51,7 @@ libcap2: libcap
 libcap-dev: libcap-devel
 libcap-ng-dev: libcap-ng-devel
 libc-bin: glibc-common
-libc-bin/unstable: glibc-common
+libc-bin: glibc-common
 libc-dev-bin: glibc-common
 libc-dev:i386: glibc-devel.i686
 libcunit1-dev: CUnit-devel
@@ -116,7 +116,7 @@ librdmacm-dev: librdmacm-devel
 libreadline5: compat-readline5
 libsctp1: lksctp-tools
 libsctp-dev: lksctp-tools-devel
-libseccomp2/unstable: libseccomp2
+libseccomp2: libseccomp2
 libselinux1:
 libsqlite3-dev: libsqlite3x-devel
 libssl: openssl-devel
@@ -142,7 +142,6 @@ linux-perf: perf
 linux-tools: perf
 mysql-server: mariadb
 ncurses-bin: ncurses
-needrestart/unstable: needrestart
 netpipe-lam: NetPIPE
 netpipe-mpich2: NetPIPE
 netpipe-openmpi: NetPIPE
@@ -161,11 +160,9 @@ python-minimal: python2
 python-pkg-resources: python-setuptools
 rstatd: rusers-server
 rusersd: rusers-server
-runc/unstable: runc
 rt-tests: numactl-devel
 ruby-dev: ruby-devel
 sg3-utils: sg3_utils
-stress-ng: stress-ng
 tshark: wireshark
 uuid-dev: libuuid-devel
 update-inetd:
