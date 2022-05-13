@@ -23,7 +23,6 @@ libgcc-dev: libgcc-8-dev
 libgcrypt-dev: libgcrypt20-dev
 libicu: libicu63
 libipsec-mb: libipsec-mb0
-libmariadbclient-dev: libmariadb-dev-compat
 libmpx2/unstable: libmpx2
 libmpx2/unstable: libmpx2
 libntfs: libntfs-3g883
