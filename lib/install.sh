@@ -108,6 +108,11 @@ parse_packages_arch()
 	generic_packages=$(echo $generic_packages | sed 's/[^ ]*([^ ]*)//g')
 }
 
+map_python2_to_python3()
+{
+	generic_packages=$(echo "$generic_packages" | sed -e 's/python-/python3-/g' -e 's/python2-/python3-/g')
+}
+
 get_dependency_packages()
 {
 	local distro=$1
@@ -121,6 +126,10 @@ get_dependency_packages()
 	detect_system
 	parse_packages_arch
 	[ "$distro" != "debian" ] && remove_packages_version && remove_packages_repository
+
+	# many python2 pkgs are not available in debian 11 and higher version source anymore
+	# do a general mapping from python-pkg to python3-pkg
+	[[ "$distro-$_system_version" =~ debian-1[1-9] ]] && map_python2_to_python3
 
 	adapt_packages | sort | uniq
 }
