@@ -20,3 +20,4 @@ libtirpc: libtirpc-common
 libicu: libicu67
 libjson-c3: libjson-c5
 python3-crypto: python3-pycryptodome
+libevent-2.1-6: libevent-2.1-7
