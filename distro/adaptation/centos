@@ -59,7 +59,7 @@ libdrm-dev: libdrm-devel
 libdw-dev: libdwarf-devel.x86_64
 libegl1-mesa-dev: mesa-libEGL-devel
 libelf-dev: elfutils-libelf-devel
-libevent-2.1-6: libevent
+libevent-2.1: libevent
 libevent-dev: libevent-devel
 libfabric-dev: libfabric-devel
 libfdt-dev:

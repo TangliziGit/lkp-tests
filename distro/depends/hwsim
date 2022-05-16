@@ -23,7 +23,7 @@ python-dbus
 wpasupplicant
 crda
 wireless-regdb
-libevent-2.1-6
+libevent-2.1
 python-netifaces
 openssl
 tcpdump
