@@ -18,3 +18,4 @@ libreadline5: readline-common
 libntfs: libntfs-3g883
 libtirpc: libtirpc-common
 libicu: libicu67
+libjson-c3: libjson-c5
