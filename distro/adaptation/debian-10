@@ -22,4 +22,3 @@ libtirpc: libtirpc3
 perl-modules-5: perl-modules-5.28
 libc6-dbg: libc6
 openjdk: openjdk-11-jdk
-mysql-server: default-mysql-server

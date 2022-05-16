@@ -26,3 +26,4 @@ procps-ng: procps
 libmariadbclient18: libmariadb3
 libopenmpi2: mpi-default-dev
 libmariadbclient-dev: libmariadb-dev-compat
+mysql-server: default-mysql-server
