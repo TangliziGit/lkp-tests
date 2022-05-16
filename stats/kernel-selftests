@@ -340,7 +340,7 @@ class VmStater < Stater
       # vm.run_vmtests.sh.gup_test.get_user_pages_fast.pass: 1
       @test_case = "#{$1}.#{$3}"
     when /^#\s+\[(PASS|FAIL)\]/, /^#\s+LKP (SKIP)/
-      stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
+      stats.add "#{@test_prefix}.#{@test_case}".tr('-', '_'), $1 if @test_case
       @test_case = nil
     else
       super(line, stats)
