@@ -72,7 +72,12 @@ download_extract()
 {
 	local URL="$1"
 	local file="$(basename $URL)"
-	local dir="$(basename $(dirname $URL))"
+	local dir="$COMPILER_INSTALL_PATH/$(basename $(dirname $URL))"
+
+	mkdir -p $COMPILER_INSTALL_PATH || {
+		echo "Can't use $COMPILER_INSTALL_PATH as compiler install path, please choose a different COMPILER_INSTALL_PATH"
+		return 1
+	}
 
 	mkdir -p $dir || return
 	cd $dir || return
@@ -81,13 +86,6 @@ download_extract()
 	     lftpget -c $URL || return
 	cd ..
 
-	mkdir -p $COMPILER_INSTALL_PATH || return
-
-	[[ -w "$COMPILER_INSTALL_PATH" ]] || {
-		echo "Can't use $COMPILER_INSTALL_PATH as compiler install path, please choose a different COMPILER_INSTALL_PATH"
-		return 1
-	}
-
 	echo tar Jxf $dir/$file -C $COMPILER_INSTALL_PATH
 	tar Jxf $dir/$file -C $COMPILER_INSTALL_PATH
 }
@@ -95,17 +93,16 @@ download_extract()
 install_crosstool_clang()
 {
 	local URL='https://download.01.org/0day-ci/cross-package'
-	local list=/tmp/0day-ci-crosstool-files
+	local date=$(date +'%Y%m%d')
+	local list=/tmp/0day-ci-crosstool-files-$date
 	local file='clang.tar.xz'
-	lftp -c "open $URL && find -d 3 > $list" || return
+	[[ -f $list ]] || lftp -c "open $URL && find -d 3 > $list" || return
 
 	file=$(grep $file $list | tail -1)
 	[[ $file ]] || {
 		echo "Cannot find $file under $URL check $list"
 		return 1
 	}
-
-	rm $list
 
 	download_extract "$URL/$file" || {
 		echo "Failed to download $URL/$file"
