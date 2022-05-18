@@ -1,6 +1,6 @@
 suite: rcurefscale
 testcase: rcurefscale
-category: benchmark
+category: functional
 
 # all possible parameters in kernel/rcu/refscale.c
 # MODULE_PARM_DESC(scale_type, "Type of test (rcu, srcu, refcnt, rwsem, rwlock.");
