@@ -22,3 +22,5 @@ libjson: libjson-c5
 python3-crypto: python3-pycryptodome
 libevent-2.1: libevent-2.1-7
 libasan: libasan6
+libperl5: libperl5.32
+perl-modules-5: perl-modules-5.32
