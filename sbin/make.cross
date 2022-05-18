@@ -62,10 +62,38 @@ check_install_path()
 
 install_packages()
 {
-	[[ -x /usr/bin/xz && -x /usr/bin/lftp ]] || {
-		echo Please install: xz-utils lftp
-		return 1
+	local ret=0
+	[[ -x /usr/bin/xz ]] || {
+		echo Please install: xz-utils
+		ret=1
 	}
+
+	[[ -x /usr/bin/lftp ]] || {
+		echo Please install: lftp
+		ret=1
+	}
+
+	[[ -x /usr/bin/ldd ]] || {
+		echo Please install: libc-bin
+		ret=1
+	}
+
+	return $ret
+}
+
+install_dependence()
+{
+	local exec=$1
+	local errors=$(ldd $exec | grep "not found")
+	[[ $errors ]] || return 0
+
+	echo "$errors" | grep -q "libc.so.6.*GLIBC_" && {
+		echo Please update: libc6
+	}
+
+	echo "ldd $exec"
+	echo "$errors"
+	return 1
 }
 
 download_extract()
@@ -312,6 +340,7 @@ setup_crosstool_gcc()
 		deplibs_path=${deplibs_path[-1]}
 		[[ -d $deplibs_path ]] && export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$deplibs_path
 
+		install_dependence "$gcc_exec" || return
 	else
 		opt_cross=
 	fi
@@ -326,6 +355,8 @@ setup_crosstool_clang()
 		echo "Install clang compiler failed"
 		return 1
 	}
+
+	install_dependence "$cross_clang" || return
 
 	local cross_clang_path=$(dirname $cross_clang)
 	local opt_ldd="LD=${cross_clang_path}/ld.lld HOSTLD=${cross_clang_path}/ld.lld"
