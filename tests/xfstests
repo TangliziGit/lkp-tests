@@ -178,6 +178,10 @@ setup_fs_config()
 		log_eval export MKFS_OPTIONS="-mreflink=1"
 	fi
 
+	# new version of mkfs.xfs set reflink=1 as default and conflict with DAX mount
+	# need to set reflink=0 manually
+	[ "$fs" = "xfs" ] && [ "$test" = "generic-dax" ] && log_eval export MKFS_OPTIONS="-mreflink=0"
+
 	[ "$test" = "generic-387" ] && {
 		[ -n "$SCRATCH_DEV_POOL" ] && {
 			SCRATCH_DEV=${SCRATCH_DEV_POOL##* }

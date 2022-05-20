@@ -26,7 +26,9 @@ fs_options() {
 			def_mount="${def_mount},logbsize=262144"
 			def_mkfs="-f -d agcount=$nr_partitions"
 		}
-		ensure_mkfs='-f'
+		# mkfs.xfs v4.20.0 would set reflink=0 by default
+		# mkfs.xfs v5.10.0 would set reflink=1 by default, and conflict with DAX mount option, so need to set reflink=0 explicitly
+		ensure_mkfs='-f -mreflink=0'
 		;;
 	ext*)
 		ensure_mkfs='-q -F'
