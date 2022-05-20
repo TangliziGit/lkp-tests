@@ -1,0 +1,7 @@
+#!/usr/bin/bpftrace
+
+BEGIN
+{
+	printf("you should replace this script with your own, bye\n");
+	exit();
+}
