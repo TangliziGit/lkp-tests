@@ -64,6 +64,8 @@ update_shared_pkg()
 	echo "update shared pkg link ${benchmark}-${arch}.cgz -> $bm_link"
 }
 
+fixup_distro_mirror
+
 distro_install_depends lkp-dev
 distro_install_depends ${benchmark}-dev
 
