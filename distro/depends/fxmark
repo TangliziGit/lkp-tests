@@ -4,6 +4,7 @@ f2fs-tools
 jfsutils
 reiserfsprogs
 nilfs-tools
+python2
 python3
 sudo
 dbench
