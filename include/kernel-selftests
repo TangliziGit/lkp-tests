@@ -145,6 +145,7 @@ need_kconfig:
 - NFT_NAT: m, v5.1-rc1
 - NFT_QUEUE: m
 - NFT_REDIR: m
+- NFT_SYNPROXY: m, v5.9-rc1
 - NF_CT_NETLINK: m
 - NF_TABLES_INET: y, v4.17-rc1
 % elsif ___.group == "livepatch"
