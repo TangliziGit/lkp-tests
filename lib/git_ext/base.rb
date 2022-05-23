@@ -84,7 +84,7 @@ module Git
 
         [tag, false]
       else
-        log_warn e
+        log_warn "version #{version.inspect} of #{commit_sha} is invalid"
 
         nil
       end
