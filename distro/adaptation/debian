@@ -27,3 +27,4 @@ libmariadbclient18: libmariadb3
 libopenmpi2: mpi-default-dev
 libmariadbclient-dev: libmariadb-dev-compat
 mysql-server: default-mysql-server
+gtk3: gir1.2-gtk-3.0

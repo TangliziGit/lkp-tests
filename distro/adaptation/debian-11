@@ -6,6 +6,7 @@
 
 # reason(1)
 winpdb:
+python3-gobject:
 
 # reason(3)
 fsverity: fsverity
