@@ -54,7 +54,7 @@ class LinuxTestcasesTableSet
        pmbench linkbench rocksdb cassandra redis power-idle
        mongodb ycsb memtier mcperf fio-jbod cyclictest filebench igt
        autonuma-benchmark adrestia kernbench rt-app migratepages intel-ipsec-mb
-       simd-stress bpftrace].freeze
+       simd-stress bpftrace stress-ng].freeze
   LINUX_TESTCASES =
     %w[analyze-suspend boot blktests cpu-hotplug ext4-frags ftq ftrace-onoff fwq
        galileo irda-kernel kernel-builtin kernel-selftests kvm-unit-tests kvm-unit-tests-qemu
@@ -62,7 +62,7 @@ class LinuxTestcasesTableSet
        qemu rcuscale rcutorture suspend suspend-stress trinity ndctl nfs-test hwsim
        idle-inject mdadm-selftests xsave-test nvml test-bpf mce-log perf-sanity-tests
        build-perf_test update-ucode reboot cat libhugetlbfs-test ocfs2test syzkaller
-       perf-test stress-ng fxmark kvm-kernel-boot-test bkc_ddt
+       perf-test fxmark kvm-kernel-boot-test bkc_ddt
        xfstests packetdrill avocado v4l2 vmem perf-stat-tests cgroup2-test].freeze
   OTHER_TESTCASES =
     %w[build-dpdk build-nvml build-qemu convert-lkpdoc-to-html convert-lkpdoc-to-html-css rsync-rootfs
