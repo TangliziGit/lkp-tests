@@ -1,3 +1,5 @@
 need_kconfig:
 - NVDIMM_PFN: y
 - FS_DAX: y
+
+rootfs: debian-10.4-x86_64-20200603.cgz
