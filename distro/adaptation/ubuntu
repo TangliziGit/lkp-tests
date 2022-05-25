@@ -9,7 +9,7 @@ bsdtar: libarchive-tools
 iblz4-1:liblz4-dev
 libbz2-1.0:libbz2-dev
 libcpupower-dev:
-libevent-2.0-5: libevent-dev
+libevent-2: libevent-dev
 libgcrypt-dev: libgcrypt11-dev
 libgflags2v5:libgflags-dev
 libhugetlbfs-bin: hugepages
