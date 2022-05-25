@@ -9,7 +9,7 @@ export PATH=$BENCHMARK_ROOT/cyclictest/bin:$PATH
 
 run_test()
 {
-	log_cmd cyclictest -p $priority -m -c $clock -i $interval -n -h $histogram -q -l $loops 2>&1
+	log_cmd cyclictest -p $priority -m -c $clock -i $interval -h $histogram -q -l $loops 2>&1
 }
 
 run_test
