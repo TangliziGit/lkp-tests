@@ -9,6 +9,15 @@ depends=(scons libevent-dev gengetopt libzmq-dev memcached)
 source=('https://github.com/leverich/mutilate.git')
 md5sums=('SKIP')
 
+patch_source() {
+	cd "$srcdir/mutilate"
+
+	# if scons isn't python3 version, no need apply patch
+	scons -v | grep -q "python3" || return 0
+
+	patch -p1 < "$LKP_SRC/pkg/${pkgname}/0001-SConstruct-update-to-python3-version.patch"
+}
+
 build()
 {
 	cd "$srcdir/mutilate"
