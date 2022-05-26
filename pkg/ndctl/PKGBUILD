@@ -9,6 +9,7 @@ md5sums=('SKIP')
 
 build() {
 	cd "$srcdir/${pkgname}"
+	[[ -e '/usr/include/iniparser.h' ]] || cp /usr/include/iniparser/* /usr/include/
 	meson setup build
 	meson configure -Dtest=enabled -Ddocs=disabled -Drootprefix=/lkp -Dprefix=/lkp/benchmarks build
 	meson compile -C build
