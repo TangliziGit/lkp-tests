@@ -12,8 +12,7 @@ kmod_module_remove_module: could not remove 'nfit_test': Resource temporarily un
 Signed-off-by: Xiao Yang <yangx.jy@cn.fujitsu.com>
 ---
  test/dsm-fail.c    | 1 +
- test/parent-uuid.c | 1 +
- 2 files changed, 2 insertions(+)
+ 1 files changed, 1 insertions(+)
 
 diff --git a/test/dsm-fail.c b/test/dsm-fail.c
 index b2c51db..632308c 100644
@@ -27,18 +26,6 @@ index b2c51db..632308c 100644
  	kmod_module_remove_module(mod, 0);
  
  	kmod_unref(kmod_ctx);
-diff --git a/test/parent-uuid.c b/test/parent-uuid.c
-index f41ca2c..6bd3010 100644
---- a/test/parent-uuid.c
-+++ b/test/parent-uuid.c
-@@ -240,6 +240,7 @@ int test_parent_uuid(int loglevel, struct ndctl_test *test, struct ndctl_ctx *ct
- 	err = do_test(ctx);
- 	if (err == 0)
- 		result = EXIT_SUCCESS;
-+	system("/lkp/benchmarks/bin/ndctl disable-region all");
- 	kmod_module_remove_module(mod, 0);
- 	kmod_unref(kmod_ctx);
- 	return result;
 -- 
 2.21.0
 
