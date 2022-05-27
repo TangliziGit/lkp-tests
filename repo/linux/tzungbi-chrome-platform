@@ -1,1 +1,4 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/tzungbi/chrome-platform.git
+owner: Tzung-Bi Shih <tzungbi@kernel.org>
+mail_cc: Tzung-Bi Shih <tzungbi@kernel.org>
+notify_build_success_branch: .*
