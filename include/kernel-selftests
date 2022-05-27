@@ -201,10 +201,10 @@ need_kconfig:
 - SAMPLE_TRACE_PRINTK: m
 - KALLSYMS_ALL: y
 % elsif ___.group == "group-01"
-- DAMON: y, 5.15-rc1
-- DAMON_VADDR: y, 5.15-rc1
-- DAMON_PADDR: y, 5.16-rc1
-- DAMON_DBGFS: y, 5.15-rc1
+- DAMON: y, v5.15-rc1
+- DAMON_VADDR: y, v5.15-rc1
+- DAMON_PADDR: y, v5.16-rc1
+- DAMON_DBGFS: y, v5.15-rc1
 - SECURITY_PATH: y
 - SECURITY_LANDLOCK: y, v5.13
 - UDMABUF: y, v4.20-rc1
