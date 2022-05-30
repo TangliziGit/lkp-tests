@@ -20,7 +20,7 @@ stress-ng:
   - filesystem
   test:
   - access
-  - binderfs
+# - binderfs
   - chattr
   - chdir
   - chmod
