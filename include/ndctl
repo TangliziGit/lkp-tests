@@ -22,3 +22,5 @@ need_kconfig:
 - NVDIMM_PFN: y
 - NVDIMM_DAX
 - TRANSPARENT_HUGEPAGE: y
+
+rootfs: debian-10.4-x86_64-20200603.cgz
