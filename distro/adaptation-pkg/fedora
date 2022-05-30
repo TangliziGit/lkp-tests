@@ -46,6 +46,7 @@ oltp::
 otc_ddt::
 packetdrill::
 pbzip2::
+pepc::
 perf::
 perf-bench-futex: perf
 perf-c2c: perf

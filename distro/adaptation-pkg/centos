@@ -48,6 +48,7 @@ ocfs2test::
 oltp::
 packetdrill::
 pbzip2::
+pepc::
 perf::
 perf-bench-futex: perf
 perf-c2c: perf
