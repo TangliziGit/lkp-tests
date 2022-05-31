@@ -4,7 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="http://www.cs.virginia.edu/stream"
 license=('GPL')
-source=("http://www.cs.virginia.edu/stream/FTP/Code/stream.c")
+source=("$pkgname"::"https://github.com/jeffhammond/STREAM.git")
 md5sums=('SKIP')
 
 package() {
