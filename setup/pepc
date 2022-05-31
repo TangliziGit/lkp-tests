@@ -6,4 +6,4 @@
 
 export PATH=$PATH:/lkp/benchmarks/pepc/bin/
 
-[ $# -ge 1 ] && log_cmd pepc "$@" 2>&1
+[ $# -ge 1 ] && log_cmd eval "pepc $@" 2>&1
