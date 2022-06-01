@@ -16,6 +16,6 @@ shopt -s nullglob
 #   could not open '/sys/module/XXX': No such file or directory
 modprobe nfit_test || die "Can not load nfit_test module and its dependencies"
 
-/lkp/bin/ndctl test 2>&1
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lkp/x86_64-linux-gnu /lkp/bin/ndctl test 2>&1
 
 exit 0
