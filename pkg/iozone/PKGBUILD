@@ -15,7 +15,7 @@ build() {
 	cd "${srcdir}/${pkgname}${pkgver}_${pkgrel}/src/current"
 
 	[[ "${CARCH}" == 'x86_64' ]] && TARGET='-AMD64'
-	make linux${TARGET} CFLAGS="${CFLAGS}"
+	make linux${TARGET} CFLAGS="${CFLAGS} -fcommon"
 }
 
 package() {
