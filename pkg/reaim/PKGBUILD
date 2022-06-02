@@ -23,7 +23,7 @@ build()
 	./bootstrap
 	LDFLAGS=-laio \
 	./configure --prefix=$benchmark_path
-	make
+	make CFLAGS="-fcommon"
 }
 
 package()
