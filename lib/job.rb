@@ -135,11 +135,20 @@ def __create_programs_hash(glob, lkp_src)
   programs
 end
 
+def multi_create_programs_hash(glob, lkp_src)
+  programs = {}
+  lkp_list = [ lkp_src ] + get_lkp_path_list
+  lkp_list.uniq!.each do |lkp|
+    programs.merge!(__create_programs_hash(glob, lkp))
+  end
+  programs
+end
+
 def create_programs_hash(glob, lkp_src = LKP_SRC)
   cache_key = [glob, lkp_src].join ':'
   $programs_cache ||= {}
   $programs =
-    $programs_cache[cache_key] ||= __create_programs_hash(glob, lkp_src).freeze
+    $programs_cache[cache_key] ||= multi_create_programs_hash(glob, lkp_src).freeze
 end
 
 def atomic_save_yaml_json(object, file)
@@ -716,6 +725,16 @@ class Job
     @job.merge!(cmdline)
   end
 
+  def get_lkp_path_list()
+    lkp_path_list = []
+    ["LKP_SRC", "LKP_SRC2", "LKP_SRC3"].each do |k|
+      break unless ENV.has_key?(k)
+      lkp_path_list << ENV[k]
+    end
+
+    return lkp_path_list
+  end
+
   def get_depend_packages(os, os_version, script)
     depend_pakeages_path = search_depend_packages_file(os, os_version, script)
     if depend_pakeages_path && File.exist?(depend_pakeages_path)
@@ -725,22 +744,36 @@ class Job
   end
 
   def get_packages_from_debian(os, script)
-    depend_pakeages_path = "#{ENV['LKP_SRC']}/distro/depends/#{script}"
-    return unless File.exist?(depend_pakeages_path)
+    get_lkp_path_list.reverse.each do |lkp_path|
+      packages_path = "#{lkp_path}/distro/depends/#{script}"
+      next unless File.exist?(packages_path)
 
-    `cat #{depend_pakeages_path} | #{ENV['LKP_SRC']}/sbin/adapt-packages #{os}`.split
+      return `cat #{packages_path} | #{ENV['LKP_SRC']}/sbin/adapt-packages #{os}`.split
+    end
+
+    return
   end
 
   # depend packages priority:
   # - $LKP_SRC/distro/depends/$os/$os_version/$script
   # - $LKP_SRC/distro/depends/$os/$script
   def search_depend_packages_file(os, os_version, script)
-    depend_pakeages_dir = "#{ENV['LKP_SRC']}/distro/depends/"
-    depend_pakeages_path = File.join(depend_pakeages_dir, os.to_s, os_version.to_s, script)
-    return depend_pakeages_path if File.exist?(depend_pakeages_path)
+    dirs = []
+    get_lkp_path_list.reverse.each do |lkp|
+      dirs << "#{lkp}/distro/depends/"
+    end
 
-    depend_pakeages_path = File.join(depend_pakeages_dir, os.to_s, script)
-    return depend_pakeages_path if File.exist?(depend_pakeages_path)
+    dirs.each do |dir|
+      file = File.join(dir, os.to_s, os_version.to_s, script)
+      return file if File.exist?(file)
+    end
+
+    dirs.each do |dir|
+      file = File.join(dir, os.to_s, script)
+      return file if File.exist?(file)
+    end
+
+    return
   end
 
   def add_pp()

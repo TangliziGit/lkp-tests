@@ -111,6 +111,9 @@ class Job2sh < Job
 
     cmd.first.gsub!(LKP_SRC, '$LKP_SRC')
     cmd.first.gsub!(lkp_src, '$LKP_SRC')
+    get_lkp_path_list.each do |lkp|
+      cmd.first.gsub!(lkp, '$LKP_SRC')
+    end
 
     command = []
     case program_dir
