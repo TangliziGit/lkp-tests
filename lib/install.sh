@@ -131,6 +131,10 @@ get_dependency_packages()
 	# do a general mapping from python-pkg to python3-pkg
 	[[ "$distro-$_system_version" =~ debian-1[1-9] ]] && map_python2_to_python3
 
+	# many python2 pkgs are not available in ubuntu 20.04 and higher version source anymore
+	# do a general mapping from python-pkg to python3-pkg
+	[[ "$distro-$_system_version" =~ ubuntu-2[0-9].* ]] && map_python2_to_python3
+
 	adapt_packages | sort | uniq
 }
 
