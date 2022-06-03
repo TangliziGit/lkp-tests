@@ -34,3 +34,4 @@ procps-ng: procps
 zlib1g:zlib1g-dev
 nasm: nasm
 btrfs-tools: btrfs-progs
+gtk3: gir1.2-gtk-3.0
