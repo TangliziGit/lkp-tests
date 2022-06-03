@@ -6,3 +6,4 @@ libtirpc: libtirpc3
 python-minimal: python2-minimal
 perl-modules-5: perl-modules-5.32
 libperl5: libperl5.32
+python3-gobject:
