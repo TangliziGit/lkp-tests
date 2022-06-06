@@ -59,6 +59,20 @@ check_die()
 	return 0
 }
 
+check_env_issue()
+{
+	# wget_initrd_fail is mostly caused by env issue not kernel, we
+	# better mv rt to bad.
+	[[ -f $RESULT_ROOT/last_state ]] || return 0
+
+	grep -q "wget_initrd_fail: 1" $RESULT_ROOT/last_state && {
+		log_warn "job exited due to wget_initrd_fail" "$RESULT_ROOT"
+		return 1
+	}
+
+	return 0
+}
+
 check_empty_output()
 {
 	[[ -s $log ]] && return
@@ -194,6 +208,7 @@ check_soft_timeout
 check_empty_output
 check_binary_output
 check_die || exit 1
+check_env_issue || exit 1
 
 # When stats script returns failure, we need decide whether it is a bad rt
 # - job exists due to die, so that rt is bad. This is handled in check_die.
