@@ -12,11 +12,12 @@
 ## networking performance. The primary foci are bulk (aka unidirectional)
 ## data transfer and request/response performance using either TCP
 ## or UDP and the Berkeley Sockets interface.
-
+. $LKP_SRC/lib/env.sh
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/wait.sh
 setup_wait
 
+systemctl stop firewalld
 export PATH=$BENCHMARK_ROOT/netperf/bin:$PATH
 
 [ "${test#*SCTP}" != "$test" ] && log_cmd modprobe sctp 2>/dev/null
@@ -43,15 +44,33 @@ opt_ip=
 [ "$ip" = 'ipv4' ] && opt_ip='-4'
 [ "$ip" = 'ipv6' ] && opt_ip='-6'
 
+run_netperf_performance()
+{
+	echo 3 > /proc/sys/vm/drop_caches
+	if [[ "$test" =~ .*_*RR ]];then
+		log_eval "use_benchmark_env /lkp/benchmarks/netperf/bin/netperf $opt_ip -H $server -t $test &"
+	elif [ "$test" = "TCP_STREAM" ] || [ "$test" = "TCP_STREAM" ];then
+		log_eval "use_benchmark_env /lkp/benchmarks/netperf/bin/netperf $opt_ip -H $server -t $test -l 60 -- -m $send_size -R 1 &"
+	fi
+}
+
 run_netperf()
 {
-	[ -n "$delay" ] && $WAIT_POST_TEST_CMD --timeout "$delay"
-
 	for i in $(seq $nr_threads)
 	do
 		log_eval "netperf $opt_ip -H $server -t $test -c -C -l $runtime $test_options &"
 	done
+}
 
+run_netperf_all()
+{
+	[ -n "$delay" ] && $WAIT_POST_TEST_CMD --timeout "$delay"
+
+	if [ "$is_performance_dashboard" = "true" ]; then
+		run_netperf_performance
+	else
+		run_netperf
+	fi
 	log_eval wait
 }
 
@@ -66,7 +85,7 @@ run_for_iterations()
 if [ -n "$iterations" ]; then
 	run_for_iterations
 else
-	run_netperf
+	run_netperf_all
 fi
 
 # Comments from Jesse Brandeburg <jesse.brandeburg@intel.com>
