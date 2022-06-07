@@ -28,7 +28,7 @@ libacl1-dev: libacl-devel
 libaio1: libaio
 libaio-dev: libaio-devel
 libarchive-dev: libarchive-devel
-libarchive-tools: libarchive
+libarchive-tools: libarchive bsdtar
 libarchive13: libarchive
 libattr1: libattr
 libattr1-dev: libattr-devel
