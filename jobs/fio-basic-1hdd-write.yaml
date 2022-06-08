@@ -85,13 +85,17 @@ fs: ext4
 fio-setup-basic:
   rw: write
   bs: 4k
-  ioengine: libaio
+  ioengine:
+    - libaio
+    - io_uring
 
 ---
 fio-setup-basic:
   rw: write
   bs: 4k
-  ioengine: sync
+  ioengine:
+    - sync
+    - io_uring
   direct: direct
 ---
 fs2: nfsv4
@@ -99,7 +103,9 @@ fs2: nfsv4
 fio-setup-basic:
   rw: write
   bs: 4k
-  ioengine: sync
+  ioengine:
+    - sync
+    - io_uring
 
 ---
 fio-setup-basic:

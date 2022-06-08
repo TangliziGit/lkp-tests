@@ -35,5 +35,6 @@ fio-setup-basic:
     - 2M
   ioengine:
     - mmap
+    - io_uring
 
 fio:
