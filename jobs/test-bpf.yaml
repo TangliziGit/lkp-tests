@@ -6,5 +6,5 @@ need_memory: 1G
 
 test-bpf:
   test:
-  - jit
-  - non-jit
+    - jit
+    - non-jit

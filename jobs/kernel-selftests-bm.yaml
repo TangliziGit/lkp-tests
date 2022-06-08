@@ -4,35 +4,34 @@ category: functional
 
 kernel-selftests:
   group:
-  - cpufreq
-  - net
-  - netfilter
-  - firmware
+    - cpufreq
+    - net
+    - netfilter
+    - firmware
 
 ---
 kernel-selftests:
   group:
-  - net
+    - net
   test:
-  - tls
-
+    - tls
 ---
 kernel-selftests:
   group:
-  - net
+    - net
   test:
-  - fcnal-test.sh
+    - fcnal-test.sh
   atomic_test:
-  - ipv4_ping
-  - ipv4_tcp
-  - ipv4_udp
-  - ipv4_bind
-  - ipv4_runtime
-  - ipv4_netfilter
-  - ipv6_ping
-  - ipv6_tcp
-  - ipv6_udp
-  - ipv6_bind
-  - ipv6_runtime
-  - ipv6_netfilter
-  - use_cases
+    - ipv4_ping
+    - ipv4_tcp
+    - ipv4_udp
+    - ipv4_bind
+    - ipv4_runtime
+    - ipv4_netfilter
+    - ipv6_ping
+    - ipv6_tcp
+    - ipv6_udp
+    - ipv6_bind
+    - ipv6_runtime
+    - ipv6_netfilter
+    - use_cases

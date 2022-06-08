@@ -4,6 +4,6 @@ category: functional
 
 kernel-selftests:
   group:
-  - kvm
+    - kvm
 
 kernel_cmdline: kvm-intel.unrestricted_guest=0

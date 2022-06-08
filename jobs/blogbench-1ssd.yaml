@@ -5,9 +5,9 @@ category: benchmark
 disk: 1SSD
 
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 
 blogbench:

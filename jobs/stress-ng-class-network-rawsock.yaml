@@ -4,12 +4,11 @@ category: benchmark
 
 nr_threads: 100%
 
-
 testtime:
-- 60s
+  - 60s
 
 stress-ng:
   class:
-  - network
+    - network
   test:
-  - rawsock
+    - rawsock

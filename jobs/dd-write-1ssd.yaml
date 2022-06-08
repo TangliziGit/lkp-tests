@@ -3,8 +3,7 @@ testcase: dd-write
 category: benchmark
 
 ftrace:
-  events:
-    balance_dirty_pages
+  events: balance_dirty_pages
     bdi_dirty_ratelimit
     global_dirty_state
     writeback_single_inode
@@ -13,16 +12,16 @@ runtime: 5m
 
 disk: 1SSD
 iosched:
-- kyber
-- mq-deadline
+  - kyber
+  - mq-deadline
 fs:
-- ext4
-- xfs
-- btrfs
+  - ext4
+  - xfs
+  - btrfs
 
 nr_threads:
-- 1dd
-- 10dd
-- 100dd
+  - 1dd
+  - 10dd
+  - 100dd
 
 dd:

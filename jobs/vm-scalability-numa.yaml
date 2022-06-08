@@ -6,4 +6,4 @@ runtime: 300s
 
 vm-scalability:
   test:
-  - migrate
+    - migrate

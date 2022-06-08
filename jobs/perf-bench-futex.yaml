@@ -7,11 +7,11 @@ nr_task: 100%
 
 perf-bench-futex:
   test:
-  - hash
-  - wake
-  - wake-parallel
-  - requeue
-  - lock-pi
+    - hash
+    - wake
+    - wake-parallel
+    - requeue
+    - lock-pi
   shared:
-  - shared
-  -
+    - shared
+    -

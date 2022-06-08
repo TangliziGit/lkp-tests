@@ -7,7 +7,7 @@ force_reboot: 1
 
 suspend-stress:
   mode:
-  - freeze
+    - freeze
 
 iterations: 10
 runtime:

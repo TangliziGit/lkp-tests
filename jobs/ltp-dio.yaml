@@ -6,14 +6,14 @@ need_memory: 4G
 
 disk: 1HDD
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 
 ltp:
   test:
-  - dio-00
-  - dio-01
-  - dio-02
-  - dio-03
+    - dio-00
+    - dio-01
+    - dio-02
+    - dio-03

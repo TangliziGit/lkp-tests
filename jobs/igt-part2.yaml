@@ -4,13 +4,13 @@ category: functional
 
 igt:
   group:
-  - group-10
-  - group-11
-  - group-12
-  - group-13
-  - group-14
-  - group-15
-  - group-16
-  - group-17
-  - group-18
-  - group-19
+    - group-10
+    - group-11
+    - group-12
+    - group-13
+    - group-14
+    - group-15
+    - group-16
+    - group-17
+    - group-18
+    - group-19

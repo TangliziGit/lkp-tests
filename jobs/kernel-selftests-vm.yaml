@@ -7,7 +7,6 @@ sysctl:
 
 kernel-selftests:
   group:
-  - vm
-
+    - vm
 # memfd_secret default is disable, should add kernel cmdline to enable
 # kernel_cmdline: secretmem.enable=1

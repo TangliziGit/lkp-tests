@@ -7,7 +7,7 @@ nr_threads: 100%
 
 disk: 1SSD
 fs:
-- ext4
+  - ext4
 
 mysql-setup:
 setup-oltp:

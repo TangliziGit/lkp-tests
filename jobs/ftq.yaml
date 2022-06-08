@@ -16,7 +16,6 @@ ftq:
   freq: 1000
 
 ---
-
 samples: 6000ss
 ftq:
   test: cache

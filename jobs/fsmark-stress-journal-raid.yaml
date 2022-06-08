@@ -7,17 +7,17 @@ nr_threads: 1t
 
 disk: 11HDD
 md:
-- RAID0
-- RAID5
+  - RAID0
+  - RAID5
 
 fs:
-- xfs
-- ext4
-- btrfs
+  - xfs
+  - ext4
+  - btrfs
 #- f2fs
 fs2:
-- nfsv4
-- 
+  - nfsv4
+  -
 
 fsmark:
   filesize: 4M

@@ -6,8 +6,8 @@ need_memory: 1G
 
 pm-qa:
   test:
-  # - all
-  - cpuhotplug
-  - thermal
-  # - suspend
-  # - powertop
+    # - all
+    - cpuhotplug
+    - thermal
+    # - suspend
+    # - powertop

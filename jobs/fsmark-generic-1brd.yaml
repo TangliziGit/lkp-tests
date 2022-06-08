@@ -7,24 +7,24 @@ perf-profile:
 
 iterations: 1x
 nr_threads:
-- 1t
-- 64t
+  - 1t
+  - 64t
 
 disk: 1BRD_48G
 need_memory: 50G
 
 fs:
-- xfs
-- ext4
-- btrfs
-- f2fs
+  - xfs
+  - ext4
+  - btrfs
+  - f2fs
 fs2:
-- nfsv4
-- 
+  - nfsv4
+  -
 
 fsmark:
   filesize: 4M
   test_size: 24G
   sync_method:
-  - NoSync
-  - fsyncBeforeClose
+    - NoSync
+    - fsyncBeforeClose

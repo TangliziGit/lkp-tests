@@ -8,21 +8,21 @@ need_memory: 6G
 
 disk: 1HDD
 fs:
-- xfs
+  - xfs
 
 nr_task:
-- 1
-- 100%
+  - 1
+  - 100%
 
 test_size: 32G
 
 fio-setup-basic:
   rw: randwrite
   bs:
-  - 4k
-  - 4M
+    - 4k
+    - 4M
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
 
 fio:

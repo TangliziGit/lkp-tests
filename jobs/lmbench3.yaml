@@ -13,36 +13,36 @@ test_memory_size: 50%
 
 #---
 nr_threads:
-- 1
-- 50%
-- 100%
+  - 1
+  - 50%
+  - 100%
 lmbench3:
   mode: development
   test:
-  - SELECT
-  - PROC
-  - PAGEFAULT
-  - MMAP
-  - PIPE
-  - UNIX
-  - TCP
-  - OPS
+    - SELECT
+    - PROC
+    - PAGEFAULT
+    - MMAP
+    - PIPE
+    - UNIX
+    - TCP
+    - OPS
 
 ---
 nr_threads:
-- 1
+  - 1
 lmbench3:
   mode: development
   test:
-# Case SYSCALL,FILE,CTX,BCOPY will take very long time when nr_threads set as 50% or 100%
-# May take 30mins ~ 1hour on lkp-bdw-ep4,so only test nr_threads as 1 for these cases.
-  - SYSCALL
-  - FILE
-  - CTX
-  - BCOPY
-# From Lmbench3 source scripts, run lat_connect when "$SYNC_MAX = 1", so case CONNECT only test with 1 thread.
-  - CONNECT
-# Case UDP can get test result when nr_threads=1, if nr_threads set as 50%,100%, can't get correct result, showing "Recv timed out".
-  - UDP
+    # Case SYSCALL,FILE,CTX,BCOPY will take very long time when nr_threads set as 50% or 100%
+    # May take 30mins ~ 1hour on lkp-bdw-ep4,so only test nr_threads as 1 for these cases.
+    - SYSCALL
+    - FILE
+    - CTX
+    - BCOPY
+    # From Lmbench3 source scripts, run lat_connect when "$SYNC_MAX = 1", so case CONNECT only test with 1 thread.
+    - CONNECT
+    # Case UDP can get test result when nr_threads=1, if nr_threads set as 50%,100%, can't get correct result, showing "Recv timed out".
+    - UDP
 # MEM is about cache and memory latency related case, it will take more than 2 hours on test machine lkp-bdw-ep4.
-  # - MEM
+# - MEM

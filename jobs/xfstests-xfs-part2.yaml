@@ -7,31 +7,31 @@ need_memory: 3G
 disk: 4HDD
 
 fs:
-- xfs
+  - xfs
 
 xfstests:
   test:
-  - xfs-rmapbt
-  - xfs-reflink-06
-  - xfs-reflink-08
-  - xfs-reflink-09
-  - xfs-reflink-10
-  - xfs-reflink-11
-  - xfs-reflink-12
-  - xfs-reflink-13
-  - xfs-reflink-14
-  - xfs-reflink-15
-  - xfs-reflink-16
-  - xfs-reflink-17
-  - xfs-reflink-18
-  - xfs-reflink-20
-  - xfs-reflink-21
-  - xfs-reflink-22
-  - xfs-reflink-23
-  - xfs-reflink-24
-  - xfs-reflink-25
-  - xfs-reflink-26
-  - xfs-reflink-27
-  - xfs-reflink-rmapbt
-  # - xfs-233 # execution time > 30mins
-  # - xfs-234 # execution time about 500s
+    - xfs-rmapbt
+    - xfs-reflink-06
+    - xfs-reflink-08
+    - xfs-reflink-09
+    - xfs-reflink-10
+    - xfs-reflink-11
+    - xfs-reflink-12
+    - xfs-reflink-13
+    - xfs-reflink-14
+    - xfs-reflink-15
+    - xfs-reflink-16
+    - xfs-reflink-17
+    - xfs-reflink-18
+    - xfs-reflink-20
+    - xfs-reflink-21
+    - xfs-reflink-22
+    - xfs-reflink-23
+    - xfs-reflink-24
+    - xfs-reflink-25
+    - xfs-reflink-26
+    - xfs-reflink-27
+    - xfs-reflink-rmapbt
+    # - xfs-233 # execution time > 30mins
+    # - xfs-234 # execution time about 500s

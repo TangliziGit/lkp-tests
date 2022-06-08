@@ -8,11 +8,11 @@ nr_threads: 1t
 disk: 1HDD
 
 fs:
-- xfs
+  - xfs
 #- f2fs
 fs2:
-- nfsv4
-- 
+  - nfsv4
+  -
 
 fsmark:
   filesize: 4K
@@ -22,8 +22,8 @@ fsmark:
 
 ---
 fs:
-- ext4
-- btrfs
+  - ext4
+  - btrfs
 
 fsmark:
   filesize: 4K

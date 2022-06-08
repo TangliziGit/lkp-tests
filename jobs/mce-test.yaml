@@ -3,12 +3,12 @@ testcase: mce-test
 category: functional
 
 disk:
-- 1HDD
+  - 1HDD
 
 need_memory: 2G
 
 fs:
- - ext4
+  - ext4
 
 mce-test:
   mce_case:

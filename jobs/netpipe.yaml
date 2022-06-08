@@ -3,11 +3,11 @@ testcase: netpipe
 category: benchmark
 
 test:
-# - lam
-# - mpich2
-# - openmpi
-# - pvm
-- tcp
+  # - lam
+  # - mpich2
+  # - openmpi
+  # - pvm
+  - tcp
 
 cluster: cs-localhost
 

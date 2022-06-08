@@ -8,4 +8,4 @@ disk: 1HDD
 fs:
 ltp:
   test:
-  - mm-00
+    - mm-00

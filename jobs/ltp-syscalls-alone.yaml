@@ -10,11 +10,11 @@ need_cpuid: 1
 
 disk: 1HDD
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 
 ltp:
   test:
-  - fork13.fork13.-i.1000000
+    - fork13.fork13.-i.1000000

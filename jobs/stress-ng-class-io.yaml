@@ -7,18 +7,18 @@ nr_threads: 100%
 disk: 1HDD
 
 testtime:
-- 60s
+  - 60s
 
 stress-ng:
   class:
-  - io
+    - io
   test:
-  - aio
-  - aiol
-  - hdd
-#  - io-uring
-  - rawdev
-  - readahead
-  - revio
-  - seek
-  - sync-file
+    - aio
+    - aiol
+    - hdd
+    #  - io-uring
+    - rawdev
+    - readahead
+    - revio
+    - seek
+    - sync-file

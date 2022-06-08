@@ -10,4 +10,4 @@ nr_task: 50%
 
 reaim:
   test:
-  - dbase
+    - dbase

@@ -9,7 +9,7 @@ swap:
 
 suspend-stress:
   mode:
-  - disk
+    - disk
 
 iterations: 10
 runtime:

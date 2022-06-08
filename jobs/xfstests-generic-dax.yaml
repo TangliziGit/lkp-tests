@@ -12,10 +12,10 @@ disk:
   nr_pmem: 4
 
 fs:
-- ext2
-- ext4
-- xfs
+  - ext2
+  - ext4
+  - xfs
 
 xfstests:
   test:
-  - generic-dax
+    - generic-dax

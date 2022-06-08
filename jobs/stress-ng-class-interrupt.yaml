@@ -7,34 +7,34 @@ nr_threads: 100%
 disk: 1HDD
 
 testtime:
-- 60s
+  - 60s
 
 stress-ng:
   class:
-  - interrupt
+    - interrupt
   test:
-  - aio
-  - aiol
-  - clock
-  - fault
-  - itimer
-  - kill
-  - nanosleep
-  - schedpolicy
-  - sigabrt
-  - sigchld
-  - sigfd
-  - sigfpe
-  - sigio
-  - signal
-  - signest
-  - sigpending
-  - sigpipe
-  - sigq
-  - sigrt
-  - sigsegv
-  - sigsuspend
-  - sigtrap
-  - sleep
-  - timer
-  - timerfd
+    - aio
+    - aiol
+    - clock
+    - fault
+    - itimer
+    - kill
+    - nanosleep
+    - schedpolicy
+    - sigabrt
+    - sigchld
+    - sigfd
+    - sigfpe
+    - sigio
+    - signal
+    - signest
+    - sigpending
+    - sigpipe
+    - sigq
+    - sigrt
+    - sigsegv
+    - sigsuspend
+    - sigtrap
+    - sleep
+    - timer
+    - timerfd

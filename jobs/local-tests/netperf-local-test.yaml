@@ -23,4 +23,4 @@ if role server:
 if role client:
   netperf:
     test:
-    - TCP_RR
+      - TCP_RR

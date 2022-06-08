@@ -7,48 +7,48 @@ need_memory: 1G
 disk: 4HDD
 
 fs:
-- ext2
-- ext4
-- xfs
-- btrfs
-- f2fs
-- udf
-# - ocfs2 # mount.ocfs2 known bug
+  - ext2
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
+  - udf
+  # - ocfs2 # mount.ocfs2 known bug
 
 xfstests:
   test:
-  - generic-group-00
-  - generic-group-01
-  - generic-group-02
-  - generic-group-03
-  - generic-group-04
-  - generic-group-05
-  - generic-group-06
-  - generic-group-07
-  - generic-group-08
+    - generic-group-00
+    - generic-group-01
+    - generic-group-02
+    - generic-group-03
+    - generic-group-04
+    - generic-group-05
+    - generic-group-06
+    - generic-group-07
+    - generic-group-08
 
 ---
 fs:
-- ext2
-- ext4
-- xfs
-- btrfs
-- f2fs
-- udf
+  - ext2
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
+  - udf
 
 xfstests:
   test:
-  - generic-387
+    - generic-387
 
 ---
 fs:
-- ext2
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext2
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 
 xfstests:
   test:
-  # when fs=udf, generic-074 has used 42min, caused timeout
-  - generic-074
+    # when fs=udf, generic-074 has used 42min, caused timeout
+    - generic-074

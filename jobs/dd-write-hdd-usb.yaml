@@ -3,8 +3,7 @@ testcase: dd-write
 category: benchmark
 
 ftrace:
-  events:
-    balance_dirty_pages
+  events: balance_dirty_pages
     bdi_dirty_ratelimit
     global_dirty_state
     writeback_single_inode
@@ -17,8 +16,8 @@ iosched: kyber
 fs: ext4
 
 nr_threads:
-- 1dd
-- 10dd
-- 100dd
+  - 1dd
+  - 10dd
+  - 100dd
 
 dd:

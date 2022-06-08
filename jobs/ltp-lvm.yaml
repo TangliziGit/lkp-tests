@@ -6,5 +6,5 @@ need_memory: 30G
 
 ltp:
   test:
-# Cause OOM, require at least 32GB memory
-  - lvm.local
+    # Cause OOM, require at least 32GB memory
+    - lvm.local

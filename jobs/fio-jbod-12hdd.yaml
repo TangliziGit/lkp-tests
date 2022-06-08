@@ -3,17 +3,17 @@ testcase: fio-jbod
 category: benchmark
 
 disk:
-- 12HDD
+  - 12HDD
 fs:
-- ext4
+  - ext4
 
 fio:
   rw:
-  - randwrite
-  - randrw
+    - randwrite
+    - randrw
   ioengine:
-  - sync
-  - mmap
+    - sync
+    - mmap
   bs:
-  - 4k
-  - 64k
+    - 4k
+    - 64k

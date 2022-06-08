@@ -6,13 +6,13 @@ need_memory: 7G
 
 disk: 1HDD
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 
 ltp:
   test:
-  - io
-  - ltp-aiodio.part2-00
-  - ltp-aiodio.part2-01
+    - io
+    - ltp-aiodio.part2-00
+    - ltp-aiodio.part2-01

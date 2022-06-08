@@ -12,13 +12,13 @@ disk: 1BRD_32G
 need_memory: 48G
 
 fs:
-- xfs
-- ext4
-- btrfs
+  - xfs
+  - ext4
+  - btrfs
 #- f2fs
 fs2:
-- nfsv4
-- 
+  - nfsv4
+  -
 
 fsmark:
   filesize: 4K

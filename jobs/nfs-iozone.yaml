@@ -5,9 +5,9 @@ category: benchmark
 disk: 1HDD
 
 fs:
-- nfsv3
-- nfsv4
+  - nfsv3
+  - nfsv4
 iosched:
-- kyber
+  - kyber
 
 iozone:

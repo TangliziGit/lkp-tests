@@ -11,5 +11,5 @@ oom-killer:
 
 ltp:
   test:
-  - crashme-00
-  - crashme-01
+    - crashme-00
+    - crashme-01
