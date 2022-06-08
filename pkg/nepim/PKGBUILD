@@ -16,6 +16,33 @@ build()
 {
   cd nepim-${pkgver}/src
   unset LDFLAGS
+
+  # Change sequence of options for gcc in makefile, place compilation before
+  # linking to avoid errors like the following:
+  #
+  # ```
+  # /usr/bin/ld: udp_server.o: in function `on_udp_write':
+  # /tmp/lkp/nepim/src/nepim-0.53/src/udp_server.c:589: undefined reference to `_oop_continue'
+  # ```
+  #
+  # Folloing is the changes after modification:
+  #
+  # ```
+  # diff --git a/src/Makefile b/src/Makefile
+  # index fba26cc..8789e22 100644
+  # --- a/src/Makefile
+  # +++ b/src/Makefile
+  # @@ -105,4 +105,4 @@ clean:
+  #  build: clean default
+  #
+  #  $(TARGET): $(OBJ)
+  # -       $(CC) $(LDFLAGS) -o $@ $^
+  # +       $(CC) -o $@ $^ $(LDFLAGS)
+  # ```
+  sed -i 's/$(CC) $(LDFLAGS) -o $@ $^/$(CC) -o $@ $^ $(LDFLAGS)/g' Makefile || {
+    echo "change sequence of options for gcc in makefile failed, maybe the current version has fixed it, continue" >&2
+  }
+
   make OOP_BASE=/usr
 }
 
