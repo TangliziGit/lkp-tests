@@ -517,6 +517,11 @@ fixup_kmod()
 	sed -i 's/0009\:150\:1/0009\:50\:1/' kmod/kmod.sh
 }
 
+fixup_fpu()
+{
+	modprobe test_fpu
+}
+
 prepare_for_selftest()
 {
 	if [ "$group" = "group-00" ]; then
@@ -793,6 +798,8 @@ fixup_subtest()
 		fixup_mount_setattr
 	elif [[ "$subtest" = "tc-testing" ]]; then
 		fixup_tc_testing # ignore return value so that doesn't abort the rest tests
+	elif [[ "$subtest" = "fpu" ]]; then
+		fixup_fpu
 	fi
 	return 0
 }
