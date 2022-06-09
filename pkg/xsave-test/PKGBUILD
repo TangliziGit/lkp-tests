@@ -1,0 +1,23 @@
+pkgname=xsave-test
+pkgver=git
+pkgrel=1
+arch=('i386' 'x86_64')
+url="https://github.com/yyu168/xsave_test"
+source=('xsave-test'::'https://github.com/yyu168/xsave_test.git')
+md5sums=('SKIP')
+
+build()
+{
+	cd $srcdir/${pkgname}
+	make all
+}
+
+package() {
+	benchmark_path="${pkgdir}/lkp/benchmarks"
+	mkdir -p "$benchmark_path"
+	cp -af "$srcdir/${pkgname}" "$benchmark_path"
+	sed -i 's,$EXE_BAT/cpuid,cpuid,' ${benchmark_path}/${pkgname}/test-xsave/BAT-xsave.sh
+
+	[[ -x "${benchmark_path}/${pkgname}/test-xsave/BAT-xsave.sh" ]] ||
+	chmod 755 ${benchmark_path}/${pkgname}/test-xsave/BAT-xsave.sh
+}
