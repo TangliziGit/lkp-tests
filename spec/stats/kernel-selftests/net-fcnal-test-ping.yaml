@@ -1,0 +1,9 @@
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_ns-B_IPv6.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_ns-B_loopback_IPv6.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_ns-B_IPv6_LLA.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_multicast_IP.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.ping_group_range=0_2147483647.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_ns-B_IPv6.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.ping_group_range=0_2147483647.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_ns-B_loopback_IPv6.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.ping_group_range=0_2147483647.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_ns-B_IPv6_LLA.pass: 1
+net.fcnal-test.sh.IPv6_ping.With_VRF.net.ipv4.ping_group_range=0_2147483647.net.ipv4.raw_l3mdev_accept=1.ping_out_VRF_bind_-_multicast_IP.pass: 1
+net.fcnal-test.sh.pass: 1

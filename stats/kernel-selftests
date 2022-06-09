@@ -113,8 +113,30 @@ class NetStater < Stater
       @test_subcase1 = $1
       @test_subcase2 = nil if @test_subcase1 =~ /Device enslaved to bridge|Ping LLA with multiple interfaces
                                                  TCP reset|ICMP unreachable/
+
+      # start a new @test_subcase1, thus reset @sysctl
+      @sysctl = false
     when /^# SYSCTL: (.*)/
-      @test_subcase2 = $1
+      # there may be indefinite num of 'SYSCTL' like below,
+      # here we use @sysctl flag to combine all 'SYSCTL'.
+      # SYSCTL: net.ipv4.raw_l3mdev_accept=0
+      #
+      # TEST: ping out - ns-B IPv6                                    [ OK ]
+      # ...
+      # SYSCTL: net.ipv4.ping_group_range=0 2147483647
+      #
+      # SYSCTL: net.ipv4.raw_l3mdev_accept=0
+      #
+      # TEST: ping out - ns-B IPv6                                    [ OK ]
+      @test_subcase2 = if !@sysctl
+                         # net.ipv4.raw_l3mdev_accept=0
+                         $1
+                       else
+                         # net.ipv4.ping_group_range=0_2147483647.net.ipv4.raw_l3mdev_accept=0
+                         "#{@test_subcase2}.#{$1}"
+                       end
+      # here we met one 'SYSCTL', thus set below flag to true
+      @sysctl = true
     # end for net.fcnal-test.sh
     when /^# TEST SECTION: (.*)/
       # selftests: net: fib-onlink-tests.sh
@@ -218,6 +240,10 @@ class NetStater < Stater
         stats.add "#{@test_prefix}.#{@test_case}.#{$1}", $2 unless @test_case == 'IPv4 route with IPv6 gateway tests' || stats.key?("#{@test_prefix}.#{@test_case}.#{$1}")
       end
     when /^# TEST: (.*) \[ ?(PASS|OK|FAIL|SKIP) ?\]/
+      # this 'TEST' line means current 'SYSCTL' is done,
+      # and next time we capture 'SYSCTL' will be a new one.
+      @sysctl = false
+
       # ##########################################################################
       # IPv4 ping
       # ##########################################################################

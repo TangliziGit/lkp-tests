@@ -1,0 +1,40 @@
+2022-06-07 19:36:24 make run_tests -C net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4e67be407725
+b1d8b829ed2075987037abec98ec/tools/testing/selftests/net'
+make --no-builtin-rules ARCH=x86 -C ../../../.. headers_install
+make[1]: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4e67be407
+725b1d8b829ed2075987037abec98ec'
+  INSTALL ./usr/include
+make[1]: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4e67be4077
+25b1d8b829ed2075987037abec98ec'
+TAP version 13
+1..1
+# selftests: net: fcnal-test.sh
+#
+# ###########################################################################
+# IPv6 ping
+# ###########################################################################
+#
+#
+# #################################################################
+# With VRF
+#
+# SYSCTL: net.ipv4.raw_l3mdev_accept=1
+#
+# TEST: ping out, VRF bind - ns-B IPv6                                          [ OK ]
+# TEST: ping out, VRF bind - ns-B loopback IPv6                                 [ OK ]
+# TEST: ping out, VRF bind - ns-B IPv6 LLA                                      [ OK ]
+# TEST: ping out, VRF bind - multicast IP                                       [ OK ]
+# SYSCTL: net.ipv4.ping_group_range=0 2147483647
+#
+# SYSCTL: net.ipv4.raw_l3mdev_accept=1
+#
+# TEST: ping out, VRF bind - ns-B IPv6                                          [ OK ]
+# TEST: ping out, VRF bind - ns-B loopback IPv6                                 [ OK ]
+# TEST: ping out, VRF bind - ns-B IPv6 LLA                                      [ OK ]
+# TEST: ping out, VRF bind - multicast IP                                       [ OK ]
+#
+# Tests passed: 119
+# Tests failed:   1
+ok 1 selftests: net: fcnal-test.sh
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4e67be407725b1d8b829ed2075987037abec98ec/tools/testing/selftests/net'
