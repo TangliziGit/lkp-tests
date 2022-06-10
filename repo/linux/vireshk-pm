@@ -1,3 +1,5 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/vireshk/pm.git
 owner: Viresh Kumar <viresh.kumar@linaro.org>
 notify_build_success_branch: .*
+public_report_branch: cpufreq/arm/linux-next|opp/linux-next
+private_report_branch: .*
