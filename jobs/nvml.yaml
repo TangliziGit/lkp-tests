@@ -2,8 +2,6 @@ suite: nvml
 testcase: nvml
 category: functional
 
-branch: linus/master
-
 need_memory: 3G
 
 nvml:

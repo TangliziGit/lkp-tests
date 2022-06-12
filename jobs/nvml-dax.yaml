@@ -2,8 +2,6 @@ suite: nvml
 testcase: nvml
 category: functional
 
-branch: linus/master
-
 nvml:
 test: pmem
 
