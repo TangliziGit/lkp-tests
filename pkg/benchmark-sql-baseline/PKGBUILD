@@ -1,0 +1,20 @@
+pkgname=benchmarksql5.0-for-mysql
+pkgver=1
+pkgrel=1
+arch=('aarch64' 'x86_64')
+url="http://www.mysql.com"
+license=('GPLv2')
+source=("https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/database/patch/benchmarksql5.0-for-mysql.zip"
+	"props.conf")
+md5sums=('SKIP' 'SKIP')
+
+package()
+{
+	cd "$srcdir"
+	cp -r "$pkgname" "$pkgdir/"
+	cp props.conf "$pkgdir/$pkgname/run"/props.conf
+	cd "$pkgdir/$pkgname/run"
+	chmod 777 *.sh
+	mv sql.mysql/tableCreates.sql sql.mysql/tableCreates.sql-bak
+	mv sql.mysql/tableCreates_partition.sql sql.mysql/tableCreates.sql
+}

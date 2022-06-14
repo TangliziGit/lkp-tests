@@ -1,0 +1,43 @@
+pkgname=mysql
+pkgver=8.0.20
+pkgrel=1
+arch=('aarch64' 'x86_64')
+url="http://www.mysql.com"
+license=('GPLv2')
+source=("https://cdn.mysql.com/archives/mysql-8.0/mysql-boost-$pkgver.tar.gz"
+	"https://ghproxy.com/https://github.com/kunpengcompute/mysql-server/releases/download/tp_v1.0.0/0001-SHARDED-LOCK-SYS.patch"
+	"https://ghproxy.com/https://github.com/kunpengcompute/mysql-server/releases/download/tp_v1.0.0/0002-LOCK-FREE-TRX-SYS.patch"
+	"https://ghproxy.com/https://github.com/kunpengcompute/mysql-server/releases/download/21.0.RC1.B031/0001-SCHED-AFFINITY.patch"
+	"my.cnf-aarch64"
+	"my.cnf-x86_64")
+md5sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+
+patch_source()
+{
+	cd "$srcdir/$pkgname-$pkgver"
+	patch -p1 < ../0001-SHARDED-LOCK-SYS.patch
+	patch -p1 < ../0002-LOCK-FREE-TRX-SYS.patch
+	patch -p1 < ../0001-SCHED-AFFINITY.patch
+}
+
+build()
+{
+	cd $srcdir/$pkgname-$pkgver/cmake
+
+	cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DWITH_BOOST=../boost -DDOWNLOAD_BOOST=1
+
+	[ "$(arch)" = "x86_64" ] && {
+		innobase_path=$srcdir/$pkgname-$pkgver/storage/innobase
+		sed -i -e "271,275d" -e "144d" $innobase_path/CMakeLists.txt
+		sed -i '/^  return word_add_fetch(&lock->lock_word, amount);/c\ \ return (os_atomic_increment_lint(&lock->lock_word, amount));' $innobase_path/include/sync0rw.ic
+	}
+
+	make -j96
+	make DESTDIR=$pkgdir install
+}
+
+package()
+{
+	mkdir -p $pkgdir/etc
+	cp my.cnf-$(arch) $pkgdir/etc/my.cnf
+}
