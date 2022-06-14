@@ -1,0 +1,20 @@
+2022-06-11 03:02:44 make run_tests -C net/mptcp
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613
+c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/net/mptcp'
+make --no-builtin-rules ARCH=x86 -C ../../../../.. headers_install
+make[1]: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3
+613c92f4ec1bdc7f60ec66fea135991f'
+  INSTALL ./usr/include
+make[1]: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a36
+13c92f4ec1bdc7f60ec66fea135991f'
+TAP version 13
+1..6
+# selftests: net/mptcp: diag.sh
+# no msk on netns creation                          [  ok  ]
+# after MPC handshake                               [  ok  ]
+# ....chk remote_key                                [  ok  ]
+# ....chk no fallback                               [  ok  ]
+# check fallback                                    [  ok  ]
+# many msk socket present                           [  ok  ]
+ok 4 selftests: net/mptcp: diag.sh
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/net/mptcp'

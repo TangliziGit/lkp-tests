@@ -487,7 +487,10 @@ end
 class MptcpStater < Stater
   def stat(line, stats)
     case line
-    when /^# (.*) ?\[ (OK|FAIL|SKIP) \]/
+    when /^# (.*) ?\[ (OK|FAIL|SKIP| ok |fail) \]/
+      # selftests: net/mptcp: diag.sh
+      # no msk on netns creation                          [  ok  ]
+
       # for "ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP (duration    75ms) [ OK ]"
       # it's @result is "OK"
       # it's @test_case is "ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP"
