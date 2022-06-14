@@ -1,0 +1,33 @@
+suite: benchmark-sql
+cluster: cs-s1-a1006-c1
+
+nic: enp9s0
+nic_gateway: 192.168.1.1
+mysql_host: 192.168.1.10
+nic_prefix: 24
+kernel_custom_params: "sched_steal_node_limit=4"
+
+if role server:
+  mysql-baseline:
+    nic_ip: 192.168.1.10
+    bind_core: 0-90
+    numa_nodes: 0-3
+    nic_queues: 5
+    cpu_list: 91 92 93 94 95
+    alloc_pages: 138192
+
+    # only is_xxx=true, will do the step, or not execute.
+    is_database_tuning: true
+    is_config_steal: true
+    is_config_gazelle: true
+    is_config_hugepages: true
+    is_allocate_hugepages: true
+if role client:
+  benchmark-sql-baseline:
+    nic_ip: 192.168.1.11
+    warehouses: 1000
+    loadworkers: 100
+    terminals: 300
+    runmins: 10
+    runtxnsperterminal: 0
+    limittxnspermin: 1000000000

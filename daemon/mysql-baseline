@@ -1,0 +1,153 @@
+#!/bin/sh
+# - bind_core
+# - numa_nodes
+# - nic_queues
+# - cpu_list
+# - is_database_tuning
+# nic
+# nic_gateway
+# nic_ip
+# nic_prefix
+# nic_gateway
+# mysql_user
+# mysql_port
+# mysql_host
+# mysql_db
+# mysql_password
+
+: "${mysql_user:=root}"
+: "${mysql_port:=3306}"
+: "${mysql_db:=tpcc}"
+: "${mysql_password:=mysql_password}"
+
+prepare()
+{
+	cat /etc/my.cnf | grep -q "^skip-grant-tables" && {
+		sed -i 's/^skip-grant-tables/#skip-grant-tables/g' /etc/my.cnf
+	}
+	systemctl stop firewalld >/dev/null 2>&1
+
+	set_nic
+}
+
+create_basedir()
+{
+	mkdir -p /data
+	mount /dev/nvme0n1 /data
+	rm -rf /data/mysql/*
+	mkdir -p /data/mysql/{data,share,tmp,run,log}
+	useradd mysql
+	touch /data/mysql/log/mysql.log
+	chown -R mysql:mysql /data
+	chown -R mysql:mysql /data/mysql/log/mysql.log
+}
+
+configure_mysql()
+{
+	if [ ! -f $mysqld ] || [ ! -f $mysql ] || [ ! -f $mysql_server ]; then
+		echo "mysql is not installed!" && exit 1
+	fi
+
+	"$mysqld" --user="$mysql_user" --basedir=/data/mysql --datadir=/data/mysql/data/ --initialize --port="$mysql_port"
+	sleep 10
+
+	"$mysql_server" start
+	sed -i 's/^#skip-grant-tables/skip-grant-tables/g' /etc/my.cnf
+	sleep 10
+	"$mysql_server" restart
+	sleep 10
+
+	"$mysql" -u "$mysql_user" -e "flush privileges; use mysql; alter user 'root'@'localhost' identified by '$mysql_password'; flush privileges;"
+	"$mysql_server" restart
+	sleep 10
+}
+
+create_database()
+{
+	"$mysql" -u "$mysql_user" -p"$mysql_password" -e "use mysql; update user set host ='%' where user='root'; flush privileges;"
+	"$mysql" -u "$mysql_user" -p"$mysql_password" -e "create database $mysql_db;"
+	sed -i 's/^skip-grant-tables/#skip-grant-tables/g' /etc/my.cnf
+	"$mysql_server" restart
+	sleep 10
+	"$mysql_server" stop
+	sleep 10
+}
+
+set_nic()
+{
+	cat >> /etc/sysconfig/network-scripts/ifcfg-$nic <<EOF
+TYPE=Ethernet
+DEVICE=$nic
+ONBOOT=yes
+BOOTPROTO=static
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+PROXY_METHOD=none
+BROWSER_ONLY=no
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+NAME="System $nic"
+IPADDR=$nic_ip
+GATEWAY=$nic_gateway
+PREFIX=$nic_prefix
+EOF
+	systemctl restart NetworkManager
+	sleep 10
+}
+
+database_tuning()
+{
+	mysql_tuning_script=/tmp/mysql_tuning
+	wget  -O $mysql_tuning_script http://${INITRD_HTTP_HOST:-$LKP_SERVER}:${INITRD_HTTP_PORT:-8800}/initrd/deps/testsuite-deps/mysql/${os}/$(arch)/${os_version}/mysql_tuning
+	sh $mysql_tuning_script
+}
+
+copy_nvme_data()
+{
+	cp -ra /data/backup/* /data/mysql/data/
+}
+
+bind_interrup()
+{
+	ethtool -L $nic combined $nic_queues
+	irqs=$(cat /proc/interrupts | grep -E "$nic" | head -n"$nic_queues" | awk -F':' '{print $1}')
+
+	cpu_list=($cpu_list)
+	index=0
+	for irq in $irqs
+	do
+		echo ${cpu_list[index]} "->" $irq
+		echo  ${cpu_list[index]} > /proc/irq/$irq/smp_affinity_list
+		let "index++"
+	done
+}
+
+start_mysql()
+{
+	bind_interrup
+	numactl -C $bind_core -i $numa_nodes "$mysqld" --defaults-file=/etc/my.cnf --port="$mysql_port" &
+}
+
+main()
+{
+	local mysql="/usr/local/mysql/bin/mysql"
+	local mysqld="/usr/local/mysql/bin/mysqld"
+	local mysql_server="/usr/local/mysql/support-files/mysql.server"
+
+	prepare
+	create_basedir
+	configure_mysql
+	create_database
+	copy_nvme_data
+	if [ "$is_database_tuning" = "true" ]; then
+		database_tuning
+	else
+		start_mysql
+	fi
+
+	sleep 10
+}
+
+main

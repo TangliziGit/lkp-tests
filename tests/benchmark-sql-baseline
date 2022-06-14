@@ -1,0 +1,94 @@
+#!/bin/sh
+# - warehouses
+# - loadworkers
+# - terminals
+# - runmins
+# - runtxnsperterminal
+# - limittxnspermin
+# mysql_password
+# mysql_user
+# mysql_port
+# mysql_host
+# benchmark_pkg_name
+# nic
+# nic_ip
+# nic_gateway
+# nic_prefix
+
+: "${benchmark_pkg_name:=benchmarksql5.0-for-mysql}"
+: "${warehouses:=1000}"
+: "${loadworkers:=100}"
+: "${terminals:=300}"
+: "${runmins:=10}"
+: "${runtxnsperterminal:=0}"
+: "${limittxnspermin:=1000000000}"
+: "${mysql_user:=root}"
+: "${mysql_password:=mysql_password}"
+: "${mysql_port:=3306}"
+
+set_nic()
+{
+	cat >> /etc/sysconfig/network-scripts/ifcfg-$nic <<EOF
+TYPE=Ethernet
+DEVICE=$nic
+ONBOOT=yes
+BOOTPROTO=static
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+PROXY_METHOD=none
+BROWSER_ONLY=no
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+NAME="System $nic"
+IPADDR=$nic_ip
+GATEWAY=$nic_gateway
+PREFIX=$nic_prefix
+EOF
+
+	systemctl restart NetworkManager
+	sleep 10
+}
+
+prepare()
+{
+	set_nic
+	systemctl stop firewalld
+}
+
+benchmarksql_config()
+{
+        cd "/$benchmark_pkg_name/run/" && {
+                sed -i \
+                    -e "/^conn=/ s|mysql://.*:3306|mysql://$mysql_host:$mysql_port|" \
+                    -e "/^user=/cuser=$mysql_user" \
+                    -e "/^password=/cpassword=$mysql_password" \
+                    -e "/^loadWorkers=/cloadWorkers=$loadworkers" \
+                    -e "/^warehouses=/cwarehouses=$warehouses" \
+                    -e "/^terminals=/cterminals=$terminals" \
+                    -e "/^runTxnsPerTerminal=/crunTxnsPerTerminal=$runtxnsperterminal" \
+                    -e "/^runMins=/crunMins=$runmins" \
+                    -e "/^limitTxnsPerMin=/climitTxnsPerMin=$limittxnspermin" \
+                    -e '/^terminalWarehouseFixed=/cterminalWarehouseFixed=true' \
+                    -e '/^newOrderWeight=/cnewOrderWeight=45' \
+                    -e '/^paymentWeight=/cpaymentWeight=43' \
+                    -e '/^orderStatusWeight=/corderStatusWeight=4' \
+                    -e '/^deliveryWeight=/cdeliveryWeight=4' \
+                    props.conf
+        }
+}
+
+run_benchmark_mysql()
+{
+        cd "/$benchmark_pkg_name/run/" && {
+		# in order to save test time(about 1 hour to 30mins), no need to build database, copy data from nvme disk.
+		#./runDatabaseBuild.sh props.conf
+                ./runBenchmark.sh  props.conf
+                ./runDatabaseDestroy.sh props.conf
+       }
+}
+
+prepare
+benchmarksql_config
+run_benchmark_mysql
