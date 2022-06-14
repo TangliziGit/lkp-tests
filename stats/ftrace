@@ -91,7 +91,7 @@ def parse_event(event_fmt, records)
   return if fmt.nil?
 
   event = File.basename(event_fmt, '.fmt')
-  pattern = " ([0-9]\+\\.[0-9]\+): #{event}: "
+  pattern = " ([0-9]\+\\.[0-9]\+): #{event}: .*"
   replace = 'time: \\1\\n'
   index = 2
   while fmt =~ /([a-zA-Z_]+[ =]%(s|l?[ud]):? *)/
