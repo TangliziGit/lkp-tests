@@ -662,7 +662,7 @@ end
 class BreakpointsStater < Stater
   def stat(line, stats)
     case line
-    when /^(ok|fail|skip) \d+ (Test .*)/
+    when /(ok|fail|skip) \d+ (Test .*)/
       # ok 1 Test breakpoint 0 with local: 0 global: 1
       stats.add "#{@test_prefix}.#{$2}", $1
     when /No such collection '(breakpoints)'/
@@ -992,9 +992,9 @@ while (line = $stdin.gets)
     # for below situation:
     # not ok 1 selftests: android: run.sh # SKIP
     stater = AndroidStater.new($1, 'run.sh')
-  when /^selftests: (breakpoints): (.*)/
+  when /^(# |)selftests: (breakpoints): (.*)/
     # selftests: breakpoints: breakpoint_test
-    stater = BreakpointsStater.new($1, $2)
+    stater = BreakpointsStater.new($2, $3)
   when /run_kselftest\.sh -c (breakpoints)/
     # for below situation:
     # No such collection 'breakpoints'
