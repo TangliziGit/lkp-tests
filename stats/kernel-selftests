@@ -608,6 +608,18 @@ class PidfdStater < Stater
   end
 end
 
+class SgxStater < Stater
+  def stat(line, stats)
+    case line
+    when /^# (ok|not ok) \d+ (.*)/
+      # not ok 1 enclave.unclobbered_vdso
+      stats.add "#{@test_prefix}.#{$2}", $1
+    else
+      super(line, stats)
+    end
+  end
+end
+
 class FirmwareStater < Stater
   def stat(line, stats)
     case line
@@ -1026,6 +1038,9 @@ while (line = $stdin.gets)
   when /^# selftests: (tc-testing): (tdc.sh)$/
     # selftests: ftrace: ftracetest
     stater = TCTestingStater.new($1, $2)
+  when /^# selftests: (sgx): (.*)$/
+    # selftests: sgx: test_sgx
+    stater = SgxStater.new($1, $2)
   when /^LKP SKIP (.*)/
     # LKP SKIP net.l2tp.sh
     # add "duplicate key" check to avoid below duplication

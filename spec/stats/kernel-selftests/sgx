@@ -1,0 +1,25 @@
+2022-06-14 16:41:41 make run_tests -C sgx
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-f2906aa863381a
+fb0015a9eb7fefad885d4e5a56/tools/testing/selftests/sgx'
+TAP version 13
+1..1
+# selftests: sgx: test_sgx
+# TAP version 13
+# 1..6
+# # Starting 6 tests from 2 test cases.
+# #  RUN           enclave.unclobbered_vdso ...
+# mmap() succeeded for PROT_READ, but failed for PROT_EXEC.
+#  Check that /dev does not have noexec set:
+#       mount | grep "/dev .*noexec"
+#  If so, remount it executable: mount -o remount,exec /dev
+#
+# # main.c:149:unclobbered_vdso:Failed to load the test enclave.
+# # main.c:248:unclobbered_vdso:Expected 0 (0) != setup_test_encl(ENCL_HEAP_SIZE_DEFAULT, &
+self->encl, _metadata) (0)
+# # unclobbered_vdso: Test terminated by assertion
+# #          FAIL  enclave.unclobbered_vdso
+# not ok 1 enclave.unclobbered_vdso
+# # FAILED: 0 / 6 tests passed.
+# # Totals: pass:0 fail:6 xfail:0 xpass:0 skip:0 error:0
+not ok 1 selftests: sgx: test_sgx # exit=1
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-f2906aa863381afb0015a9eb7fefad885d4e5a56/tools/testing/selftests/sgx'
