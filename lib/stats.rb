@@ -587,7 +587,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
   b.each_key { |k| a[k] = [0] * cols_a unless a.include?(k) } # rubocop:disable Style/CombinableLoops
 
   a.each do |k, v|
-    log_verbose k
+    # log_verbose k
 
     next if v[-1].is_a?(String)
     next if options['perf'] && !perf_metric?(k)
@@ -604,14 +604,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
       next if k =~ /\.pass$/ && b.keys.none? { |stat| stat == "#{stat_base}.fail" }
     end
 
-    is_allowed_stat = false
-    if options["force_#{k}"]
-      if strict_kpi_stat?(k, nil)
-        is_allowed_stat = true
-      else
-        is_function_stat = true
-      end
-    end
+    is_force_stat = options["force_#{k}"]
 
     is_latency_stat = latency_stat?(k)
     max_margin = if is_function_stat || is_latency_stat
@@ -655,10 +648,10 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     min_a, mean_a, max_a = get_min_mean_max sorted_a
     next unless max_a
 
-    if !is_allowed_stat && !changed_stats?(sorted_a, min_a, mean_a, max_a,
-                                           sorted_b, min_b, mean_b, max_b,
-                                           is_function_stat, is_latency_stat,
-                                           k, options)
+    if !is_force_stat && !changed_stats?(sorted_a, min_a, mean_a, max_a,
+                                         sorted_b, min_b, mean_b, max_b,
+                                         is_function_stat, is_latency_stat,
+                                         k, options)
       next
     end
 
@@ -690,7 +683,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     y = 0 if y < 0
     ratio = MAX_RATIO if ratio > MAX_RATIO
 
-    if !is_allowed_stat && !(options['perf-profile'] && k =~ /^perf-profile\./)
+    if !is_force_stat && !(options['perf-profile'] && k =~ /^perf-profile\./)
       next unless ratio > 1.01 # time.elapsed_time only has 0.01s precision
       next unless ratio > 1.1 || perf_metric?(k)
       next unless reasonable_perf_change?(k, delta, max)
