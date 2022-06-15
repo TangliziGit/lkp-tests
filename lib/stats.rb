@@ -327,7 +327,7 @@ def load_base_matrix(matrix_path, head_matrix, options)
     version = nil
     is_exact_match = false
     version, is_exact_match = git.gcommit(commit).last_release_tag
-    puts "project: #{project}, version: #{version}, is exact match: #{is_exact_match}" if ENV['LKP_VERBOSE']
+    log_debug "project: #{project}, version: #{version}, is_exact_match: #{is_exact_match}"
   rescue StandardError => e
     log_error e
     return nil
