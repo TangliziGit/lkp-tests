@@ -1,0 +1,23 @@
+2022-06-05 06:57:57 make run_tests -C cgroup
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/cgroup'
+TAP version 13
+1..6
+# selftests: cgroup: test_memcontrol
+# ok 1 test_memcg_subtree_control
+# ok 1 test_memcg_subtree_control
+# ok 1 test_memcg_subtree_control
+# ok 2 test_memcg_current
+# not ok 3 test_memcg_min
+# not ok 3 test_memcg_min
+# not ok 3 test_memcg_min
+# not ok 3 test_memcg_min
+# not ok 4 test_memcg_low
+#
+not ok 1 selftests: cgroup: test_memcontrol # TIMEOUT 300 seconds
+# selftests: cgroup: test_stress.sh
+# ok 1 test_cgcore_internal_process_constraint
+# ok 2 test_cgcore_top_down_constraint_enable
+# ok 3 test_cgcore_top_down_constraint_disable
+# ok 4 # SKIP test_cgcore_no_internal_process_constraint_on_threads
+ok 6 selftests: cgroup: test_stress.sh
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/cgroup'

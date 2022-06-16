@@ -1,0 +1,3 @@
+landlock.ptrace_test.hierarchy.allow_without_domain.trace.fail: 1
+landlock.ptrace_test.hierarchy.allow_with_one_domain.trace.pass: 1
+landlock.ptrace_test.fail: 1

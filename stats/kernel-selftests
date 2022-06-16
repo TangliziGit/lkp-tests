@@ -18,6 +18,33 @@ class Stater
   end
 
   def stat(line, stats)
+    if line =~ /^# (ok|not ok) \d+ (.*)/
+      # some tests under tools/testing/selftests use same result format:
+      # selftests: seccomp: seccomp_bpf
+      # ok 1 global.kcmp
+      if %w{cgroup seccomp sigaltstack syscall_user_dispatch core landlock}.include? @test
+        result = $1
+        test_case = $2
+
+        if test_case =~ /SKIP/
+          # selftests: cgroup: test_stress.sh
+          # ok 4 # SKIP test_cgcore_no_internal_process_constraint_on_threads
+          test_case = "#{@test_prefix}.#{test_case.split(' SKIP ').last}"
+          stats.add test_case, 'skip' unless stats.key? test_case
+        else
+          # cgroup will repeatedly output below subtests, ignore the duplicates.
+          # selftests: cgroup: test_kmem
+          # not ok 1 test_kmem_basic
+          # not ok 1 test_kmem_basic
+          # not ok 1 test_kmem_basic
+          test_case = "#{@test_prefix}.#{test_case}"
+          stats.add test_case, result unless stats.key? test_case
+        end
+      end
+
+      return
+    end
+
     case line
     when /^(ok|not ok).*selftests: (\S*): (\S*)( # SKIP)?( \[)?/,
          /^Test \d+ (ok|not ok) - selftests: (\S*): (\S*)( # SKIP)?( \[)?/

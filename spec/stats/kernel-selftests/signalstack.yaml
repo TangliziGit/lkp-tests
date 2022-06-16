@@ -1,0 +1,2 @@
+syscall_user_dispatch.sud_test.global.dispatch_trigger_sigsys.pass: 1
+syscall_user_dispatch.sud_test.pass: 1

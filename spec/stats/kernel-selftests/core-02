@@ -1,0 +1,15 @@
+2022-06-09 17:49:52 make run_tests -C core
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/core'
+TAP version 13
+1..1
+# selftests: core: close_range_test
+# TAP version 13
+# 1..7
+# # Starting 7 tests from 1 test cases.
+# #  RUN           global.core_close_range ...
+# #            OK  global.core_close_range
+# ok 1 global.core_close_range
+# # PASSED: 7 / 7 tests passed.
+# # Totals: pass:7 fail:0 xfail:0 xpass:0 skip:0 error:0
+ok 1 selftests: core: close_range_test
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/core'

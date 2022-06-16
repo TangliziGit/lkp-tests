@@ -1,0 +1,16 @@
+2022-06-07 04:27:01 make run_tests -C seccomp
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/seccomp'
+TAP version 13
+1..2
+# selftests: seccomp: seccomp_bpf
+# TAP version 13
+# 1..89
+# # Starting 89 tests from 7 test cases.
+# #  RUN           global.kcmp ...
+# #            OK  global.kcmp
+# ok 1 global.kcmp
+# # PASSED: 89 / 89 tests passed.
+# # Totals: pass:89 fail:0 xfail:0 xpass:0 skip:0 error:0
+ok 1 selftests: seccomp: seccomp_bpf
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a36
+13c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/seccomp'
