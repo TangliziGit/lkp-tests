@@ -306,11 +306,8 @@ fi
 
 LKP_USER="lkp"
 if [ -z $QEMU_MODEL ]; then
-	if get_job_env $job_script 'model' | grep -q 'qemu-system-i386'; then
-		QEMU_MODEL='qemu-system-i386'
-	else
-		QEMU_MODEL='qemu-system-x86_64'
-	fi
+	QEMU_MODEL=$(get_job_env $job_script 'model')
+	[[ $QEMU_MODEL =~ qemu-system ]] || QEMU_MODEL="qemu-system-x86_64 -enable-kvm"
 fi
 
 run_kvm()
@@ -331,7 +328,7 @@ run_kvm()
 	netdev_option="-device e1000,netdev=net0 "
 	netdev_option+="-netdev user,id=net0"
 	KVM_COMMAND=(
-		$QEMU_MODEL -enable-kvm
+		$QEMU_MODEL
 		-fsdev local,id=test_dev,path=$vm_result_path,security_model=none -device virtio-9p-pci,fsdev=test_dev,mount_tag=$mount_tag
 		-kernel ${opt_kernel_image:-$kernel_file}
 		-append "$bootloader_append ip=dhcp result_service=$mount_tag"
