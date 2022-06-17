@@ -398,6 +398,9 @@ fixup_netfilter()
 	# RULE_APPEND failed (No such file or directory): rule in chain BROUTING.
 	# table `broute' is obsolete commands.
 	update-alternatives --set ebtables /usr/sbin/ebtables-legacy
+
+	echo "timeout=3600" >> netfilter/settings
+	sed -ie "s/[\t[:space:]]\.\.\/\.\.\/\.\.\/samples\/pktgen\/pktgen_bench_xmit_mode_netif_receive.sh/\.\.\/\.\.\/\.\.\/\.\.\/samples\/pktgen\/pktgen_bench_xmit_mode_netif_receive.sh/g" netfilter/nft_concat_range.sh
 }
 
 fixup_lkdtm()

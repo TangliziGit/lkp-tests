@@ -1,0 +1,10 @@
+suite: kernel-selftests
+testcase: kernel-selftests
+category: functional
+
+runtime: 1h
+timeout: 1h
+
+kernel-selftests:
+  group:
+    - netfilter

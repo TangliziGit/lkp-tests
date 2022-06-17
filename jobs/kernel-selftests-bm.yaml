@@ -6,7 +6,6 @@ kernel-selftests:
   group:
     - cpufreq
     - net
-    - netfilter
     - firmware
 
 ---
