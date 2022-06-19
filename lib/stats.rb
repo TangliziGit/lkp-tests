@@ -587,7 +587,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
   b.each_key { |k| a[k] = [0] * cols_a unless a.include?(k) } # rubocop:disable Style/CombinableLoops
 
   a.each do |k, v|
-    # log_verbose k
+    is_force_stat = options["force_#{k}"]
 
     next if v[-1].is_a?(String)
     next if options['perf'] && !perf_metric?(k)
@@ -595,7 +595,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     next if !options['more'] && !bisectable_stat?(k) && k !~ $report_allowlist_re
 
     is_function_stat = function_stat?(k)
-    if is_function_stat && k !~ /^(dmesg|kmsg|last_state|stderr)\./
+    if !is_force_stat && is_function_stat && k !~ /^(dmesg|kmsg|last_state|stderr)\./
       # if stat is packetdrill.packetdrill/gtests/net/tcp/mtu_probe/basic-v6_ipv6.fail,
       # base rt stats should contain 'packetdrill.packetdrill/gtests/net/tcp/mtu_probe/basic-v6_ipv6.pass'
       stat_base = k.sub(/\.[^.]*$/, '')
@@ -603,8 +603,6 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
       next if k =~ /\.fail$/ && b.keys.none? { |stat| stat == "#{stat_base}.pass" }
       next if k =~ /\.pass$/ && b.keys.none? { |stat| stat == "#{stat_base}.fail" }
     end
-
-    is_force_stat = options["force_#{k}"]
 
     is_latency_stat = latency_stat?(k)
     max_margin = if is_function_stat || is_latency_stat
