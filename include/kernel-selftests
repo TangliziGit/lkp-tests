@@ -390,5 +390,3 @@ need_kconfig:
 - TMPFS_XATTR
 - TMPFS
 % end
-
-rootfs: debian-11.1-x86_64-20220510.cgz
