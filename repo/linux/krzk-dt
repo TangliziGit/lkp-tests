@@ -1,0 +1,11 @@
+url: https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git
+integration_testing_branches: for-next
+owner: Krzysztof Kozlowski <krzk@kernel.org>
+subsystems:
+- arm
+- arm64
+- devicetree
+- dt-bindings
+- dt
+- dts
+notify_build_success_branch: .*
