@@ -6,9 +6,28 @@ make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-7.6-kselftests-d6d
 # # Parent: Waiting for Child (2794) to complete.
 # # Time waited for child: 3
 # ok 1 pidfd_poll check for premature notification on child thread exec test: Passed
+# # Parent: pid: 1212
+# # Parent: Waiting for Child (1224) to complete.
+# # Parent: Child process waited for.
+# # Time waited for child: 3
+# ok 2 pidfd_poll check for premature notification on child thread exec test: Passed
 # ok 4 pidfd_poll check for premature notification on non-emptygroup leader exit test: Passed
 # ok 5 pidfd_send_signal check for support test: pidfd_send_signal() syscall is supported. Tests can be executed
-# # Pass 8 Fail 0 Xfail 0 Xpass 0 Skip 0 Error 0
+# waitpTAP version 13
+# 1..8
+# # Parent: pid: 2793
+# # Parent: Waiting for Child (2794) to complete.
+# # Time waited for child: 3
+# ok 1 pidfd_poll check for premature notification on child thread exec test: Passed
+# # Parent: pid: 1212
+# # Parent: Waiting for Child (1224) to complete.
+# # Parent: Child process waited for.
+# # Time waited for child: 3
+# ok 2 pidfd_poll check for premature notification on child thread exec test: Passed
+# ok 4 pidfd_poll check for premature notification on non-emptygroup leader exit test: Passed
+# ok 5 pidfd_send_signal check for support test: pidfd_send_signal() syscall is supported. Tests can be executed
+# ok 8 # SKIP pidfd_send_signal signal recycled pid test: Skipping test
+# # Pass 7 Fail 0 Xfail 0 Xpass 0 Skip 1 Error 0
 ok 1 selftests: pidfd: pidfd_test
 # selftests: pidfd: pidfd_open_test
 # 1..3

@@ -625,10 +625,29 @@ end
 class PidfdStater < Stater
   def stat(line, stats)
     case line
-    when /# (ok|fail|skip) \d+ (.*)(:.*)?/
-      # ok 1 pidfd poll test: pass
+    when /# (ok|fail|skip) \d+ (.*)/
       # ok 1 global.wait_simple
-      stats.add "#{@test_prefix}.#{$2}", $1 unless @test_script == 'pidfd_test'
+      result = $1
+      test_case = $2
+      if test_case =~ /SKIP/
+        # ok 8 # SKIP pidfd_send_signal signal recycled pid test: Skipping test
+        # ksft_test_result_skip("%s test: Skipping test\n", test_name);
+        test_case = test_case.split(' SKIP ').last.split(' test: Skipping').first
+        result = 'skip'
+      end
+
+      if @test_script == 'pidfd_test'
+        # pidfd_test will run twice subtest and output the result twice,
+        # ignore the duplication of line 30, line 32771 and line 32776.
+        # selftests: pidfd: pidfd_test
+        # 25 # ok 1 pidfd_poll check for premature notification on child thread exec test: Passed
+        # 30 # ok 2 pidfd_poll check for premature notification on child thread exec test: Passed
+        # 32771 # ok 1 pidfd_poll check for premature notification on child thread exec test: Passed
+        # 32776 # ok 2 pidfd_poll check for premature notification on child thread exec test: Passed
+        stats.add "#{@test_prefix}.#{test_case}", result unless stats.key? "#{@test_prefix}.#{test_case}"
+      else
+        stats.add "#{@test_prefix}.#{test_case}", result
+      end
     else
       super(line, stats)
     end
