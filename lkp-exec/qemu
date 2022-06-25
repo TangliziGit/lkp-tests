@@ -329,7 +329,7 @@ run_kvm()
 	netdev_option+="-netdev user,id=net0"
 	KVM_COMMAND=(
 		$QEMU_MODEL
-		-fsdev local,id=test_dev,path=$vm_result_path,security_model=none -device virtio-9p-pci,fsdev=test_dev,mount_tag=$mount_tag
+		-fsdev "local,id=test_dev,path=$vm_result_path,security_model=none" -device "virtio-9p-pci,fsdev=test_dev,mount_tag=$mount_tag"
 		-kernel ${opt_kernel_image:-$kernel_file}
 		-append "$bootloader_append ip=dhcp result_service=$mount_tag"
 		$initrd_option
@@ -337,7 +337,7 @@ run_kvm()
 		-m $mem_mb
 		-no-reboot
 		-watchdog i6300esb
-		-rtc base=localtime
+		-rtc "base=localtime"
 		$qemu_netdev_option
 		$qemu_console_option
 		$QEMU_DRIVE_OPTION
