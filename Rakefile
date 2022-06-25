@@ -62,7 +62,7 @@ end
 
 desc 'Run syntax check'
 task :syntax do
-  executables = `find -type f -executable ! -path "./.git*" ! -size +100k`.split("\n").join(' ')
+  executables = `find -type f -executable ! -path "./.git*" ! -path "./vendor*" ! -size +100k`.split("\n").join(' ')
 
   bash "grep -s -l '^#!/.*ruby$' #{executables} | xargs -n1 ruby -c >/dev/null"
   bash "grep -s -l '^#!/.*bash$' #{executables} | xargs -n1 bash -n"
@@ -73,7 +73,7 @@ end
 
 desc 'Run shellcheck'
 task :shellcheck do
-  executables = `find -type f -executable ! -path "./.git*" ! -size +100k | xargs grep -s -l -e '^#!/.*bash$' -e '^#!/bin/sh$'`.split("\n").join(' ')
+  executables = `find -type f -executable ! -path "./.git*"  ! -path "./vendor*" ! -size +100k | xargs grep -s -l -e '^#!/.*bash$' -e '^#!/bin/sh$'`.split("\n").join(' ')
 
   format = ENV['format'] || 'tty'
 
