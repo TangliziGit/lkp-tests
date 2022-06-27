@@ -1,1 +1,3 @@
 python: python-is-python3
+libunwind8: libunwind-14
+libunwind-dev: libunwind-14-dev
