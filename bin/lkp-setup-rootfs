@@ -330,12 +330,22 @@ chmod_root_ssh()
 	chmod 600 /root/.ssh/id_rsa
 }
 
+noreboot_too_many_cycles()
+{
+	[ -f /tmp/noreboot-job-count ] && return 1
+	[ $(cat /tmp/noreboot-job-count | wc -l) -lt 100 ] && return 1
+}
+
 install_proxy || exit_with_job_state 'error:proxy'
 chmod_root_ssh
 
 while true; do
+	. $job_script
+	export_top_env
+	define_files
+
 	set_tbox_wtmp 'running'
-	. $job_script define_files
+
 	define_files_auto_pack $define_files
 	if [ "$os_mount" != "initramfs" ]; then
 		download_install_cgz $initrd_deps
@@ -353,7 +363,7 @@ while true; do
 		exit
 	}
 	
-	if tbox_cant_kexec || job_force_reboot; then
+	if tbox_cant_kexec || job_force_reboot || noreboot_too_many_cycles; then
 		echo "LKP: rebooting forcely"
 		set_tbox_wtmp 'rebooting'
 		# Avoid get stuck in yocto minimal rootfs.
@@ -386,6 +396,8 @@ while true; do
 	rsync_rootfs
 	[ "$need_reboot" -eq 0 ] && break
 	job_does_not_need_reboot || break
+
+	echo $id >> /tmp/noreboot-job-count
 done
 
 if downgrade_ucode; then

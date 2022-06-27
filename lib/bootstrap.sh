@@ -9,6 +9,7 @@
 . $LKP_SRC/lib/detect-system.sh
 . $LKP_SRC/lib/network.sh
 . $LKP_SRC/lib/log.sh
+. $LKP_SRC/lib/reboot.sh
 
 # borrowed from linux/tools/testing/selftests/rcutorture/doc/initrd.txt
 # Author: Paul E. McKenney <paulmck@linux.vnet.ibm.com>
@@ -716,6 +717,7 @@ netconsole_init()
 
 download_job()
 {
+	local job=
 	job="$(grep -m1 '^initrd http://.*/job.cgz' $NEXT_JOB | awk '{print $2}')"
 	[ -z "$job" ] && {
 		job="$(grep -o 'job=[^ ]*.yaml' $NEXT_JOB | awk -F 'job=' '{print $2}')"
@@ -743,11 +745,17 @@ __next_job()
 	echo "getting new job..."
 	local last_kernel=
 	[ -n "$job" ] && last_kernel="last_kernel=$(escape_cgi_param $(grep ^kernel: $job | cut -d \" -f 2))&"
-	http_get_cgi "cgi-bin/gpxelinux.cgi?hostname=${HOSTNAME}&mac=$PUB_MAC&${last_kernel}${manual_reboot}lkp_wtmp" \
+	http_get_cgi "cgi-bin/gpxelinux.cgi?hostname=${HOSTNAME}&mac=$PUB_MAC&${last_kernel}${manual_reboot}lkp_wtmp&pre_job_id=$id" \
 		$NEXT_JOB || {
 		echo "cannot get next job" 1>&2
 		set_tbox_wtmp 'cannot_get_next_job'
 		return 1
+	}
+
+	grep -iq "job mismatch" $NEXT_JOB && {
+		echo "job mismatch" 1>&2
+		set_tbox_wtmp 'job_mismatch'
+		reboot_tbox 2>/dev/null && exit
 	}
 
 	grep -iq "^KERNEL " $NEXT_JOB || {
