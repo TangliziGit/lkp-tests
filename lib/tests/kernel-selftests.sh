@@ -525,6 +525,13 @@ fixup_fpu()
 	modprobe test_fpu
 }
 
+fixup_kexec()
+{
+	# test_kexec_load.sh: 126: [: x86_64: unexpected operator
+	# using bash to avoid "unexpected operator" warning.
+	sed -i 's/bin\/sh/bin\/bash/g' kexec/test_kexec_load.sh
+}
+
 prepare_for_selftest()
 {
 	if [ "$group" = "group-00" ]; then
@@ -803,6 +810,8 @@ fixup_subtest()
 		fixup_tc_testing # ignore return value so that doesn't abort the rest tests
 	elif [[ "$subtest" = "fpu" ]]; then
 		fixup_fpu
+	elif [[ "$subtest" = "kexec" ]]; then
+		fixup_kexec
 	fi
 	return 0
 }
