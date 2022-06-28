@@ -1,6 +1,5 @@
 suite: unixbench
 
-swap:
 nr_hdd: 1
 disk:
 fs: ext4

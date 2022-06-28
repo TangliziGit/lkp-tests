@@ -1,24 +1,17 @@
 pkgname=unixbench
 pkgver=git
 pkgrel=1
-url='https://github.com/kdlucas/byte-unixbench.git'
+url='http://codingpy-1252715393.cosgz.myqcloud.com/archive/UnixBench5.1.3.tgz'
 arch=('i386' 'x86_64')
 license=('GPL')
-source=('https://github.com/kdlucas/byte-unixbench.git')
+source=('http://codingpy-1252715393.cosgz.myqcloud.com/archive/UnixBench5.1.3.tgz')
 md5sums=('SKIP')
-
-patch_source()
-{
-        cd $srcdir/byte-unixbench
-        patch -p1 < "$LKP_SRC/pkg/${pkgname}/${pkgname}.patch"
-}
 
 build()
 {
-	cd $srcdir/byte-unixbench
-	cd UnixBench
-	sed -i $'s/"System Benchmarks", \'maxCopies\' => 0/"System Benchmarks", \'maxCopies\' => 256/g' ./Run
-	sed -i $'s/"Non-Index Benchmarks", \'maxCopies\' => 0/"Non-Index Benchmarks", \'maxCopies\' => 256/g' ./Run
+	cd $srcdir/UnixBench
+	sed -i $'s/"System Benchmarks", \'maxCopies\' => 16/"System Benchmarks", \'maxCopies\' => 256/g' ./Run
+	sed -i $'s/"Non-Index Benchmarks", \'maxCopies\' => 16/"Non-Index Benchmarks", \'maxCopies\' => 256/g' ./Run
 	make
 }
 
@@ -26,6 +19,5 @@ package()
 {
 	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
 	mkdir -p $benchmark_path
-	cp -af "$srcdir/byte-unixbench/"* $benchmark_path
-	mkdir $benchmark_path/results
+	cp -af "$srcdir/UnixBench/"* $benchmark_path
 }

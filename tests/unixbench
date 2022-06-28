@@ -30,14 +30,12 @@ test_partial()
 
 	[ -n "$nr_task" ] && other_params="-c $nr_task"
 
-	cd UnixBench
 	log_cmd ./Run $test $other_params -i $iteration || exit
 }
 
 test_all()
 {
 
-	cd UnixBench
 	echo 3 > /proc/sys/vm/drop_caches
 	log_cmd use_benchmark_env numactl --interleave=all ./Run -c $nr_task
 }
@@ -50,4 +48,4 @@ else
 	test_partial
 fi
 
-upload_files -t results $unixbench_path/UnixBench/results/*
+upload_files -t results $unixbench_path/results/*
