@@ -46,3 +46,5 @@ cmake
 fakeroot
 telnet
 traceroute
+openvswitch-common
+openvswitch-switch

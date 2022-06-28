@@ -76,3 +76,5 @@ conntrack
 iperf3
 tshark
 iptables
+openvswitch-common
+openvswitch-switch
