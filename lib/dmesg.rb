@@ -324,6 +324,10 @@ def analyze_error_id(line)
     # [   13.708945 ] [<0000000013155f90>] usb_hcd_irq
     line = $1
     bug_to_bisect = oops_to_bisect_pattern line
+  when /(.*) \]---(.*)/
+    # [    0.049111 ][    T0 ] ---[ end Kernel panic - not syncing: Fatal exception ]---
+    line = "#{$1}#{$2}"
+    bug_to_bisect = oops_to_bisect_pattern line
   when /segfault at .* ip .* sp .* error/
     # [ 2062.833046] pmbench[5394]: segfault at b ip 00007f568fec1ca6 sp 00007f54c1bf9d80 error 4 in libc-2.28.so[7f568fea8000+148000]
     # [  834.411251 ] init[1]: segfault at ffffffffff600400 ip ffffffffff600400 sp 00007fff59f7caa8 error 15
@@ -357,7 +361,6 @@ def analyze_error_id(line)
 
   error_id = common_error_id(error_id)
 
-  error_id.gsub!(/#\]$/, '') unless error_id =~ /\[[^\]]+\]$/ # ---[ end Kernel panic - not syncing: __populate_section_memmap: Failed to allocate 5242880 bytes align=0x1000 nid=0 from=0x0000000001000000   ]---
   error_id.gsub!(/([a-z]:)[0-9]+\b/, '\1') # WARNING: at arch/x86/kernel/cpu/perf_event.c:1077 x86_pmu_start+0xaa/0x110()
   error_id.gsub!(/#:\[<#>\]\[<#>\]/, '') # RIP: 0010:[<ffffffff91906d8d>]  [<ffffffff91906d8d>] validate_chain+0xed/0xe80
   error_id.gsub!(/RIP:#:/, 'RIP:')       # RIP: 0010:__might_sleep+0x72/0x80

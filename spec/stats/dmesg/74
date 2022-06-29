@@ -1,0 +1,8 @@
+[    0.043841 ][    T0 ] EIP: string_nocheck+0x59/0xb0
+[    0.044282 ][    T0 ] Code: 90 83 05 38 83 15 3c ff 83 15 3c ff c2 01 83 05 c2 01 83 05 01 83 15 4c 01 83 15 4c 39 d7 74 24 39 d7 74 24 5d 08 0f b6 5d 08 <0f> b6 74 1c 39 c1 74 1c 39 c1 30 ff a0 44 30 ff a0 44 ff a0 44 00
+[    0.046143 ][    T0 ] EAX: 441e8b7c EBX: 20534847 ECX: 441e87da EDX: 00000000
+[    0.046808 ][    T0 ] ESI: 441e87da EDI: ffffffff EBP: 432b5d0c ESP: 432b5d00
+[    0.047282 ][    T0 ] DS: 007b ES: 007b FS: 00d8 GS: 00e0 SS: 0068 EFLAGS: 00210086
+[    0.047867 ][    T0 ] CR0: 80050033 CR2: 20534847 CR3: 039b7000 CR4: 00040690
+[    0.048509 ][    T0 ] Kernel panic - not syncing: Fatal exception
+[    0.049111 ][    T0 ] ---[ end Kernel panic - not syncing: Fatal exception ]---

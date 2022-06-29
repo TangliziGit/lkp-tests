@@ -1,0 +1,12 @@
+boot_failures: 1
+
+# EIP: string_nocheck+0x
+EIP:string_nocheck: 1
+message:EIP:string_nocheck: [    0.043841 ][    T0 ] EIP: string_nocheck+0x59/0xb0
+pattern:EIP:string_nocheck: EIP: string_nocheck+0x
+
+# Kernel panic - not syncing: Fatal exception
+Kernel_panic-not_syncing:Fatal_exception: 1
+message:Kernel_panic-not_syncing:Fatal_exception: [    0.048509 ][    T0 ] Kernel panic - not syncing: Fatal exception
+pattern:Kernel_panic-not_syncing:Fatal_exception: Kernel panic - not syncing: Fatal exception
+
