@@ -11,3 +11,4 @@ rcuscale:
     - srcu
     - srcud
     - tasks
+    - tasks-tracing
