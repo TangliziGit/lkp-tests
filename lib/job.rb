@@ -663,9 +663,10 @@ class Job
   end
 
   def run_filter(_hash, _key, _val, script)
-    system @filter_env, script, unsetenv_others: true
-
-    raise Job::ParamError, "#{script}: exitstatus #{$CHILD_STATUS.exitstatus}" unless $CHILD_STATUS.success?
+    Bash.call2(@filter_env, script, unsetenv_others: true) do |stdout, _stderr, status|
+      puts stdout
+      raise Job::ParamError, "#{script}: exitstatus #{status}"
+    end
   end
 
   def expand_params(run_scripts: true)
