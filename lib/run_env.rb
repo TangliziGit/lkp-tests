@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 LKP_SRC ||= ENV['LKP_SRC'] || File.dirname(__dir__)
-LOCAL_RUN_ENV = 'LKP_LOCAL_RUN'.freeze
+LOCAL_RUN_ENV ||= 'LKP_LOCAL_RUN'.freeze
 
 require 'yaml'
 
