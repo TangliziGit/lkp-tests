@@ -666,6 +666,31 @@ class SgxStater < Stater
   end
 end
 
+class Clone3Stater < Stater
+  def stat(line, stats)
+    case line
+    when /Trying (.*)/
+      # # [1246] Trying clone3() with flags 0x20000000 (size 0)
+      @test_case = $1
+    when /^# (ok|not ok) \d+ \[[0-9]+\] (.*)/
+      # ok 2 [1246] Result (0) matches expectation (0)
+
+      # below 'ok 6' is the same as 'ok 7', thus ignore the duplication
+      # # [1246] Trying clone3() with flags 0 (size 0)
+      # # Invalid argument - Failed to create new process
+      # # [1246] clone3() with flags says: -22 expected -22
+      # ok 6 [1246] Result (-22) matches expectation (-22)
+      # # [1246] Trying clone3() with flags 0 (size 0)
+      # # Invalid argument - Failed to create new process
+      # # [1246] clone3() with flags says: -22 expected -22
+      # ok 7 [1246] Result (-22) matches expectation (-22)
+      stats.add "#{@test_prefix}.#{@test_case}.#{$2}", $1 unless stats.key? "#{@test_prefix}.#{@test_case}.#{$2}"
+    else
+      super(line, stats)
+    end
+  end
+end
+
 class FirmwareStater < Stater
   def stat(line, stats)
     case line
@@ -1087,6 +1112,9 @@ while (line = $stdin.gets)
   when /^# selftests: (sgx): (.*)$/
     # selftests: sgx: test_sgx
     stater = SgxStater.new($1, $2)
+  when /^# selftests: (clone3): (.*)$/
+    # selftests: clone3: clone3
+    stater = Clone3Stater.new($1, $2)
   when /^LKP SKIP (.*)/
     # LKP SKIP net.l2tp.sh
     # add "duplicate key" check to avoid below duplication
