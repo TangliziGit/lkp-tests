@@ -9,6 +9,7 @@ describe 'log_cmd' do
     @pwd = Dir.pwd
     @tmp_dir = Dir.mktmpdir
     FileUtils.chmod 'go+rwx', @tmp_dir
+    ENV['TMP_RESULT_ROOT'] = @tmp_dir
     Dir.chdir(@tmp_dir)
   end
 
@@ -55,7 +56,7 @@ describe 'log_cmd' do
   end
 
   after(:all) do
-    Dir.delete(@tmp_dir)
+    FileUtils.rm_rf(@tmp_dir)
     Dir.chdir(@pwd)
   end
 end
