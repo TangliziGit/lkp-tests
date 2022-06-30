@@ -850,6 +850,18 @@ class ExecStater < Stater
     when /: recipe for target.+failed$/, /^make: \*\*\* (.*) (Error \d+|Stop\.)$/
       # make: *** No rule to make target .*, needed by 'all'.  Stop.
       stats.add @test.to_s, 'make_fail'
+    when /^# (ok|not ok) ([0-9]+) (.*)/
+      test_case = $3.split('- ').last
+      # selftests: exec: null-argv
+      # ok 1 execve(argv[0], str, NULL)
+
+      # selftests: exec: binfmt_script.py
+      # ok 1 - binfmt_script too-big (correctly failed bad exec)
+
+      # ignore below duplication
+      # ok 20 - binfmt_script two-under-no-nl (successful good exec)
+      # ok 24 - binfmt_script two-under-no-nl (successful good exec)
+      stats.add "#{@test_prefix}.#{test_case}", $1 unless stats.key? "#{@test_prefix}.#{test_case}"
     else
       super(line, stats)
     end
@@ -1091,9 +1103,9 @@ while (line = $stdin.gets)
   when /^# selftests: (netfilter): (.*)/
     # selftests: netfilter: nft_queue.sh
     stater = NetfilterStater.new($1, $2)
-  when /^selftests: (exec): (.*)/
+  when /(^|^# )selftests: (exec): (.*)/
     # selftests: exec: execveat
-    stater = ExecStater.new($1, $2)
+    stater = ExecStater.new($2, $3)
   when /^# selftests: (mqueue): (.*)/
     # selftests: mqueue: mq_perf_tests
     stater = MqueueStater.new($1, $2)
