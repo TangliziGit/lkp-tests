@@ -3,3 +3,13 @@ need_kconfig:
 - SECURITY_LOADPIN_ENABLED: n, <= v4.19
 - SECURITY_LOADPIN_ENFORCE: n, v4.20
 - MODULE_UNLOAD: y
+# 3b6e1dd42317 (rcutorture: Allow rcutorture without RCU Tasks)
+- RCU_EXPERT: y
+- FORCE_TASKS_RCU: y, v5.18-rc1
+- TASKS_RCU: y
+# 40c1278aa7cd (rcutorture: Allow rcutorture without RCU Tasks Trace)
+- FORCE_TASKS_TRACE_RCU: y, v5.18-rc1
+- TASKS_TRACE_RCU: y, v5.7-rc2
+# 4c3f7b0e1e88 (rcutorture: Allow rcutorture without RCU Tasks Rude)
+- FORCE_TASKS_RUDE_RCU: y, v5.18-rc1
+- TASKS_RUDE_RCU: y, v5.7-rc2
