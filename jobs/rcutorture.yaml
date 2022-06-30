@@ -14,3 +14,8 @@ rcutorture:
     - srcu
     - srcud
     - tasks
+    - tasks-rude
+    - tasks-tracing
+    - busted
+    - busted_srcud
+    - trivial
