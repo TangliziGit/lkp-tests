@@ -1,0 +1,6 @@
+dmabuf-heaps.dmabuf-heap.Testing_alloced_4k_buffers_are_zeroed.pass: 1
+dmabuf-heaps.dmabuf-heap.Testing_alloced_1024k_buffers_are_zeroed.pass: 1
+dmabuf-heaps.dmabuf-heap.Testing_theoretical_older_alloc_compat.pass: 1
+dmabuf-heaps.dmabuf-heap.Testing_theoretical_newer_alloc_compat.pass: 1
+dmabuf-heaps.dmabuf-heap.Testing_expected_error_cases.pass: 1
+dmabuf-heaps.dmabuf-heap.pass: 1

@@ -691,6 +691,18 @@ class Clone3Stater < Stater
   end
 end
 
+class DmabufStater < Stater
+  def stat(line, stats)
+    case line
+    when /^#   (Testing .*):  (OK|FAIL)/
+      #   Testing allocation and importing:   OK
+      stats.add "#{@test_prefix}.#{$1}", $2
+    else
+      super(line, stats)
+    end
+  end
+end
+
 class FirmwareStater < Stater
   def stat(line, stats)
     case line
@@ -1127,6 +1139,9 @@ while (line = $stdin.gets)
   when /^# selftests: (clone3): (.*)$/
     # selftests: clone3: clone3
     stater = Clone3Stater.new($1, $2)
+  when /^# selftests: (dmabuf-heaps): (.*)$/
+    # selftests: dmabuf-heaps: dmabuf-heap
+    stater = DmabufStater.new($1, $2)
   when /^LKP SKIP (.*)/
     # LKP SKIP net.l2tp.sh
     # add "duplicate key" check to avoid below duplication
