@@ -4,3 +4,10 @@ need_kconfig:
 - SECURITY_LOADPIN_ENABLED: n, <= v4.19
 - SECURITY_LOADPIN_ENFORCE: n, v4.20
 - MODULE_UNLOAD: y
+# 4df002d90879 (rcuscale: Allow rcuscale without RCU Tasks)
+- RCU_EXPERT: y
+- FORCE_TASKS_RCU: y, v5.18-rc1
+- TASKS_RCU: y
+# 5ce027f4cd0e (rcuscale: Allow rcuscale without RCU Tasks Rude/Trace)
+- FORCE_TASKS_TRACE_RCU: y, v5.18-rc1
+- TASKS_TRACE_RCU: y, v5.7-rc2
