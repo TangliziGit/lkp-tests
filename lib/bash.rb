@@ -22,9 +22,12 @@ module Bash
 
     def call2(*command)
       stdout, stderr, status = Open3.capture3(*command)
-      raise Bash::BashCallError, "#{command}\n#{stderr}#{stdout}" unless status.success?
 
-      stdout
+      return stdout if status.success?
+
+      raise Bash::BashCallError, "#{command}\n#{stderr}#{stdout}" unless block_given?
+
+      yield stdout, stderr, status
     end
   end
 end
