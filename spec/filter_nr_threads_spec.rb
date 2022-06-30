@@ -30,7 +30,7 @@ describe 'filter/nr_threads' do
         f.write({ 'testcase' => 'testcase', 'nr_threads' => 0 }.to_yaml)
       end
       job = Job.open(@test_yaml_file)
-      expect { job.expand_params }.to raise_error Job::ParamError
+      expect { redirect_to_string { job.expand_params } }.to raise_error Job::ParamError
     end
   end
 
