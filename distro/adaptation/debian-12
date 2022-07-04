@@ -1,0 +1,34 @@
+# this version specific adaptation contains adaptations for debian 12 only. The common adaptations are still put in debian
+# 1. not exist/valid packages, mark it empty to avoid installing error.
+# 2. exist/valid packages, mark it empty if you don't want to install later.
+# 3. exist/valid packages, but its name needs to be adapted for other distro,
+#    mapping to a new package name, then the new package will be install later.
+
+# reason(1)
+winpdb:
+python3-gobject:
+
+# reason(3)
+fsverity: fsverity
+libgcrypt-dev: libgcrypt20-dev
+libgcc-dev: libgcc-11-dev
+lib32gcc-dev: lib32gcc-11-dev
+libx32gcc-dev: libx32gcc-11-dev
+lib64gcc-dev: lib64gcc-11-dev
+libx32gcc1: libx32gcc-s1
+lib64gcc1 (i386): lib64gcc-s1 (i386)
+btrfs-tools: btrfs-progs
+libreadline5: readline-common
+libntfs: libntfs-3g89
+libtirpc: libtirpc-common
+libicu: libicu71
+libjson: libjson-c5
+python3-crypto: python3-pycryptodome
+python-docutils: python3-docutils
+libevent-2: libevent-2.1-7
+libasan: libasan6
+libperl5: libperl5.34
+perl-modules-5: perl-modules-5.34
+libhugetlbfs: libhugetlbfs0
+libx32asan5: libx32asan6
+lib64asan3: lib64asan6
