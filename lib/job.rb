@@ -9,6 +9,7 @@ require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/hash"
 require "#{LKP_SRC}/lib/erb"
 require "#{LKP_SRC}/lib/log"
+require "#{LKP_SRC}/lib/bash"
 require 'fileutils'
 require 'yaml'
 require 'json'
