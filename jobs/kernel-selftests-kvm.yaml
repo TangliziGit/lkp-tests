@@ -2,7 +2,7 @@ suite: kernel-selftests
 testcase: kernel-selftests
 category: functional
 
-need_memory: 15G # lkp-icl-2sp5
+need_memory: 12G # lkp-icl-2sp5
 
 kernel-selftests:
   group:
