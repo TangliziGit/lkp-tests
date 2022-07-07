@@ -159,7 +159,8 @@ need_kconfig:
 - FW_LOADER_USER_HELPER: y, v4.18-rc1
 - IKCONFIG: y
 - IKCONFIG_PROC: y
-- TEST_FIRMWARE
+- TEST_FIRMWARE: y
+- FW_UPLOAD: y, v5.19-rc1
 % elsif ___.group == "lkdtm"
 - LKDTM: y
 - DEBUG_LIST
