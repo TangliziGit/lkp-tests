@@ -112,7 +112,7 @@ download_extract()
 
 	echo lftpget -c $URL
 	     lftpget -c $URL || return
-	cd -
+	cd - || return
 
 	echo tar Jxf $dir/$file -C $COMPILER_INSTALL_PATH
 	tar Jxf $dir/$file -C $COMPILER_INSTALL_PATH
