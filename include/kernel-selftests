@@ -258,8 +258,8 @@ need_kconfig:
 - NFT_OBJREF: m, v4.10-rc1
 - NF_FLOW_TABLE: m, v4.16-rc1
 - NF_FLOW_TABLE_INET: m, v4.16-rc1
-- NF_FLOW_TABLE_IPV4: m, v4.16-rc1
-- NF_FLOW_TABLE_IPV6: m, v4.16-rc1
+- NF_FLOW_TABLE_IPV4: m, v4.16-rc1, <= v5.17-rc2
+- NF_FLOW_TABLE_IPV6: m, v4.16-rc1, <= v5.17-rc2
 - NF_TABLES_NETDEV: y, v4.17-rc1
 - NOTIFIER_ERROR_INJECTION: y
 - PROC_FS: y
