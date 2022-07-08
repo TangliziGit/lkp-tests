@@ -9,5 +9,3 @@ mail_cc:
 owner:
 - Mat Martineau <mathew.j.martineau@linux.intel.com>
 - Matthieu Baerts <matthieu.baerts@tessares.net>
-subsystems:
-- mptcp
