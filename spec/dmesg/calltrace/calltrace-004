@@ -1,3 +1,4 @@
+[    0.000000] ------------[ cut here ]------------
 [    0.000000] kernel BUG at arch/x86/mm/physaddr.c:26!
 [    0.000000] invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC
 [    0.000000] Modules linked in:

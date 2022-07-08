@@ -1,3 +1,4 @@
+[    0.391370] ------------[ cut here ]------------
 [    0.391697] WARNING: CPU: 0 PID: 0 at kernel/sched/core.c:109 update_rq_clock+0x6a/0x99
 [    0.392350] rq->clock_update_flags & RQCF_UPDATED
 [    0.392674] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.9.0-rc1-00295-gaa55074 #1
@@ -27,6 +28,7 @@
 [    0.402374]  [<ffffffffaf0873dc>] x86_64_start_kernel+0x133/0x142
 [    0.402781] ---[ end trace f68728a0d3053b52 ]---
 ---
+[   11.845632] ------------[ cut here ]------------
 [   11.845943] WARNING: CPU: 0 PID: 11 at kernel/sched/sched.h:797 rq_clock_task+0x60/0x6a
 [   11.846583] rq->clock_update_flags < RQCF_ACT_SKIP
 [   11.846898] CPU: 0 PID: 11 Comm: migration/0 Tainted: G        W       4.9.0-rc1-00295-gaa55074 #1
@@ -60,6 +62,7 @@
 [   11.857620]  [<ffffffffae35f9fa>] ret_from_fork+0x2a/0x40
 [   11.857965] ---[ end trace f68728a0d3053b54 ]---
 ---
+[   11.858263] ------------[ cut here ]------------
 [   11.858566] WARNING: CPU: 0 PID: 11 at kernel/locking/lockdep.c:3536 lock_release+0x179/0x3b7
 [   11.859222] releasing a pinned lock
 [   11.859453] CPU: 0 PID: 11 Comm: migration/0 Tainted: G        W       4.9.0-rc1-00295-gaa55074 #1
@@ -90,6 +93,7 @@
 [   11.868958]  [<ffffffffae35f9fa>] ret_from_fork+0x2a/0x40
 [   11.869305] ---[ end trace f68728a0d3053b55 ]---
 ---
+[   11.869610] ------------[ cut here ]------------
 [   11.869910] WARNING: CPU: 0 PID: 11 at kernel/locking/lockdep.c:3536 lock_release+0x179/0x3b7
 [   11.870573] releasing a pinned lock
 [   11.870801] CPU: 0 PID: 11 Comm: migration/0 Tainted: G        W       4.9.0-rc1-00295-gaa55074 #1
@@ -120,6 +124,7 @@
 [   11.880285]  [<ffffffffae35f9fa>] ret_from_fork+0x2a/0x40
 [   11.880633] ---[ end trace f68728a0d3053b56 ]---
 ---
+[   11.880936] ------------[ cut here ]------------
 [   11.881237] WARNING: CPU: 0 PID: 11 at kernel/locking/lockdep.c:3536 lock_release+0x179/0x3b7
 [   11.881895] releasing a pinned lock
 [   11.882124] CPU: 0 PID: 11 Comm: migration/0 Tainted: G        W       4.9.0-rc1-00295-gaa55074 #1
@@ -150,6 +155,7 @@
 [   11.891618]  [<ffffffffae35f9fa>] ret_from_fork+0x2a/0x40
 [   11.891963] ---[ end trace f68728a0d3053b57 ]---
 ---
+[   11.892261] ------------[ cut here ]------------
 [   11.892568] WARNING: CPU: 0 PID: 11 at kernel/locking/lockdep.c:3536 lock_release+0x179/0x3b7
 [   11.893221] releasing a pinned lock
 [   11.893453] CPU: 0 PID: 11 Comm: migration/0 Tainted: G        W       4.9.0-rc1-00295-gaa55074 #1

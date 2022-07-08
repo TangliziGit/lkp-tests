@@ -431,7 +431,7 @@ def get_crash_calltraces(dmesg_file)
   dmesg_content.gsub!('kbuild/src/consumer/', '') if dmesg_content.include?('kbuild/src/consumer/')
 
   dmesg_content.each_line do |line|
-    if line =~ / BUG: | WARNING: | INFO: | UBSAN: | kernel BUG at /
+    if line =~ /---\[ cut here | BUG: | WARNING: | INFO: | UBSAN: | kernel BUG at /
       in_calltrace = true
       if end_calltrace
         index += 1
