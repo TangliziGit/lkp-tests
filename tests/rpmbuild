@@ -327,7 +327,7 @@ upload_spec_file
 build_rpm
 [ $? = 0 ] && update_srpm_list
 [ -n "$depend_upstream_repo" ] && exit 0
-detect_reverse_depends
+#detect_reverse_depends
 upload_rpm_pkg
 update_repo_mq
 #[ -n "$upstream_commit" ] && rpmbuild_email "rpmbuild_success"
