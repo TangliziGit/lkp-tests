@@ -17,3 +17,6 @@ blktests:
     - nvme-group-02
     - nvme-032
   nvme_trtype: rdma
+  use_siw:
+    - true
+    - false

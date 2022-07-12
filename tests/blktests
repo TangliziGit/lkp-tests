@@ -1,6 +1,7 @@
 #!/bin/sh
 # - test
 # - nvme_trtype
+# - use_siw
 
 ## blktests is a test framework for the Linux kernel block layer and storage stack.
 
@@ -44,6 +45,7 @@ set_env()
 	fi
 
 	[ "$nvme_trtype" ] && echo "nvme_trtype=$nvme_trtype" >> config
+	[ "$use_siw" = "true" ] && echo "use_siw=1" >> config
 
 	# fix the issue: losetup: cannot find an unused loop device
 	lsmod | grep -q loop || modprobe loop
