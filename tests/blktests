@@ -1,5 +1,6 @@
 #!/bin/sh
 # - test
+# - nvme_trtype
 
 ## blktests is a test framework for the Linux kernel block layer and storage stack.
 
@@ -41,6 +42,8 @@ set_env()
 		echo "TEST_DEVS=$partition" > config
 		[ "$test" = "nvme-group1" ] && log_cmd mkdir -p /mnt/$test && log_cmd mount $partition /mnt/$test
 	fi
+
+	[ "$nvme_trtype" ] && echo "nvme_trtype=$nvme_trtype" >> config
 
 	# fix the issue: losetup: cannot find an unused loop device
 	lsmod | grep -q loop || modprobe loop
