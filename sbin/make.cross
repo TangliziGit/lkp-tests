@@ -326,6 +326,9 @@ setup_crosstool_gcc()
 		xtensa)
 			setup_compiler_for_xtensa
 			;;
+		loongarch)
+			gcc_arch=loongarch64-linux
+			;;
 		*)
 			gcc_arch=$ARCH-linux
 			;;
