@@ -1,7 +1,11 @@
 url: https://github.com/ammarfaizi2/linux-block
 notify_build_success_branch: testing/.*
 owner: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-mail_cc: GNU/Weeb Mailing List <gwml@vger.gnuweeb.org>
-mail_to: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+mail_cc:
+- Ammar Faizi <ammarfaizi2@gnuweeb.org>
+- GNU/Weeb Mailing List <gwml@vger.gnuweeb.org>
+mail_to:
+- Ammar Faizi <ammarfaizi2@gnuweeb.org>
+- GNU/Weeb Mailing List <gwml@vger.gnuweeb.org>
 private_report_branch: google/android/.*
 branch_denylist: axboe/linux-block/sock-nolock.2
