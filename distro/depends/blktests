@@ -36,3 +36,4 @@ libnl-nf-3-200
 multipath-tools
 kpartx
 iproute2
+bsdextrautils
