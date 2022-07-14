@@ -294,6 +294,7 @@ fixup_net()
 
 	[ "$test" = "fcnal-test.sh" ] && [ "$atomic_test" ] && setup_fcnal_test_atomic
 
+	export CCINCLUDE="-I../bpf/tools/include"
 	log_cmd make -C ../../../tools/testing/selftests/net 2>&1 || return
 	log_cmd make install INSTALL_PATH=/usr/bin/ -C ../../../tools/testing/selftests/net 2>&1 || return
 }
