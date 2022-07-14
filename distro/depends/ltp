@@ -60,3 +60,4 @@ iputils-tracepath
 telnet
 traceroute
 nftables
+net-tools
