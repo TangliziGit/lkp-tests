@@ -1,0 +1,27 @@
+#!/bin/sh
+
+. $LKP_SRC/lib/debug.sh
+
+setup_rxe_netdev()
+{
+	# pick up the first 'up' network interface
+	NET_IF=$(ip link | grep -v -e "LOOPBACK" | grep -e "state UP" | head -n1 | cut -d: -f2 | cut -d' ' -f2)
+	[ "$NET_IF" ] || die "no avaliable network interface"
+	RXE_NAME="rxe_$NET_IF"
+	rdma link add $RXE_NAME type rxe netdev $NET_IF || die "failed to setup rxe interface"
+}
+
+run_pyverbs()
+{
+	cd build || die "Please build pyverbs first"
+
+	# -v means verbose, which will print messages to stderr by default
+	./bin/run_tests.py --dev $RXE_NAME --gid 1 -v 2>&1
+}
+
+cd $BENCHMARK_ROOT/rdma-pyverbs || die "failed to cd $BENCHMARK_ROOT/rdma-pyverbs"
+
+setup_rxe_netdev
+run_pyverbs
+
+exit 0
