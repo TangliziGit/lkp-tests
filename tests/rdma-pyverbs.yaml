@@ -1,0 +1,9 @@
+short_description: >
+ Pyverbs provides a Python API over rdma-core, the Linux userspace C API for
+ the RDMA stack. And rdma-pyverbs is the unitests for pyverbs.
+
+homepage: https://github.com/linux-rdma/rdma-core
+
+parameters:
+
+results:
