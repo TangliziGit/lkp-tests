@@ -1,0 +1,22 @@
+test_create_ah (tests.test_addr.AHTest)
+Test ibv_create_ah. ... ERROR
+test_create_ah_roce (tests.test_addr.AHTest)
+Verify that AH can't be created without GRH in RoCE ... ok
+test_destroy_ah (tests.test_addr.AHTest)
+Test ibv_destroy_ah. ... ERROR
+test_atomic_cmp_and_swap (tests.test_atomic.AtomicTest) ... ok
+test_rdmacm_async_write (tests.test_rdmacm.CMTestCase) ... skipped "Device rxe_eth0 doesn't have net interface"
+test_rdmacm_sync_traffic (tests.test_rdmacm.CMTestCase) ... skipped "Device rxe_eth0 doesn't have net interface"
+test_ro_rc_traffic (tests.test_relaxed_ordering.RoTestCase) ... ok
+test_ro_ud_traffic (tests.test_relaxed_ordering.RoTestCase) ... ok
+test_ro_xrc_traffic (tests.test_relaxed_ordering.RoTestCase) ... skipped 'Create XRCD is not supported'
+test_rss_traffic (tests.test_rss_traffic.RSSTrafficTest) ... skipped 'Create QP type 8 is not supported'
+test_imported_rc_ex_rdma_write (tests.test_shared_pd.SharedPDTestCase) ... skipped 'Importing a device is not supported'
+test_tm_no_tag (tests.test_tag_matching.TMTest)
+Test no_tag Tag Matching traffic, ... skipped 'Extended CQ is not supported'
+test_tm_rndv (tests.test_tag_matching.TMTest)
+Test rendezvous Tag Matching traffic, ... skipped 'Extended CQ is not supported'
+test_tm_traffic (tests.test_tag_matching.TMTest)
+Test basic Tag Matching traffic, client sends tagged WRs server receives ... skipped 'Extended CQ is not supported'
+test_tm_unexpected_tag (tests.test_tag_matching.TMTest)
+Test unexpected Tag Matching traffic, client sends unexpected tagged WRs, ... skipped 'Extended CQ is not supported'
