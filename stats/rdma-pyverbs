@@ -23,7 +23,13 @@ while (line = $stdin.gets)
              else
                'skipped'
              end
-    stats.add $1.to_s.tr('.', '_'), result
+
+    # XXX: there is a duplicate case descrition in current pyverbs tests
+    # As a temporary workaround, we rename it currently.
+    # we can drop this workaround once pyverbs is fixed.
+    name = $1.to_s.tr('.', '_')
+    name = "2_#{name}" if stats.key? name
+    stats.add name, result
   end
 end
 
