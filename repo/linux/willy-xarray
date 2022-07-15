@@ -1,1 +1,5 @@
 url: git://git.infradead.org/users/willy/xarray.git
+owner: Matthew Wilcox <willy@infradead.org>
+notify_build_success_branch: .*
+private_report_branch: .*
+mail_to: Matthew Wilcox <willy@infradead.org>
