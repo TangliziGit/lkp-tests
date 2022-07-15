@@ -32,3 +32,4 @@ perl-modules-5: perl-modules-5.34
 libhugetlbfs: libhugetlbfs0
 libx32asan5: libx32asan6
 lib64asan3: lib64asan6
+exfat-utils: exfatprogs
