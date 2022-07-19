@@ -1,0 +1,5 @@
+suite: rdma-pyverbs
+testcase: rdma-pyverbs
+category: functional
+
+rdma-pyverbs:

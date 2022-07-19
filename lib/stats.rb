@@ -62,7 +62,7 @@ class LinuxTestcasesTableSet
        qemu rcuscale rcutorture suspend suspend-stress trinity ndctl nfs-test hwsim
        idle-inject mdadm-selftests xsave-test nvml test-bpf mce-log perf-sanity-tests
        build-perf_test update-ucode reboot cat libhugetlbfs-test ocfs2test syzkaller
-       perf-test fxmark kvm-kernel-boot-test bkc_ddt
+       perf-test fxmark kvm-kernel-boot-test bkc_ddt rdma-pyverbs
        xfstests packetdrill avocado v4l2 vmem perf-stat-tests cgroup2-test].freeze
   OTHER_TESTCASES =
     %w[build-dpdk build-nvml build-qemu convert-lkpdoc-to-html convert-lkpdoc-to-html-css rsync-rootfs

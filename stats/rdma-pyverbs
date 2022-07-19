@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/statistics"
+require "#{LKP_SRC}/lib/string_ext"
+require "#{LKP_SRC}/lib/array_ext"
+require "#{LKP_SRC}/lib/tests/stats"
+
+stats = LKP::Stats.new
+
+while (line = $stdin.gets)
+  line = line.resolve_invalid_bytes
+
+  case line
+  when /^(.+? )\.\.\. (ok|ERROR|skipped)/
+    result = $2
+    result = case result
+             when 'ok'
+               'passed'
+             when 'ERROR'
+               'failed'
+             else
+               'skipped'
+             end
+
+    # XXX: there is a duplicate case descrition in current pyverbs tests
+    # As a temporary workaround, we rename it currently.
+    # we can drop this workaround once pyverbs is fixed.
+    name = $1.to_s.tr('.', '_')
+    name = "2_#{name}" if stats.key? name
+    stats.add name, result
+  end
+end
+
+stats.dump('passed' => 'pass', 'failed' => 'fail', 'not_run' => 'skip')
