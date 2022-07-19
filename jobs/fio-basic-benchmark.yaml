@@ -48,3 +48,4 @@ fio-setup-basic:
   - 1024k
 
 fio:
+do_not_reboot: 1
