@@ -15,10 +15,10 @@ while (line = $stdin.gets)
   case line
   when /test_bpf: #[0-9]+ (.+) jited:.+ PASS$/
     type = $1.tr(' ', '_')
-    stats.add type, 'pass'
+    stats.add type, 'pass' unless stats.key? "#{type}"
   when /test_bpf: #[0-9]+ (.+) jited:.+ FAIL/
     type = $1.tr(' ', '_')
-    stats.add type, 'fail'
+    stats.add type, 'fail' unless stats.key? "#{type}"
   when /test_bpf: #[0-9]+ check: (.+) PASS$/
     type = $1.tr(' ', '_')
     stats.add "check:_#{type}", 'pass'
