@@ -40,8 +40,11 @@ build_rusers()
 	cd rpc*/ || return
 	./configure --prefix="${benchmark_path}"/netkit-rusers
 
-	sed -i '/^DEFAULT_INCLUDES =/ s/$/ -I\/usr\/include\/tirpc/' Makefile
-	sed -i '/^LIBS =/ s/$/ -ltirpc/' Makefile
+	local distro=$(basename $rootfs)
+	if [[ "$distro" =~ "debian-12" ]]; then
+		sed -i '/^DEFAULT_INCLUDES =/ s/$/ -I\/usr\/include\/tirpc/' Makefile
+		sed -i '/^LIBS =/ s/$/ -ltirpc/' Makefile
+	fi
 	make
 }
 
