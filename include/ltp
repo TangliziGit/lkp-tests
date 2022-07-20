@@ -25,3 +25,5 @@ need_kconfig:
 - CAN_VCAN: m
 - MINIX_FS: m
 - CHECKPOINT_RESTORE: y
+
+rootfs: debian-12-x86_64-20220629.cgz
