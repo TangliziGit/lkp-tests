@@ -1,0 +1,2 @@
+JMP32_JSGT_K_operand_preserved_in_zext.pass: 1
+JMP32_JSGE_K_operand_preserved_in_zext.pass: 1
