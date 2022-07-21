@@ -68,7 +68,7 @@ need_kconfig:
 - TEST_BITMAP: m
 - TEST_UUID: m
 - TEST_XARRAY: m
-- TEST_OVERFLOW: m
+- TEST_OVERFLOW: m, <= v5.17
 - TEST_RHASHTABLE: m
 - PARMAN
 - TEST_PARMAN: m
