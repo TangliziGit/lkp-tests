@@ -507,6 +507,10 @@ fixup_bpf()
 		sed -i "s/test_kmod.sh//" bpf/Makefile
 		echo "LKP SKIP test_kmod.sh"
 	fi
+
+	sed -i 's/\/redirect_map_0/\/xdp_redirect_map_0/g' bpf/test_xdp_veth.sh
+	sed -i 's/\/redirect_map_1/\/xdp_redirect_map_1/g' bpf/test_xdp_veth.sh
+	sed -i 's/\/redirect_map_2/\/xdp_redirect_map_2/g' bpf/test_xdp_veth.sh
 }
 
 fixup_kmod()
