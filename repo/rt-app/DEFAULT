@@ -1,0 +1,2 @@
+release_tag_pattern: v(?<major>[0-9])\.(?<minor>\d+)
+belongs_to: rt-app
