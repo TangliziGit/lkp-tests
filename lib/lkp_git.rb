@@ -211,7 +211,7 @@ end
 
 def load_remotes
   remotes = {}
-  files = Dir["#{LKP_SRC}/repo/*/*"]
+  files = Dir[LKP::Path.src('repo', '*', '*')]
   files.each do |file|
     remote = File.basename file
     next if remote == 'DEFAULTS'
