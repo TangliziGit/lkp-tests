@@ -4,12 +4,12 @@ BEGIN {
 	FS = "\\.\\.\\. "
 }
 
-$2 ~ /FAILED/ {
-	printf("%s.fail: 1\n", substr($1, 7))
+$0 ~ FS && $2 == "" {
+	printf("%s.fail: 1\n", substr($1, 39))
 }
 
 $2 ~ /succeeded/ {
-	printf("%s.pass: 1\n", substr($1, 7))
+	printf("%s.pass: 1\n", substr($1, 39))
 }
 
 $2 ~ /ignored_by_lkp/ {
