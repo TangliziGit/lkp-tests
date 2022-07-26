@@ -1,0 +1,50 @@
+2022-05-30 10:01:22 mkdir -p /var/tmp
+2022-05-30 10:01:22 mke2fs -t ext3 -b 4096 -J size=4 -q /dev/sdb1
+2022-05-30 10:01:55 mount -t ext3 /dev/sdb1 /var/tmp
+sed -e 's/{DEFAULT_METADATA}/1.2/g' \
+-e 's,{MAP_PATH},/run/mdadm/map,g'  mdadm.8.in > mdadm.8
+/usr/bin/install -D -m 644 mdadm.8 /usr/share/man/man8/mdadm.8
+/usr/bin/install -D -m 644 mdmon.8 /usr/share/man/man8/mdmon.8
+/usr/bin/install -D -m 644 md.4 /usr/share/man/man4/md.4
+/usr/bin/install -D -m 644 mdadm.conf.5 /usr/share/man/man5/mdadm.conf.5
+/usr/bin/install -D -m 644 udev-md-raid-creating.rules /lib/udev/rules.d/01-md-raid-creating.rules
+/usr/bin/install -D -m 644 udev-md-raid-arrays.rules /lib/udev/rules.d/63-md-raid-arrays.rules
+/usr/bin/install -D -m 644 udev-md-raid-assembly.rules /lib/udev/rules.d/64-md-raid-assembly.rules
+/usr/bin/install -D -m 644 udev-md-clustered-confirm-device.rules /lib/udev/rules.d/69-md-clustered-confirm-device.rules
+/usr/bin/install -D  -m 755 mdadm /sbin/mdadm
+/usr/bin/install -D  -m 755 mdmon /sbin/mdmon
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r0_r0_2d-grow-r0_r0_4d... 
+	ERROR: dmesg prints errors when testing 13imsm-r0_r0_2d-grow-r0_r0_4d! 
+
+FAILED - see /var/tmp/13imsm-r0_r0_2d-grow-r0_r0_4d.log and /var/tmp/fail13imsm-r0_r0_2d-grow-r0_r0_4d.log for details
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r0_r0_2d-grow-r0_r0_5d... 
+	ERROR: dmesg prints errors when testing 13imsm-r0_r0_2d-grow-r0_r0_5d! 
+
+FAILED - see /var/tmp/13imsm-r0_r0_2d-grow-r0_r0_5d.log and /var/tmp/fail13imsm-r0_r0_2d-grow-r0_r0_5d.log for details
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r0_r0_3d-grow-r0_r0_4d... 
+	ERROR: dmesg prints errors when testing 13imsm-r0_r0_3d-grow-r0_r0_4d! 
+
+FAILED - see /var/tmp/13imsm-r0_r0_3d-grow-r0_r0_4d.log and /var/tmp/fail13imsm-r0_r0_3d-grow-r0_r0_4d.log for details
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r0_r5_3d-grow-r0_r5_4d... 
+	ERROR: dmesg prints errors when testing 13imsm-r0_r5_3d-grow-r0_r5_4d! 
+
+FAILED - see /var/tmp/13imsm-r0_r5_3d-grow-r0_r5_4d.log and /var/tmp/fail13imsm-r0_r5_3d-grow-r0_r5_4d.log for details
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r0_r5_3d-grow-r0_r5_5d... 
+	ERROR: dmesg prints errors when testing 13imsm-r0_r5_3d-grow-r0_r5_5d! 
+
+FAILED - see /var/tmp/13imsm-r0_r5_3d-grow-r0_r5_5d.log and /var/tmp/fail13imsm-r0_r5_3d-grow-r0_r5_5d.log for details
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r5_r0_3d-grow-r5_r0_4d... 
+	ERROR: dmesg prints errors when testing 13imsm-r5_r0_3d-grow-r5_r0_4d! 
+
+FAILED - see /var/tmp/13imsm-r5_r0_3d-grow-r5_r0_4d.log and /var/tmp/fail13imsm-r5_r0_3d-grow-r5_r0_4d.log for details
+Testing on linux-5.15.0 kernel
+/lkp/benchmarks/mdadm-selftests/tests/13imsm-r5_r0_3d-grow-r5_r0_5d... 
+	ERROR: dmesg prints errors when testing 13imsm-r5_r0_3d-grow-r5_r0_5d! 
+
+FAILED - see /var/tmp/13imsm-r5_r0_3d-grow-r5_r0_5d.log and /var/tmp/fail13imsm-r5_r0_3d-grow-r5_r0_5d.log for details
