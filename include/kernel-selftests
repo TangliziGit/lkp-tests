@@ -45,6 +45,7 @@ need_kconfig:
 - BPF_JIT: y
 - BPF_STREAM_PARSER: y, v4.14-rc1
 - BPF_SYSCALL: y
+- BPF_LIRC_MODE2: y
 - CGROUP_BPF: y, v4.10-rc1
 - CRYPTO_HMAC
 - CRYPTO_SHA256
@@ -52,6 +53,7 @@ need_kconfig:
 - DEBUG_INFO
 - DEBUG_INFO_BTF: v5.2-rc1
 - FTRACE_SYSCALLS: y
+- FPROBE: y, v5.18
 - GENEVE: y, v4.3-rc1
 - IPV6: y
 - IPV6_FOU: v4.7-rc1
