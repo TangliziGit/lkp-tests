@@ -374,7 +374,7 @@ need_kconfig:
 - MEMORY_HOTPLUG_SPARSE: y, <= v5.15
 - MEMORY_NOTIFIER_ERROR_INJECT
 - NOTIFIER_ERROR_INJECTION
-- RC_CORE: m, v4.14-rc1
+- RC_CORE: y, v4.14-rc1
 - RC_DECODERS: y # Depends on: RC_CORE [: m]
 - RC_DEVICES: y # Depends on: RC_CORE [: m]
 - RUNTIME_TESTING_MENU: y
