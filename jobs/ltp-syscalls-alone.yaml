@@ -17,4 +17,4 @@ fs:
 
 ltp:
   test:
-    - fork13.fork13.-i.1000000
+    - fork13.fork13.-i.2
