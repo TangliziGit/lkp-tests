@@ -30,8 +30,8 @@ need_kconfig:
 - LOCKDEP: y
 - PROVE_LOCKING: y
 % elsif ___.group == "kvm"
-- KVM: m
-- KVM_INTEL: m
+- KVM
+- KVM_INTEL
 % elsif ___.group == "vm"
 - MEM_SOFT_DIRTY: y
 - GUP_BENCHMARK: y, v4.15-rc1, <= v5.10
