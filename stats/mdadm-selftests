@@ -8,6 +8,10 @@ $0 ~ FS && $2 == "" {
 	printf("%s.fail: 1\n", substr($1, 39))
 }
 
+$2 ~ /FAILED/ {
+	printf("%s.fail: 1\n", substr($1, 39))
+}
+
 $2 ~ /succeeded/ {
 	printf("%s.pass: 1\n", substr($1, 39))
 }
