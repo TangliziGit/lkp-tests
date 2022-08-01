@@ -4,6 +4,7 @@ mail_cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 fetch_tags: true
 fetch_pull_request: true
 notify_build_success_branch: topic/.*
+branch_denylist: pr/.*
 mail_recipient: intel.com
 use_customized_release_tag_pattern: true
 release_tag_pattern: sof-v(?<major>[0-9])\.(?<minor>\d+)\.?(?<micro>\d+)?(-rc(?<prerelease>\d+))?
