@@ -16,6 +16,7 @@ require "#{LKP_SRC}/lib/cache"
 require "#{LKP_SRC}/lib/assert"
 require "#{LKP_SRC}/lib/git_ext"
 require "#{LKP_SRC}/lib/constant"
+require "#{LKP_SRC}/lib/lkp_path"
 
 GIT_WORK_TREE ||= ENV['GIT_WORK_TREE'] || ENV['LKP_GIT_WORK_TREE'] || "#{GIT_ROOT_DIR}/linux"
 GIT_DIR ||= ENV['GIT_DIR'] || "#{GIT_WORK_TREE}/.git"
