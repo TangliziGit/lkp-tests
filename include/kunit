@@ -70,9 +70,6 @@ need_kconfig:
 - TEST_XARRAY: m
 - TEST_OVERFLOW: m, <= v5.17
 - TEST_RHASHTABLE: m
-- COMPILE_TEST: y
-- PARMAN: m
-- TEST_PARMAN: m
 - TEST_IDA: m
 - TEST_MEMCAT_P: m
 - TEST_UDELAY: m
@@ -80,8 +77,6 @@ need_kconfig:
 - DYNAMIC_DEBUG: y
 - LIVEPATCH: y
 - TEST_LIVEPATCH: m, v5.1-rc1
-- OBJAGG: m, v5.0-rc1
-- TEST_OBJAGG: m, v5.0-rc1
 - TEST_MEMINIT: m, v5.3-rc1
 - TRANSPARENT_HUGEPAGE: y
 - DEVICE_PRIVATE: y
