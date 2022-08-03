@@ -204,7 +204,7 @@ test_setting()
 		sed -i "1s/^/::1 ${HOSTNAME}\n/" /etc/hosts
 		sed -i "1s/^/127.0.0.1 ${HOSTNAME}\n/" /etc/hosts
 		;;
-	net.rpc)
+	net.rpc_tests)
 		systemctl start openbsd-inetd || exit
 		cp netkit-rusers/bin/rup /usr/bin/
 		;;

@@ -10,7 +10,6 @@ ltp:
     - ltp-aiodio.part3
     - math
     - net.ipv6_lib
-    - net.rpc
     - net.sctp
     - nptl
     - power_management_tests
