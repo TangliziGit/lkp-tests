@@ -14,6 +14,9 @@ while (line = $stdin.gets)
   when /^\[\d+ modules\] .+(Live|Loading|Unloading) .+/
     # skip the line about kernel modules
     next
+  when /addr:.*vm_flags:.*anon_vma:.*mapping:.*index:/
+    # [  223.066648 ] addr:00005586d8f2b000 vm_flags:00000075 anon_vma:0000000000000000 mapping:ffff88810b5aaa98 index:3b
+    next
   when /Total number of results.*: (.*)/
     total_number = $1
   when /^\[ +([\d.]+)\] (.*)/
