@@ -547,6 +547,12 @@ fixup_user_events()
 	sed -i 's/headers_install\: headers/headers_install\:/' ../../../Makefile
 }
 
+fixup_kvm()
+{
+	# print detail debug info
+	export CFLAGS="-DDEBUG"
+}
+
 prepare_for_selftest()
 {
 	if [ "$group" = "group-00" ]; then
@@ -829,6 +835,8 @@ fixup_subtest()
 		fixup_kexec
 	elif [[ "$subtest" = "user_events" ]]; then
 		fixup_user_events
+	elif [[ "$subtest" = "kvm" ]]; then
+		fixup_kvm
 	fi
 	return 0
 }
