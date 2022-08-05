@@ -1,0 +1,3 @@
+KVM-debug: PASS: single step #VE emulated instructions
+KVM-debug: PASS: single step TDX module emulated CPUID 0
+KVM-debug: PASS: single step TDX module emulated RDMSR 0x1a0
