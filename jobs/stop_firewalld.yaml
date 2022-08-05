@@ -1,0 +1,2 @@
+setup-firewalld:
+        firewalld_action: stop
