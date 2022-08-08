@@ -186,4 +186,10 @@ class << ResultPath
     rp.update(axes)
     rp
   end
+
+  def rectify(path)
+    # remove extra '/'
+    # //result/rcuscale/300s-rcu/vm-snb/debian-i386-20191205.cgz/i386-randconfig-a001-20201231/gcc-9/b1ca223e5ea73f2fea3551685f38ec35a372400a/
+    path.split('/').reject(&:empty?).map { |field| "/#{field}" }.join
+  end
 end
