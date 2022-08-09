@@ -547,6 +547,12 @@ fixup_user_events()
 	sed -i 's/headers_install\: headers/headers_install\:/' ../../../Makefile
 }
 
+fixup_kvm()
+{
+	# SKIP - /dev/kvm not available (errno: 2)
+	lsmod | grep -q 'kvm_intel' || modprobe kvm_intel
+}
+
 prepare_for_selftest()
 {
 	if [ "$group" = "group-00" ]; then
@@ -829,6 +835,8 @@ fixup_subtest()
 		fixup_kexec
 	elif [[ "$subtest" = "user_events" ]]; then
 		fixup_user_events
+	elif [[ "$subtest" = "kvm" ]]; then
+		fixup_kvm
 	fi
 	return 0
 }
