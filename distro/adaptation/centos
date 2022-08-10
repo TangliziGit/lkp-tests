@@ -227,3 +227,4 @@ libicu: libicu57
 libgdbm-dev: gdbm-devel
 xsltproc: libxslt
 nasm: nasm.x86_64
+libpython2.7: python2-libs
