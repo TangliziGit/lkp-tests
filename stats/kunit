@@ -16,7 +16,8 @@ while (line = $stdin.gets)
     stats.add $2, $3
   when /\d*(not ok|ok).* - (.*)/
     # [   41.553190]     ok 6 - kmalloc_pagealloc_invalid_free
-    stats.add $2, $1
+    # there are two "ok 1 - total_mapping_size_test" in output
+    stats.add $2, $1 unless stats.key? $2.to_s
   end
 end
 
