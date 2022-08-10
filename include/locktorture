@@ -1,3 +1,4 @@
+need_kernel_version: '>= v4.17'
 need_kconfig:
 - LOCK_TORTURE_TEST: m
 # LoadPin: kernel-module old-api-denied obj=<unknown> pid=731 cmdline="modprobe locktorture onoff_interval=3 onoff_holdoff=30"
