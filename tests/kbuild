@@ -16,6 +16,11 @@
 
 run_kbuild()
 {
+	# when using gcc-11 instead of gcc-9, there is this error.
+	# /usr/bin/ld: scripts/dtc/dtc-parser.tab.o:(.bss+0x20): multiple definition of `yylloc'
+	log_cmd rm /usr/bin/gcc
+	log_cmd ln -s /usr/bin/gcc-9 /usr/bin/gcc
+
 	start_time=$(date +%s)
 	iterations=0
 	while true; do

@@ -48,3 +48,4 @@ telnet
 traceroute
 openvswitch-common
 openvswitch-switch
+gcc-9
