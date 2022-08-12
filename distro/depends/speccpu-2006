@@ -1,0 +1,4 @@
+numactl
+gcc-gfortran
+libnsl
+tar
