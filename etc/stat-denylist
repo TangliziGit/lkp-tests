@@ -45,6 +45,7 @@
 ^dmesg.Mem-Info
 ^dmesg.timestamp:.*
 ^dmesg.WARNING:at_kernel/kcsan/kcsan_test.c:#test_init
+^dmesg\.WARNING:Unprivileged_eBPF_is_enabled_with_eIBRS_on,data_leaks_possible_via_Spectre_v2_BHB_attacks
 ^GLib-WARNING\*\*:#:#:#:gmem.c:#:custom_memory_allocation_vtable_not_supported
 .*\.ignored_by_lkp
 ^interrupts.
