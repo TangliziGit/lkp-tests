@@ -1,5 +1,5 @@
 pkgname=hackbench
-pkgver=2.3
+pkgver=2.4
 pkgrel=1
 arch=('i386' 'x86_64')
 url="https://www.kernel.org/pub/linux/utils/rt-tests"
