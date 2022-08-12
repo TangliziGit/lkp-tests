@@ -71,6 +71,8 @@ class ResultPath < Hash
 
       monitor = self['path_params'][/monitor=[0-9a-f]{8}/]
       self['monitor'] = monitor.split('=').last if monitor
+
+      self['unified_path_params'] = self.class.unified_path_params self['path_params']
     end
 
     if ps.include?('commit')
