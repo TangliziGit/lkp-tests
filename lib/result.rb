@@ -171,6 +171,10 @@ class ResultPath < Hash
       cmdline = "grep -he '#{pattern}' #{KTEST_PATHS_DIR}/*/????-??-??-* | sed -e 's#[0-9]\\+/$##' | sort | uniq"
       `#{cmdline}`
     end
+
+    def unified_path_params(path)
+      path.sub(/-ucode=[a-zA-Z0-9]{0,10}/, '')
+    end
   end
 end
 
