@@ -96,7 +96,7 @@ def for_each_in(ah, set, pk = nil)
   ah.each do |k, v|
     next if k == 'pp' || k == 'ss'
 
-    k = k.sub(/-\d+$/, '') if k.is_a?(String)
+    k = k.sub(/-\d+$/, '') if k.is_a?(String) && set.include?(k.sub(/-\d+$/, ''))
     yield pk, ah, k, v if set.include?(k)
     next unless v.is_a?(Hash)
 
