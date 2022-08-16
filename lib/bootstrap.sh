@@ -451,6 +451,15 @@ show_default_gateway()
 	fi
 }
 
+show_gateway_mac()
+{
+	if has_cmd ip; then
+		ip neigh | grep "$1" | awk '{print $5}'
+	else
+		arp "$1" | grep "$1" | awk '{print $3}'
+	fi
+}
+
 show_default_interface()
 {
 	if has_cmd ip; then
@@ -473,8 +482,9 @@ netconsole_init()
 	# Select the interface that can access netconsole server
 	netconsole_interface=$(show_default_interface)
 	[ -n "$netconsole_server" ] || return
+	netconsole_server_mac=$(show_gateway_mac "$netconsole_server")
 	# eth0 is default interface if netconsole_interface is null.
-	modprobe netconsole netconsole=@/$netconsole_interface,$netconsole_port@$netconsole_server/
+	modprobe netconsole netconsole=@/$netconsole_interface,$netconsole_port@$netconsole_server/$netconsole_server_mac
 }
 
 download_job()
