@@ -1,9 +1,11 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git
 notify_build_success_branch: .*
+git_am_branch: next
 mail_cc:
 - Alison Schofield <alison.schofield@intel.com>
 - Vishal Verma <vishal.l.verma@intel.com>
 - Ira Weiny <ira.weiny@intel.com>
 - Ben Widawsky <ben.widawsky@intel.com>
 - Dan Williams <dan.j.williams@intel.com>
+- linux-cxl@vger.kernel.org
 report_to_domain_branch: preview
