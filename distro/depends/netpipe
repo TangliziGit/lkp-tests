@@ -3,3 +3,4 @@ netpipe-mpich2
 netpipe-openmpi
 netpipe-pvm
 netpipe-tcp
+mpi-default-dev

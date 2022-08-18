@@ -27,7 +27,7 @@ description: |
  rates, or a disk module under development that measures the performance to
  various I/O devices.
 
-homepage: http://bitspjoule.org/netpipe/
+homepage: https://web.archive.org/web/20210501032326/https://netpipe.cs.ksu.edu/
 
 parameters:
  test:

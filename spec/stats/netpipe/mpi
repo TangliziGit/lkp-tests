@@ -1,0 +1,18 @@
+2022-08-16 15:50:52 make CFLAGS=-fcommon mpi
+mpicc -fcommon -DMPI  ./src/netpipe.c ./src/mpi.c -o NPmpi -I./src
+2022-08-16 15:50:52 mpirun -np 1 --hostfile mpihosts --allow-run-as-root NPmpi --repeats 1000
+Using a constant number of 1000 transmissions
+NOTE: Be leary of timings that are close to the clock accuracy.
+
+      Clock resolution ~ [33m  1.000 nsecs[0m      Clock accuracy ~ [33m 42.000 nsecs[0m
+
+Start testing with 7 trials for each message size
+  1: [32m      1  B[0m      1000 times -->  [35m 71.619 Mbps[0m  in  [33m111.702 nsecs[0m[31m
+[0m  2: [32m      2  B[0m      1000 times -->  [35m150.807 Mbps[0m  in  [33m106.096 nsecs[0m[31m
+[0m  3: [32m      3  B[0m      1000 times -->  [35m224.512 Mbps[0m  in  [33m106.898 nsecs[0m[31m
+[0m  9: [32m     16  B[0m      1000 times -->  [31m  1.211 Gbps[0m  in  [33m105.727 nsecs[0m[31m
+[0m 72: [36m 24.576 KB[0m      1000 times -->  [31m256.751 Gbps[0m  in  [33m765.755 nsecs[0m[31m
+[0m122: [35m  8.389 MB[0m      1000 times -->  [31m 66.191 Gbps[0m  in  [32m  1.014 msecs[0m[31m
+[0m123: [35m  8.389 MB[0m      1000 times -->  [31m 68.334 Gbps[0m  in  [36m982.072 usecs[0m[31m
+[0m124: [35m  8.389 MB[0m      1000 times -->  [31m 67.481 Gbps[0m  in  [36m994.480 usecs[0m[31m
+Completed with        max bandwidth  [31m311.403 Gbps[0m      [33m107.216 nsecs[0m latency
