@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# SPDX-License-Identifier: MulanPSL-2.0+
+# Copyright (c) 2022 Huawei Technologies Co., Ltd. All rights reserved
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+stats = {}
+while (line = $stdin.gets)
+  case line
+  when /^Benchmarks.*Ratio.*/
+    test_item = line.split[4]
+  when /^==============================/
+    while (line = $stdin.gets)
+      case line
+      when /^\d{3}/
+        data = line.split[0] + "_" + "#{test_item}"
+        stats["#{data}"] = line.split[3]
+      when /^\sEst\..*/
+        avg = line.split[0] + line.split[1]
+        stats["#{avg}"] = line.split[2]
+        break
+      end
+    end
+  end
+end
+stats.each do |k, v|
+  puts "#{k}: #{v}"
+end
