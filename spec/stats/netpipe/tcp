@@ -1,0 +1,12 @@
+2022-08-15 06:12:31 NPtcp -n 1000 -h 127.0.0.1
+Send and receive buffers are 16384 and 131072 bytes
+(A bug in Linux doubles the requested buffer sizes)
+Now starting the main loop
+ 55:    4093 bytes   1000 times -->   3408.35 Mbps in       9.16 usec
+ 56:    4096 bytes   1000 times -->   3384.38 Mbps in       9.23 usec
+ 57:    4099 bytes   1000 times -->   3372.84 Mbps in       9.27 usec
+ 58:    6141 bytes   1000 times -->   4793.33 Mbps in       9.77 usec
+116: 4194304 bytes   1000 times -->  45983.65 Mbps in     695.90 usec
+117: 4194307 bytes   1000 times -->  45166.00 Mbps in     708.50 usec
+118: 6291453 bytes   1000 times -->  45548.13 Mbps in    1053.83 usec
+119: 6291456 bytes   1000 times -->  44919.13 Mbps in    1068.59 usec
