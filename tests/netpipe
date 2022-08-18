@@ -11,6 +11,14 @@ cd $BENCHMARK_ROOT/netpipe || die "no $BENCHMARK_ROOT/netpipe"
 [ -z "$server" ] && server=127.0.0.1
 server=${server%% *}
 
+fixup_mpi()
+{
+	# fix 'make: mpicc: No such file or directory'
+	ln -sf /usr/bin/mpicc.openmpi /usr/bin/mpicc
+}
+
+fixup_mpi
+
 log_cmd make CFLAGS="-fcommon" $test || die "failed to compile $test"
 
 case $test in
