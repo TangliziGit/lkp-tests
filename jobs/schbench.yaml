@@ -4,5 +4,16 @@ category: benchmark
 
 schbench:
   message_threads:
+    - 1
     - 12.5%
     - 100%
+  worker_threads:
+    - 1
+    - 16
+    - 128
+    - 512
+  runtime:
+    - 30s
+    - 300s
+  iterations:
+    - 3x

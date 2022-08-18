@@ -9,6 +9,7 @@ parameters:
   runtime:          seconds to run before exiting
   sleeptime_us:     message thread latency with unit usec
   cputime_us:       time think during loop with unit usec
+  iterations:       number of iterations
 
 results:
   schbench.latency_50%_us:
