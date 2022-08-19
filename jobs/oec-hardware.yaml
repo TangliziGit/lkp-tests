@@ -1,0 +1,8 @@
+suite: oec-hardware
+category: functional
+
+if role server:
+  oech-server:
+
+if role client:
+  oech:

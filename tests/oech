@@ -1,3 +1,256 @@
 #!/bin/sh
 
-oech --auto
+. $LKP_SRC/lib/upload.sh
+timeout=3600
+
+server_ip=$direct_server_ips
+card_ids=$test_card_id
+card_type=$test_card_type
+card_name=$test_card_name
+driverlink=$driverlink
+
+config_file="/usr/share/oech/lib/config/test_config.yaml"
+logdir="/usr/share/oech/logs"
+server_log="/usr/share/oech/lib/server/results"
+report="${card_type}-${card_name}-report.html"
+
+function setup_oech_server() {
+    pip3 install Flask Flask-bootstrap uwsgi --default-timeout=${timeout} -i https://pypi.tuna.tsinghua.edu.cn/simple
+    systemctl start oech-server.service
+    systemctl status oech-server.service
+    systemctl start nginx.service
+    systemctl stop firewalld
+    iptables -F
+    setenforce 0
+}
+
+function setup_oech() {
+    expect <<-EOF
+    set timeout ${timeout}
+    spawn oech
+        expect {
+            "*Please provide your Compatibility Test ID:"
+            {
+                send "test\r"
+                expect "*Please provide your Product URL:"
+                send "test\r"
+                expect "*Please provide the Compatibility Test Server (Hostname or Ipaddr):"
+                send "127.0.0.1\r"
+                expect "*Ready to begin testing? (run|edit|quit)"
+                send "q\r"
+            }
+            timeout 
+            {
+                end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
+                exit 101
+            }
+        }
+EOF
+}
+
+function get_exec_number() {
+    if [[ ${card_type} == "ethernet" || ${card_type} == "infiniband" ]]; then
+        test_id=$(get_netdev_name ${card_ids})
+    else
+        card_pci=$(get_card_pci ${card_ids})
+        test_id=$(grep ${card_type} oech_device.log | grep ${card_pci} | awk '{print $1}')
+        if [[ ${card_type} == "raid" || ${card_type} == "fc" ]]; then
+            create_test_config_file ${card_pci}
+        fi
+    fi
+    printf $test_id
+}
+
+function exec_oech() {
+    test_id=$1
+    expect <<-EOF
+    set timeout ${timeout}
+    spawn oech
+        expect {
+            "*Ready to begin testing? (run|edit|quit)"
+            {
+                send "e\r"
+                expect "*Selection (<number>|all|none|quit|run):"
+                send "n\n"
+                expect "*Selection (<number>|all|none|quit|run):"
+                send "${test_id}\n"
+                expect "*Selection (<number>|all|none|quit|run):"
+                send "r\n"
+                expect "*Do you want to submit last result? (y|n)"
+                send "y\n"
+                expect "*Ready to begin testing? (run|edit|quit)"
+                send "q\r"
+            }
+            timeout 
+            {
+                end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
+                exit 101
+            }
+        }
+EOF
+}
+
+# Get raid/fc/gpu/keycard pci id
+function get_card_pci() {
+    card_ids=$1
+    vendorID=$(echo $card_ids | cut -d '-' -f 1)
+    deviceID=$(echo $card_ids | cut -d '-' -f 2)
+    svID=$(echo $card_ids | cut -d '-' -f 3)
+    ssID=$(echo $card_ids | cut -d '-' -f 4)
+    if [[ "0000" =~ $svID ]]; then
+        svID=""
+    fi
+    if [[ "0000" =~ $ssID ]]; then
+        ssID=""
+    fi
+    lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
+    if [[ $? -ne 0 ]]; then
+        echo "The test card cannot find on this machine."
+        printf 100
+        return 1
+    fi
+    card_pci=$(lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | head -n 1 | awk '{print $1}')
+    printf $card_pci
+    return 0
+}
+
+# Get nic/ib device name
+function get_netdev_name() {
+    card_ids=$1
+    vendorID=$(echo $card_ids | cut -d '-' -f 1)
+    deviceID=$(echo $card_ids | cut -d '-' -f 2)
+    svID=$(echo $card_ids | cut -d '-' -f 3)
+    ssID=$(echo $card_ids | cut -d '-' -f 4)
+    if [[ "0000" =~ $svID ]]; then
+        svID=""
+    fi
+    if [[ "0000" =~ $ssID ]]; then
+        ssID=""
+    fi
+    lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
+    if [[ $? -ne 0 ]]; then
+        echo "The test card cannot find on this machine."
+        printf 100
+        return 100
+    fi
+    card_pcis=$(lspci -nvv | grep -C1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | grep -v -i control | awk '{print $1}')
+    port_names=$(ls /etc/sysconfig/network-scripts/ | cut -d '-' -f 2)
+    for i in $(seq 1 $((${#port_names[@]} - 1))); do
+        name=${port_names[$i]}
+        ip a | grep $name | grep -q UP
+        if [ $? -ne 0 ]; then
+            continue
+        fi
+        for i in $(seq 1 $((${#card_pcis[@]} - 1))); do
+            pci=${card_pcis[$i]}
+            ethtool -i $name | grep -q $pci
+            if [ $? -ne 0 ]; then
+                useful_name=$name
+                printf $useful_name
+                break
+            fi
+        done
+    done
+
+    test_id=$(grep ${card_type} oech_device.log | grep $card_pci | awk '{print $1}')
+    create_test_config_file $useful_name
+    printf $test_id
+    return 0
+}
+
+# Get useful disk to test
+function get_useful_disk() {
+    card_pci=$1
+    disks=($(ls -l /sys/block | grep ${card_pci} | awk '{print $9}'))
+    for i in $(seq 1 $((${#disks[@]} - 1))); do
+        cur_disk=${disks[$i]}
+        df -h | grep $cur_disk
+        if [[ $? -ne 0 ]]; then
+            printf $cur_disk
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Create test_config.yaml file to test
+function create_test_config_file() {
+    card_pci=$1
+    disk=$(get_useful_disk $card_pci)
+    if [[ $? -eq 1 ]]; then
+        echo "There is no useful disk to test $card_pci."
+        return 1
+    fi
+
+    mv $config_file ${config_file}".bak"
+    if [[ ${card_type} -eq "raid" || ${card_type} -eq "fc" ]]; then
+        echo "${card_type}:
+  ${card_type}1:
+    device: '0000:${card_pci}'
+    disk: ${disk-all}" >>$config_file
+    elif [[ ${card_type} -eq "ethernet" ]]; then
+        echo "ethernet:
+  eth1:
+    device: ${card_pci}
+    if_rdma: N" >>$config_file
+
+    elif [[ ${card_type} -eq "infiniband" ]]; then
+        echo "infiniband:
+  ib1:
+    device: ${card_pci}" >>$config_file
+    fi
+
+    return 0
+}
+
+function get_html_report() {
+    machine_name=$(ls ${server_log} | grep -v README)
+    log_name=$(ls ${server_log}/${machine_name}/test | head -n 1)
+    curl http://127.0.0.1/results/${machine_name}/test/${log_name} &>${report}
+    sed -i "1,4d" ${card_name}.html
+}
+
+# Install outbox driver to test
+function install_driver() {
+    driverlink=$1
+    wget $driverlink
+    driver_rpm=$(ls -t ./ | head -n 1)
+    rpm -ivh $driver_rpm
+    if [[ "megaraid_sas" =~ $driver_rpm ]]; then
+        return 0
+    fi
+}
+
+set -x
+
+echo "Start to install rpms."
+dnf install -y expect ethtool wget tar python3-devel oec-hardware oec-hardware-server
+echo "End to install rpms."
+
+echo "Start to setup oech-server."
+setup_oech_server
+echo "End to setup oech-server."
+
+echo "Start to run oec-hardware test."
+# Setup oech information
+setup_oech
+echo q | oech &>oech_device.log
+
+# Get test suite numbers
+test_id=$(get_exec_number)
+
+# Execute oech
+if [[ $test_id == 100 ]]; then
+    echo "Test oec-hardware failed."
+    return False
+fi
+
+exec_oech $test_id
+get_html_report
+
+# Upload test results to compass-ci
+upload_files -t oec-hardware ${logdir}/*
+upload_files -t oec-hardware ${report}
+
+echo "End to run oec-hardware test."
+
