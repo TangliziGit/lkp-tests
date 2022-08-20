@@ -172,7 +172,7 @@ class ResultPath < Hash
     end
 
     def unified_path_params(path)
-      path.sub(/-ucode=[a-zA-Z0-9]{0,10}/, '')
+      path.sub(/-?ucode=[a-zA-Z0-9]{0,10}/, '')
     end
   end
 end
