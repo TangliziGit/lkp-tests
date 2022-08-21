@@ -1,8 +1,10 @@
 #!/bin/sh
 
-# enable i386 arch packages
-dpkg --add-architecture i386 && apt-get update
+. $LKP_SRC/lib/detect-system.sh
+arch=$(get_system_arch)
 
+# enable i386 arch packages
+[ "$arch" = "x86_64" ] && dpkg --add-architecture i386 && apt-get update
 apt-get -o Dpkg::Options::="--force-confdef" \
      -o Dpkg::Options::="--force-confold" \
      -o Dpkg::Options::="--force-overwrite" \

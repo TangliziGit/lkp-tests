@@ -17,9 +17,9 @@ cpio
 wget
 libklibc-dev
 linux-libc-dev
-linux-libc-dev:i386
+linux-libc-dev:i386 (x86_64)
 libc6-dev
-libc6-dev:i386
+libc6-dev:i386 (x86_64)
 ruby
 ruby-dev
 bzip2
@@ -29,4 +29,4 @@ flex
 bison
 libssl-dev
 libipc-run-perl
-libc6-dev-x32
+libc6-dev-x32 (x86_64)

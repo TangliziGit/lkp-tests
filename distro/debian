@@ -187,9 +187,10 @@ distro_install_depends()
 	local script
 	local bm="$1"
 	local scripts=$(find $LKP_SRC/distro/depends/ -name "$bm" -o -name "${bm}.[0-9]")
+	local arch=$(get_system_arch)
 
 	export DEBIAN_FRONTEND=noninteractive
-	add_i386_package
+	[ "$arch" = "x86_64" ] && add_i386_package
 	update
 
 	apt-get install -yf
