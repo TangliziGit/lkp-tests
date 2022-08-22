@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+$stdin.each_line do |line|
+  key, val = line.split(" ")
+  puts "#{key}: #{val}"
+end
