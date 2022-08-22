@@ -1,3 +1,4 @@
+need_kernel_version: '>= v4.17'
 need_kconfig:
 - RCU_PERF_TEST: m, <= v5.9
 - RCU_SCALE_TEST: m, v5.10-rc1
