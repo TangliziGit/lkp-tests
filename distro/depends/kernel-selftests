@@ -80,3 +80,4 @@ openvswitch-common
 openvswitch-switch
 tcpdump
 arping
+linux-perf
