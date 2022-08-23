@@ -81,3 +81,4 @@ openvswitch-switch
 tcpdump
 arping
 linux-perf
+file
