@@ -1,0 +1,4 @@
+url: https://github.com/aarontomlin/module-linux.git
+integration_testing_branches: modules-next
+mail_cc: atomlin@atomlin.com
+owner: Aaron Tomlin <atomlin@atomlin.com>
