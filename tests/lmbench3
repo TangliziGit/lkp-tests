@@ -138,7 +138,9 @@ run_lmbench3_development()
 
 	eval "$test=yes"
 
-	sed -i '/lat_pagefault -P $SYNC_MAX $FILE/i [ -f $FILE ] || dd if=/dev/zero of=$FILE count=1 bs=1G' bin/x86_64-linux-gnu/lmbench
+	local LMBENCH_PATH="$(find bin/ -maxdepth 2 -name lmbench)"
+
+	sed -i '/lat_pagefault -P $SYNC_MAX $FILE/i [ -f $FILE ] || dd if=/dev/zero of=$FILE count=1 bs=1G' $LMBENCH_PATH
 	log_eval "
 	(
 		echo $nr_threads
@@ -177,7 +179,8 @@ run_lmbench3_development()
 
 show_result()
 {
-	cat results/x86_64-linux-gnu/$testbox.0 || die "no test result found"
+	local LMBENCH_RESULT_PATH=$(find results/ -maxdepth 2 -name ${testbox}.0)
+	cat $LMBENCH_RESULT_PATH|| die "no test result found"
 }
 
 cd $BENCHMARK_ROOT/lmbench3 || {
