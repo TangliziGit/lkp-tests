@@ -11,8 +11,13 @@
 args=""
 [ -n "$scale_type" ] && args="$args scale_type=$scale_type"
 
-log_cmd modprobe rcuscale $args ||
-die "failed to load rcuscale module, try to enable CONFIG_RCU_SCALE_TEST as module and build rcuscale.ko"
+log=$(log_cmd modprobe rcuscale $args 2>&1) || {
+	echo "$log"
+	echo "$log" | grep -q "Invalid argument" ||
+	die "failed to load rcuscale module, try to enable CONFIG_RCU_SCALE_TEST as module and build rcuscale.ko"
+	echo "rcu-scale: Skip"
+	exit
+}
 
 log_cmd sleep $runtime
 
