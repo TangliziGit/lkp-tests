@@ -80,6 +80,16 @@ CALLTRACE_IGNORE_PATTERN = /(
 OOM1 = 'invoked oom-killer: gfp_mask='.freeze
 OOM2 = 'Out of memory and no killable processes...'.freeze
 
+def grep_cmd(dmesg_file)
+  if dmesg_file =~ /\.xz$/
+    'xzgrep'
+    # cat = 'xzcat'
+  else
+    'grep'
+    # cat = 'cat'
+  end
+end
+
 def grep_crash_head(dmesg_file)
   grep = if dmesg_file =~ /\.xz$/
            'xzgrep'
@@ -89,7 +99,7 @@ def grep_crash_head(dmesg_file)
            # cat = 'cat'
          end
 
-  raw_oops = %x[ #{grep} -a -E -e \\\\+0x -f #{LKP_SRC_ETC}/oops-pattern #{dmesg_file} |
+  raw_oops = %x[ #{grep_cmd(dmesg_file)} -a -E -e \\\\+0x -f #{LKP_SRC_ETC}/oops-pattern #{dmesg_file} |
        grep -v -E -f #{LKP_SRC_ETC}/oops-pattern-ignore ]
 
   return {} if raw_oops.empty?
