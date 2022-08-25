@@ -1,0 +1,23 @@
+[    0.368007][    T1] ============================================
+[    0.368302][    T1] WARNING: possible recursive locking detected
+[    0.368598][    T1] 5.10.110-00159-g58823a9b097c #1 Not tainted
+[    0.368633][    T1] --------------------------------------------
+[    0.368633][    T1] swapper/1 is trying to acquire lock:
+[    0.368633][    T1] c39f57d0 (gcov_lock){+.+.}-{3:3}, at: llvm_gcov_init+0x3d/0xc2
+[    0.368633][    T1] 
+[    0.368633][    T1] but task is already holding lock:
+[    0.368633][    T1] c39f57d0 (gcov_lock){+.+.}-{3:3}, at: llvm_gcov_init+0x3d/0xc2
+[    0.368633][    T1] 
+[    0.368633][    T1] other info that might help us debug this:
+[    0.368633][    T1]  Possible unsafe locking scenario:
+[    0.368633][    T1] 
+[    0.368633][    T1]        CPU0
+[    0.368633][    T1]        ----
+[    0.368633][    T1]   lock(gcov_lock);
+[    0.368633][    T1] 
+[    0.368633][    T1]  *** DEADLOCK ***
+[    0.368633][    T1] 
+[    0.368633][    T1]  May be due to missing lock nesting notation
+[    0.368633][    T1] 
+[    0.368633][    T1] 1 lock held by swapper/1:
+[    0.368633][    T1]  #0: c39f57d0 (gcov_lock){+.+.}-{3:3}, at: llvm_gcov_init+0x3d/0xc2

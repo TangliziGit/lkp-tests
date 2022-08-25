@@ -90,15 +90,15 @@ def grep_cmd(dmesg_file)
   end
 end
 
-def grep_crash_head(dmesg_file)
-  grep = if dmesg_file =~ /\.xz$/
-           'xzgrep'
-           # cat = 'xzcat'
-         else
-           'grep'
-           # cat = 'cat'
-         end
+def concat_context_from_dmesg(dmesg_file, line)
+  if line =~ /(possible recursive locking detected|possible circular locking dependency detected)/
+    lines = `#{grep_cmd(dmesg_file)} -A7 -Fx "#{line.chomp}" #{dmesg_file} | tail -n +4`.chomp.split("\n")
+    line = "#{line.chomp} #{lines.map { |l| l.sub(/^\[.*\] /, '') }.join(' ')}" unless lines.empty?
+  end
+  line
+end
 
+def grep_crash_head(dmesg_file)
   raw_oops = %x[ #{grep_cmd(dmesg_file)} -a -E -e \\\\+0x -f #{LKP_SRC_ETC}/oops-pattern #{dmesg_file} |
        grep -v -E -f #{LKP_SRC_ETC}/oops-pattern-ignore ]
 
@@ -120,6 +120,7 @@ def grep_crash_head(dmesg_file)
 
   raw_oops.each_line do |line|
     line = line.resolve_invalid_bytes
+    line = concat_context_from_dmesg(dmesg_file, line)
     if line =~ oops_re
       oops_map[$1] ||= line
       has_oom = true if line.index(OOM1)

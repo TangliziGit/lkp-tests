@@ -1,0 +1,9 @@
+boot_failures: 1
+
+# WARNING: possible circular locking dependency detected .* is trying to acquire lock: .* at: console_unlock+0x
+WARNING:possible_circular_locking_dependency_detected_getty_is_trying_to_acquire_lock:#(console_owner){-.-.}-{#:#},at:console_unlock_but_task_is_already_holding_lock:#(&rq->lock){-.-.}-{#:#},at:rq_lock_irqsave/0x: 1
+message:WARNING:possible_circular_locking_dependency_detected_getty_is_trying_to_acquire_lock:#(console_owner){-.-.}-{#:#},at:console_unlock_but_task_is_already_holding_lock:#(&rq->lock){-.-.}-{#:#},at:rq_lock_irqsave/0x: [  327.929818][    C1] WARNING: possible circular locking dependency detected getty/4382 is trying to acquire lock: 81bdb92c (console_owner){-.-.}-{0:0}, at: console_unlock+0x1d6/0x38d  but task is already holding lock: e9518da0 (&rq->lock){-.-.}-{2:2}, at: rq_lock_irqsave+0xf/0x1f
+pattern:WARNING:possible_circular_locking_dependency_detected_getty_is_trying_to_acquire_lock:#(console_owner){-.-.}-{#:#},at:console_unlock_but_task_is_already_holding_lock:#(&rq->lock){-.-.}-{#:#},at:rq_lock_irqsave/0x: WARNING: possible circular locking dependency detected .* is trying to acquire lock: .* at: console_unlock+0x
+
+timestamp:last: 327.930145
+timestamp:WARNING:possible_circular_locking_dependency_detected_getty_is_trying_to_acquire_lock:#(console_owner){-.-.}-{#:#},at:console_unlock_but_task_is_already_holding_lock:#(&rq->lock){-.-.}-{#:#},at:rq_lock_irqsave/0x: 327.929818

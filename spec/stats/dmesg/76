@@ -1,0 +1,166 @@
+[  327.929816][    C1] ======================================================
+[  327.929818][    C1] WARNING: possible circular locking dependency detected
+[  327.929864][    C1] 5.11.0-00017-ged3cd45f8ca8 #1 Tainted: G                T
+[  327.929865][    C1] ------------------------------------------------------
+[  327.929866][    C1] getty/4382 is trying to acquire lock:
+[  327.929867][    C1] 81bdb92c (console_owner){-.-.}-{0:0}, at: console_unlock+0x1d6/0x38d
+[  327.929872][    C1] 
+[  327.929874][    C1] but task is already holding lock:
+[  327.929875][    C1] e9518da0 (&rq->lock){-.-.}-{2:2}, at: rq_lock_irqsave+0xf/0x1f
+[  327.929880][    C1] 
+[  327.929881][    C1] which lock already depends on the new lock.
+[  327.929882][    C1] 
+[  327.929883][    C1] 
+[  327.929884][    C1] the existing dependency chain (in reverse order) is:
+[  327.929885][    C1] 
+[  327.929886][    C1] -> #4 (&rq->lock){-.-.}-{2:2}:
+[  327.929891][    C1]        validate_chain+0x2be/0x364
+[  327.929892][    C1]        __lock_acquire+0x613/0x699
+[  327.929893][    C1]        lock_acquire+0x193/0x1bb
+[  327.929894][    C1]        _raw_spin_lock+0x2a/0x5a
+[  327.929895][    C1]        rq_lock+0x11/0x1e
+[  327.929896][    C1]        task_fork_fair+0x3e/0x104
+[  327.929897][    C1]        sched_fork+0x183/0x1f5
+[  327.929898][    C1]        copy_process+0x97d/0x1a2a
+[  327.929900][    C1]        kernel_clone+0xa5/0x36f
+[  327.929901][    C1]        kernel_thread+0x4d/0x55
+[  327.929901][    C1]        rest_init+0x21/0x138
+[  327.929902][    C1]        arch_call_rest_init+0x16/0x4f
+[  327.929903][    C1]        start_kernel+0x60f/0x62d
+[  327.929904][    C1]        i386_start_kernel+0x62/0x78
+[  327.929905][    C1]        startup_32_smp+0x15f/0x170
+[  327.929906][    C1] 
+[  327.929907][    C1] -> #3 (&p->pi_lock){-.-.}-{2:2}:
+[  327.929911][    C1]        validate_chain+0x2be/0x364
+[  327.929912][    C1]        __lock_acquire+0x613/0x699
+[  327.929913][    C1]        lock_acquire+0x193/0x1bb
+[  327.929914][    C1]        _raw_spin_lock_irqsave+0x39/0x6c
+[  327.929915][    C1]        try_to_wake_up+0x5c/0x213
+[  327.929916][    C1]        default_wake_function+0x55/0x5d
+[  327.929917][    C1]        pollwake+0x55/0x5e
+[  327.929918][    C1]        __wake_up_common+0xc4/0x11a
+[  327.929919][    C1]        __wake_up_common_lock+0x49/0x65
+[  327.929920][    C1]        __wake_up+0x12/0x16
+[  327.929921][    C1]        pty_close+0x136/0x19b
+[  327.929922][    C1]        tty_release+0xcd/0x34e
+[  327.929923][    C1]        __fput+0x14e/0x275
+[  327.929924][    C1]        ____fput+0x12/0x14
+[  327.929925][    C1]        task_work_run+0x5b/0x7c
+[  327.929927][    C1]        do_exit+0x3bf/0x499
+[  327.929943][    C1]        __ia32_sys_exit_group+0x0/0x15
+[  327.929944][    C1]        __wake_up_parent+0x0/0x22
+[  327.929945][    C1]        do_int80_syscall_32+0x48/0x59
+[  327.929946][    C1]        entry_INT80_32+0x108/0x10d
+[  327.929947][    C1] 
+[  327.929948][    C1] -> #2 (&tty->write_wait){-.-.}-{2:2}:
+[  327.929952][    C1]        validate_chain+0x2be/0x364
+[  327.929954][    C1]        __lock_acquire+0x613/0x699
+[  327.929955][    C1]        lock_acquire+0x193/0x1bb
+[  327.929956][    C1]        _raw_spin_lock_irqsave+0x39/0x6c
+[  327.929957][    C1]        __wake_up_common_lock+0x31/0x65
+[  327.929958][    C1]        __wake_up+0x12/0x16
+[  327.929959][    C1]        tty_wakeup+0x4a/0x52
+[  327.929961][    C1]        tty_port_default_wakeup+0x1a/0x24
+[  327.929962][    C1]        tty_port_tty_wakeup+0x11/0x13
+[  327.929963][    C1]        uart_write_wakeup+0x3c/0x41
+[  327.929964][    C1]        serial8250_tx_chars+0xcf/0x139
+[  327.929966][    C1]        serial8250_handle_irq+0xc0/0x10d
+[  327.929967][    C1]        serial8250_default_handle_irq+0x26/0x35
+[  327.929968][    C1]        serial8250_interrupt+0x36/0x79
+[  327.929969][    C1]        __handle_irq_event_percpu+0x128/0x313
+[  327.929971][    C1]        handle_irq_event_percpu+0x1c/0x42
+[  327.929972][    C1]        handle_irq_event+0x2e/0x47
+[  327.929973][    C1]        handle_edge_irq+0xcc/0xed
+[  327.929974][    C1]        __handle_irq+0x9c/0xcc
+[  327.929975][    C1]        common_interrupt+0x9e/0x103
+[  327.929976][    C1]        asm_common_interrupt+0x11a/0x120
+[  327.929977][    C1]        _raw_spin_unlock_irqrestore+0x2d/0x38
+[  327.929978][    C1]        klist_next+0x99/0xb5
+[  327.929979][    C1]        class_dev_iter_next+0x12/0x28
+[  327.929980][    C1]        class_find_device+0x7d/0xa7
+[  327.929981][    C1]        alloc_tty_struct+0x232/0x245
+[  327.929982][    C1]        tty_init_dev+0x2e/0x1b1
+[  327.929983][    C1]        ptmx_open+0x8e/0x141
+[  327.929985][    C1]        chrdev_open+0x167/0x188
+[  327.929986][    C1]        do_dentry_open+0x217/0x3ac
+[  327.929987][    C1]        vfs_open+0x26/0x2a
+[  327.929988][    C1]        do_open+0x294/0x3cf
+[  327.929989][    C1]        path_openat+0x1ba/0x263
+[  327.929990][    C1]        do_filp_open+0x4d/0xbb
+[  327.929991][    C1]        do_sys_openat2+0x5f/0xb0
+[  327.929993][    C1]        do_sys_open+0x2b/0x32
+[  327.929993][    C1]        __ia32_sys_open+0x1c/0x1e
+[  327.929994][    C1]        do_int80_syscall_32+0x48/0x59
+[  327.929996][    C1]        entry_INT80_32+0x108/0x10d
+[  327.929996][    C1] 
+[  327.930011][    C1] -> #1 (&port_lock_key){-.-.}-{2:2}:
+[  327.930016][    C1]        validate_chain+0x2be/0x364
+[  327.930021][    C1]        __lock_acquire+0x613/0x699
+[  327.930022][    C1]        lock_acquire+0x193/0x1bb
+[  327.930023][    C1]        _raw_spin_lock_irqsave+0x39/0x6c
+[  327.930024][    C1]        serial8250_console_write+0x6c/0x207
+[  327.930025][    C1]        univ8250_console_write+0x3a/0x3f
+[  327.930026][    C1]        call_console_drivers+0x172/0x17f
+[  327.930028][    C1]        console_unlock+0x1fd/0x38d
+[  327.930029][    C1]        vprintk_emit+0x248/0x25e
+[  327.930030][    C1]        vprintk_default+0x15/0x17
+[  327.930031][    C1]        vprintk_func+0x9b/0xa6
+[  327.930032][    C1]        printk+0x13/0x15
+[  327.930033][    C1]        register_console+0x243/0x283
+[  327.930034][    C1]        univ8250_console_init+0x3f/0x58
+[  327.930035][    C1]        console_init+0x2c6/0x437
+[  327.930036][    C1]        start_kernel+0x4c0/0x62d
+[  327.930037][    C1]        i386_start_kernel+0x62/0x78
+[  327.930038][    C1]        startup_32_smp+0x15f/0x170
+[  327.930039][    C1] 
+[  327.930039][    C1] -> #0 (console_owner){-.-.}-{0:0}:
+[  327.930043][    C1]        check_noncircular+0x5c/0x67
+[  327.930044][    C1]        check_prev_add+0xeb/0x26a
+[  327.930045][    C1]        validate_chain+0x2be/0x364
+[  327.930046][    C1]        __lock_acquire+0x613/0x699
+[  327.930047][    C1]        lock_acquire+0x193/0x1bb
+[  327.930048][    C1]        console_unlock+0x1ef/0x38d
+[  327.930049][    C1]        vprintk_emit+0x248/0x25e
+[  327.930050][    C1]        vprintk_default+0x15/0x17
+[  327.930051][    C1]        vprintk_func+0x9b/0xa6
+[  327.930052][    C1]        printk+0x13/0x15
+[  327.930053][    C1]        ubsan_prologue+0x1c/0x3f
+[  327.930054][    C1]        __ubsan_handle_shift_out_of_bounds+0x51/0x102
+[  327.930055][    C1]        detach_tasks+0x143/0x21a
+[  327.930056][    C1]        load_balance+0x455/0x775
+[  327.930057][    C1]        rebalance_domains+0x1c3/0x2a7
+[  327.930058][    C1]        run_rebalance_domains+0x43/0x5b
+[  327.930060][    C1]        __do_softirq+0x1c1/0x452
+[  327.930061][    C1]        do_softirq_own_stack+0x22/0x28
+[  327.930062][    C1]        __irq_exit_rcu+0x5c/0x65
+[  327.930063][    C1]        irq_exit_rcu+0xd/0x16
+[  327.930064][    C1]        sysvec_apic_timer_interrupt+0x6c/0x7d
+[  327.930066][    C1]        handle_exception_return+0x0/0xc5
+[  327.930067][    C1]        _raw_write_unlock_irq+0x2a/0x2d
+[  327.930069][    C1]        exit_notify+0x123/0x174
+[  327.930070][    C1]        do_exit+0x3f1/0x499
+[  327.930071][    C1]        __ia32_sys_exit_group+0x0/0x15
+[  327.930086][    C1]        __wake_up_parent+0x0/0x22
+[  327.930087][    C1]        do_int80_syscall_32+0x48/0x59
+[  327.930088][    C1]        entry_INT80_32+0x108/0x10d
+[  327.930089][    C1] 
+[  327.930103][    C1] other info that might help us debug this:
+[  327.930104][    C1] 
+[  327.930105][    C1] Chain exists of:
+[  327.930106][    C1]   console_owner --> &p->pi_lock --> &rq->lock
+[  327.930112][    C1] 
+[  327.930113][    C1]  Possible unsafe locking scenario:
+[  327.930114][    C1] 
+[  327.930116][    C1]        CPU0                    CPU1
+[  327.930117][    C1]        ----                    ----
+[  327.930118][    C1]   lock(&rq->lock);
+[  327.930121][    C1]                                lock(&p->pi_lock);
+[  327.930124][    C1]                                lock(&rq->lock);
+[  327.930126][    C1]   lock(console_owner);
+[  327.930129][    C1] 
+[  327.930130][    C1]  *** DEADLOCK ***
+[  327.930131][    C1] 
+[  327.930132][    C1] 3 locks held by getty/4382:
+[  327.930133][    C1]  #0: 81efdf30 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire+0x3/0x21
+[  327.930139][    C1]  #1: e9518da0 (&rq->lock){-.-.}-{2:2}, at: rq_lock_irqsave+0xf/0x1f
+[  327.930145][    C1]  #2: 81efbb5c (console_lock){+.+.}-{0:0}, at: vprintk_emit+0x160/0x25e
