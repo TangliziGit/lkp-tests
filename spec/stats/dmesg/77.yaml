@@ -1,0 +1,9 @@
+boot_failures: 1
+
+# WARNING: possible circular locking dependency detected .* is trying to acquire lock: ubsan_epilogue+0x
+WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:ubsan_epilogue_but_task_is_already_holding_lock:restore_regulatory_settings/0x: 1
+message:WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:ubsan_epilogue_but_task_is_already_holding_lock:restore_regulatory_settings/0x: [   29.493344][    C1] WARNING: possible circular locking dependency detected ksoftirqd/1/16 is trying to acquire lock:  ubsan_epilogue+0x8/0x21 but task is already holding lock:  restore_regulatory_settings+0xc1e/0xc40
+pattern:WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:ubsan_epilogue_but_task_is_already_holding_lock:restore_regulatory_settings/0x: WARNING: possible circular locking dependency detected .* is trying to acquire lock: ubsan_epilogue+0x
+
+timestamp:last: 29.493364
+timestamp:WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:ubsan_epilogue_but_task_is_already_holding_lock:restore_regulatory_settings/0x: 29.493344
