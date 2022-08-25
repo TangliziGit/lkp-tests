@@ -1,4 +1,5 @@
 need_kconfig:
+% if ___.group == "group-00"
 - KUNIT: y, v5.5-rc1
 - KUNIT_DEBUGFS: y, v5.7-rc1
 - KUNIT_ALL_TESTS: m, v5.8-rc1
@@ -49,6 +50,7 @@ need_kconfig:
 - SECURITY_APPARMOR: y
 - SECURITY_APPARMOR_KUNIT_TEST: y, v5.6-rc1
 
+% elsif ___.group == "group-01"
 # below are not kunit test
 - STRING_SELFTEST: m
 - PHYLIB: y
@@ -95,3 +97,4 @@ need_kconfig:
 - CRC32: y
 - CRC32_SELFTEST: m
 - ATOMIC64_SELFTEST: m
+% end

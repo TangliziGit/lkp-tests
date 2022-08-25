@@ -3,3 +3,6 @@ testcase: kunit
 category: functional
 
 kunit:
+  group:
+    - group-00
+    - group-01
