@@ -148,6 +148,10 @@ prepare_for_test()
 		llvm_ver=${llvm##*/}
 		export PATH=$PATH:/usr/lib/$llvm_ver/bin
 	}
+	# fix sh: 1: iptables: not found
+	command -v iptables >/dev/null || log_cmd ln -sf /usr/sbin/iptables-nft /usr/bin/iptables
+	# fix ip6tables: command not found
+	command -v ip6tables >/dev/null || log_cmd ln -sf /usr/sbin/ip6tables-nft /usr/bin/ip6tables
 }
 
 # Get testing env kernel config file
