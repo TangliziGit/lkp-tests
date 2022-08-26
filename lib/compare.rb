@@ -25,7 +25,7 @@ $stat_absolute_changes = [
 
 class AxesGrouper
   include Property
-  prop_with :group_axis_keys, :axes_data
+  prop_with :group_axis_keys, :axes_data, :ignore_common_axes
 
   private
 
@@ -40,7 +40,7 @@ class AxesGrouper
   def group
     map = {}
     @axes_data.each do |d|
-      as = calc_common_axes d.axes
+      as = @ignore_common_axes ? {} : calc_common_axes(d.axes)
       as.freeze
       map[as] ||= AxesGroup.new self, as
       map[as].add_axes_datum d
@@ -111,7 +111,7 @@ module Compare
     include Property
     # following properties are parameters for compare
     prop_reader :stat_calc_funcs
-    prop_with :mresult_roots, :compare_axis_keys,
+    prop_with :mresult_roots, :compare_axis_keys, :compare_different_rts,
               :sort_mresult_roots, :dedup_mresult_roots,
               :use_all_stat_keys, :use_stat_keys,
               :use_testcase_stat_keys, :include_stat_keys,
@@ -127,6 +127,7 @@ module Compare
     private
 
     def initialize(params = nil)
+      @compare_different_rts = false
       @show_empty_group = false
       @sort_mresult_roots = true
       @dedup_mresult_roots = true
@@ -204,6 +205,7 @@ module Compare
       mrts.uniq! if dedup_mresult_roots
       grouper = AxesGrouper.new
       groups = grouper.set_axes_data(mrts)
+                      .set_ignore_common_axes(@compare_different_rts)
                       .set_group_axis_keys(@compare_axis_keys)
                       .group
       groups.map do |g|
@@ -884,14 +886,16 @@ module Compare
     compare_axeses = group.compare_axeses.map do |axes|
       axes_format axes
     end
-    puts '========================================================================================='
-    printf "%s:\n", common_axes.keys.join('/')
-    printf "  %s\n\n", common_axes.values.join('/')
-    printf "%s: \n", compare_axeses[0].keys.join('/')
-    compare_axeses.each do |compare_axes|
-      printf "  %s\n", compare_axes.values.join('/')
+    unless common_axes.empty?
+      puts '========================================================================================='
+      printf "%s:\n", common_axes.keys.join('/')
+      printf "  %s\n\n", common_axes.values.join('/')
+      printf "%s: \n", compare_axeses[0].keys.join('/')
+      compare_axeses.each do |compare_axes|
+        printf "  %s\n", compare_axes.values.join('/')
+      end
+      puts
     end
-    puts
     first_width = ABS_WIDTH + ERR_WIDTH
     width = first_width + REL_WIDTH + 1
     printf "%#{first_width}s ", compare_axeses[0].values.join('/')[0...first_width]
@@ -1072,7 +1076,7 @@ module Compare
       compare_axis_keys: [COMMIT_AXIS_KEY]
     }
     msearch_axes = []
-    job_dir = nil
+    job_dirs = []
     parser = OptionParser.new do |p|
       p.banner = 'Usage: ncompare [options] <commit>...
        ncompare [options] -s <axes> [-s <axes>] [-o <axes>]'
@@ -1099,7 +1103,7 @@ module Compare
 
       p.on('-j <job dir>', '--job-dir <job dir>',
            'Job Directory') do |jd|
-        job_dir = jd
+        job_dirs << jd
       end
 
       p.on('-m', '--more', 'more stats as compare result') do
@@ -1126,12 +1130,7 @@ module Compare
     argv = ['-h'] if argv.empty?
     argv = parser.parse(argv)
 
-    if job_dir
-      _rts = each_job_in_dir(job_dir).map do |job|
-        mrt_table_set.open_node job.axes
-      end
-      _rts.select!(&:exist?)
-    else
+    if job_dirs.empty?
       if msearch_axes.empty?
         msearch_axes = argv.map do |c|
           { COMMIT_AXIS_KEY => c.to_s }
@@ -1141,6 +1140,14 @@ module Compare
         axes = axes_gcommit axes
         NMResultRootCollection.new(axes).to_a
       end.flatten
+    else
+      options[:compare_different_rts] = true if job_dirs.size > 1
+      _rts = job_dirs.map do |job_dir|
+        each_job_in_dir(job_dir, 'job.yaml').map do |job|
+          mrt_table_set.open_node job.axes
+        end
+      end.flatten
+      _rts.select!(&:exist?)
     end
     options[:mresult_roots] = _rts
     options
