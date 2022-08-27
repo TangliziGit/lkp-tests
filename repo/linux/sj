@@ -1,1 +1,3 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git
+branch_deny_runtime_test: .*
+no_merge_branch: .*
