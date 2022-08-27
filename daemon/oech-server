@@ -1,8 +1,8 @@
 #!/bin/sh
 
 . $LKP_SRC/lib/upload.sh
-timeout=3600
 
+timeout=3600
 server_log="/usr/share/oech/lib/server/results"
 card_type=$test_card_type
 card_name=$test_card_name
@@ -19,14 +19,11 @@ function setup_oech_server() {
 
 function get_html_report() {
     for i in $(seq 0 ${timeout}); do
-        ls ${server_log} | grep -v README
-        if [[ $? -eq 0 ]]; then 
-            break
-        fi
+        test -f oech* && break
         sleep 1
     done
-    machine_name=$(ls ${server_log} | grep -v README)
-    log_name=$(ls ${server_log}/${machine_name}/test | head -n 1)
+    local machine_name=$(ls ${server_log} | grep -v README)
+    local log_name=$(ls ${server_log}/${machine_name}/test | head -n 1)
     curl http://127.0.0.1/results/${machine_name}/test/${log_name} &>${report}
     sed -i "1,4d" ${card_name}.html
 }
@@ -34,13 +31,8 @@ function get_html_report() {
 set -x
 
 echo "Start to setup oech-server environment."
-
-dnf install -y python3-devel oec-hardware-server
-
 setup_oech_server
-
 get_html_report
-
 upload_files -t oec-hardware ${report}
 
 echo "End to setup oech-server environment."

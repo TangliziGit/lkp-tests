@@ -2,6 +2,8 @@
 
 . $LKP_SRC/lib/upload.sh
 timeout=3600
+error_code=100
+timeout_code=101
 
 server_ip=$direct_server_ips
 card_ids=$test_card_id
@@ -42,7 +44,7 @@ function setup_oech() {
             timeout 
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
-                exit 101
+                exit ${timeout_code}
             }
         }
 EOF
@@ -50,10 +52,10 @@ EOF
 
 function get_exec_number() {
     if [[ ${card_type} == "ethernet" || ${card_type} == "infiniband" ]]; then
-        test_id=$(get_netdev_name ${card_ids})
+        local test_id=$(get_netdev_name ${card_ids})
     else
-        card_pci=$(get_card_pci ${card_ids})
-        test_id=$(grep ${card_type} oech_device.log | grep ${card_pci} | awk '{print $1}')
+        local card_pci=$(get_card_pci ${card_ids})
+        local test_id=$(grep ${card_type} oech_device.log | grep ${card_pci} | awk '{print $1}')
         if [[ ${card_type} == "raid" || ${card_type} == "fc" ]]; then
             create_test_config_file ${card_pci}
         fi
@@ -62,7 +64,12 @@ function get_exec_number() {
 }
 
 function exec_oech() {
-    test_id=$1
+    local test_id=$1
+    if [[ $test_id == ${error_code} ]]; then
+        echo "The test id doesn't exist, test failed."
+        exit ${error_code}
+    fi
+    
     expect <<-EOF
     set timeout ${timeout}
     spawn oech
@@ -84,7 +91,7 @@ function exec_oech() {
             timeout 
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
-                exit 101
+                exit ${timeout_code}
             }
         }
 EOF
@@ -92,11 +99,11 @@ EOF
 
 # Get raid/fc/gpu/keycard pci id
 function get_card_pci() {
-    card_ids=$1
-    vendorID=$(echo $card_ids | cut -d '-' -f 1)
-    deviceID=$(echo $card_ids | cut -d '-' -f 2)
-    svID=$(echo $card_ids | cut -d '-' -f 3)
-    ssID=$(echo $card_ids | cut -d '-' -f 4)
+    local card_ids=$1
+    local vendorID=$(echo $card_ids | cut -d '-' -f 1)
+    local deviceID=$(echo $card_ids | cut -d '-' -f 2)
+    local svID=$(echo $card_ids | cut -d '-' -f 3)
+    local ssID=$(echo $card_ids | cut -d '-' -f 4)
     if [[ "0000" =~ $svID ]]; then
         svID=""
     fi
@@ -106,21 +113,21 @@ function get_card_pci() {
     lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
     if [[ $? -ne 0 ]]; then
         echo "The test card cannot find on this machine."
-        printf 100
+        printf ${error_code}
         return 1
     fi
-    card_pci=$(lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | head -n 1 | awk '{print $1}')
+    local card_pci=$(lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | head -n 1 | awk '{print $1}')
     printf $card_pci
     return 0
 }
 
 # Get nic/ib device name
 function get_netdev_name() {
-    card_ids=$1
-    vendorID=$(echo $card_ids | cut -d '-' -f 1)
-    deviceID=$(echo $card_ids | cut -d '-' -f 2)
-    svID=$(echo $card_ids | cut -d '-' -f 3)
-    ssID=$(echo $card_ids | cut -d '-' -f 4)
+    local card_ids=$1
+    local vendorID=$(echo $card_ids | cut -d '-' -f 1)
+    local deviceID=$(echo $card_ids | cut -d '-' -f 2)
+    local svID=$(echo $card_ids | cut -d '-' -f 3)
+    local ssID=$(echo $card_ids | cut -d '-' -f 4)
     if [[ "0000" =~ $svID ]]; then
         svID=""
     fi
@@ -130,14 +137,14 @@ function get_netdev_name() {
     lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
     if [[ $? -ne 0 ]]; then
         echo "The test card cannot find on this machine."
-        printf 100
-        return 100
+        printf ${error_code}
+        return ${error_code}
     fi
-    card_pcis=$(lspci -nvv | grep -C1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | grep -v -i control | awk '{print $1}')
-    port_names=$(ls /etc/sysconfig/network-scripts/ | cut -d '-' -f 2)
+    local card_pcis=$(lspci -nvv | grep -C1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | grep -v -i control | awk '{print $1}')
+    local port_names=$(ls /etc/sysconfig/network-scripts/ | cut -d '-' -f 2)
     for i in $(seq 1 $((${#port_names[@]} - 1))); do
         name=${port_names[$i]}
-        ip a | grep $name | grep -q UP
+        ip a show up dev $name | grep -q "state UP"
         if [ $? -ne 0 ]; then
             continue
         fi
@@ -152,7 +159,7 @@ function get_netdev_name() {
         done
     done
 
-    test_id=$(grep ${card_type} oech_device.log | grep $card_pci | awk '{print $1}')
+    local test_id=$(grep ${card_type} oech_device.log | grep $card_pci | awk '{print $1}')
     create_test_config_file $useful_name
     printf $test_id
     return 0
@@ -160,10 +167,10 @@ function get_netdev_name() {
 
 # Get useful disk to test
 function get_useful_disk() {
-    card_pci=$1
-    disks=($(ls -l /sys/block | grep ${card_pci} | awk '{print $9}'))
+    local card_pci=$1
+    local disks=($(ls -l /sys/block | grep ${card_pci} | awk '{print $9}'))
     for i in $(seq 1 $((${#disks[@]} - 1))); do
-        cur_disk=${disks[$i]}
+        local cur_disk=${disks[$i]}
         df -h | grep $cur_disk
         if [[ $? -ne 0 ]]; then
             printf $cur_disk
@@ -175,8 +182,8 @@ function get_useful_disk() {
 
 # Create test_config.yaml file to test
 function create_test_config_file() {
-    card_pci=$1
-    disk=$(get_useful_disk $card_pci)
+    local card_pci=$1
+    local disk=$(get_useful_disk $card_pci)
     if [[ $? -eq 1 ]]; then
         echo "There is no useful disk to test $card_pci."
         return 1
@@ -204,28 +211,24 @@ function create_test_config_file() {
 }
 
 function get_html_report() {
-    machine_name=$(ls ${server_log} | grep -v README)
-    log_name=$(ls ${server_log}/${machine_name}/test | head -n 1)
+    local machine_name=$(ls ${server_log} | grep -v README)
+    local log_name=$(ls ${server_log}/${machine_name}/test | head -n 1)
     curl http://127.0.0.1/results/${machine_name}/test/${log_name} &>${report}
     sed -i "1,4d" ${card_name}.html
 }
 
 # Install outbox driver to test
 function install_driver() {
-    driverlink=$1
-    wget $driverlink
-    driver_rpm=$(ls -t ./ | head -n 1)
-    rpm -ivh $driver_rpm
+    local driverlink=$1
+    wget $driverlink || return 1
+    local driver_rpm=$(ls -t ./ | head -n 1)
+    rpm -ivh $driver_rpm || return 1
     if [[ "megaraid_sas" =~ $driver_rpm ]]; then
         return 0
     fi
 }
 
 set -x
-
-echo "Start to install rpms."
-dnf install -y expect ethtool wget tar python3-devel oec-hardware oec-hardware-server
-echo "End to install rpms."
 
 echo "Start to setup oech-server."
 setup_oech_server
@@ -240,11 +243,6 @@ echo q | oech &>oech_device.log
 test_id=$(get_exec_number)
 
 # Execute oech
-if [[ $test_id == 100 ]]; then
-    echo "Test oec-hardware failed."
-    return False
-fi
-
 exec_oech $test_id
 get_html_report
 
