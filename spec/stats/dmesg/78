@@ -1,0 +1,40 @@
+[   54.757348][  T223] WARNING: possible circular locking dependency detected
+[   54.758309][   T95]  ret_from_fork+0x2e/0x40
+[   54.759176][  T223] 5.4.101-00290-g7852feb3accb #2 Not tainted
+[   54.760485][   T95] ================================================================================
+[   54.761756][  T223] ------------------------------------------------------
+[   54.761760][  T223] bootlogd/223 is trying to acquire lock:
+[   54.762605][   T95] ================================================================================
+[   54.763701][  T223] bfd1c53c (&p->pi_lock){-.-.}, at: try_to_wake_up+0x4c/0xd30
+[   54.765421][   T95] UBSAN: Undefined behaviour in include/linux/rhashtable.h:297:9
+[   54.766719][  T223] 
+[   54.766719][  T223] but task is already holding lock:
+[   54.766721][  T223] e965a354 (&tty->write_wait){-...}, at: __wake_up_common_lock+0x5b/0xe0
+[   54.766728][  T223] 
+[   54.766728][  T223] which lock already depends on the new lock.
+[   54.766728][  T223] 
+[   54.766728][  T223] the existing dependency chain (in reverse order) is:
+[   54.766729][  T223] 
+[   54.766729][  T223] -> #4 (&tty->write_wait){-...}:
+[   54.766733][  T223]        lock_acquire+0x9e/0x230
+[   54.766736][  T223]        _raw_spin_lock_irqsave+0x3a/0xd0
+[   54.766737][  T223]        __wake_up_common_lock+0x5b/0xe0
+[   54.766739][  T223]        __wake_up+0x12/0x20
+[   54.766741][  T223]        tty_wakeup+0x4b/0x130
+[   54.766744][  T223]        tty_port_default_wakeup+0x1a/0x30
+[   54.766745][  T223]        tty_port_tty_wakeup+0x28/0x50
+[   54.766747][  T223]        uart_write_wakeup+0x25/0x60
+[   54.766750][  T223]        serial8250_tx_chars+0x407/0x910
+[   54.766753][  T223]        serial8250_handle_irq+0x10e/0x2f0
+[   54.767828][   T95] member access within misaligned address (ptrval) for type 'struct bucket_table'
+[   54.769551][  T223]        serial8250_default_handle_irq+0x4e/0x1a0
+[   54.769556][  T223]        serial8250_interrupt+0xad/0x210
+[   54.770976][   T95] which requires 32 byte alignment
+[   54.772705][  T223]        __handle_irq_event_percpu+0x75/0x550
+[   54.772709][  T223]        handle_irq_event_percpu+0x2c/0x90
+[   54.774112][   T95] CPU: 1 PID: 95 Comm: kworker/1:1 Not tainted 5.4.101-00290-g7852feb3accb #2
+[   54.775351][  T223]        handle_irq_event+0x86/0x190
+[   54.775355][  T223]        handle_edge_irq+0x149/0xe40
+[   54.777283][   T95] Workqueue: events rht_deferred_worker
+[   54.778932][  T223]        execute_on_irq_stack+0x6a/0xb0
+[   54.778936][  T223]        handle_irq+0x37/0x60

@@ -92,7 +92,7 @@ end
 
 def concat_context_from_dmesg(dmesg_file, line)
   if line =~ /(possible recursive locking detected|possible circular locking dependency detected)/
-    lines = `#{grep_cmd(dmesg_file)} -A30 -Fx "#{line.chomp}" #{dmesg_file} | grep -A1 -m2 -e "trying to acquire lock" -e "already holding lock" | grep -v "^--$"`.chomp.split("\n")
+    lines = `#{grep_cmd(dmesg_file)} -A30 -Fx "#{line.chomp}" #{dmesg_file} | grep -m4 -e "trying to acquire lock" -e "already holding lock" -e "at: .*"`.chomp.split("\n")
     line = "#{line.chomp} #{lines.map { |l| l.sub(/^\[.*\] /, '') }.join(' ')}" unless lines.empty?
   end
   line
