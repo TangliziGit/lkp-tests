@@ -468,6 +468,12 @@ fixup_memfd()
 
 fixup_bpf()
 {
+	# fix the below error due to the incompatible version of binutils-dev on old kernel
+	# jit_disasm.c:105:17: error: too few arguments to function 'init_disassemble_info'
+	# 105 |                 init_disassemble_info(&info, stdout,)
+	[[ "$LKP_LOCAL_RUN" = "1" ]] || [[ -f ../../../tools/include/tools/dis-asm-compat.h ]] ||
+	log_cmd sed -i -z "s/extern void init_disassemble_info (struct disassemble_info \*dinfo, void \*stream,\n.*fprintf_ftype fprintf_func,\n.*fprintf_styled_ftype fprintf_styled_func);/extern void init_disassemble_info (struct disassemble_info \*dinfo, void \*stream, fprintf_ftype fprintf_func);/" /usr/include/dis-asm.h
+
 	log_cmd make -C ../../../tools/bpf/bpftool 2>&1 || return
 	log_cmd make install -C ../../../tools/bpf/bpftool 2>&1 || return
 	type ping6 && {
