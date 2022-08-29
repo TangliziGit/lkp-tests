@@ -1,7 +1,7 @@
 pkgname=stream
 pkgver=1
 pkgrel=1
-arch=('i386' 'x86_64')
+arch=('i386' 'x86_64' 'riscv64')
 url="http://www.cs.virginia.edu/stream"
 license=('GPL')
 source=("$pkgname"::"https://github.com/jeffhammond/STREAM.git")
