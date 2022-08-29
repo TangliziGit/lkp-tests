@@ -32,6 +32,11 @@ fi
 # file, here we directly use relative path.
 sed -i 's/\(ERRATATXT=\).*/\1errata.txt/' config.mak
 
+# below fix timeout issue in kvm-unit-tests-qemu,
+# 'FAIL vmx_pf_exception_test_reduced_maxphyaddr (timeout; duration=90s)'
+# we should keep same setting for bare metal
+sed -i '/\[vmx_pf_exception_test_reduced_maxphyaddr\]/a\timeout = 240' x86/unittests.cfg
+
 setup_test_environment || die "failed to setup test environment"
 
 check_ignored_cases
