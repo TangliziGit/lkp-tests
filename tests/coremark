@@ -1,0 +1,13 @@
+#!/bin/sh
+# - coremark
+
+. $LKP_SRC/lib/upload.sh
+. $LKP_SRC/lib/unit.sh
+. $LKP_SRC/lib/reproduce-log.sh
+
+cd $BENCHMARK_ROOT/coremark || die "no $BENCHMARK_ROOT/coremark"
+
+echo "Running coremark benchmark..."
+
+log_cmd ./coremark.exe
+

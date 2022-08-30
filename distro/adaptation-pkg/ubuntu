@@ -117,3 +117,4 @@ phoronix-test-suite::
 bpftrace::
 kernbench::
 rt-app::
+coremark::
