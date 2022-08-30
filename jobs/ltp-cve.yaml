@@ -6,4 +6,11 @@ need_memory: 4G
 
 ltp:
   test:
-    - cve
+    - cve-00
+    - cve-01
+    - cve-02
+    - cve-03
+    - cve-04
+    - cve-05
+    - cve-06
+    - cve-07

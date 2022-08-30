@@ -176,6 +176,7 @@ split_syscalls_tests()
 
 	grep -v -f syscalls-timer -f syscalls-tgkill -f syscalls-setsockopt06 -f syscalls-numa syscalls -f $standalone_file > syscalls-rest || return
 	$LKP_SRC/tools/split-tests syscalls-rest 8 syscalls-
+	$LKP_SRC/tools/split-tests cve 8 cve-
 	hide syscalls-rest
 	hide syscalls
 }
