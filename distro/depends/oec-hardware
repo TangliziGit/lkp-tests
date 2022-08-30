@@ -1,6 +1,7 @@
+python
+python3-devel
 oec-hardware
 oec-hardware-server
-python3-devel
 expect
 ethtool
 wget

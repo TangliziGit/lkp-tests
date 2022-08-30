@@ -1,0 +1,40 @@
+#!/bin/sh
+
+. $LKP_SRC/lib/upload.sh
+
+TIMEOUT=3600
+SERVER_LOG="/usr/share/oech/lib/server/results"
+CARD_TYPE=$test_card_type
+CARD_NAME=$test_card_name
+REPORT="${CARD_TYPE}-${CARD_NAME}-report.html"
+
+function setup_oech_server() {
+    systemctl start oech-server.service
+    systemctl status oech-server.service
+    systemctl start nginx.service
+    systemctl stop firewalld
+    iptables -F
+    setenforce 0
+}
+
+function get_html_report() {
+    for i in $(seq 0 ${TIMEOUT}); do
+        local num=$(ls ${SERVER_LOG} | wc -l)
+        [[ $num -ge 2 ]] && break
+        sleep 1
+    done
+    local machine_name=$(ls ${SERVER_LOG} | grep -v README)
+    local log_name=$(ls ${SERVER_LOG}/${machine_name}/test | head -n 1)
+    curl http://127.0.0.1/results/${machine_name}/test/${log_name} &>${REPORT}
+    sed -i "1,4d" ${CARD_NAME}.html
+}
+
+set -x
+
+echo "Start to setup oec-hardware-server environment."
+setup_oech_server
+get_html_report
+upload_files -t oec-hardware ${REPORT}
+
+echo "End to setup oec-hardware-server environment."
+

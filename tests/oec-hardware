@@ -1,23 +1,24 @@
 #!/bin/sh
 
 . $LKP_SRC/lib/upload.sh
-timeout=3600
-error_code=100
-timeout_code=101
 
-server_ip=$direct_server_ips
-card_ids=$test_card_id
-card_type=$test_card_type
-card_name=$test_card_name
-driverlink=$driverlink
+TIMEOUT=3600
+ERROR_CODE=100
+TIMEOUT_CODE=101
 
-config_file="/usr/share/oech/lib/config/test_config.yaml"
-logdir="/usr/share/oech/logs"
-server_log="/usr/share/oech/lib/server/results"
-report="${card_type}-${card_name}-report.html"
+SERVER_IP=$direct_server_ips
+CARD_IDS=$test_card_id
+CARD_TYPE=$test_card_type
+CARD_NAME=$test_card_name
+DRIVERLINK=$driverlink
+
+CONFIG_FILE="/usr/share/oech/lib/config/test_config.yaml"
+LOGDIR="/usr/share/oech/logs"
+SERVER_LOGS="/usr/share/oech/lib/server/results"
+REPORT="${CARD_TYPE}-${CARD_NAME}-report.html"
 
 function setup_oech_server() {
-    pip3 install Flask Flask-bootstrap uwsgi --default-timeout=${timeout} -i https://pypi.tuna.tsinghua.edu.cn/simple
+    pip3 install Flask Flask-bootstrap uwsgi --default-timeout=${TIMEOUT} -i https://pypi.tuna.tsinghua.edu.cn/simple
     systemctl start oech-server.service
     systemctl status oech-server.service
     systemctl start nginx.service
@@ -28,7 +29,7 @@ function setup_oech_server() {
 
 function setup_oech() {
     expect <<-EOF
-    set timeout ${timeout}
+    set timeout ${TIMEOUT}
     spawn oech
         expect {
             "*Please provide your Compatibility Test ID:"
@@ -44,19 +45,19 @@ function setup_oech() {
             timeout 
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
-                exit ${timeout_code}
+                exit ${TIMEOUT_CODE}
             }
         }
 EOF
 }
 
 function get_exec_number() {
-    if [[ ${card_type} == "ethernet" || ${card_type} == "infiniband" ]]; then
-        local test_id=$(get_netdev_name ${card_ids})
+    if [[ ${CARD_TYPE} == "ethernet" || ${CARD_TYPE} == "infiniband" ]]; then
+        local test_id=$(get_netdev_name ${CARD_IDS})
     else
-        local card_pci=$(get_card_pci ${card_ids})
-        local test_id=$(grep ${card_type} oech_device.log | grep ${card_pci} | awk '{print $1}')
-        if [[ ${card_type} == "raid" || ${card_type} == "fc" ]]; then
+        local card_pci=$(get_card_pci ${CARD_IDS})
+        local test_id=$(grep ${CARD_TYPE} oech_device.log | grep ${card_pci} | awk '{print $1}')
+        if [[ ${CARD_TYPE} == "raid" || ${CARD_TYPE} == "fc" ]]; then
             create_test_config_file ${card_pci}
         fi
     fi
@@ -65,13 +66,13 @@ function get_exec_number() {
 
 function exec_oech() {
     local test_id=$1
-    if [[ $test_id == ${error_code} ]]; then
+    if [[ $test_id == ${ERROR_CODE} ]]; then
         echo "The test id doesn't exist, test failed."
-        exit ${error_code}
+        exit ${ERROR_CODE}
     fi
     
     expect <<-EOF
-    set timeout ${timeout}
+    set timeout ${TIMEOUT}
     spawn oech
         expect {
             "*Ready to begin testing? (run|edit|quit)"
@@ -91,7 +92,7 @@ function exec_oech() {
             timeout 
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
-                exit ${timeout_code}
+                exit ${TIMEOUT_CODE}
             }
         }
 EOF
@@ -113,7 +114,7 @@ function get_card_pci() {
     lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
     if [[ $? -ne 0 ]]; then
         echo "The test card cannot find on this machine."
-        printf ${error_code}
+        printf ${ERROR_CODE}
         return 1
     fi
     local card_pci=$(lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | head -n 1 | awk '{print $1}')
@@ -137,8 +138,8 @@ function get_netdev_name() {
     lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
     if [[ $? -ne 0 ]]; then
         echo "The test card cannot find on this machine."
-        printf ${error_code}
-        return ${error_code}
+        printf ${ERROR_CODE}
+        return ${ERROR_CODE}
     fi
     local card_pcis=$(lspci -nvv | grep -C1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | grep -v -i control | awk '{print $1}')
     local port_names=$(ls /etc/sysconfig/network-scripts/ | cut -d '-' -f 2)
@@ -159,7 +160,7 @@ function get_netdev_name() {
         done
     done
 
-    local test_id=$(grep ${card_type} oech_device.log | grep $card_pci | awk '{print $1}')
+    local test_id=$(grep ${CARD_TYPE} oech_device.log | grep $card_pci | awk '{print $1}')
     create_test_config_file $useful_name
     printf $test_id
     return 0
@@ -189,32 +190,32 @@ function create_test_config_file() {
         return 1
     fi
 
-    mv $config_file ${config_file}".bak"
-    if [[ ${card_type} -eq "raid" || ${card_type} -eq "fc" ]]; then
-        echo "${card_type}:
-  ${card_type}1:
+    mv ${CONFIG_FILE} ${CONFIG_FILE}".bak"
+    if [[ ${CARD_TYPE} -eq "raid" || ${CARD_TYPE} -eq "fc" ]]; then
+        echo "${CARD_TYPE}:
+  ${CARD_TYPE}1:
     device: '0000:${card_pci}'
-    disk: ${disk-all}" >>$config_file
-    elif [[ ${card_type} -eq "ethernet" ]]; then
+    disk: ${disk-all}" >>${CONFIG_FILE}
+    elif [[ ${CARD_TYPE} -eq "ethernet" ]]; then
         echo "ethernet:
   eth1:
     device: ${card_pci}
-    if_rdma: N" >>$config_file
+    if_rdma: N" >>${CONFIG_FILE}
 
-    elif [[ ${card_type} -eq "infiniband" ]]; then
+    elif [[ ${CARD_TYPE} -eq "infiniband" ]]; then
         echo "infiniband:
   ib1:
-    device: ${card_pci}" >>$config_file
+    device: ${card_pci}" >>${CONFIG_FILE}
     fi
 
     return 0
 }
 
 function get_html_report() {
-    local machine_name=$(ls ${server_log} | grep -v README)
-    local log_name=$(ls ${server_log}/${machine_name}/test | head -n 1)
-    curl http://127.0.0.1/results/${machine_name}/test/${log_name} &>${report}
-    sed -i "1,4d" ${card_name}.html
+    local machine_name=$(ls ${SERVER_LOGS} | grep -v README)
+    local log_name=$(ls ${SERVER_LOGS}/${machine_name}/test | head -n 1)
+    curl http://127.0.0.1/results/${machine_name}/test/${log_name} &>${REPORT}
+    sed -i "1,4d" ${CARD_NAME}.html
 }
 
 # Install outbox driver to test
@@ -230,9 +231,9 @@ function install_driver() {
 
 set -x
 
-echo "Start to setup oech-server."
+echo "Start to setup oec-hardware-server."
 setup_oech_server
-echo "End to setup oech-server."
+echo "End to setup oec-hardware-server."
 
 echo "Start to run oec-hardware test."
 # Setup oech information
@@ -247,8 +248,8 @@ exec_oech $test_id
 get_html_report
 
 # Upload test results to compass-ci
-upload_files -t oec-hardware ${logdir}/*
-upload_files -t oec-hardware ${report}
+upload_files -t oec-hardware ${LOGDIR}/*
+upload_files -t oec-hardware ${REPORT}
 
 echo "End to run oec-hardware test."
 

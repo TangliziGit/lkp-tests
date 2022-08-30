@@ -2,7 +2,7 @@ suite: oec-hardware
 category: functional
 
 if role server:
-  oech-server:
+  oec-hardware-server:
 
 if role client:
-  oech:
+  oec-hardware:
