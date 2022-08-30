@@ -16,7 +16,7 @@ fs2: nfsv4
 
 fsmark:
   filesize: 16MB
-  test_size: 60G
+  test_size: 20G
   sync_method:
     - NoSync
     - fsyncBeforeClose
