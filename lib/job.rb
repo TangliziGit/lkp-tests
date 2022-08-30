@@ -433,8 +433,7 @@ class Job
   def init_program_options
     @referenced_programs = {}
     @program_options = {
-      'cluster' => '-',
-      'ucode' => '='
+      'cluster' => '-'
     }
     programs = available_programs(:workload_elements)
     for_each_in(@job, programs) do |_pk, _h, k, _v|
