@@ -1,0 +1,7 @@
+url: https://github.com/yiliu1765/iommufd.git
+notify_build_success_branch: .*
+owner: Yi Liu <yi.l.liu@intel.com>
+mail_to:
+- Yi Liu <yi.l.liu@intel.com>
+- Kevin Tian <kevin.tian@intel.com>
+private_report_branch: .*
