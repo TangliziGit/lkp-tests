@@ -140,6 +140,8 @@ write_shell_profile()
 
 write_host()
 {
+	[ -f hosts/$(hostname) ] && return
+
 	if is_system "Linux"; then
 		local nr_cpu=$(nproc)
 		local memory_total=$(cat /proc/meminfo |grep MemTotal | awk '{print $2}')
