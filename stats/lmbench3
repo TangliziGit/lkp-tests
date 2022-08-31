@@ -21,6 +21,16 @@ def largest_bandwidth
   bandwidth
 end
 
+def read_mb_sec
+  bandwidth = 0
+  $stdin.each_line do |line|
+    break if line.chomp.empty?
+
+    bandwidth = line.split(' ')[1].to_f
+  end
+  bandwidth
+end
+
 while (line = $stdin.gets)
   line = line.resolve_invalid_bytes
   case line
@@ -198,5 +208,8 @@ while (line = $stdin.gets)
   # ...
   when /^"Mmap read open2close bandwidth$/
     puts "MMAP.read_open2close.bandwidth.MB/sec: #{largest_bandwidth}"
+
+  when /bw_mem/
+    puts "Mem.Bandwidth.MB/sec: #{read_mb_sec}"
   end
 end
