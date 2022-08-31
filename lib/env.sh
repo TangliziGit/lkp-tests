@@ -124,7 +124,7 @@ shell_profile()
 
 write_shell_profile()
 {
-	shell_profile_file=$(shell_profile)
+	local shell_profile_file=$(shell_profile)
 	if [ $# -gt 0 ]; then
 		echo "$@" >> $shell_profile_file
 	fi
@@ -135,14 +135,14 @@ write_shell_profile()
 write_host()
 {
 	if is_system "Linux"; then
-		nr_cpu=$(nproc)
-		memory_total=$(cat /proc/meminfo |grep MemTotal | awk '{print $2}')
+		local nr_cpu=$(nproc)
+		local memory_total=$(cat /proc/meminfo |grep MemTotal | awk '{print $2}')
 	else
-		nr_cpu=$(sysctl -n hw.logicalcpu)
-		memory_total=$(top -l 1 | grep MemRegions | awk '{print $2}')
+		local nr_cpu=$(sysctl -n hw.logicalcpu)
+		local memory_total=$(top -l 1 | grep MemRegions | awk '{print $2}')
 	fi
-	memory_new=$(awk 'BEGIN{printf "%0.2f", '$memory_total'/1024/1024}')
-	memory=$(echo $memory_new | awk '{print int($0)+1}')G
+	local memory_new=$(awk 'BEGIN{printf "%0.2f", '$memory_total'/1024/1024}')
+	local memory=$(echo $memory_new | awk '{print int($0)+1}')G
 
 	cat > hosts/$(hostname) <<-EOF
 	nr_cpu: $nr_cpu
@@ -156,7 +156,7 @@ write_host()
 
 get_emulate_login_env()
 {
-        login_env=""
+        local login_env=""
         for i in $(cat $LKP_SRC/env/emulate-login-env)
         do
                 login_env=$login_env" "$i
@@ -166,7 +166,7 @@ get_emulate_login_env()
 
 use_benchmark_env()
 {
-        tmp_env=""
+        local tmp_env=""
         for i in $benchmark_env
         do
                 if [ "$i" = "EMULATE_LOGIN_ENV" ];then
