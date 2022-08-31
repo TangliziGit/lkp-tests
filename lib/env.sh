@@ -124,12 +124,18 @@ shell_profile()
 
 write_shell_profile()
 {
-	local shell_profile_file=$(shell_profile)
-	if [ $# -gt 0 ]; then
-		echo "$@" >> $shell_profile_file
-	fi
+	[ $# -gt 0 ] || return
 
-	source $shell_profile_file
+	local env_file=sbin/lkp-env
+	[ -f $env_file ] && return
+
+	local shell_profile_file=$(shell_profile)
+
+	echo $env_file >> .git/info/exclude
+	echo "$@" > $env_file
+	echo "source $PWD/$env_file" >> $shell_profile_file
+
+	source $env_file
 }
 
 write_host()
