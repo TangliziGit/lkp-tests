@@ -13,6 +13,7 @@ linux_dep()
 	case "$installer" in
 	apt-get)
 		export DEBIAN_FRONTEND=noninteractive
+		sudo "$installer" update
 		sudo "$installer" install -yqm ruby-dev libssl-dev gcc g++ uuid-runtime diffutils
 		;;
 	dnf|yum)
