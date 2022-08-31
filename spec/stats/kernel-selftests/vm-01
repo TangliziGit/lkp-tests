@@ -1,0 +1,112 @@
+# selftests: vm: run_vmtests.sh
+# arm64 ia64 mips64 parisc64 ppc64 ppc64le riscv64 s390x sh64 sparc64 x86_64
+# -----------------------
+# running ./madv_populate
+# -----------------------
+# TAP version 13
+# 1..21
+# # [RUN] test_prot_read
+# ok 1 MADV_POPULATE_READ with PROT_READ
+# ok 2 MADV_POPULATE_WRITE with PROT_READ
+# # [RUN] test_prot_write
+# ok 3 MADV_POPULATE_READ with PROT_WRITE
+# ok 4 MADV_POPULATE_WRITE with PROT_WRITE
+# # [RUN] test_holes
+# ok 5 MADV_POPULATE_READ with holes in the middle
+# ok 6 MADV_POPULATE_WRITE with holes in the middle
+# ok 7 MADV_POPULATE_READ with holes at the end
+# ok 8 MADV_POPULATE_WRITE with holes at the end
+# ok 9 MADV_POPULATE_READ with holes at the beginning
+# ok 10 MADV_POPULATE_WRITE with holes at the beginning
+# # [RUN] test_populate_read
+# ok 11 range initially not populated
+# ok 12 MADV_POPULATE_READ
+# ok 13 range is populated
+# # [RUN] test_populate_write
+# ok 14 range initially not populated
+# ok 15 MADV_POPULATE_WRITE
+# ok 16 range is populated
+# # [RUN] test_softdirty
+# ok 17 range is not softdirty
+# ok 18 MADV_POPULATE_READ
+# ok 19 range is not softdirty
+# ok 20 MADV_POPULATE_WRITE
+# ok 21 range is softdirty
+# # Totals: pass:21 fail:0 xfail:0 xpass:0 skip:0 error:0
+# [PASS]
+# ----------------------
+# running ./memfd_secret
+# ----------------------
+# page_size: 4096, mlock.soft: 8388608, mlock.hard: 8388608
+# TAP version 13
+# 1..4
+# ok 2 # SKIP memfd_secret is not supported
+# # Planned tests != run tests (4 != 1)
+# # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:1 error:0
+# [SKIP]
+# ----------------------------
+# running ./ksm_tests -M -p 10
+# ----------------------------
+# OK
+# [PASS]
+# ----------------------
+# running ./ksm_tests -U
+# ----------------------
+# OK
+# [PASS]
+# ---------------------------------
+# running ./ksm_tests -Z -p 10 -z 0
+# ---------------------------------
+# OK
+# [PASS]
+# ---------------------------------
+# running ./ksm_tests -Z -p 10 -z 1
+# ---------------------------------
+# OK
+# [PASS]
+# ---------------------------
+# running ./ksm_tests -N -m 1
+# ---------------------------
+# At least 2 NUMA nodes must be available
+# [SKIP]
+# ---------------------------
+# running ./ksm_tests -N -m 0
+# ---------------------------
+# At least 2 NUMA nodes must be available
+# [SKIP]
+# ----------------------------
+# running ./protection_keys_32
+# ----------------------------
+# has pkeys: 0
+# running PKEY tests for unsupported CPU/OS
+# [PASS]
+# ----------------------------
+# running ./protection_keys_64
+# ----------------------------
+# has pkeys: 0
+# running PKEY tests for unsupported CPU/OS
+# [PASS]
+# --------------------
+# running ./soft-dirty
+# --------------------
+# TAP version 13
+# 1..15
+# ok 1 Test test_simple
+# ok 2 Test test_vma_reuse dirty bit of allocated page
+# ok 3 Test test_vma_reuse dirty bit of reused address page
+# ok 4 Test test_hugepage huge page allocation
+# ok 5 Test test_hugepage huge page dirty bit
+# ok 6 Test test_mprotect-anon dirty bit of new written page
+# ok 7 Test test_mprotect-anon soft-dirty clear after clear_refs
+# ok 8 Test test_mprotect-anon soft-dirty clear after marking RO
+# ok 9 Test test_mprotect-anon soft-dirty clear after marking RW
+# ok 10 Test test_mprotect-anon soft-dirty after rewritten
+# ok 11 Test test_mprotect-file dirty bit of new written page
+# ok 12 Test test_mprotect-file soft-dirty clear after clear_refs
+# ok 13 Test test_mprotect-file soft-dirty clear after marking RO
+# ok 14 Test test_mprotect-file soft-dirty clear after marking RW
+# ok 15 Test test_mprotect-file soft-dirty after rewritten
+# # Totals: pass:15 fail:0 xfail:0 xpass:0 skip:0 error:0
+# [PASS]
+ok 4 selftests: vm: run_vmtests.sh # SKIP
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-b90cb1053190353cc30f0fef0ef1f378ccc063c5/tools/testing/selftests/vm'

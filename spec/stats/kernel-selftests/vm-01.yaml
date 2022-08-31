@@ -1,0 +1,8 @@
+vm.run_vmtests.sh../madv_populate.pass: 1
+vm.run_vmtests.sh../ksm_tests_M_p_10.pass: 1
+vm.run_vmtests.sh../ksm_tests_U.pass: 1
+vm.run_vmtests.sh../ksm_tests_Z_p_10_z_0.pass: 1
+vm.run_vmtests.sh../ksm_tests_Z_p_10_z_1.pass: 1
+vm.run_vmtests.sh.PKEY_tests_for_unsupported_CPU/OS.pass: 1
+vm.run_vmtests.sh../soft_dirty.pass: 1
+vm.run_vmtests.sh.skip: 1

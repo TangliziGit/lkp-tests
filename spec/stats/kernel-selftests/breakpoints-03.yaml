@@ -1,0 +1,6 @@
+breakpoints.breakpoint_test.Test_breakpoint_0_with_local_0_global_1.pass: 1
+breakpoints.breakpoint_test.Test_breakpoint_1_with_local_0_global_1.pass: 1
+breakpoints.breakpoint_test.Test_breakpoint_2_with_local_0_global_1.pass: 1
+breakpoints.breakpoint_test.Test_breakpoint_3_with_local_0_global_1.pass: 1
+breakpoints.breakpoint_test.Test_breakpoint_0_with_local_1_global_0.pass: 1
+breakpoints.breakpoint_test.pass: 1
