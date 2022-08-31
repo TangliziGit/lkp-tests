@@ -150,6 +150,8 @@ write_host()
 	hdd_partitions:
 	ssd_partitions:
 	EOF
+
+	echo hosts/$(hostname) >> .git/info/exclude
 }
 
 get_emulate_login_env()
