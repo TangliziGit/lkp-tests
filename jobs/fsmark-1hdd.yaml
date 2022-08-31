@@ -12,13 +12,11 @@ fs:
   - ext4
   - btrfs
   - f2fs
-fs2:
-  - nfsv4
-  -
+fs2: nfsv4
 
 fsmark:
   filesize: 16MB
-  test_size: 60G
+  test_size: 12G
   sync_method:
     - NoSync
     - fsyncBeforeClose
