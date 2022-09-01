@@ -1102,6 +1102,7 @@ module Compare
       p.on('-o <search-axes>', '--override-search <search-axes>',
            'Search Axes') do |search_axes|
         search_axes = DataStore::Layout.axes_from_string(search_axes)
+        options[:compare_different_rts] = true if search_axes.size > 1
         prev_axes = msearch_axes[-1] || {}
         msearch_axes << prev_axes.merge(search_axes)
       end
