@@ -64,7 +64,7 @@ install_packages()
 {
 	local ret=0
 	[[ -x /usr/bin/xz ]] || {
-		echo Please install: xz-utils
+		echo Please install: xz-utils or xz
 		ret=1
 	}
 
