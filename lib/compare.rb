@@ -886,16 +886,21 @@ module Compare
     compare_axeses = group.compare_axeses.map do |axes|
       axes_format axes
     end
-    unless common_axes.empty?
-      puts '========================================================================================='
+    puts '========================================================================================='
+    if common_axes.empty?
+      group.mresult_roots.each do |rt|
+        printf "%s:\n", rt.axes.keys.join('/')
+        printf "  %s\n\n", rt.axes.values.join('/')
+      end
+    else
       printf "%s:\n", common_axes.keys.join('/')
       printf "  %s\n\n", common_axes.values.join('/')
-      printf "%s: \n", compare_axeses[0].keys.join('/')
-      compare_axeses.each do |compare_axes|
-        printf "  %s\n", compare_axes.values.join('/')
-      end
-      puts
     end
+    printf "%s: \n", compare_axeses[0].keys.join('/')
+    compare_axeses.each do |compare_axes|
+      printf "  %s\n", compare_axes.values.join('/')
+    end
+    puts
     first_width = ABS_WIDTH + ERR_WIDTH
     width = first_width + REL_WIDTH + 1
     printf "%#{first_width}s ", compare_axeses[0].values.join('/')[0...first_width]
