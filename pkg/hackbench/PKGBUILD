@@ -1,7 +1,7 @@
 pkgname=hackbench
 pkgver=2.4
 pkgrel=1
-arch=('i386' 'x86_64')
+arch=('i386' 'x86_64' 'riscv64')
 url="https://www.kernel.org/pub/linux/utils/rt-tests"
 license=('GPL')
 # The url for latest pkg is https://www.kernel.org/pub/linux/utils/rt-tests/rt-tests-${pkgver}.tar.gz
