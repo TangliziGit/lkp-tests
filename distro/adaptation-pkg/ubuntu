@@ -118,3 +118,4 @@ bpftrace::
 kernbench::
 rt-app::
 coremark::
+fio::
