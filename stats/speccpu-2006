@@ -8,14 +8,13 @@ stats = {}
 while (line = $stdin.gets)
   case line
   when /^Benchmarks.+Run\sTime.*/
-    test_item = line.split[4]
     while (line = $stdin.gets)
       case line
       when /^==============================/
         while (line = $stdin.gets)
           case line
           when /^\d{3}/
-            data = line.split[0] + "_" + "#{test_item}"
+            data = line.split[0]
             stats["#{data}"] = line.split[3]
           when /^\sEst\..*/
             avg = line.split[0] + line.split[1]
