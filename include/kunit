@@ -44,7 +44,7 @@ need_kconfig:
 # below are kunit test configs of bool type
 - DRIVER_PE_KUNIT_TEST: y, v5.13-rc1
 - PM_QOS_KUNIT_TEST: y, v5.5-rc1
-- USB4: m, v5.6-rc1
+- USB4: y, v5.6-rc1
 - USB4_KUNIT_TEST: y, v5.9-rc1
 
 - SECURITY_APPARMOR: y
