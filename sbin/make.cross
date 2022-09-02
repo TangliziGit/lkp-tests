@@ -143,7 +143,7 @@ install_crosstool_gcc()
 	local URL='https://download.01.org/0day-ci/cross-package'
 	local list=/tmp/0day-ci-crosstool-files
 
-	lftp -c "open $URL && find -d 3 > $list" || return
+	lftp -c "open $URL && find -d 3" | sort -V > $list || return
 
 	local file
 	local gcc_arch_pattern=$(echo "${gcc_arch}" | sed 's/*/.*/g')
@@ -206,7 +206,7 @@ setup_gcc_exec()
 	}
 
 	# use highest available version
-	gcc_exec=${gcc_exec[-1]}
+	gcc_evec=$(tr ' ' '\n' <<< ${gcc_exec[@]} | sort -V | tail -n1)
 }
 
 update_path_env_for_parisc()
@@ -340,7 +340,7 @@ setup_crosstool_gcc()
 
 		# load build-in depends libs
 		local deplibs_path=($COMPILER_INSTALL_PATH/${COMPILER}*/${gcc_arch}/libexec/gcc/${gcc_arch}/*)
-		deplibs_path=${deplibs_path[-1]}
+		deplibs_path=$(tr ' ' '\n' <<< ${deplibs_path[@]} | sort -V | tail -n1)
 		[[ -d $deplibs_path ]] && export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$deplibs_path
 
 		install_dependence "$gcc_exec" || return
