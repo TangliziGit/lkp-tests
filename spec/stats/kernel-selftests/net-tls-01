@@ -1,0 +1,45 @@
+# selftests: net: tls
+# TAP version 13
+# 1..554
+# # Starting 554 tests from 15 test cases.
+# #  RUN           global.non_established ...
+# #            OK  global.non_established
+# ok 1 global.non_established
+# #  RUN           global.keysizes ...
+# #            OK  global.keysizes
+# ok 2 global.keysizes
+# #  RUN           global.no_pad ...
+# Failure setting TCP_ULP, testing without tls
+# # no_pad: Test failed at step #4
+# #          FAIL  global.no_pad
+# not ok 3 global.no_pad
+# #  RUN           global.tls_v6ops ...
+# #      SKIP      no TLS support
+# #            OK  global.tls_v6ops
+# ok 4 # SKIP no TLS support
+# #  RUN           tls_basic.base_base ...
+# #            OK  tls_basic.base_base
+# ok 5 tls_basic.base_base
+# #  RUN           tls.12_aes_gcm.sendfile ...
+# #            OK  tls.12_aes_gcm.sendfile
+# ok 6 tls.12_aes_gcm.sendfile
+# #  RUN           tls.12_aes_gcm.send_then_sendfile ...
+# #            OK  tls.12_aes_gcm.send_then_sendfile
+# ok 7 tls.12_aes_gcm.send_then_sendfile
+# #  RUN           tls.12_aes_gcm.multi_chunk_sendfile ...
+# #            OK  tls.12_aes_gcm.multi_chunk_sendfile
+# ok 8 tls.12_aes_gcm.multi_chunk_sendfile
+# #  RUN           tls.12_aes_gcm.recv_max ...
+# #            OK  tls.12_aes_gcm.recv_max
+# ok 9 tls.12_aes_gcm.recv_max
+# #  RUN           tls.12_aes_gcm.recv_small ...
+# #            OK  tls.12_aes_gcm.recv_small
+# ok 10 tls.12_aes_gcm.recv_small
+# #  RUN           tls.12_aes_gcm.splice_cmsg_to_pipe ...
+# #      SKIP      no TLS support
+# #            OK  tls.12_aes_gcm.splice_cmsg_to_pipe
+# ok 22 # SKIP no TLS support
+# #  RUN           tls.12_aes_gcm.splice_dec_cmsg_to_pipe ...
+# #      SKIP      no TLS support
+# #            OK  tls.12_aes_gcm.splice_dec_cmsg_to_pipe
+# ok 23 # SKIP no TLS support

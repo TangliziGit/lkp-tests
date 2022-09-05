@@ -372,10 +372,23 @@ class NetStater < Stater
       # selftests: net: reuseport_addr_any.sh
       # UDP IPv4 ... pass
       stats.add "#{@test_prefix}.#{$1} #{$2}", $3
-    when /# (ok|fail|skip) \d+ (.*)/
+    when /RUN\s+([^\s]+)/
+      # #  RUN           global.tls_v6ops ...
+      @test_case = $1
+    when /^# (ok|fail|skip) \d+ ([^#].*)/
       # selftests: net: reuseaddr_ports_exhausted.sh
       # ok 1 global.reuseaddr_ports_exhausted_unreusable
+      if $2 != @test_case
+        log_warn "#{$2} not equals to #{@test_case}"
+        exit 1
+      end
+
       stats.add "#{@test_prefix}.#{$2}", $1
+      @test_case = nil
+    when /^# ok \d+ # SKIP (.*)/
+      # ok 22 # SKIP no TLS support
+      stats.add "#{@test_prefix}.#{@test_case}", 'skip'
+      @test_case = nil
     else
       super(line, stats)
     end
