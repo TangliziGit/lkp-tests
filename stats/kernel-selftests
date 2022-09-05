@@ -660,10 +660,24 @@ end
 class SgxStater < Stater
   def stat(line, stats)
     case line
-    when /^# (ok|not ok) \d+ (.*)/
+    when /RUN\s+([^\s]+)/
+      # #  RUN           enclave.augment_via_eaccept ...
+      @test_case = $1
+    when /^# (ok|not ok) \d+ ([^#].*)/
       # not ok 1 enclave.unclobbered_vdso
+      if $2 != @test_case
+        log_warn "#{$2} not equals to #{@test_case}"
+        exit 1
+      end
+
       stats.add "#{@test_prefix}.#{$2}", $1
+      @test_case = nil
+    when /^# ok \d+ # SKIP (.*)/
+      # ok 3 # SKIP System does not support SGX2
+      stats.add "#{@test_prefix}.#{@test_case}", 'skip'
+      @test_case = nil
     else
+      # ok 1 selftests: sgx: test_sgx
       super(line, stats)
     end
   end

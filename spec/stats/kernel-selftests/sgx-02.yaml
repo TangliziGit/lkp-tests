@@ -1,0 +1,6 @@
+sgx.test_sgx.enclave.unclobbered_vdso.pass: 1
+sgx.test_sgx.enclave.unclobbered_vdso_oversubscribed.pass: 1
+sgx.test_sgx.enclave.unclobbered_vdso_oversubscribed_remove.skip: 1
+sgx.test_sgx.enclave.clobbered_vdso.pass: 1
+sgx.test_sgx.enclave.tcs_permissions.skip: 1
+sgx.test_sgx.pass: 1
