@@ -1,4 +1,9 @@
 suite: speccpu-2006
 category: benchmark
-
 speccpu-2006:
+  test_item:
+    - rate
+    - speed
+  num_type:
+    - int
+    - fp
