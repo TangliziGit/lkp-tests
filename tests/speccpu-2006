@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: MulanPSL-2.0+
+# Copyright (c) 2022 Huawei Technologies Co., Ltd. All rights reserved.
+
+# - test_item
+# - num_type
+
+: "${test_item:=rate}"
+: "${num_type:=int}"
+
+cd /home
+wget http://$LKP_SERVER:8000/os/install/iso/cpu2006-1.2.iso
+wget http://$LKP_SERVER:8800/initrd/deps/testsuite-deps/speccpu/speccpu-2006.tar.gz
+
+[ -n speccpu-2006.tar.gz ] && tar xvf speccpu-2006.tar.gz
+[ -d /home/speccpu2006 ] && {
+	cd /home/speccpu2006
+	./speccpu2006-install.sh
+}
+
+[ $? == 0 ] || exit
+
+case $test_item in
+rate)
+	[[ $num_type == int ]] && {
+		echo 'runspec -c $cfg --rate `nproc` -n 3 --noreportable -o all int' >> /home/speccpu2006/cpu2006-test.sh
+	}
+	[[ $num_type != int ]] && {
+		echo 'runspec -c $cfg --rate `nproc` -n 3 --noreportable -o all fp' >> /home/speccpu2006/cpu2006-test.sh
+	}
+	;;
+speed)
+	[[ $num_type == int ]] && {
+		echo 'runspec -c $cfg --speed -n 3 --noreportable -o all int' >> /home/speccpu2006/cpu2006-test.sh
+	}
+	[[ $num_type != int ]] && {
+		echo 'runspec -c $cfg --speed -n 3 --noreportable -o all fp' >> /home/speccpu2006/cpu2006-test.sh
+	}
+	;;
+esac
+
+cat >> /home/speccpu2006/cpu2006-test.sh <<-EOF
+sysctl -w vm.drop_caches=3
+sleep 300
+
+# clean some trash after build and run
+rm -rf ./benchspec/CPU2006/*/run/*
+EOF
+
+./cpu2006-test.sh
+
+if [ $? == 0 ];then
+	[ -d '/home/cpu2006-1.2/result' ] && cat /home/cpu2006-1.2/result/*.txt
+else
+       exit
+fi
