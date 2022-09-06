@@ -1,0 +1,36 @@
+suite: fio-basic
+testcase: fio-basic
+
+category: benchmark
+
+runtime: 300s
+nr_task:
+  - 1
+  - 4
+
+disk: 1SSD
+fs:
+  fs: ext4
+  format: n
+
+fio-setup-basic:
+  rw:
+    - read
+    - write
+    - randread
+    - randwrite
+    - readwrite
+    - randrw
+  direct: 1
+  bs:
+    - 4k
+    - 1M
+  ioengine:
+    - libaio
+    - io_uring
+  iodepth:
+    - 1
+    - 32
+  test_size: 1g
+
+fio:
