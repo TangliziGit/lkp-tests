@@ -375,7 +375,7 @@ class NetStater < Stater
     when /RUN\s+([^\s]+)/
       # #  RUN           global.tls_v6ops ...
       @test_case = $1
-    when /^# (ok|fail|skip) \d+ ([^#].*)/
+    when /^# (ok|fail|skip|not ok) \d+ ([^#].*)/
       # selftests: net: reuseaddr_ports_exhausted.sh
       # ok 1 global.reuseaddr_ports_exhausted_unreusable
       if $2 != @test_case
