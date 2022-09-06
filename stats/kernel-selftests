@@ -419,6 +419,54 @@ class VmStater < Stater
       # mmap(ADDR_SWITCH_HINT - PAGE_SIZE, PAGE_SIZE): 0x7fe8ef2a4000 - OK
       # mmap(ADDR_SWITCH_HINT - PAGE_SIZE, PAGE_SIZE): 0x7fe8ef29d000 - OK
       stats.add test_name, $2 unless stats.key?(test_name)
+    when /^# # \[RUN\]\s(.*)/
+      # selftests: vm: madv_populate
+      # # [RUN] test_prot_read
+      # ok 1 MADV_POPULATE_READ with PROT_READ
+      @test_subcase = $1
+    when /^# (ok|not ok) \d+\s(# SKIP |)(.*)/
+      # if it has '# # [RUN]' level
+
+      test_name = if @test_case && @test_subcase
+                    # selftests: vm: run_vmtests.sh
+                    # -----------------------
+                    # running ./madv_populate
+                    # -----------------------
+                    # TAP version 13
+                    # 1..21
+                    # # [RUN] test_prot_read
+                    # ok 1 MADV_POPULATE_READ with PROT_READ
+                    "#{@test_prefix}.#{@test_case}.#{@test_subcase}.#{$3}"
+                  elsif @test_case && !@test_subcase
+                    # running ./memfd_secret
+                    # ----------------------
+                    # page_size: 4096, mlock.soft: 8388608, mlock.hard: 8388608
+                    # TAP version 13
+                    # 1..4
+                    # ok 2 # SKIP memfd_secret is not supported
+                    "#{@test_prefix}.#{@test_case}.#{$3}"
+                  elsif !@test_case && @test_subcase
+                    # selftests: vm: madv_populate
+                    # TAP version 13
+                    # 1..21
+                    # # [RUN] test_prot_read
+                    # ok 1 MADV_POPULATE_READ with PROT_READ
+                    "#{@test_prefix}.#{@test_subcase}.#{$3}"
+                  else
+                    # selftests: vm: soft-dirty
+                    # TAP version 13
+                    # 1..5
+                    # ok 1 Test test_simple
+                    "#{@test_prefix}.#{$3}"
+                  end
+
+      test_result = $2['SKIP'] ? 'skip' : $1
+
+      # ignore below duplication
+      # # [RUN] test_softdirty
+      # ok 17 range is not softdirty
+      # ok 19 range is not softdirty
+      stats.add test_name, test_result unless stats.key?(test_name)
     else
       super(line, stats)
     end
