@@ -1,0 +1,3 @@
+netfilter.nft_meta.sh.nftables_meta_iif/oif_counters_at_expected_values.pass: 1
+netfilter.nft_meta.sh.nftables_meta_cpu_counter_at_expected_values.pass: 1
+netfilter.nft_meta.sh.pass: 1

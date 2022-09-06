@@ -874,7 +874,7 @@ class NetfilterStater < Stater
       # PASS: ns1-Ip028vuy connection on port 2121 has ftp helper attached
       # PASS: ns2-Ip028vuy connection on port 2121 has ftp helper attached
       stats.add "#{@test_prefix}.#{$2}_#{$3}", $1 unless stats.key? "#{@test_prefix}.#{$2}_#{$3}"
-    when /^# (PASS|FAIL|SKIP): (.*)/
+    when /^# (PASS|FAIL|SKIP|OK): (.*)/
       # PASS: ipsec tunnel mode for ns1/ns2
 
       # 46 # selftests: netfilter: nft_flowtable.sh
