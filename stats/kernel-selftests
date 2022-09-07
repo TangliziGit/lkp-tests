@@ -1117,6 +1117,19 @@ class ProtectionKeysStater < Stater
   end
 end
 
+class SyncStater < Stater
+  def stat(line, stats)
+    case line
+    when /^# (ok|not ok) \d+ \[RUN\]\s+(.*)/
+      # ok 1 [RUN]    test_alloc_timeline
+      stats.add "#{@test_prefix}.#{$2}", $1
+    else
+      # ok 1 selftests: sync: sync_test
+      super(line, stats)
+    end
+  end
+end
+
 while (line = $stdin.gets)
   line = line.resolve_invalid_bytes
 
@@ -1228,6 +1241,9 @@ while (line = $stdin.gets)
   when /^# selftests: (dmabuf-heaps): (.*)$/
     # selftests: dmabuf-heaps: dmabuf-heap
     stater = DmabufStater.new($1, $2)
+  when /# selftests: (sync): (.*)/
+    # selftests: sync: sync_test
+    stater = SyncStater.new($1, $2)
   when /^LKP SKIP (.*)/
     # LKP SKIP net.l2tp.sh
     # add "duplicate key" check to avoid below duplication
