@@ -1130,6 +1130,30 @@ class SyncStater < Stater
   end
 end
 
+class SysctlStater < Stater
+  def stat(line, stats)
+    case line
+    when /^# (Checking production write strict setting) ... (ok|not ok)/
+      # Checking production write strict setting ... ok
+      stats.add "#{@test_prefix}.#{$1}", $2
+    when /^# Running test: (sysctl_test_[0-9]+) - run #([0-9]+)/
+      # Running test: sysctl_test_0001 - run #0
+      @test_case = "#{$1}.#{$2}"
+    when /^# ([^.]*)\s*...\s*(ok|not ok)/
+      # Checking bitmap handler... ok
+      test_name = "#{@test_prefix}.#{@test_case}.#{$1}"
+
+      # ignore duplication
+      # 1609 # Running test: sysctl_test_0002 - run #0
+      # 1869 # Running test: sysctl_test_0002 - run #0
+      stats.add test_name, $2 unless stats.key?(test_name)
+    else
+      # ok 1 selftests: sysctl: sysctl.sh
+      super(line, stats)
+    end
+  end
+end
+
 while (line = $stdin.gets)
   line = line.resolve_invalid_bytes
 
@@ -1244,6 +1268,9 @@ while (line = $stdin.gets)
   when /# selftests: (sync): (.*)/
     # selftests: sync: sync_test
     stater = SyncStater.new($1, $2)
+  when /# selftests: (sysctl): (.*)/
+    # selftests: sysctl: sysctl.sh
+    stater = SysctlStater.new($1, $2)
   when /^LKP SKIP (.*)/
     # LKP SKIP net.l2tp.sh
     # add "duplicate key" check to avoid below duplication
