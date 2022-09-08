@@ -32,5 +32,6 @@ fio-setup-basic:
     - 1
     - 32
   test_size: 1g
+  testfile: y
 
 fio:
