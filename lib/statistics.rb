@@ -39,4 +39,9 @@ module Enumerable
   def relative_stddev
     standard_deviation * 100 / average
   end
+
+  def harmonic_mean
+    inv_sum = inject(0) { |res, i| res + 1 / i }
+    length / inv_sum
+  end
 end
