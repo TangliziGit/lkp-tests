@@ -187,6 +187,16 @@ for storage in $storages; do
 		storage_setup="filename=$storage"
 	elif is_null_blk /dev/$(basename $storage); then
 		storage_setup="filename=/dev/nullb0"
+	elif is_mount_on_root /dev/$(basename $storage); then
+		[ -d "/lkp/benchmarks/fio" ] || mkdir /lkp/benchmarks/fio
+		if [ "$testfile" = 'y' ]; then
+			storage_setup="\
+directory=/lkp/benchmarks/fio
+filename=fio_testfile_local
+"
+		else
+			storage_setup="directory=/lkp/benchmarks/fio"
+		fi
 	elif [ "$testfile" = 'y' ]; then
 		storage_setup="\
 directory=$storage

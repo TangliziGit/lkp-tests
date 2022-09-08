@@ -178,3 +178,9 @@ is_null_blk()
 	local dev=$1
 	[ $(echo "$dev" | grep -Fe "/null") ]
 }
+
+is_mount_on_root()
+{
+	local dev=$1
+	[ "$(df | grep $dev | grep -o '\S\+$')" = "/" ]
+}
