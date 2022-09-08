@@ -28,6 +28,7 @@
 . $LKP_SRC/lib/common.sh
 . $LKP_SRC/lib/unit.sh
 . $LKP_SRC/lib/debug.sh
+. $LKP_SRC/lib/fs_ext.sh
 
 [ -n "$test_size" ] || die "test_size must be specified for fio"
 
@@ -184,6 +185,8 @@ no=0
 for storage in $storages; do
 	if [ "$raw_disk" = 1 ]; then
 		storage_setup="filename=$storage"
+	elif is_null_blk /dev/$(basename $storage); then
+		storage_setup="filename=/dev/nullb0"
 	elif [ "$testfile" = 'y' ]; then
 		storage_setup="\
 directory=$storage

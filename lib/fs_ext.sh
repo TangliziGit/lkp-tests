@@ -172,3 +172,9 @@ mount_tmpfs()
 		mount_points="${mount_points}$mnt "
 	done
 }
+
+is_null_blk()
+{
+	local dev=$1
+	[ $(echo "$dev" | grep -Fe "/null") ]
+}

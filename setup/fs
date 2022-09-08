@@ -121,7 +121,9 @@ mount_fs() {
 		local mnt=/fs/$(basename $dev)
 		log_cmd mkdir -p $mnt
 		probe_filesystem $fs
-		log_cmd mount -t $fs ${mount:-$def_mount} $mount_option $dev $mnt || exit
+		if ! is_null_blk $dev; then
+			log_cmd mount -t $fs ${mount:-$def_mount} $mount_option $dev $mnt || exit
+		fi
 		mount_points="${mount_points}$mnt "
 	done
 }
