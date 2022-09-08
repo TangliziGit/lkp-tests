@@ -22,11 +22,13 @@
 # - rwmixread
 # - cpuload
 # - donorname
+# - testfile
 
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/common.sh
 . $LKP_SRC/lib/unit.sh
 . $LKP_SRC/lib/debug.sh
+. $LKP_SRC/lib/fs_ext.sh
 
 [ -n "$test_size" ] || die "test_size must be specified for fio"
 
@@ -179,9 +181,27 @@ parse_numa_mem_policy
 parse_numa_cpu_nodes
 
 no=0
+
 for storage in $storages; do
 	if [ "$raw_disk" = 1 ]; then
 		storage_setup="filename=$storage"
+	elif is_null_blk /dev/$(basename $storage); then
+		storage_setup="filename=/dev/nullb0"
+	elif is_mount_on_root /dev/$(basename $storage); then
+		[ -d "/lkp/benchmarks/fio" ] || mkdir /lkp/benchmarks/fio
+		if [ "$testfile" = 'y' ]; then
+			storage_setup="\
+directory=/lkp/benchmarks/fio
+filename=fio_testfile_local
+"
+		else
+			storage_setup="directory=/lkp/benchmarks/fio"
+		fi
+	elif [ "$testfile" = 'y' ]; then
+		storage_setup="\
+directory=$storage
+filename=fio_testfile
+"
 	else
 		storage_setup="directory=$storage"
 	fi
