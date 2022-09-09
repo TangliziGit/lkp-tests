@@ -404,9 +404,13 @@ class NetStater < Stater
       # selftests: net: msg_zerocopy.sh
       # ipv4 tcp -t 1
       # ok
+
+      # selftests: net: ip_defrag.sh
+      # ipv4 defrag
+      # PASS
       @test_case = $1
     when /^# \[(PASS|FAIL|SKIP)\]$/,
-         /^# (OK|ok)$/
+         /^# (OK|ok|PASS)$/
       stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
     else
       super(line, stats)
