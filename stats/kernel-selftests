@@ -389,6 +389,15 @@ class NetStater < Stater
       # ok 22 # SKIP no TLS support
       stats.add "#{@test_prefix}.#{@test_case}", 'skip'
       @test_case = nil
+    when /^# running ([^\s]+) test/
+      # selftests: net: run_afpackettests
+      # --------------------
+      # running psock_fanout test
+      # --------------------
+      # [PASS]
+      @test_case = $1
+    when /^# \[(PASS|FAIL|SKIP)\]$/
+      stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
     else
       super(line, stats)
     end
