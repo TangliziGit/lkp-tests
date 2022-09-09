@@ -400,9 +400,13 @@ class NetStater < Stater
       # selftests: net: udpgso.sh
       # ipv4 cmsg
       # OK
+
+      # selftests: net: msg_zerocopy.sh
+      # ipv4 tcp -t 1
+      # ok
       @test_case = $1
     when /^# \[(PASS|FAIL|SKIP)\]$/,
-         /^# (OK)$/
+         /^# (OK|ok)$/
       stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
     else
       super(line, stats)
