@@ -1,0 +1,3 @@
+net.udpgso.sh.ipv4_cmsg.pass: 1
+net.udpgso.sh.ipv6_cmsg.pass: 1
+net.udpgso.sh.pass: 1

@@ -389,14 +389,20 @@ class NetStater < Stater
       # ok 22 # SKIP no TLS support
       stats.add "#{@test_prefix}.#{@test_case}", 'skip'
       @test_case = nil
-    when /^# running ([^\s]+) test/
+    when /^# running ([^\s]+) test/,
+         /^# (ipv\d [^:]+)$/
       # selftests: net: run_afpackettests
       # --------------------
       # running psock_fanout test
       # --------------------
       # [PASS]
+
+      # selftests: net: udpgso.sh
+      # ipv4 cmsg
+      # OK
       @test_case = $1
-    when /^# \[(PASS|FAIL|SKIP)\]$/
+    when /^# \[(PASS|FAIL|SKIP)\]$/,
+         /^# (OK)$/
       stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
     else
       super(line, stats)

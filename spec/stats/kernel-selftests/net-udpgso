@@ -1,0 +1,19 @@
+2022-09-05 07:02:48 make run_tests -C net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'
+TAP version 13
+1..67
+# selftests: net: udpgso.sh
+# ipv4 cmsg
+# device mtu (orig): 65536
+# device mtu (test): 1500
+# ipv4 tx:64 gso:1
+# ipv4 tx:65 gso:1 (fail)
+# OK
+# ipv6 cmsg
+# device mtu (orig): 65536
+# device mtu (test): 1500
+# ipv6 tx:64 gso:1
+# ipv6 tx:65 gso:1 (fail)
+# OK
+ok 18 selftests: net: udpgso.sh
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'
