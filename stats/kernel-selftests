@@ -390,7 +390,8 @@ class NetStater < Stater
       stats.add "#{@test_prefix}.#{@test_case}", 'skip'
       @test_case = nil
     when /^# running ([^\s]+) test/,
-         /^# (ipv\d [^:]+)$/
+         /^# (ipv\d [^:]+)$/,
+         /^# (dgram.*|raw.*)$/
       # selftests: net: run_afpackettests
       # --------------------
       # running psock_fanout test
@@ -408,6 +409,10 @@ class NetStater < Stater
       # selftests: net: ip_defrag.sh
       # ipv4 defrag
       # PASS
+
+      # selftests: net: psock_snd.sh
+      # dgram
+      # OK
       @test_case = $1
     when /^# \[(PASS|FAIL|SKIP)\]$/,
          /^# (OK|ok|PASS)$/
