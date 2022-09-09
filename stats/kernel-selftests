@@ -389,7 +389,7 @@ class NetStater < Stater
       # ok 22 # SKIP no TLS support
       stats.add "#{@test_prefix}.#{@test_case}", 'skip'
       @test_case = nil
-    when /^# running ([^\s]+) test/,
+    when /^# (running|run) ([^\s]+) test/,
          /^# (ipv\d [^:]+)$/,
          /^# (dgram.*|raw.*)$/
       # selftests: net: run_afpackettests
@@ -413,7 +413,7 @@ class NetStater < Stater
       # selftests: net: psock_snd.sh
       # dgram
       # OK
-      @test_case = $1
+      @test_case = $2 || $1
     when /^# \[(PASS|FAIL|SKIP)\]$/,
          /^# (OK|ok|PASS)$/
       stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
