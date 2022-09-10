@@ -39,6 +39,8 @@ fi
 
 if [[ "$*" =~ O=([^ ]+) ]]; then
 	BUILD_DIR="${BASH_REMATCH[1]}"
+elif [[ -n "$KBUILD_OUTPUT" ]]; then
+	BUILD_DIR="$KBUILD_OUTOUT"
 elif [[ -d obj-$ARCH ]]; then
 	BUILD_DIR=obj-$ARCH
 	O=O=obj-$ARCH
