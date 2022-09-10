@@ -39,6 +39,9 @@ fi
 
 if [[ "$*" =~ O=([^ ]+) ]]; then
 	BUILD_DIR="${BASH_REMATCH[1]}"
+elif [[ -d obj-$ARCH ]]; then
+	BUILD_DIR=obj-$ARCH
+	O=O=obj-$ARCH
 else
 	BUILD_DIR="."
 fi
@@ -432,11 +435,6 @@ setup_crosstool || {
 [[ "$*" =~ "ARCH=$ARCH" ]] || {
 	opt_arch="ARCH=$ARCH"
 }
-
-if [ -d obj-$ARCH ]; then
-	export KBUILD_OUTPUT=obj-$ARCH
-	O=KBUILD_OUTPUT=obj-$ARCH
-fi
 
 [[ -f arch/$ARCH/boot/dts/Makefile ]] && make_dts="CONFIG_OF_ALL_DTBS=y CONFIG_DTC=y"
 
