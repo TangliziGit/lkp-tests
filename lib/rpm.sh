@@ -24,6 +24,7 @@ add_repo()
 		enabled=1
 		gpgcheck=0
 		priority=100
+		skip_if_unavailable=True
 
 		EOF
 	done

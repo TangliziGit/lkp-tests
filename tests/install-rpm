@@ -2,6 +2,7 @@
 # - rpm_name
 # mount_repo_name
 # mount_repo_addr
+# do_remove_rpms
 # user can add mount_repo_name and mount_repo_addr to setup
 # local repo, value can be an array
 
@@ -233,4 +234,7 @@ install_rpms
 run_cmd
 run_service
 ldd_test
-remove_rpms
+
+[ -n "${do_remove_rpms}" ] && {
+	remove_rpms
+}
