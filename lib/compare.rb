@@ -1147,9 +1147,13 @@ module Compare
         NMResultRootCollection.new(axes).to_a
       end.flatten
     else
-      options[:compare_different_rts] = true if job_dirs.size > 1
+      job_name = '*.yaml'
+      if job_dirs.size > 1
+        options[:compare_different_rts] = true
+        job_name = 'job.yaml'
+      end
       _rts = job_dirs.map do |job_dir|
-        each_job_in_dir(job_dir, 'job.yaml').map do |job|
+        each_job_in_dir(job_dir, job_name).map do |job|
           mrt_table_set.open_node job.axes
         end
       end.flatten
