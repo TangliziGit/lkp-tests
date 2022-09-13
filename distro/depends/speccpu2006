@@ -1,3 +1,7 @@
+wget
+gcc
+gcc-c++
+make
 numactl
 gcc-gfortran
 libnsl

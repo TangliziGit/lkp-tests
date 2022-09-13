@@ -1,10 +1,9 @@
 #!/bin/bash
+# - test_item
+# - num_type
 
 # SPDX-License-Identifier: MulanPSL-2.0+
 # Copyright (c) 2022 Huawei Technologies Co., Ltd. All rights reserved.
-
-# - test_item
-# - num_type
 
 : "${test_item:=rate}"
 : "${num_type:=int}"
