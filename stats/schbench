@@ -1,24 +1,35 @@
 #!/usr/bin/env ruby
 
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/statistics"
+
+stats = Hash.new { |h, k| h[k] = [] }
+
 $stdin.each_line do |line|
   case line
   when /50.0th/
-    puts "latency_50%_us: #{line.split[1]}"
+    stats['latency_50%_us'] << line.split[1].to_i
   when /75.0th/
-    puts "latency_75%_us: #{line.split[1]}"
+    stats['latency_75%_us'] << line.split[1].to_i
   when /90.0th/
-    puts "latency_90%_us: #{line.split[1]}"
+    stats['latency_90%_us'] << line.split[1].to_i
   when /95.0th/
-    puts "latency_95%_us: #{line.split[1]}"
+    stats['latency_95%_us'] << line.split[1].to_i
   when /99.0th/
-    puts "latency_99%_us: #{line.split[1]}"
+    stats['latency_99%_us'] << line.split[1].to_i
   when /99.5th/
-    puts "latency_99.5%_us: #{line.split[1]}"
+    stats['latency_99.5%_us'] << line.split[1].to_i
   when /99.9th/
-    puts "latency_99.9%_us: #{line.split[1]}"
+    stats['latency_99.9%_us'] << line.split[1].to_i
   when /min/
-    line = line.tr(',', ' ')
-    puts "latency_#{line.split[0].gsub(/=/, '_us: ')}"
-    puts "latency_#{line.split[1].gsub(/=/, '_us: ')}"
+    line = line.gsub(/([,=])/, ' ')
+    stats["latency_#{line.split[0]}_us"] << line.split[1].to_i
+    stats["latency_#{line.split[2]}_us"] << line.split[3].to_i
   end
+end
+
+stats.each do |k, v|
+  puts "#{k}: #{v.average.round(2)}"
+  puts "#{k}_stddev: #{v.relative_stddev.round(2)}"
 end
