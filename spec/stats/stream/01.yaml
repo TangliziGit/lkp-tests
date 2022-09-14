@@ -1,0 +1,10 @@
+element_size_byte: 8
+array_size: 10000000
+copy_bandwidth_MBps: 28339.17
+copy_bandwidth_MBps_harmonicMean: 28212.53
+scale_bandwidth_MBps: 19816.56
+scale_bandwidth_MBps_harmonicMean: 19757.48
+add_bandwidth_MBps: 28612.33
+add_bandwidth_MBps_harmonicMean: 28587.85
+triad_bandwidth_MBps: 27710.44
+triad_bandwidth_MBps_harmonicMean: 27688.76

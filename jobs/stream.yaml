@@ -7,6 +7,9 @@ nr_threads:
   - 50%
   - 25%
 
+iterations:
+  - 10x
+
 stream:
   array_size:
     - 10000000 # 0.2GB
@@ -14,3 +17,5 @@ stream:
   omp:
     - true
     - false
+  loop:
+    - 100
