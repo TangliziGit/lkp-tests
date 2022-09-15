@@ -6,8 +6,11 @@ need_memory: 4G
 
 ltp:
   test:
-    - ltp-aiodio.part1
-    - ltp-aiodio.part3
+    # https://github.com/linux-test-project/ltp/issues/261
+    # ltp-aiodio.part1/part3 no such file or directory error
+    # test misses the junkfile preparation step, and the fixes are still ongoing.
+    # - ltp-aiodio.part1
+    # - ltp-aiodio.part3
     - math
     - net.ipv6_lib
     - net.sctp
