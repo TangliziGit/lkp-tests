@@ -12,19 +12,29 @@ while (line = $stdin.gets)
   case line
   when /^## (hdd|ssd|nvme|mem)(.*)/
     name = line[3..-1].tr(':', '_')
+    cpu = line.split(':')[-2]
   when /^# ncpu/
     subname = line[2..-1].tr('.', '_').split
 
+    # ncpu secs works works/sec
+    # 18 0.014712 10032.000000 681889.757833
     datas = $stdin.gets
-    break unless datas
 
-    datas = $stdin.gets
-    break unless datas
+    # ncpu secs works works/sec
+    #
+    # 4 0.028158 10070.000000 357624.831309
+    datas = $stdin.gets if datas.length == 1
+
+    # make sure the value is corresponding to correct subtest
+    next unless datas.split(' ')[0] == cpu
 
     datas = datas.split
     i = 0
     subname.each do |s|
-      stats["#{name}.#{s}"] = datas[i]
+      # ignore below '-nan'
+      # ncpu secs works works/sec
+      # 2 0.000000 0.000000 -nan
+      stats["#{name}.#{s}"] = datas[i] if datas[i] =~ /^\d/
       i += 1
     end
   end
