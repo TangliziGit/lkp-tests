@@ -182,5 +182,5 @@ is_null_blk()
 is_mount_on_root()
 {
 	local dev=$1
-	[ "$(df | grep $dev | grep -o '\S\+$')" = "/" ]
+	[ "$(df | grep -w $dev | grep -o '\S\+$')" = "/" ]
 }
