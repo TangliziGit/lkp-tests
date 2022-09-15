@@ -377,6 +377,11 @@ fixup_proc()
 {
 	# proc-fsconfig-hidepid.c:25:17: error: ‘__NR_fsopen’ undeclared (first use in this function); did you mean ‘fsopen’?
 	export CFLAGS="-I../../../../usr/include"
+
+	## this test caused soft timeout, error output: Assertion `rv == len' failed.
+	## The test error is caused by g_vsyscall set failed.
+	sed -i 's/proc-pid-vm//' proc/Makefile
+	echo "LKP SKIP proc.proc-pid-vm"
 }
 
 fixup_move_mount_set_group()
