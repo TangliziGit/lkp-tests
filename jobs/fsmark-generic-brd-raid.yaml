@@ -21,7 +21,6 @@ fs:
   - xfs
   - ext4
   - btrfs
-  - f2fs
 
 fsmark:
   filesize: 4M

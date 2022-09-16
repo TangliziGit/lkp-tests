@@ -7,7 +7,6 @@ fs:
   - ext4
   - xfs
   - btrfs
-  - f2fs
 fs2:
   - nfsv4
   - cifs

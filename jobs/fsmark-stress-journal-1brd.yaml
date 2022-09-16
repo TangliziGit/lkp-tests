@@ -15,7 +15,6 @@ fs:
   - xfs
   - ext4
   - btrfs
-#- f2fs
 fs2:
   - nfsv4
   -

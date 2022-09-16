@@ -9,7 +9,6 @@ disk: 1HDD
 
 fs:
   - xfs
-#- f2fs
 fs2:
   - nfsv4
   -

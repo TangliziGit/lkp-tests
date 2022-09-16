@@ -22,21 +22,6 @@ fsmark:
     nr_files_per_directory: 256fpd
 
 ---
-fs: f2fs
-
-fsmark:
-  - filesize: 9B
-    test_size: 40G
-    sync_method: fsyncBeforeClose
-    nr_directories: 16d
-    nr_files_per_directory: 256fpd
-  - filesize: 8K
-    test_size: 72G
-    sync_method: fsyncBeforeClose
-    nr_directories: 16d
-    nr_files_per_directory: 256fpd
-
----
 nr_threads: 16
 
 fs: ext4
