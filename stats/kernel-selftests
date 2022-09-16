@@ -228,11 +228,18 @@ class NetStater < Stater
         @test_case = nil
         @result = nil
       end
-    when /^# \[       (OK|FAIL|SKIP) \] (.*)/
+    when /^# \[\s*(OK|FAIL|SKIP)\s*\]\s+(.*)/
       # selftests: net: tls
       # [       OK ] tls_basic.base_base
       # [       OK ] tls.sendfile
-      stats.add "#{@test_prefix}.#{$2}", $1
+
+      # ignore below duplication
+      # selftests: net: ipv6_flowlabel.sh
+      # TEST management
+      # [OK]   flowlabel_get(fd, 1, 255, 1)
+      # [OK]   flowlabel_get(fd, 1, 255, 0)
+      # [OK]   flowlabel_get(fd, 1, 255, 1)
+      stats.add "#{@test_prefix}.#{$2}", $1 unless stats.key? "#{@test_prefix}.#{$2}"
     when /^#     TEST: (.*) \[ ?(OK|FAIL|SKIP) ?\]$/
       if @test_subcase
         # selftests: net: fib-onlink-tests.sh
