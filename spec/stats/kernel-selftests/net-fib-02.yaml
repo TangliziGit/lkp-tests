@@ -12,5 +12,11 @@ net.fib_tests.sh.Single_path_admin_down.Start_point.IPv6_fibmatch.pass: 1
 net.fib_tests.sh.Single_path_admin_down.Route_deleted_on_down.IPv4_fibmatch.pass: 1
 net.fib_tests.sh.Single_path_admin_down.Route_deleted_on_down.IPv6_fibmatch.pass: 1
 net.fib_tests.sh.fail: 1
+net.fib_nexthop_multiprefix.sh.IPv4_host_0_to_host_1_mtu_1300.pass: 1
+net.fib_nexthop_multiprefix.sh.IPv6_host_0_to_host_1_mtu_1300.fail: 1
+net.fib_nexthop_multiprefix.sh.IPv4_host_0_to_host_2_mtu_1350.pass: 1
+net.fib_nexthop_multiprefix.sh.IPv6_host_0_to_host_2_mtu_1350.fail: 1
+net.fib_nexthop_multiprefix.sh.IPv4_host_0_to_host_3_mtu_1400.pass: 1
+net.fib_nexthop_multiprefix.sh.IPv6_host_0_to_host_3_mtu_1400.fail: 1
 net.fib_nexthop_multiprefix.sh.pass: 1
 net.fib_nexthops.sh.fail: 1

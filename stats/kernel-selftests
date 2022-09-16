@@ -353,7 +353,7 @@ class NetStater < Stater
         # selftests: net: pmtu.sh
         # TEST: ipv4: PMTU exceptions                                        [ OK ]
 
-        # ignore detail stats of fib_nexthops_multiprefix.sh to avoid duplication
+        # ignore below duplication
         # selftests: net: fib_nexthop_multiprefix.sh
         # TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
         # TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
@@ -366,7 +366,8 @@ class NetStater < Stater
         #
         # TEST: IPv4: host 0 to host 1, mtu 1300                              [ OK ]
         # TEST: IPv6: host 0 to host 1, mtu 1300                              [FAIL]
-        stats.add "#{@test_prefix}.#{@test_subcase3}", @subcase_stat unless @test_script == 'fib_nexthop_multiprefix.sh'
+        test_name = "#{@test_prefix}.#{@test_subcase3}"
+        stats.add test_name, @subcase_stat unless stats.key?(test_name)
       end
     when /^# (UDP|TCP|DCCP) (.*) \.\.\. (pass|fail|skip)/
       # selftests: net: reuseport_addr_any.sh

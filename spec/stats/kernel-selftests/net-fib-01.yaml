@@ -21,4 +21,8 @@ net.fib_rule_tests.sh.IPv6_fib_rule.rule6_check_ipproto_ipv6-icmp.pass: 1
 net.fib_rule_tests.sh.IPv6_fib_rule.rule6_del_by_pref_ipproto_ipv6-icmp.pass: 1
 net.fib_rule_tests.sh.pass: 1
 net.fib_nexthops.sh.pass: 1
+net.fib_nexthop_multiprefix.sh.IPv4_host_0_to_host_2_mtu_1350.pass: 1
+net.fib_nexthop_multiprefix.sh.IPv6_host_0_to_host_2_mtu_1350.fail: 1
+net.fib_nexthop_multiprefix.sh.IPv4_host_0_to_host_3_mtu_1400.pass: 1
+net.fib_nexthop_multiprefix.sh.IPv6_host_0_to_host_3_mtu_1400.fail: 1
 net.fib_nexthop_multiprefix.sh.fail: 1
