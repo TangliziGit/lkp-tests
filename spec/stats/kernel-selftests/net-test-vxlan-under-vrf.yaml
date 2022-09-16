@@ -1,0 +1,4 @@
+net.test_vxlan_under_vrf.sh.Checking_HV_connectivity.pass: 1
+net.test_vxlan_under_vrf.sh.Check_VM_connectivity_through_VXLAN_underlay_in_the_default_VRF.pass: 1
+net.test_vxlan_under_vrf.sh.Check_VM_connectivity_through_VXLAN_underlay_in_a_VRF.pass: 1
+net.test_vxlan_under_vrf.sh.pass: 1

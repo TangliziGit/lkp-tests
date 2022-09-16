@@ -425,6 +425,10 @@ class NetStater < Stater
     when /^# \[(PASS|FAIL|SKIP)\]$/,
          /^# (OK|ok|PASS)$/
       stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
+    when /^#\s(.*)\[\s*(OK|FAIL|SKIP)\s*\]/
+      # selftests: net: test_vxlan_under_vrf.sh
+      # Checking HV connectivity                                           [ OK ]
+      stats.add "#{@test_prefix}.#{$1}", $2
     else
       super(line, stats)
     end
