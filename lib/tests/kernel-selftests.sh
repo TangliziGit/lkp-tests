@@ -489,7 +489,7 @@ fixup_bpf()
 	sed -i 's/test_lirc_mode2_user//' bpf/Makefile
 	echo "LKP SKIP bpf.test_lirc_mode2_user"
 
-	## this test caused soft timeout, failed begin at v6.0-rc1, test ok in v5.19-rc8.
+	## this test caused soft timeout in v6.0-rc1 ~ v6.0-rc3, test ok in v6.0-rc4 v6.0-rc5.
 	sed -i 's/test_sockmap//' bpf/Makefile
 	echo "LKP SKIP bpf.test_sockmap"
 
