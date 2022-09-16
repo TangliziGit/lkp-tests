@@ -93,7 +93,7 @@ end
 def concat_context_from_dmesg(dmesg_file, line)
   line = line.resolve_invalid_bytes
   if line =~ /(possible recursive locking detected|possible circular locking dependency detected)/
-    lines = `#{grep_cmd(dmesg_file)} -A30 -Fx "#{line.chomp}" #{dmesg_file} | grep -m4 -e "trying to acquire lock" -e "already holding lock" -e "at: .*"`.chomp.split("\n")
+    lines = `#{grep_cmd(dmesg_file)} -A30 -Fx "#{line.chomp}" #{dmesg_file} | grep -m4 -e "trying to acquire lock" -e "already holding lock" -e "at: .*" | sed 's/^.* at:/at:/'`.chomp.split("\n")
     unless lines.empty?
       new_line = "#{line.chomp} #{lines.map { |l| l.sub(/^\[.*\] /, '') }.join(' ')}"
       return [line, new_line]
