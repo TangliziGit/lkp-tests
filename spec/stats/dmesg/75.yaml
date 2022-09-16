@@ -1,9 +1,15 @@
 boot_failures: 1
 
+# WARNING: possible recursive locking detected
+WARNING:possible_recursive_locking_detected: 1
+message:WARNING:possible_recursive_locking_detected: [    0.368302][    T1] WARNING: possible recursive locking detected
+pattern:WARNING:possible_recursive_locking_detected: WARNING: possible recursive locking detected
+
 # WARNING: possible recursive locking detected .* is trying to acquire lock: .* at: llvm_gcov_init+0x
 WARNING:possible_recursive_locking_detected_swapper_is_trying_to_acquire_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init_but_task_is_already_holding_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init/0x: 1
 message:WARNING:possible_recursive_locking_detected_swapper_is_trying_to_acquire_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init_but_task_is_already_holding_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init/0x: [    0.368302][    T1] WARNING: possible recursive locking detected swapper/1 is trying to acquire lock: c39f57d0 (gcov_lock){+.+.}-{3:3}, at: llvm_gcov_init+0x3d/0xc2 but task is already holding lock: c39f57d0 (gcov_lock){+.+.}-{3:3}, at: llvm_gcov_init+0x3d/0xc2
 pattern:WARNING:possible_recursive_locking_detected_swapper_is_trying_to_acquire_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init_but_task_is_already_holding_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init/0x: WARNING: possible recursive locking detected .* is trying to acquire lock: .* at: llvm_gcov_init+0x
 
 timestamp:last: 0.368633
+timestamp:WARNING:possible_recursive_locking_detected: 0.368302
 timestamp:WARNING:possible_recursive_locking_detected_swapper_is_trying_to_acquire_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init_but_task_is_already_holding_lock:#(gcov_lock){+.+.}-{#:#},at:llvm_gcov_init/0x: 0.368302

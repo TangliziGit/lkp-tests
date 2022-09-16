@@ -91,9 +91,13 @@ def grep_cmd(dmesg_file)
 end
 
 def concat_context_from_dmesg(dmesg_file, line)
+  line = line.resolve_invalid_bytes
   if line =~ /(possible recursive locking detected|possible circular locking dependency detected)/
     lines = `#{grep_cmd(dmesg_file)} -A30 -Fx "#{line.chomp}" #{dmesg_file} | grep -m4 -e "trying to acquire lock" -e "already holding lock" -e "at: .*"`.chomp.split("\n")
-    line = "#{line.chomp} #{lines.map { |l| l.sub(/^\[.*\] /, '') }.join(' ')}" unless lines.empty?
+    unless lines.empty?
+      new_line = "#{line.chomp} #{lines.map { |l| l.sub(/^\[.*\] /, '') }.join(' ')}"
+      return [line, new_line]
+    end
   end
   line
 end
@@ -118,9 +122,7 @@ def grep_crash_head(dmesg_file)
     oops_map["calltrace:#{$1}"] ||= line
   end
 
-  raw_oops.each_line do |line|
-    line = line.resolve_invalid_bytes
-    line = concat_context_from_dmesg(dmesg_file, line)
+  raw_oops.each_line.flat_map { |l| concat_context_from_dmesg(dmesg_file, l) }.each do |line|
     if line =~ oops_re
       oops_map[$1] ||= line
       has_oom = true if line.index(OOM1)
