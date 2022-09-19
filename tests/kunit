@@ -6,8 +6,16 @@
 if [[ "$group" = "group-00" ]]; then
 	test_array=("bitfield_kunit" "test_bits" "cmdline_kunit" "ext4-inode-test" "test_hash" "test_linear_ranges" "list-test" "memcpy_kunit" "dev_addr_lists_test" "resource_kunit" "lib_test" "sysctl-test" "time_test" "test_list_sort" "test_sort" "fat_test" "test_kasan" "kfence_test" "mptcp_crypto_test" "mptcp_token_test" "rational-test" "slub_kunit")
 elif [[ "$group" = "group-01" ]]; then
+	# test_kstrtox: could not insert 'test_kstrtox': Invalid argument
+	# test_string_helpers: could not insert 'test_string_helpers': Invalid argument
+	# test_overflow: Module test_overflow not found in directory /lib/modules/6.0.0-rc5
+	# test_ida: could not insert 'test_ida': Invalid argument
+	# udelay_test: Module udelay_test not found in directory /lib/modules/6.0.0-rc5
+	# test_vmalloc: could not insert 'test_vmalloc': Resource temporarily unavailable
+	# test_klp_state: could not insert 'test_klp_state': Invalid argument
+	# test_meminit: could not insert 'test_meminit': Invalid argument
 	# test-drm_modeset: Kernel panic - not syncing: Fatal exception
-	test_array=("test_string" "test_div64" "test_bpf" "test_min_heap" "test_user_copy" "test_strscpy" "test_static_key_base" "test_siphash" "test_scanf" "test_printf" "test-kstrtox" "test-string_helpers" "test_bitmap" "test_uuid" "test_xarray" "test_overflow" "test_rhashtable" "test_ida" "test_memcat_p" "test_udelay" "udelay_test" "test_vmalloc" "test_klp_atomic_replace" "test_klp_callbacks_busy" "test_klp_callbacks_demo2" "test_klp_callbacks_demo" "test_klp_callbacks_mod" "test_klp_livepatch" "test_klp_shadow_vars" "test_klp_state2" "test_klp_state3" "test_klp_state" "test_meminit" "test_hmm" "test_free_pages" "test_fpu" "test_bitops" "test_async_driver_probe" "spi-loopback-test" "globtest" "test-drm-helper" "test-drm_buddy" "test-drm_cmdline_parser" "test-drm_mm" "crc32test" "atomic64_test")
+	test_array=("test_string" "test_div64" "test_bpf" "test_min_heap" "test_user_copy" "test_strscpy" "test_static_key_base" "test_siphash" "test_scanf" "test_printf" "test_bitmap" "test_uuid" "test_xarray" "test_rhashtable" "test_memcat_p" "test_udelay" "test_klp_livepatch" "test_klp_shadow_vars" "test_hmm" "test_free_pages" "test_fpu" "test_bitops" "test_async_driver_probe" "spi-loopback-test" "globtest" "test-drm_buddy" "test-drm_mm" "crc32test" "atomic64_test")
 fi
 
 run_kunit_tests()
