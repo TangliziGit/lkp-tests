@@ -1,0 +1,11 @@
+suite: kernel-selftests
+testcase: kernel-selftests
+category: benchmark
+
+kernel-selftests:
+  group:
+    - netfilter
+  test:
+    - nft_concat_range.sh
+
+timeout: 1h
