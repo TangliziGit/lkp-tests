@@ -85,6 +85,7 @@ sysbench-mutex::
 sysbench-threads::
 tbench::
 thrulay::
+tinymembench::
 trace-cmd::
 trinity::
 trinity-static-i386::
