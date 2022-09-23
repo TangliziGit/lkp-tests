@@ -123,8 +123,8 @@ def atomic_save_yaml_json(object, file)
     else
       lines = YAML.dump(object)
       # create comment lines from symbols
-      lines.gsub!(/^:#(.*): $/, "\n#\\1")
-      lines.gsub!(/^\? :#(.*)\n: $/, "\n#\\1")
+      lines.gsub!(/^:#(.*):( |)$/, "\n#\\1")
+      lines.gsub!(/^\? :#(.*)\n:( |)$/, "\n#\\1")
     end
     file.write(lines)
   end
