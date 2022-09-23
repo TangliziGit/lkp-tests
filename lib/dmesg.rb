@@ -6,6 +6,7 @@ require "#{LKP_SRC}/lib/yaml"
 require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/string_ext"
 require "#{LKP_SRC}/lib/lkp_path"
+require "#{LKP_SRC}/lib/job"
 require "#{LKP_SRC}/lib/log"
 
 LKP_SRC_ETC ||= LKP::Path.src('etc')
@@ -13,6 +14,19 @@ LKP_SRC_ETC ||= LKP::Path.src('etc')
 # /c/linux% git grep '"[a-z][a-z_]\+%d"'|grep -o '"[a-z_]\+'|cut -c2-|sort -u
 LINUX_DEVICE_NAMES = IO.read("#{LKP_SRC_ETC}/linux-device-names").split("\n")
 LINUX_DEVICE_NAMES_RE = /\b(#{LINUX_DEVICE_NAMES.join('|')})\d+/.freeze
+
+INITCALL_LEVELS = {
+  'early' => 1,
+  'pure' => 2,
+  'core' => 3,
+  'postcore' => 4,
+  'arch' => 5,
+  'subsys' => 6,
+  'fs' => 7,
+  'device' => 8,
+  'module' => 8,
+  'late' => 9
+}.freeze
 
 require 'fileutils'
 require 'tempfile'
@@ -485,10 +499,54 @@ def get_crash_calltraces(dmesg_file)
   calltraces
 end
 
-def put_dmesg_stamps(error_stamps)
+def initcall_levels(dmesg_file = '')
+  initcall_file = ENV['INITCALL_FILE']
+  unless File.exist?(initcall_file.to_s)
+    return nil if dmesg_file.empty?
+
+    job_file = File.join(File.dirname(dmesg_file), 'job.yaml')
+    return nil unless File.exist?(job_file)
+
+    job = Job.open(job_file)
+    initcall_file = File.join(File.dirname(job['kernel']), 'initcalls.yaml')
+  end
+
+  YAML.load_file(initcall_file)
+rescue StandardError
+  nil
+end
+
+def timestamp_levels(dmesg_file)
+  initcall_level = initcall_levels(dmesg_file)
+  return nil unless initcall_level
+
+  map = {}
+  initcall_lines = %x[#{grep_cmd(dmesg_file)} -E " initcall [0-9a-zA-Z_]+\\\\+0x.* returned" #{dmesg_file}]
+  initcall_lines.each_line do |line|
+    next unless line =~ /\[ *(\d{1,6}\.\d{6})\].* ([0-9a-zA-Z_]+)\+0x/
+
+    timestamp = $1
+    initcall = $2
+    level = initcall_level[initcall].to_s.split('_').first
+    map[timestamp] = INITCALL_LEVELS[level] if level
+    # when late_initcall called, other level initcall may be still running
+    break if level == 'late'
+  end
+  return nil if map.empty?
+
+  map
+end
+
+def put_dmesg_stamps(error_stamps, dmesg_file)
+  timestamp_level = timestamp_levels(dmesg_file)
   puts
   error_stamps.each do |error_id, timestamp|
     puts "timestamp:#{error_id}: #{timestamp}"
+    next unless timestamp_level
+
+    at = timestamp_level.keys.bsearch_index { |t| t.to_f > timestamp.to_f } || timestamp_level.size
+    last_timestamp = timestamp_level.keys[at - 1]
+    puts "bootstage:#{error_id}: #{timestamp_level[last_timestamp]}"
   end
 end
 

@@ -12,8 +12,9 @@ describe 'stats' do
       it "invariance: #{file}" do
         script = File.basename(File.dirname(file))
         old_stat = File.read yaml_file
+        initcall_file = file =~ /spec\/stats\/dmesg\/boot-stage/ ? "#{file}-initcalls_yaml" : ''
         new_stat = if script =~ /^(kmsg|dmesg|mpstat|fio|perf-stat-tests)$/
-                     `#{LKP_SRC}/stats/#{script} #{file}`
+                     `INITCALL_FILE=#{initcall_file} #{LKP_SRC}/stats/#{script} #{file}`
                    else
                      `#{LKP_SRC}/stats/#{script} < #{file}`
                    end

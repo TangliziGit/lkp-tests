@@ -1,0 +1,39 @@
+boot_failures: 1
+
+# EIP: test+0x
+EIP:test: 1
+message:EIP:test: [    4.345803][  T204] EIP: test+0x1e9/0x1bb0
+pattern:EIP:test: EIP: test+0x
+
+# BUG: unable to handle page fault for address:
+BUG:unable_to_handle_page_fault_for_address: 1
+message:BUG:unable_to_handle_page_fault_for_address: [   24.342728][  T204] BUG: unable to handle page fault for address: ee3fe004
+pattern:BUG:unable_to_handle_page_fault_for_address: BUG: unable to handle page fault for address:
+
+# Oops:
+Oops:#[##]: 1
+message:Oops:#[##]: [   24.344813][  T204] Oops: 0000 [#1] SMP
+pattern:Oops:#[##]: Oops:
+
+# EIP: blake2s_compress_generic+0x
+EIP:blake2s_compress_generic: 1
+message:EIP:blake2s_compress_generic: [   24.345803][  T204] EIP: blake2s_compress_generic+0x1e9/0x1bb0
+pattern:EIP:blake2s_compress_generic: EIP: blake2s_compress_generic+0x
+
+# Kernel panic - not syncing: Fatal exception
+Kernel_panic-not_syncing:Fatal_exception: 1
+message:Kernel_panic-not_syncing:Fatal_exception: [   24.359521][  T204] Kernel panic - not syncing: Fatal exception
+pattern:Kernel_panic-not_syncing:Fatal_exception: Kernel panic - not syncing: Fatal exception
+
+timestamp:last: 25.474532
+bootstage:last: 9
+timestamp:EIP:test: 4.345803
+bootstage:EIP:test: 1
+timestamp:BUG:unable_to_handle_page_fault_for_address: 24.342728
+bootstage:BUG:unable_to_handle_page_fault_for_address: 9
+timestamp:Oops:#[##]: 24.344813
+bootstage:Oops:#[##]: 9
+timestamp:EIP:blake2s_compress_generic: 24.345803
+bootstage:EIP:blake2s_compress_generic: 9
+timestamp:Kernel_panic-not_syncing:Fatal_exception: 24.359521
+bootstage:Kernel_panic-not_syncing:Fatal_exception: 9

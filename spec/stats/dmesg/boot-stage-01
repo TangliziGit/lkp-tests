@@ -1,0 +1,81 @@
+[    3.245867][    T1] Running RCU-tasks wait API self tests
+[    3.349344][    T1] calling  init_hw_perf_events+0x0/0x829 @ 1
+[    3.350131][    T1] Performance Events: unsupported p6 CPU model 42 no PMU driver, software events only.
+[    3.351249][    T1] initcall init_hw_perf_events+0x0/0x829 returned 0 after 0 usecs
+[    3.352161][    T1] calling  init_real_mode+0x0/0xf5 @ 1
+[    3.352851][    T1] initcall init_real_mode+0x0/0xf5 returned 0 after 0 usecs
+[    3.353731][    T1] calling  trace_init_perf_perm_irq_work_exit+0x0/0x24 @ 1
+[    3.354599][    T1] initcall trace_init_perf_perm_irq_work_exit+0x0/0x24 returned 0 after 0 usecs
+[    3.355674][    T1] calling  bp_init_aperfmperf+0x0/0x71 @ 1
+[    3.356360][    T1] initcall bp_init_aperfmperf+0x0/0x71 returned 0 after 0 usecs
+[    4.345803][  T204] EIP: test+0x1e9/0x1bb0
+[   19.610157][    T1] initcall ip_auto_config+0x0/0x8dd returned 0 after 1464836 usecs
+[   19.610171][    T1] calling  pci_mmcfg_late_insert_resources+0x0/0x8f @ 1
+[   19.610181][    T1] initcall pci_mmcfg_late_insert_resources+0x0/0x8f returned 0 after 1 usecs
+[   19.610186][    T1] calling  software_resume+0x0/0x2c0 @ 1
+[   19.610210][    T1] initcall software_resume+0x0/0x2c0 returned -2 after 16 usecs
+[   19.610216][    T1] calling  ftrace_check_sync+0x0/0x42 @ 1
+[   19.610266][    T1] initcall ftrace_check_sync+0x0/0x42 returned 0 after 43 usecs
+[   19.610272][    T1] calling  latency_fsnotify_init+0x0/0x6b @ 1
+[   19.610329][    T1] initcall latency_fsnotify_init+0x0/0x6b returned 0 after 52 usecs
+[   19.610334][    T1] calling  trace_eval_sync+0x0/0x42 @ 1
+[   19.610356][    T1] initcall trace_eval_sync+0x0/0x42 returned 0 after 15 usecs
+[   19.610361][    T1] calling  late_trace_init+0x0/0x19c @ 1
+[   19.610368][    T1] initcall late_trace_init+0x0/0x19c returned 0 after 1 usecs
+[   19.610373][    T1] calling  acpi_gpio_handle_deferred_request_irqs+0x0/0x95 @ 1
+[   19.610402][    T1] initcall acpi_gpio_handle_deferred_request_irqs+0x0/0x95 returned 0 after 21 usecs
+[   19.610408][    T1] calling  clk_disable_unused+0x0/0x1e8 @ 1
+[   19.610436][    T1] initcall clk_disable_unused+0x0/0x1e8 returned 0 after 20 usecs
+[   19.610442][    T1] calling  regulator_init_complete+0x0/0x7e @ 1
+[   19.610455][    T1] initcall regulator_init_complete+0x0/0x7e returned 0 after 7 usecs
+[   19.610461][    T1] calling  of_platform_sync_state_init+0x0/0x2d @ 1
+[   19.610469][    T1] initcall of_platform_sync_state_init+0x0/0x2d returned 0 after 3 usecs
+[   19.610473][    T1] calling  alsa_sound_last_init+0x0/0xe2 @ 1
+[   19.875693][  T193] gfs2: path_lookup on /dev/root returned error -2
+Starting udev
+[   20.022384][  T204] udevd[204]: starting version 3.2.7
+[   24.342728][  T204] BUG: unable to handle page fault for address: ee3fe004
+[   24.343469][  T204] #PF: supervisor read access in kernel mode
+[   24.343939][  T204] #PF: error_code(0x0000) - not-present page
+[   24.344405][  T204] *pde = 057b7067 *pte = 00000000 
+[   24.344813][  T204] Oops: 0000 [#1] SMP
+[   24.345130][  T204] CPU: 1 PID: 204 Comm: udevd Not tainted 5.19.0-rc2-00011-g327b18b7aaed #1
+[   24.345803][  T204] EIP: blake2s_compress_generic+0x1e9/0x1bb0
+[   24.346283][  T204] Code: 8b 48 18 8b 58 24 8b 50 28 89 75 88 89 8d 4c ff ff ff 8b 70 20 89 4d 8c 8b 48 1c 89 b5 44 ff ff ff 89 8d 48 ff ff ff 89 4d 90 <8b> 48 34 89 75 94 8b 70 2c 89 9d 40 ff ff ff 89 5d 98 8b 58 30 89
+[   24.347828][  T204] EAX: ee3fdfd0 EBX: 00000000 ECX: 00000000 EDX: 00000000
+[   24.348391][  T204] ESI: 00000000 EDI: c42d9920 EBP: c7157e60 ESP: c7157d1c
+[   24.348953][  T204] DS: 007b ES: 007b FS: 00d8 GS: 0033 SS: 0068 EFLAGS: 00010082
+[   24.349554][  T204] CR0: 80050033 CR2: ee3fe004 CR3: 07206000 CR4: 000406d0
+[   24.350100][  T204] DR0: 00000000 DR1: 00000000 DR2: 00000000 DR3: 00000000
+[   24.350658][  T204] DR6: fffe0ff0 DR7: 00000400
+[   24.351019][  T204] Call Trace:
+[   24.351285][  T204]  blake2s_update+0x86/0x140
+[   24.351645][  T204]  mix_pool_bytes+0x45/0x80
+[   24.351995][  T204]  try_to_generate_entropy+0x188/0x21d
+[   24.352426][  T204]  ? _credit_init_bits+0x20c/0x20c
+[   24.352825][  T204]  urandom_read_iter.cold+0x57/0x7a
+[   24.353246][  T204]  new_sync_read+0x83/0x1a0
+[   24.353600][  T204]  vfs_read+0x2a1/0x320
+[   24.353923][  T204]  ksys_read+0x79/0x190
+[   24.354246][  T204]  __ia32_sys_read+0x23/0x40
+[   24.354618][  T204]  do_int80_syscall_32+0x54/0xb0
+[   24.355005][  T204]  entry_INT80_32+0x10d/0x10d
+[   24.355369][  T204] EIP: 0xb7da7632
+[   24.355666][  T204] Code: 00 66 90 66 90 66 90 90 56 53 83 ec 14 8b 5c 24 20 8b 4c 24 24 8b 54 24 28 65 a1 0c 00 00 00 85 c0 75 15 b8 03 00 00 00 cd 80 <3d> 00 f0 ff ff 77 47 83 c4 14 5b 5e c3 90 89 54 24 0c 89 4c 24 08
+[   24.357151][  T204] EAX: ffffffda EBX: 00000006 ECX: 004981a0 EDX: 00000010
+[   24.357713][  T204] ESI: 00000010 EDI: 004981a0 EBP: 00000000 ESP: bfdd7bc0
+[   24.358258][  T204] DS: 007b ES: 007b FS: 0000 GS: 0033 SS: 007b EFLAGS: 00000246
+[   24.358856][  T204] Modules linked in:
+[   24.359164][  T204] CR2: 00000000ee3fe004
+[   24.359490][  T204] ---[ end trace 0000000000000000 ]---
+[   24.359492][  T204] EIP: blake2s_compress_generic+0x1e9/0x1bb0
+[   24.359499][  T204] Code: 8b 48 18 8b 58 24 8b 50 28 89 75 88 89 8d 4c ff ff ff 8b 70 20 89 4d 8c 8b 48 1c 89 b5 44 ff ff ff 89 8d 48 ff ff ff 89 4d 90 <8b> 48 34 89 75 94 8b 70 2c 89 9d 40 ff ff ff 89 5d 98 8b 58 30 89
+[   24.359503][  T204] EAX: ee3fdfd0 EBX: 00000000 ECX: 00000000 EDX: 00000000
+[   24.359505][  T204] ESI: 00000000 EDI: c42d9920 EBP: c7157e60 ESP: c7157d1c
+[   24.359508][  T204] DS: 007b ES: 007b FS: 00d8 GS: 0033 SS: 0068 EFLAGS: 00010082
+[   24.359511][  T204] CR0: 80050033 CR2: ee3fe004 CR3: 07206000 CR4: 000406d0
+[   24.359517][  T204] DR0: 00000000 DR1: 00000000 DR2: 00000000 DR3: 00000000
+[   24.359519][  T204] DR6: fffe0ff0 DR7: 00000400
+[   24.359521][  T204] Kernel panic - not syncing: Fatal exception
+[   25.473989][  T204] Shutting down cpus with NMI
+[   25.474532][  T204] Kernel Offset: disabled
