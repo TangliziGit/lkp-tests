@@ -1061,11 +1061,24 @@ class ProgsStater < Stater
        # # #3/1 add:OK
        # # #3/2 sub:OK
        # # #3/3 and:OK
-    when /^(#| ) #(\d+|\d+\/\d+) (\S*):(OK|FAIL|SKIP)/
+    when /^(#| ) #(\d+|\d+\/\d+)\s+([^:]+):(OK|FAIL|SKIP)/
       r = $4 == 'OK' ? 'ok' : 'not ok'
-      pattern1 = $3
+      pattern1 = if $3.include? '/'
+                   # selftests: bpf: test_progs
+                   # #1/1     align/mov:OK
+                   # #1/2     align/shift:OK
+                   $3.split('/')[1]
+                 else
+                   # selftests: bpf: test_progs
+                   # #1/1 mov:OK
+                   # #1/2 shift:OK
+                   $3
+                 end
       subname = "bpf.test_progs.#{pattern1.gsub(' ', '_')}"
       stats.add subname, r unless stats.key? subname
+    else
+      # not ok 6 selftests: bpf: test_progs # exit=1
+      super(line, stats)
     end
   end
 end
