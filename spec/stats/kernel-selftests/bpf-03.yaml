@@ -21,6 +21,11 @@ bpf.test_tcpnotify_user.pass: 1
 bpf.test_sock_fields.pass: 1
 bpf.test_sysctl.fail: 1
 bpf.test_hashmap.pass: 1
+bpf.test_progs-no_alu32.attach_probe.pass: 1
+bpf.test_progs-no_alu32.pin_raw_tp.fail: 1
+bpf.test_progs-no_alu32.TCP_LOOPBACK_test_syncookie.pass: 1
+bpf.test_progs-no_alu32.select_reuseport.pass: 1
+bpf.test_progs-no_alu32.test_lsm.fail: 1
 bpf.test_progs-no_alu32.fail: 1
 bpf.test_current_pid_tgid_new_ns.pass: 1
 bpf.urandom_read.pass: 1

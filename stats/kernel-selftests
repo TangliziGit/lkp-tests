@@ -1074,7 +1074,7 @@ class ProgsStater < Stater
                    # #1/2 shift:OK
                    $3
                  end
-      subname = "bpf.test_progs.#{pattern1.gsub(' ', '_')}"
+      subname = "#{@test_prefix}.#{pattern1.gsub(' ', '_')}"
       stats.add subname, r unless stats.key? subname
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
@@ -1300,8 +1300,9 @@ while (line = $stdin.gets)
   when /^# selftests: (prctl): (.*)/
     # selftests: prctl: disable-tsc-ctxt-sw-stress-test
     stater = PrctlStater.new($1, $2)
-  when /^# selftests: (bpf): (test_progs)$/
-    # selftests: prctl: disable-tsc-ctxt-sw-stress-test
+  when /^# selftests: (bpf): (test_progs|test_progs-no_alu32)$/
+    # selftests: bpf: test_progs
+    # selftests: bpf: test_progs-no_alu32
     stater = ProgsStater.new($1, $2)
   when /^# selftests: (ftrace): (ftracetest)$/
     # selftests: ftrace: ftracetest
