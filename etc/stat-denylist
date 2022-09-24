@@ -18,6 +18,7 @@
 ^diskstats.*
 ^dmesg.backtrace
 ^dmesg.Bad_pagetable:#.\[##\]
+^dmesg.bootstage:.*
 ^dmesg.boot_failures
 ^dmesg.boot_successes
 ^dmesg.BUG:Dentry.*i=.*n=.*
