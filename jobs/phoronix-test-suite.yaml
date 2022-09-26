@@ -205,29 +205,29 @@ phoronix-test-suite:
       # - Test All Options
   - test:
     - fhourstones-1.1.2
-  - test: fio-1.14.1
-    option_a:
-      - Random Read
-      - Random Write
-      - Sequential Read
-      - Sequential Write
+  # - test: fio-1.14.1 # temporarily comment out
+    # option_a:
+      # - Random Read
+      # - Random Write
+      # - Sequential Read
+      # - Sequential Write
       # - Test All Options
-    option_b:
-      - IO_uring
-      - POSIX AIO
-      - Sync
-      - Linux AIO
+    # option_b:
+      # - IO_uring
+      # - POSIX AIO
+      # - Sync
+      # - Linux AIO
       # - Test All Options
-    option_c:
-      - 'Yes'
-      - 'No'
+    # option_c:
+      # - 'Yes'
+      # - 'No'
       # - Test All Options
-    option_d:
-      - 'No'
-      - 'Yes'
+    # option_d:
+      # - 'No'
+      # - 'Yes'
       # - Test All Options
-    option_e:
-      - 4KB
+    # option_e:
+      # - 4KB
       # - 8KB
       # - 16KB
       # - 32KB
@@ -235,13 +235,13 @@ phoronix-test-suite:
       # - 128KB
       # - 256KB
       # - 512KB
-      - 1MB
+      # - 1MB
       # - 2MB
       # - 4MB
       # - 8MB
       # - Test All Options
-    option_f:
-      - Default Test Directory
+    # option_f:
+      # - Default Test Directory
       # - /opt/rootfs
       # - Test All Options
   - test: fs-mark-1.0.2
