@@ -1,0 +1,7 @@
+bpf.test_xdp_redirect_multi.sh.xdpgeneric_IPv6_no_flags_ns1-1.fail: 1
+bpf.test_xdp_redirect_multi.sh.xdpgeneric_IPv6_no_flags_ns1-2.pass: 1
+bpf.test_xdp_redirect_multi.sh.xdpdrv_IPv6_no_flags_ns1-1.fail: 1
+bpf.test_xdp_redirect_multi.sh.xdpdrv_IPv6_no_flags_ns1-2.pass: 1
+bpf.test_xdp_redirect_multi.sh.xdpegress_mac_ns1-2.fail: 1
+bpf.test_xdp_redirect_multi.sh.xdpegress_mac_ns1-3.fail: 1
+bpf.test_xdp_redirect_multi.sh.fail: 1

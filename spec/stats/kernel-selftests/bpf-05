@@ -1,0 +1,12 @@
+2022-09-08 05:40:56 make -C bpf
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/bpf'
+# selftests: bpf: test_xdp_redirect_multi.sh
+# fail: xdpgeneric IPv6 (no flags) ns1-1
+# Pass: xdpgeneric IPv6 (no flags) ns1-2
+# fail: xdpdrv IPv6 (no flags) ns1-1
+# Pass: xdpdrv IPv6 (no flags) ns1-2
+# fail: xdpegress mac ns1-2
+# fail: xdpegress mac ns1-3
+# Summary: PASS 2, FAIL 16
+not ok 18 selftests: bpf: test_xdp_redirect_multi.sh # exit=1
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/bpf'
