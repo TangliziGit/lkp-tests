@@ -1086,6 +1086,12 @@ class BpfStater < Stater
       # fail: xdpgeneric arp(F_BROADCAST) ns1-1
       # Pass: xdpgeneric IPv6 (no flags) ns1-2
       stats.add "#{@test_prefix}.#{$2}", $1
+    when /^# Test case:\s(.*)\s\.\.\s\[(PASS|FAIL)\]/
+      # selftests: bpf: test_sysctl
+      # Test case: sysctl wrong attach_type .. [PASS]
+
+      # printf("[%s]\n", err ? "FAIL" : "PASS");
+      stats.add "#{@test_prefix}.#{$1}", $2
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
       super(line, stats)

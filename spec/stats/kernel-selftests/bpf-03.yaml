@@ -10,6 +10,8 @@ bpf.test_align.fail: 1
 bpf.test_verifier_log.pass: 1
 bpf.test_dev_cgroup.pass: 1
 bpf.test_tcpbpf_user.pass: 1
+bpf.test_sock.bind4_load_with_invalid_access_src_ip6.pass: 1
+bpf.test_sock.bind6_allow_all.pass: 1
 bpf.test_sock.pass: 1
 bpf.test_btf.pass: 1
 bpf.test_sockmap.pass: 1
@@ -19,6 +21,7 @@ bpf.test_cgroup_storage.pass: 1
 bpf.test_netcnt.pass: 1
 bpf.test_tcpnotify_user.pass: 1
 bpf.test_sock_fields.pass: 1
+bpf.test_sysctl.C_prog_read_tcp_mem.fail: 1
 bpf.test_sysctl.fail: 1
 bpf.test_hashmap.pass: 1
 bpf.test_progs-no_alu32.attach_probe.pass: 1
@@ -37,6 +40,10 @@ bpf.test_xdp_meta.sh.pass: 1
 bpf.test_xdp_veth.sh.xdp_veth.pass: 1
 bpf.test_xdp_veth.sh.pass: 1
 bpf.test_offload.py.pass: 1
+bpf.test_sock_addr.sh.sendmsg6_deny_call.pass: 1
+bpf.test_sock_addr.sh.recvmsg4_return_code_ok.pass: 1
+bpf.test_sock_addr.sh.recvmsg6_return_code_!ok.pass: 1
+bpf.test_sock_addr.sh.recvmsg4_rewrite_IP_&_port_asm.pass: 1
 bpf.test_sock_addr.sh.pass: 1
 bpf.test_tunnel.sh.pass: 1
 bpf.test_lirc_mode2.sh.pass: 1
