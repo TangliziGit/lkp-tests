@@ -1051,17 +1051,17 @@ class PrctlStater < Stater
   end
 end
 
-class ProgsStater < Stater
+class BpfStater < Stater
   def stat(line, stats)
     case line
-       # #1/11 variable subtraction:OK
-       # # #1/12 pointer variable subtraction:OK
-       # # #1 align:OK
-       # # #2 atomic_bounds:OK
-       # # #3/1 add:OK
-       # # #3/2 sub:OK
-       # # #3/3 and:OK
     when /^(#| ) #(\d+|\d+\/\d+)\s+([^:]+):(OK|FAIL|SKIP)/
+      # #1/11 variable subtraction:OK
+      # # #1/12 pointer variable subtraction:OK
+      # # #1 align:OK
+      # # #2 atomic_bounds:OK
+      # # #3/1 add:OK
+      # # #3/2 sub:OK
+      # # #3/3 and:OK
       r = $4 == 'OK' ? 'ok' : 'not ok'
       pattern1 = if $3.include? '/'
                    # selftests: bpf: test_progs
@@ -1300,10 +1300,9 @@ while (line = $stdin.gets)
   when /^# selftests: (prctl): (.*)/
     # selftests: prctl: disable-tsc-ctxt-sw-stress-test
     stater = PrctlStater.new($1, $2)
-  when /^# selftests: (bpf): (test_progs|test_progs-no_alu32)$/
+  when /^# selftests: (bpf): (.*)/
     # selftests: bpf: test_progs
-    # selftests: bpf: test_progs-no_alu32
-    stater = ProgsStater.new($1, $2)
+    stater = BpfStater.new($1, $2)
   when /^# selftests: (ftrace): (ftracetest)$/
     # selftests: ftrace: ftracetest
     stater = FtraceStater.new($1, $2)
