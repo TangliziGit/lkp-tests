@@ -1076,6 +1076,11 @@ class BpfStater < Stater
                  end
       subname = "#{@test_prefix}.#{pattern1.gsub(' ', '_')}"
       stats.add subname, r unless stats.key? subname
+    when /^# selftests:\s(.*)\s\[(PASS|SKIP|FAIL)/
+      # echo "selftests: test_xdp_redirect $xdpmode [FAILED]";
+      # echo "selftests: test_xdp_redirect $xdpmode [SKIP]"
+      # echo "selftests: test_xdp_redirect $xdpmode [PASS]";
+      stats.add "#{@test_prefix}.#{$1}", $2
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
       super(line, stats)
