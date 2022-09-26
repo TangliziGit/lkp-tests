@@ -7,6 +7,7 @@ bpf.test_verifier.837/p.bpf_map_lookup_elem_xskmap_&key_;_xs->queue_id.skip: 1
 bpf.test_verifier.pass: 1
 bpf.test_tag.pass: 1
 bpf.test_maps.pass: 1
+bpf.test_lru_map.test_lru_sanity0_map_type_9_map_flags_0x0.pass: 1
 bpf.test_lru_map.pass: 1
 bpf.test_lpm_map.pass: 1
 bpf.test_align.fail: 1

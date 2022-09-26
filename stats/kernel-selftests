@@ -1103,6 +1103,10 @@ class BpfStater < Stater
       # main:PASS:bpf_find_map
       # main:PASS:bpf_find_map
       stats.add "#{@test_prefix}.#{$2}", $1 unless stats.key? "#{@test_prefix}.#{$2}"
+    when /^# (test_lru_sanity\d+)\s(\(.*\)): (Pass)/
+      # selftests: bpf: test_lru_map
+      # test_lru_sanity0 (map_type:9 map_flags:0x0): Pass
+      stats.add "#{@test_prefix}.#{$1}_#{$2}", $3
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
       super(line, stats)
