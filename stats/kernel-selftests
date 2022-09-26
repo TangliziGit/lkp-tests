@@ -1092,6 +1092,11 @@ class BpfStater < Stater
 
       # printf("[%s]\n", err ? "FAIL" : "PASS");
       stats.add "#{@test_prefix}.#{$1}", $2
+    when /^# #([0-9]+)\/([up])\s(.*)\s(SKIP|OK)/
+      # selftests: bpf: test_verifier
+      # #0/u invalid and of negative number SKIP
+      # #0/p invalid and of negative number OK
+      stats.add "#{@test_prefix}.#{$1}/#{$2}.#{$3}", $4
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
       super(line, stats)
