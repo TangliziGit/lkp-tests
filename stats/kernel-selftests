@@ -1097,6 +1097,12 @@ class BpfStater < Stater
       # #0/u invalid and of negative number SKIP
       # #0/p invalid and of negative number OK
       stats.add "#{@test_prefix}.#{$1}/#{$2}.#{$3}", $4
+    when /^# main:(PASS|FAIL):(.*)/
+      # selftests: bpf: get_cgroup_id_user
+      # main:PASS:cgroup_setup_and_join
+      # main:PASS:bpf_find_map
+      # main:PASS:bpf_find_map
+      stats.add "#{@test_prefix}.#{$2}", $1 unless stats.key? "#{@test_prefix}.#{$2}"
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
       super(line, stats)
