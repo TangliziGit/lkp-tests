@@ -1,0 +1,3 @@
+bpf.test_lwt_ip_encap.sh.egress_IPv4_encap_test.pass: 1
+bpf.test_lwt_ip_encap.sh.egress_IPv6_encap_test.fail: 1
+bpf.test_lwt_ip_encap.sh.fail: 1

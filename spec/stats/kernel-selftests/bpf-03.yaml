@@ -60,6 +60,8 @@ bpf.test_xdp_vlan_mode_generic.sh.xdp_vlan_mode_generic.pass: 1
 bpf.test_xdp_vlan_mode_generic.sh.pass: 1
 bpf.test_xdp_vlan_mode_native.sh.xdp_vlan_mode_native.pass: 1
 bpf.test_xdp_vlan_mode_native.sh.pass: 1
+bpf.test_lwt_ip_encap.sh.egress_IPv4_encap_test.pass: 1
+bpf.test_lwt_ip_encap.sh.ingress_IPv4_encap_test_vrf_red.pass: 1
 bpf.test_lwt_ip_encap.sh.pass: 1
 bpf.test_tcp_check_syncookie.sh.pass: 1
 bpf.test_tc_edt.sh.pass: 1

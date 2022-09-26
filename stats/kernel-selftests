@@ -1107,6 +1107,16 @@ class BpfStater < Stater
       # selftests: bpf: test_lru_map
       # test_lru_sanity0 (map_type:9 map_flags:0x0): Pass
       stats.add "#{@test_prefix}.#{$1}_#{$2}", $3
+    when /^# starting (egress|ingress)\s(.*)/
+      # selftests: bpf: test_lwt_ip_encap.sh
+      # starting egress IPv4 encap test
+      # PASS
+      # starting egress IPv6 encap test
+      #     test_ping failed: expected: 0; got 1
+      # FAIL
+      @test_case = "#{$1}_#{$2}"
+    when /^# (PASS|FAIL)$/
+      stats.add "#{@test_prefix}.#{@test_case}", $1 if @test_case
     else
       # not ok 6 selftests: bpf: test_progs # exit=1
       super(line, stats)
