@@ -1,0 +1,23 @@
+make -C fuzzer
+make[1]: Entering directory '/lkp/benchmarks/perf_event_tests/fuzzer'
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o perf_fuzzer.o perf_fuzzer.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o perf_attr_print.o perf_attr_print.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o get_cpuinfo.o get_cpuinfo.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o filter_address.o filter_address.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o filter_tracepoint.o filter_tracepoint.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_access.o fuzz_access.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_close.o fuzz_close.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_fork.o fuzz_fork.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_ioctl.o fuzz_ioctl.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_million.o fuzz_million.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_mmap.o fuzz_mmap.c
+gcc -Wno-all -Wno-incompatible-pointer-types -I../include -I./include -I./trinity_files/include  -c -o fuzz_open.o fuzz_open.c
+fuzz_open.c: In function ‘update_read_size’:
+fuzz_open.c:176:38: error: ‘PERF_FORMAT_LOST’ undeclared (first use in this function); did you mean ‘PERF_FORMAT_MAX’?
+  176 |    !!(event_data[i].attr.read_format&PERF_FORMAT_LOST)
+      |                                      ^~~~~~~~~~~~~~~~
+      |                                      PERF_FORMAT_MAX
+fuzz_open.c:176:38: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: *** [<builtin>: fuzz_open.o] Error 1
+make[1]: Leaving directory '/lkp/benchmarks/perf_event_tests/fuzzer'
+make: *** [Makefile:11: all] Error 2
