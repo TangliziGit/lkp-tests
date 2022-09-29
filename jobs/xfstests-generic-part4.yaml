@@ -31,7 +31,6 @@ xfstests:
 
 ---
 fs:
-  - ext2
   - ext4
   - xfs
   - btrfs
