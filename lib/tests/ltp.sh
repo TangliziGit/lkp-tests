@@ -91,6 +91,12 @@ workaround_env()
 			echo "can not install mkisofs"
 		fi
 	}
+
+	# fix CONF: 'iptables' not found
+	command -v iptables >/dev/null || log_cmd ln -sf /usr/sbin/iptables-nft /usr/bin/iptables
+
+	# fix CONF: 'ip6tables' not found
+	command -v ip6tables >/dev/null || log_cmd ln -sf /usr/sbin/ip6tables-nft /usr/bin/ip6tables
 }
 
 specify_tmpdir()

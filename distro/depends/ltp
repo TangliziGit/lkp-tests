@@ -62,3 +62,4 @@ traceroute
 nftables
 net-tools
 bzip2
+iptables
