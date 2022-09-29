@@ -36,6 +36,9 @@ while (line = $stdin.gets)
   line = line.resolve_invalid_bytes
 
   case line
+  when /^([A-Za-z-]+)-torture: Skip/
+    stats.add $1, 'skip'
+    break
   when /^\[.*\] ([A-Za-z_-]+)-torture.*Start of test:/
     type = $1
   when /^\[.*\] #{type}-torture.*End of test: (.*):.*onoff_interval=([0-9]+).*/
