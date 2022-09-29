@@ -15,6 +15,9 @@ parameters:
  test:
  fstype: [ext4, ext4_no_jnl, xfs, btrfs, f2fs]
  directio: [bufferedio, directio]
+ thread_nr: *
+ blksize: 100M
+ blkcount: 1
 
 results:
  fxmark.works/sec: number of works per sec.
