@@ -386,7 +386,7 @@ need_kconfig:
 - TEST_USER_COPY
 - TUN: m
 - XFS_FS: m # Depends on: BLOCK [: y]
-- GPIO_CDEV
+- GPIO_CDEV: v5.10-rc1
 - OVERLAY_FS
 - PERF_EVENTS
 - SCHED_DEBUG
