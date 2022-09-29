@@ -45,6 +45,7 @@
 ^dmesg..*/lkp/
 ^dmesg.Mem-Info
 ^dmesg.timestamp:.*
+^dmesg.bootstage:.*
 ^dmesg.WARNING:at_kernel/kcsan/kcsan_test.c:#test_init
 ^dmesg\.WARNING:Unprivileged_eBPF_is_enabled_with_eIBRS_on,data_leaks_possible_via_Spectre_v2_BHB_attacks
 ^GLib-WARNING\*\*:#:#:#:gmem.c:#:custom_memory_allocation_vtable_not_supported
@@ -114,6 +115,7 @@
 ^kmsg.test_bitmap:parselist
 ^kmsg.test_stackinit:failures
 ^kmsg.timestamp:.*
+^kmsg.bootstage:.*
 ^kmsg.TPR_Threshold=
 ^kmsg.TR:sel=#,attr=#,limit=#,base=
 ^kmsg.TSC_Offset=
