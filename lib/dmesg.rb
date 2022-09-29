@@ -524,7 +524,7 @@ def timestamp_levels(dmesg_file)
   map = {}
   initcall_lines = %x[#{grep_cmd(dmesg_file)} -E " initcall [0-9a-zA-Z_]+\\\\+0x.* returned" #{dmesg_file}]
   initcall_lines.each_line do |line|
-    next unless line =~ /\[ *(\d{1,6}\.\d{6})\].* ([0-9a-zA-Z_]+)\+0x/
+    next unless line.resolve_invalid_bytes =~ /\[ *(\d{1,6}\.\d{6})\].* ([0-9a-zA-Z_]+)\+0x/
 
     timestamp = $1
     initcall = $2
@@ -534,7 +534,7 @@ def timestamp_levels(dmesg_file)
     break if level == 'late'
   end
   boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{2}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
-  m = boot_ok.match(/\[ *(\d{1,6}\.\d{6})\]/)
+  m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
   map[m[1]] = INITCALL_LEVELS['boot-ok'] if m
 
   return nil if map.empty?
