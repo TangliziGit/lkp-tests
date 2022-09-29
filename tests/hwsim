@@ -54,7 +54,10 @@ esac
 #166     sleep 0.05
 #167 done
 sed -i 's/0.05/0.5/g' start.sh
-log_cmd ./start.sh $start_opt || die "fail to setup test environment"
+log_cmd ./start.sh $start_opt || {
+	echo "fail to setup test environment" 1>&2
+	exit 1
+}
 
 while read testcase
 do
