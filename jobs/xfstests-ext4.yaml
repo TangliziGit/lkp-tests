@@ -17,4 +17,11 @@ xfstests:
     - ext4-group-02
     - ext4-group-13
     - ext4-group-15
+
+---
+fs:
+  - ext4
+
+xfstests:
+  test:
     - ext4-logdev
