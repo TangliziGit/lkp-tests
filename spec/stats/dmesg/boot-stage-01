@@ -79,3 +79,4 @@ Starting udev
 [   24.359521][  T204] Kernel panic - not syncing: Fatal exception
 [   25.473989][  T204] Shutting down cpus with NMI
 [   25.474532][  T204] Kernel Offset: disabled
+[   25.474533][  T204] LKP: stdout: 401: Kernel tests: Boot OK!

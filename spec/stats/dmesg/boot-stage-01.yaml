@@ -25,8 +25,8 @@ Kernel_panic-not_syncing:Fatal_exception: 1
 message:Kernel_panic-not_syncing:Fatal_exception: [   24.359521][  T204] Kernel panic - not syncing: Fatal exception
 pattern:Kernel_panic-not_syncing:Fatal_exception: Kernel panic - not syncing: Fatal exception
 
-timestamp:last: 25.474532
-bootstage:last: 9
+timestamp:last: 25.474533
+bootstage:last: 10
 timestamp:EIP:test: 4.345803
 bootstage:EIP:test: 1
 timestamp:BUG:unable_to_handle_page_fault_for_address: 24.342728

@@ -25,7 +25,8 @@ INITCALL_LEVELS = {
   'fs' => 7,
   'device' => 8,
   'module' => 8,
-  'late' => 9
+  'late' => 9,
+  'boot-ok' => 10
 }.freeze
 
 require 'fileutils'
@@ -532,6 +533,10 @@ def timestamp_levels(dmesg_file)
     # when late_initcall called, other level initcall may be still running
     break if level == 'late'
   end
+  boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 " Kernel tests: Boot OK" #{dmesg_file}]
+  m = boot_ok.match(/\[ *(\d{1,6}\.\d{6})\]/)
+  map[m[1]] = INITCALL_LEVELS['boot-ok'] if m
+
   return nil if map.empty?
 
   map
