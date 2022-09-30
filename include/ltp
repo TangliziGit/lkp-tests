@@ -24,6 +24,9 @@ need_kconfig:
 - CAN_RAW: m
 - CAN_VCAN: m
 - MINIX_FS: m
+# d1b069f5febc ("EXPERT Kconfig menu: fix broken EXPERT menu"), EXPERT is required for CHECKPOINT_RESTORE, merged by v4.15-rc1
+# 5cb366bb3a74 ("init/Kconfig: remove EXPERT from CHECKPOINT_RESTORE"), merged by v4.19-rc1
+- EXPERT: y
 - CHECKPOINT_RESTORE: y
 
 rootfs: debian-12-x86_64-20220629.cgz
