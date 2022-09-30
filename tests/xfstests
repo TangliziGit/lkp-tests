@@ -267,6 +267,8 @@ run_smbv2_tests()
 
 run_smbv3_tests()
 {
+	# generic/478 run over 1 hour in smbv3_test
+	echo "generic/478" >> tests/cifs/exclude.very-slow.txt
 	log_cmd ./check -E tests/cifs/exclude.incompatible-smb3.txt $exclude_file $all_tests
 }
 
