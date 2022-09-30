@@ -108,6 +108,11 @@ fixup_kernel-selftests()
 	ln -sf /usr/sbin/tcptraceroute.db ./usr/sbin/tcptraceroute
 }
 
+fixup_ltp()
+{
+	ln -sf /usr/sbin/in.telnetd ./usr/sbin/in.telnetd
+}
+
 pack()
 {
 	local date=$(date +"%Y%m%d")
