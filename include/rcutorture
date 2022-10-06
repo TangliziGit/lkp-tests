@@ -14,5 +14,5 @@ need_kconfig:
 - FORCE_TASKS_TRACE_RCU: y, v5.19-rc1
 - TASKS_TRACE_RCU: y, v5.8-rc1
 # 4c3f7b0e1e88 (rcutorture: Allow rcutorture without RCU Tasks Rude)
-- FORCE_TASKS_RUDE_RCU: y, v5.18-rc1
+- FORCE_TASKS_RUDE_RCU: y, v5.19-rc1
 - TASKS_RUDE_RCU: y, v5.8-rc1
