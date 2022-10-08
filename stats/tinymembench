@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/log"
+
+stats = Hash.new { |h, k| h[k] = [] }
+
+while (line = $stdin.gets)
+  case line
+  when /(standard mem|MOVSB|MOVSD|SSE2)/
+    # SSE2 copy : 17668.2 MB/s (0.5%)
+    line = line.split(':')
+    key = line[0].strip.gsub(/[)(]/, '').gsub(/[ -]/, '_').gsub(/$/, '_MBpS')
+    values = line[1].split(' MB/s')
+    stats[key] = values[0].lstrip
+    stats["#{key}_stddev"] = values[1].gsub(/[()% ]/, '') unless values[1].nil?
+  when /(1024|4096|16384|65536|262144|1048576)/
+    # 65536 :    1.3 ns          /     1.9 ns
+    line = line.split(':')
+    line[0].lstrip!.rstrip!
+    values = line[1].split('/')
+    single_key = "single_random_read_#{line[0]}_block"
+    dual_key = "dual_random_read_#{line[0]}_block"
+    if !stats.key?("#{single_key}_nohugepage")
+      stats["#{single_key}_nohugepage"] = values[0].gsub(/[ ns]/, '')
+    else
+      stats["#{single_key}_hugepage"] = values[0].gsub(/[ ns]/, '')
+    end
+    if !stats.key?("#{dual_key}_nohugepage")
+      stats["#{dual_key}_nohugepage"] = values[1].gsub(/[ ns]/, '')
+    else
+      stats["#{dual_key}_hugepage"] = values[1].gsub(/[ ns]/, '')
+    end
+  end
+end
+
+stats.each do |k, v|
+  puts "#{k}: #{v}"
+end

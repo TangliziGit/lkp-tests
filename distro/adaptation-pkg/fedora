@@ -74,6 +74,7 @@ stutter::
 swapin: vm-scalability
 tbench::
 thrulay::
+tinymembench::
 trace-cmd::
 trinity:: 
 trinity-static-i386::

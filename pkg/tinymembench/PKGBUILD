@@ -1,0 +1,17 @@
+pkgname=tinymembench
+pkgver=0.4.9
+pkgrel=0
+arch=('i386' 'x86_64')
+license=('MIT')
+source=("$pkgname"::"https://github.com/ssvb/tinymembench.git")
+md5sums=('SKIP')
+
+build() {
+	cd "$srcdir/$pkgname"
+	make
+}
+
+package() {
+	mkdir -p "$pkgdir/lkp/benchmarks/tinymembench"
+	cp -r "$srcdir/$pkgname/"* "$pkgdir/lkp/benchmarks/tinymembench"
+}
