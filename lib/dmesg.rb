@@ -533,7 +533,7 @@ def timestamp_levels(dmesg_file)
     # when late_initcall called, other level initcall may be still running
     break if level == 'late'
   end
-  boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{2}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
+  boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
   m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
   map[m[1]] = INITCALL_LEVELS['boot-ok'] if m
 
