@@ -18,3 +18,4 @@ autoconf
 automake
 libtool
 m4
+libbpf-dev
