@@ -425,8 +425,8 @@ end
 
 def __function_stat?(stats_field)
   return false if stats_field.index('.time.')
-  return false if stats_field.index('.timestamp.')
-  return false if stats_field.index('.bootstage.')
+  return false if stats_field.index('.timestamp:')
+  return false if stats_field.index('.bootstage:')
   return true if $metric_failure.any? { |pattern| stats_field =~ %r{^#{pattern}} }
   return true if $metric_pass.any? { |pattern| stats_field =~ %r{^#{pattern}} }
 
