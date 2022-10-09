@@ -6,9 +6,9 @@ libc-bin
 libc6-dev-i386 (x86_64)
 libc6-dev-x32
 libc6
-lib32gcc-dev
+lib32gcc-dev (x86_64)
 libx32gcc-dev
-libc6-i386
+libc6-i386 (x86_64)
 libc6-dev
 libc6-x32
 libx32gcc1
@@ -49,7 +49,6 @@ net-tools
 netcat-openbsd
 zlib1g-dev
 libhugetlbfs-dev
-g++
 libssl-dev
 libasound2-dev
 libc-dev-bin

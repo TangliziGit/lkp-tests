@@ -26,3 +26,5 @@ libasan: libasan6
 libperl5: libperl5.32
 perl-modules-5: perl-modules-5.32
 libhugetlbfs: libhugetlbfs0
+lib64asan3: lib64asan6
+lib64gcc1: lib64gcc-s1
