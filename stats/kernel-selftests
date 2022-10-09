@@ -647,7 +647,12 @@ class MptcpStater < Stater
         stats.add "#{@test_prefix}.#{@test_case}", @result if @test_case =~ /MPTCP|mptcp/
       else
         # defaults addr list                                 [ OK ]
-        stats.add "#{@test_prefix}.#{@test_case}", @result
+
+        # ignore below duplication
+        # msk in use statistics                             [  ok  ]
+        # msk in use statistics                             [  ok  ]
+        test_name = "#{@test_prefix}.#{@test_case}"
+        stats.add test_name, @result unless stats.key?(test_name)
       end
     when /^# (PASS|FAIL|SKIP): (.*)/
       # selftests: net/mptcp: mptcp_sockopt.sh
