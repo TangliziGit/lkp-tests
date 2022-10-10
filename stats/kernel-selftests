@@ -973,7 +973,17 @@ class NetfilterStater < Stater
       # 46 # selftests: netfilter: nft_flowtable.sh
       # 52 # FAIL: file mismatch for ns1 -> ns2
       # 78 # FAIL: file mismatch for ns1 -> ns2
-      stats.add "#{@test_prefix}.#{$2}", $1 unless stats.key? "#{@test_prefix}.#{$2}"
+
+      result = $1
+      test_case = $2
+
+      # selftests: netfilter: nft_queue.sh
+      # PASS: ns1-IpVmXxqi can reach ns2-IpVmXxqi
+      # rm -IpVmXxqi
+      test_case = test_case.gsub($1, '') if test_case =~ /ns\d+(-\w+)/
+
+      test_name = "#{@test_prefix}.#{test_case}"
+      stats.add test_name, result unless stats.key?(test_name)
     else
       super(line, stats)
     end

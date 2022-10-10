@@ -39,6 +39,7 @@ ok 5 selftests: netfilter: nft_flowtable.sh
 #   perf not supported
 not ok 7 selftests: netfilter: nft_concat_range.sh # exit=1
 # selftests: netfilter: nft_queue.sh
+# PASS: ns1-IpVmXxqi can reach ns2-IpVmXxqi
 # PASS: tcp and nfqueue in forward chain
 # PASS: tcp via loopback
 ok 8 selftests: netfilter: nft_queue.sh
