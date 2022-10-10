@@ -62,6 +62,7 @@ arch_list=(
 	tilepro
 	um
 	unicore32
+	x86
 	x86_64
 	xtensa
 )
