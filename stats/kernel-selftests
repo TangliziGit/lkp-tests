@@ -963,7 +963,7 @@ class NetfilterStater < Stater
       stats.add "#{@test_prefix}.#{@test_case}.#{$1}", $2 if @test_script == 'nft_concat_range.sh'
     when /^#     (baseline .+|set with .+):\s*(\S*)pps/
       #     baseline (drop from netdev hook):               1612678pps
-      stats.add "#{@test_prefix}.#{@test_case}.#{@subtest_case}.#{$1}", $2.to_i if @test_script == 'nft_concat_range.sh'
+      stats.add "#{@test_prefix}.#{@test_case}.#{@subtest_case}.#{$1}.packets_per_sec", $2.to_i if @test_script == 'nft_concat_range.sh'
     when /^# (PASS|FAIL|SKIP): (ns\d)-\S+ (connection on port.*)/
       # selftests: netfilter: nft_conntrack_helper.sh
       # PASS: ns1-Ip028vuy connection on port 2121 has ftp helper attached
