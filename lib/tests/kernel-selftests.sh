@@ -411,6 +411,9 @@ fixup_netfilter()
 
 	echo "timeout=3600" >> netfilter/settings
 	sed -ie "s/[\t[:space:]]\.\.\/\.\.\/\.\.\/samples\/pktgen\/pktgen_bench_xmit_mode_netif_receive.sh/\.\.\/\.\.\/\.\.\/\.\.\/samples\/pktgen\/pktgen_bench_xmit_mode_netif_receive.sh/g" netfilter/nft_concat_range.sh
+	# separate function test and performance test in netfilter/nft_concat_range.sh
+	# [ "${quicktest}" = "1" ] && TESTS="reported_issues correctness concurrency timeout"
+	sed -i "s/^TESTS=/\[ \"\${quicktest}\" = \"1\" \] \&\& TESTS=/" netfilter/nft_concat_range.sh
 }
 
 fixup_lkdtm()
