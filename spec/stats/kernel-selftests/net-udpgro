@@ -1,0 +1,22 @@
+2022-10-11 06:12:10 make quicktest=1 run_tests -C net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4fe89d07dcc2804c8b562f6c7896a45643d34b2f/tools/testing/selftests/net'
+# selftests: net: udpgro.sh
+# ipv4
+#  no GRO                                  ok
+#  no GRO chk cmsg                         ok
+#  GRO                                     ok
+#  GRO chk cmsg                            ok
+#  GRO with custom segment size            ok
+#  GRO with custom segment size cmsg       ok
+#  bad GRO lookup                          ok
+#  multiple GRO socks                      ok
+# ipv6
+#  no GRO                                  ok
+#  no GRO chk cmsg                         ok
+#  GRO                                     ok
+#  GRO chk cmsg                            ok
+#  GRO with custom segment size            ok
+#  GRO with custom segment size cmsg       ok
+#  bad GRO lookup                          ok
+#  multiple GRO socks                      ok
+ok 26 selftests: net: udpgro.sh

@@ -429,6 +429,13 @@ class NetStater < Stater
       # selftests: net: test_vxlan_under_vrf.sh
       # Checking HV connectivity                                           [ OK ]
       stats.add "#{@test_prefix}.#{$1}", $2
+    when /^# (ipv4|ipv6)$/
+      # selftests: net: udpgro.sh
+      # ipv4
+      #  no GRO                                  ok
+      @test_case = $1
+    when /#  ([a-zA-Z].*)(ok|fail)/
+      stats.add "#{@test_prefix}.#{@test_case}.#{$1}", $2
     else
       super(line, stats)
     end

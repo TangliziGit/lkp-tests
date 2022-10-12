@@ -1,0 +1,17 @@
+net.udpgro.sh.ipv4.no_GRO.pass: 1
+net.udpgro.sh.ipv4.no_GRO_chk_cmsg.pass: 1
+net.udpgro.sh.ipv4.GRO.pass: 1
+net.udpgro.sh.ipv4.GRO_chk_cmsg.pass: 1
+net.udpgro.sh.ipv4.GRO_with_custom_segment_size.pass: 1
+net.udpgro.sh.ipv4.GRO_with_custom_segment_size_cmsg.pass: 1
+net.udpgro.sh.ipv4.bad_GRO_lookup.pass: 1
+net.udpgro.sh.ipv4.multiple_GRO_socks.pass: 1
+net.udpgro.sh.ipv6.no_GRO.pass: 1
+net.udpgro.sh.ipv6.no_GRO_chk_cmsg.pass: 1
+net.udpgro.sh.ipv6.GRO.pass: 1
+net.udpgro.sh.ipv6.GRO_chk_cmsg.pass: 1
+net.udpgro.sh.ipv6.GRO_with_custom_segment_size.pass: 1
+net.udpgro.sh.ipv6.GRO_with_custom_segment_size_cmsg.pass: 1
+net.udpgro.sh.ipv6.bad_GRO_lookup.pass: 1
+net.udpgro.sh.ipv6.multiple_GRO_socks.pass: 1
+net.udpgro.sh.pass: 1
