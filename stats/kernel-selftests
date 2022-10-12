@@ -436,6 +436,17 @@ class NetStater < Stater
       @test_case = $1
     when /#  ([a-zA-Z].*)(ok|fail)/
       stats.add "#{@test_prefix}.#{@test_case}.#{$1}", $2
+    when /^# (\w.*)(ok $|fail )/
+      # selftests: net: veth.sh
+      # default - gro flag                                           ok
+      #         - peer gro flag                                      ok
+      # default channels                                             fail rx:1:1 tx:1:1 combined:n/a:0
+      test_name = "#{@test_prefix}.#{$1.split('-')[0]}"
+
+      # ignore below duplication
+      # 6404 # setting invalid channels nr                                  ok
+      # 6408 # setting invalid channels nr                                  ok
+      stats.add test_name, $2 unless stats.key?(test_name)
     else
       super(line, stats)
     end

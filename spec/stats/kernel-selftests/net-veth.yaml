@@ -1,0 +1,12 @@
+net.veth.sh.default.pass: 1
+net.veth.sh.with_gro_on.pass: 1
+net.veth.sh.default_channels.fail: 1
+net.veth.sh.setting_tx_channels.pass: 1
+net.veth.sh.setting_both_rx_and_tx_channels.pass: 1
+net.veth.sh.bad_setting_combined_channels.pass: 1
+net.veth.sh.setting_invalid_channels_nr.pass: 1
+net.veth.sh.with_xdp_attached.pass: 1
+net.veth.sh.decreasing_tx_channels_with_device_down.pass: 1
+net.veth.sh.increasing_tx_channels_with_device_down.pass: 1
+net.veth.sh.aggregation_again_with_default_and_TSO_off.pass: 1
+net.veth.sh.fail: 1
