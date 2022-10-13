@@ -518,6 +518,24 @@ def bisectable_stat?(stat)
   stat !~ $stat_denylist
 end
 
+def samples_remove_early_fails(matrix, samples, stat_boot_stage)
+  return samples if stat_boot_stage.zero?
+
+  perf_samples = []
+  samples.each_with_index do |v, i|
+    next if matrix['dmesg.bootstage:last'] &&
+            matrix['dmesg.bootstage:last'][i] != 0 &&
+            matrix['dmesg.bootstage:last'][i] < stat_boot_stage
+
+    next if matrix['kmsg.bootstage:last'] &&
+            matrix['kmsg.bootstage:last'][i] != 0 &&
+            matrix['kmsg.bootstage:last'][i] < stat_boot_stage
+
+    perf_samples << v
+  end
+  perf_samples
+end
+
 def samples_remove_boot_fails(matrix, samples)
   perf_samples = []
   samples.each_with_index do |v, i|
