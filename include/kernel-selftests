@@ -182,7 +182,7 @@ need_kconfig:
 - CGROUPS: y
 - CHECKPOINT_RESTORE: y
 % elsif ___.group == "group-00"
-- ANDROID: y
+- ANDROID: y, <= v5.19
 - DRM: y
 - DRM_VGEM: y
 - ION: y, <= v5.10 # Depends on: STAGING [: y]
@@ -288,7 +288,7 @@ need_kconfig:
 - TEST_LKM: m
 - TEST_STATIC_KEYS: m
 - STAGING: y
-- ANDROID: y
+- ANDROID: y, <= v5.19 # 1045a06724f3 ("remove CONFIG_ANDROID")
 - SYNC: y, <= v4.7
 - SW_SYNC: y
 - GENERIC_ENTRY: y
