@@ -1,6 +1,6 @@
-suite: speccpu2006
+suite: speccpu-2006
 category: benchmark
-speccpu2006:
+speccpu-2006:
   test_item:
     - rate
     - speed
