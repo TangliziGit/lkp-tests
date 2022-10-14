@@ -6,12 +6,11 @@ require 'yaml'
 require "#{LKP_SRC}/lib/kernel_tag"
 require "#{LKP_SRC}/lib/log"
 
-def read_kernel_version_from_context
+def load_kernel_context
   context_file = File.expand_path '../context.yaml', kernel
   raise Job::ParamError, "context.yaml doesn't exist: #{context_file}" unless File.exist?(context_file)
 
-  context = YAML.load(File.read(context_file))
-  context['rc_tag']
+  YAML.load(File.read(context_file))
 end
 
 def read_kernel_kconfigs
@@ -48,7 +47,8 @@ end
 def check_all(kernel_kconfigs)
   uncompiled_kconfigs = []
 
-  kernel_version = read_kernel_version_from_context
+  context = load_kernel_context
+  kernel_version = context['rc_tag']
 
   $___.each do |e|
     if e.instance_of? Hashugar
