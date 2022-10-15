@@ -230,27 +230,33 @@ function create_test_config_file() {
             echo "There is no useful disk to test $device_name."
             return 1
         fi
-        echo "${CARD_TYPE}:
+        cat > ${CONFIG_FILE} <<EOF
+${CARD_TYPE}:
   ${CARD_TYPE}1:
     device: '0000:${device_name}'
-    disk: ${disk-all}" >>${CONFIG_FILE}
+    disk: ${disk-all}
+EOF
 
     # Set ethernet config 
     elif [[ ${CARD_TYPE} -eq "ethernet" ]]; then
-        echo "ethernet:
+        cat > ${CONFIG_FILE} <<EOF 
+ethernet:
   eth1:
     device: ${device_name}
     if_rdma: N
     client_ip:
-    server_ip:" >>${CONFIG_FILE}
+    server_ip:
+EOF
 
     # Set infiniband config 
     elif [[ ${CARD_TYPE} -eq "infiniband" ]]; then
-        echo "infiniband:
+        cat > ${CONFIG_FILE} <<EOF 
+infiniband:
   ib1:
     device: ${device_name}
     client_ip:
-    server_ip:" >>${CONFIG_FILE}
+    server_ip:
+EOF
     fi
 
     return 0
@@ -298,4 +304,3 @@ upload_files -t oec-hardware ${LOGDIR}/*
 upload_files -t oec-hardware ${REPORT}
 
 echo "End to run oec-hardware test."
-
