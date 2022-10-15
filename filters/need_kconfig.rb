@@ -20,6 +20,10 @@ def read_kernel_kconfigs
   File.read kernel_kconfigs
 end
 
+def kernel_match_arch?(kernel_arch, expected_archs)
+  expected_archs.include? kernel_arch
+end
+
 def kernel_match_kconfig?(kernel_kconfigs, expected_kernel_kconfig)
   case expected_kernel_kconfig
   when /^([A-Z0-9_]+)=n$/
@@ -49,12 +53,16 @@ def check_all(kernel_kconfigs)
 
   context = load_kernel_context
   kernel_version = context['rc_tag']
+  kernel_arch = context['kconfig'].split('-').first
 
   $___.each do |e|
     if e.instance_of? Hashugar
       config_name, config_options = e.to_hash.first
       # to_s is for "CMA_SIZE_MBYTES: 200"
       config_options = config_options.to_s.split(',').map(&:strip)
+
+      expected_archs, config_options = config_options.partition { |option| option =~ /^(i386|x86_64)$/ }
+      next unless expected_archs.empty? || kernel_match_arch?(kernel_arch, expected_archs)
 
       expected_kernel_versions, config_options = config_options.partition { |option| option =~ /v\d+\.\d+/ }
       # ignore the check of kconfig type if kernel is not within the valid range
