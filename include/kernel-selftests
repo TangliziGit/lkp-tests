@@ -92,6 +92,8 @@ need_kconfig:
 - DYNAMIC_FTRACE
 - FUNCTION_TRACER
 - IPV6_SEG6_BPF
+- MODULE_SRCVERSION_ALL: y
+- MODVERSIONS: y
 % elsif ___.group == "net"
 - PACKET: y
 - USER_NS: y
