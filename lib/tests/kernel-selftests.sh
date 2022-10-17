@@ -873,10 +873,16 @@ fixup_subtest()
 
 check_subtest()
 {
-	subtest_config="$subtest/config"
-	kernel_config="/lkp/kernel-selftests-kernel-config"
+	local subtest_config="$subtest/config"
+	local kernel_config="/lkp/kernel-selftests-kernel-config"
 
 	[[ -s "$subtest_config" ]] && get_kconfig "$kernel_config" && {
+		check_kconfig "$subtest_config" "$kernel_config"
+	}
+
+	# bpf/config.x86_64
+	subtest_config="$subtest/config.x86_64"
+	[[ -s "$subtest_config" ]] && {
 		check_kconfig "$subtest_config" "$kernel_config"
 	}
 
