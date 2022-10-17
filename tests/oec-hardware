@@ -6,7 +6,7 @@ TIMEOUT=3600
 ERROR_CODE=100
 TIMEOUT_CODE=101
 
-SERVER_IP=${direct\_${server}\_ips-"127.0.0.1"}
+SERVER_IP=${direct_server_ips}
 CARD_IDS=$test_card_id
 CARD_TYPE=$test_card_type
 CARD_NAME=$test_card_name

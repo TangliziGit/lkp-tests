@@ -1,6 +1,8 @@
 suite: oec-hardware
 category: functional
 
+cluster: cs-localhost
+
 if role server:
   oec-hardware-server:
 
