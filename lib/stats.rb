@@ -523,13 +523,14 @@ def samples_remove_early_fails(matrix, samples, stat_boot_stage)
 
   perf_samples = []
   samples.each_with_index do |v, i|
-    next if matrix['dmesg.bootstage:last'] &&
-            matrix['dmesg.bootstage:last'][i].to_i != 0 &&
-            matrix['dmesg.bootstage:last'][i].to_i < stat_boot_stage
-
-    next if matrix['kmsg.bootstage:last'] &&
-            matrix['kmsg.bootstage:last'][i].to_i != 0 &&
-            matrix['kmsg.bootstage:last'][i].to_i < stat_boot_stage
+    stage = if matrix['dmesg.bootstage:last']
+              matrix['dmesg.bootstage:last'][i].to_i
+            elsif matrix['kmsg.bootstage:last']
+              matrix['kmsg.bootstage:last'][i].to_i
+            else
+              0
+            end
+    next if stage != 0 && stage < stat_boot_stage
 
     perf_samples << v
   end
