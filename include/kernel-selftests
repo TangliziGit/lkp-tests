@@ -363,6 +363,11 @@ need_kconfig:
 - PROC_CPU_RESCTRL: y
 % elsif ___.group == "tc-testing"
 - NET_SCH_FQ_PIE
+- NET_SCH_CAKE: v4.19-rc1
+- NET_SCH_CBS: v4.15-rc1
+- NET_SCH_SKBPRIO: v4.19-rc1
+- NET_SCH_TAPRIO: v4.20-rc1
+- NET_ACT_GATE: v5.8-rc1
 - PACKET
 - NET_SCH_RED
 % else
