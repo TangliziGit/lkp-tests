@@ -555,8 +555,9 @@ fixup_fpu()
 fixup_kexec()
 {
 	# test_kexec_load.sh: 126: [: x86_64: unexpected operator
+	# test_kexec_file_load.sh: 99: [: x86_64: unexpected operator
 	# using bash to avoid "unexpected operator" warning.
-	sed -i 's/bin\/sh/bin\/bash/g' kexec/test_kexec_load.sh
+	sed -i 's/bin\/sh/bin\/bash/g' kexec/*.sh
 }
 
 fixup_user_events()
