@@ -558,6 +558,14 @@ fixup_kexec()
 	# test_kexec_file_load.sh: 99: [: x86_64: unexpected operator
 	# using bash to avoid "unexpected operator" warning.
 	sed -i 's/bin\/sh/bin\/bash/g' kexec/*.sh
+
+	# tail: cannot open '/boot/vmlinuz-6.0.0' for reading: No such file or directory
+	# the kernel image path on tbox is /opt/rootfs/tmp/pkg/linux/x86_64-rhel-8.3-kselftests/gcc-11/4fe89d07dcc2804c8b562f6c7896a45643d34b2f/vmlinuz-6.0.0
+	local kernel_image=/boot/vmlinuz-$(uname -r)
+	[[ -e $kernel_image ]] || {
+		kernel_image=/opt/rootfs/tmp$(grep -o "/pkg/linux/.*/vmlinuz-[^ ]*" /proc/cmdline)
+		[[ -e $kernel_image ]] && sed -i "s|/boot/vmlinuz-\`uname -r\`|$kernel_image|g" kexec/kexec_common_lib.sh
+	}
 }
 
 fixup_user_events()
