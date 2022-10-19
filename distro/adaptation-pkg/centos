@@ -34,6 +34,7 @@ liboop-dev: liboop
 linkbench::
 linpack::
 ltp::
+lz4::
 makepkg::
 mce-log::
 mce-test::
