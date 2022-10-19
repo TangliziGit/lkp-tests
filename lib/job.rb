@@ -137,7 +137,7 @@ end
 
 def multi_create_programs_hash(glob, lkp_src)
   programs = {}
-  lkp_list = [ lkp_src ] + get_lkp_path_list
+  lkp_list = [ lkp_src ] + Job.get_lkp_path_list
   lkp_list.uniq!.each do |lkp|
     programs.merge!(__create_programs_hash(glob, lkp))
   end
@@ -725,7 +725,7 @@ class Job
     @job.merge!(cmdline)
   end
 
-  def get_lkp_path_list()
+  def Job.get_lkp_path_list()
     lkp_path_list = []
     ["LKP_SRC", "LKP_SRC2", "LKP_SRC3"].each do |k|
       break unless ENV.has_key?(k)
