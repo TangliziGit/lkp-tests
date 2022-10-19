@@ -69,6 +69,7 @@ plzip::
 pmbench::
 pmdk::
 pm-qa::
+pybench::
 postmark::
 qperf::
 reaim::

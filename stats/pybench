@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/log"
+
+stats = Hash.new { |h, k| h[k] = [] }
+
+while (line = $stdin.gets)
+  case line
+  when /(Rounds:|Warp:)/
+    key = line.split[0].gsub(/:/, '')
+    stats[key] = line.split[1]
+  when /.*:.*ms.*ms.*us.*ms$/
+    key = line.split[0].gsub(/:$/, '_ms')
+    stats[key] = line.split[2].gsub(/ms/, '')
+  when /^Totals/
+    key = line.split[0].gsub(/s:/, '_ms')
+    stats[key] = line.split[2].gsub(/ms/, '')
+  end
+end
+
+stats.each do |k, v|
+  puts "#{k}: #{v}"
+end

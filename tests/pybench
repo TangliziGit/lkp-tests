@@ -1,0 +1,8 @@
+#!/bin/sh
+# - rounds
+# - warp
+
+. $LKP_SRC/lib/reproduce-log.sh
+
+cd $BENCHMARK_ROOT/pybench || die "no $BENCHMARK_ROOT/pybench"
+log_cmd python3 pybench.py -n $rounds -w $warp || die "failed to run pybench"
