@@ -53,6 +53,7 @@ test_memory_size=$(($test_memory_size/1024/1024))
 # small files,
 # Use /dev/tty to display output status information,
 # Disable to send the test result to remote database
+
 run_lmbench3_all()
 {
 	if [ "$is_performance_dashboard" = "true" ]; then
@@ -64,12 +65,11 @@ run_lmbench3_all()
 
 run_by_make_rerun()
 {
-	mv CONFIG.lmbench3 bin/$system_type/CONFIG.$(hostname)
-	sed -i \
-            -e "/^INFO=/cINFO=INFO.$(hostname)" \
-            -e "/^OS=/cOS=\"$system_type\"" \
-	    bin/$system_type/CONFIG.$(hostname)
-	make rerun
+	sed -i 's|^OS=.*|OS='"${system_type}"'|g' CONFIG.lmbench3
+	mv bin/*/ bin/${system_type}/
+	cp CONFIG.lmbench3 bin/${system_type}/CONFIG.$(hostname)
+	cd scripts
+	env OS=${system_type} ./results
 }
 
 run_by_make_results()
@@ -196,7 +196,7 @@ run_lmbench3_development()
 
 show_result()
 {
-	cat results/"${system_type}"/*.0 || die "no test result found"
+	cat $BENCHMARK_ROOT/lmbench3/results/${system_type}/* || die "no test result found"
 }
 
 cd $BENCHMARK_ROOT/lmbench3 || {
@@ -205,8 +205,7 @@ cd $BENCHMARK_ROOT/lmbench3 || {
 }
 
 make 2>&1 || die "failed to build lmbench3"
-system_type=$(cd $BENCHMARK_ROOT/lmbench3/scripts; ./os)
-[ -n "$system_type" ] && rm -rf $BENCHMARK_ROOT/lmbench3/results/$system_type/
+system_type=$os_arch
 
 case "$mode" in
 	'all') run_lmbench3_all ;;
@@ -217,3 +216,4 @@ case "$mode" in
 	esac
 
 show_result
+sleep 100
