@@ -191,10 +191,14 @@ install_crosstool_clang()
 
 install_crosstool_gcc()
 {
-	local URL='https://download.01.org/0day-ci/cross-package'
+	[[ $URL ]] || local URL='https://download.01.org/0day-ci/cross-package'
 	local list=/tmp/0day-ci-crosstool-files
 
-	lftp -c "open $URL && find -d 3" | sort -V > $list || return
+	timeout 3m lftp -c "open $URL && find -d 3" | sort -V > $list || {
+		echo "Cannot get list from $URL"
+		echo "Please set new url, e.g. export URL=https://cdn.kernel.org/pub/tools/crosstool/files/bin/x86_64"
+		return 1
+	}
 
 	local file
 	local gcc_arch_pattern=$(echo "${gcc_arch}" | sed 's/*/.*/g')
@@ -205,12 +209,13 @@ install_crosstool_gcc()
 		# for arch has more than 1 cross tool available, like x86_64-gcc-9.3.0-nolibc_arm-linux-gnueabi.tar.xz
 		# and x86_64-gcc-9.3.0-nolibc_arm-linux-gnueabihf.tar.xz for arm, match "arm-linux-gnueabi." instead of
 		# "arm-linux-gnueabi" to get single tool package which match exactly.
-		file=$(grep "${gcc_arch_pattern}\." $list | grep "${gcc_version}" | tail -1)
+		file=$(grep "${gcc_arch_pattern}\..*tar\.xz" $list | grep "${gcc_version}" | tail -1)
 	else
-		file=$(grep "${gcc_arch_pattern}\." $list | tail -1)
+		file=$(grep "${gcc_arch_pattern}\..*tar\.xz" $list | tail -1)
 	fi
 	[[ $file ]] || {
 		echo "Cannot find $gcc_arch_pattern under $URL check $list"
+		echo "Please set new url, e.g. export URL=https://cdn.kernel.org/pub/tools/crosstool/files/bin/x86_64"
 		return 1
 	}
 
