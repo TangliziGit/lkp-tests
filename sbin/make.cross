@@ -172,7 +172,7 @@ download_extract()
 install_crosstool_clang()
 {
 	local URL='https://download.01.org/0day-ci/cross-package'
-	local file='clang-latest/clang.tar.xz'
+	local file='clang-latest/clang-latest/clang.tar.xz'
 
 	download_extract "$URL/$file" || {
 		echo "Failed to download $URL/$file"
