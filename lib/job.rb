@@ -744,7 +744,7 @@ class Job
   end
 
   def get_packages_from_debian(os, script)
-    get_lkp_path_list.reverse.each do |lkp_path|
+    Job.get_lkp_path_list.reverse.each do |lkp_path|
       packages_path = "#{lkp_path}/distro/depends/#{script}"
       next unless File.exist?(packages_path)
 
@@ -759,7 +759,7 @@ class Job
   # - $LKP_SRC/distro/depends/$os/$script
   def search_depend_packages_file(os, os_version, script)
     dirs = []
-    get_lkp_path_list.reverse.each do |lkp|
+    Job.get_lkp_path_list.reverse.each do |lkp|
       dirs << "#{lkp}/distro/depends/"
     end
 
