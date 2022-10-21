@@ -12,3 +12,4 @@ clone_from_upsteam_repos:
 - tip
 belongs_to: general scheduler
 branch_denylist: x86/mm
+no_merge_branch: perf/core
