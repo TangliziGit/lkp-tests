@@ -699,6 +699,23 @@ end
 class TimensStater < Stater
   def stat(line, stats)
     case line
+    when /# SKIP CLOCK_BOOTTIME_ALARM isn't supported/
+      # ignore below skip, cause there's no test name when it skipped,
+      # thus it's meaningless for auto-bisect
+      # selftests: timens: timens
+      # ok 3 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+      # ok 4 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+      # below shows their name when test passed,
+      # can't unite the stats name between skip & pass
+      # ok 3 Passed for CLOCK_BOOTTIME_ALARM (syscall)
+      # ok 4 Passed for CLOCK_BOOTTIME_ALARM (vdso)
+
+      # same as timerfd
+      # selftests: timens: timerfd
+      # ok 3 clockid=9
+
+      # ok 3 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
     when /# (ok|fail|skip) \d+ (.*):(.*)/
       # ok 1 clockid: 1 abs:0
       @test_case = "#{$2}:#{$3}"
