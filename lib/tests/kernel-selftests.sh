@@ -661,7 +661,7 @@ fixup_vm()
 	fi
 
 	# vm selftests may needs to run for more than 150s on some specific platforms and exceeds the default timeout 45s
-	echo 'timeout=200' > vm/settings
+	echo 'timeout=600' > vm/settings
 }
 
 platform_is_skylake_or_snb()
