@@ -229,6 +229,9 @@ test_setting()
 		# fix 'Unable to make dir /test/growfiles/XXX' error
 		mkdir -p /test/growfiles
 		;;
+	tracing)
+		export LTP_TIMEOUT_MUL=5
+		;;
 	esac
 }
 
