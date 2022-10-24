@@ -363,6 +363,8 @@ fixup_firmware()
 			log_cmd systemctl restart systemd-udevd
 		fi
 	}
+
+	sed -i "s/timeout=165/timeout=300/" firmware/settings
 }
 
 fixup_gpio()
