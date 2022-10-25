@@ -218,7 +218,7 @@ need_kconfig:
 - DMABUF_HEAPS_SYSTEM: y, v5.6-rc1
 - BTRFS_FS: m
 - CHECKPOINT_RESTORE: y
-- DRM_DEBUG_SELFTEST: m, v4.18-rc1
+- DRM_DEBUG_SELFTEST: m, v4.18-rc1, <= v6.0
 - EFIVAR_FS: y
 - EMBEDDED: y
 - EXPERT: y
