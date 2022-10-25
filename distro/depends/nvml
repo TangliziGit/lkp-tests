@@ -27,3 +27,4 @@ libc6-dbg
 strace
 gdb
 sudo
+cmake
