@@ -16,6 +16,7 @@ LINUX_DEVICE_NAMES = IO.read("#{LKP_SRC_ETC}/linux-device-names").split("\n")
 LINUX_DEVICE_NAMES_RE = /\b(#{LINUX_DEVICE_NAMES.join('|')})\d+/.freeze
 
 INITCALL_LEVELS = {
+  'cmdline' => 1,
   'early' => 1,
   'pure' => 2,
   'core' => 3,
@@ -517,12 +518,12 @@ rescue StandardError
   nil
 end
 
-def timestamp_levels(dmesg_file)
-  initcall_level = initcall_levels(dmesg_file)
-  return nil unless initcall_level
-
+def timestamp_levels(error_stamps, dmesg_file)
   map = {}
+
   initcall_lines = %x[#{grep_cmd(dmesg_file)} -E " initcall [0-9a-zA-Z_]+\\\\+0x.* returned" #{dmesg_file}]
+  initcall_level = initcall_levels(dmesg_file) unless initcall_lines.empty?
+
   initcall_lines.each_line do |line|
     next unless line.resolve_invalid_bytes =~ /\[ *(\d{1,6}\.\d{6})\].* ([0-9a-zA-Z_]+)\+0x/
 
@@ -533,21 +534,28 @@ def timestamp_levels(dmesg_file)
     # when late_initcall called, other level initcall may be still running
     break if level == 'late'
   end
-  boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
-  m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
-  map[m[1]] = INITCALL_LEVELS['boot-ok'] if m
 
-  return nil if map.empty?
+  if map.empty?
+    kernel_cmdline = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel command line:' #{dmesg_file}]
+    if kernel_cmdline.empty?
+      last = error_stamps['last']
+      map[last] = INITCALL_LEVELS['cmdline'] if last
+    end
+  else
+    boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
+    m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
+    map[m[1]] = INITCALL_LEVELS['boot-ok'] if m
+  end
 
   map
 end
 
 def put_dmesg_stamps(error_stamps, dmesg_file)
-  timestamp_level = timestamp_levels(dmesg_file)
+  timestamp_level = timestamp_levels(error_stamps, dmesg_file)
   puts
   error_stamps.each do |error_id, timestamp|
     puts "timestamp:#{error_id}: #{timestamp}"
-    next unless timestamp_level
+    next if timestamp_level.empty?
 
     at = timestamp_level.keys.bsearch_index { |t| t.to_f > timestamp.to_f } || timestamp_level.size
     at = at.positive? ? at - 1 : at
