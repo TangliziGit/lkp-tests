@@ -1,5 +1,10 @@
 boot_failures: 1
 
+# kernel/workqueue.c:.* RCU-list traversed in non-reader section!
+kernel/workqueue.c:#RCU-list_traversed_in_non-reader_section: 1
+message:kernel/workqueue.c:#RCU-list_traversed_in_non-reader_section: [    0.396297][    T1] kernel/workqueue.c:4294 RCU-list traversed in non-reader section!
+pattern:kernel/workqueue.c:#RCU-list_traversed_in_non-reader_section: kernel/workqueue.c:.* RCU-list traversed in non-reader section!
+
 # EIP: test+0x
 EIP:test: 1
 message:EIP:test: [    4.345803][  T204] EIP: test+0x1e9/0x1bb0
@@ -27,6 +32,8 @@ pattern:Kernel_panic-not_syncing:Fatal_exception: Kernel panic - not syncing: Fa
 
 timestamp:last: 25.474533
 bootstage:last: 10
+timestamp:kernel/workqueue.c:#RCU-list_traversed_in_non-reader_section: 0.396297
+bootstage:kernel/workqueue.c:#RCU-list_traversed_in_non-reader_section: 1
 timestamp:EIP:test: 4.345803
 bootstage:EIP:test: 1
 timestamp:BUG:unable_to_handle_page_fault_for_address: 24.342728

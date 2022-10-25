@@ -1,3 +1,4 @@
+[    0.396297][    T1] kernel/workqueue.c:4294 RCU-list traversed in non-reader section!
 [    3.245867][    T1] Running RCU-tasks wait API self tests
 [    3.349344][    T1] calling  init_hw_perf_events+0x0/0x829 @ 1
 [    3.350131][    T1] Performance Events: unsupported p6 CPU model 42 no PMU driver, software events only.
