@@ -857,7 +857,7 @@ phoronix-test-suite:
       - 6            [Default]
       - 6, Lossless  [Default Speed + Lossless]
       - 10           [Fastest]
-      - 10, Lossless [Fastest]
+      # - 10, Lossless [Fastest]
       # - Test All Options
   - test: basis-1.1.0
     option_a:
