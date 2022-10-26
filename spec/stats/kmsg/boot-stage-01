@@ -1,0 +1,18 @@
+kern  :notice: [    1.041442] Kernel command line: ip=::::vm-meta-316::dhcp root=/dev/ram0
+kern  :err   : [   47.356795] IP-Config: Failed to open gretap0
+kern  :err   : [   47.358191] IP-Config: Failed to open erspan0
+kern  :info  : [   47.359664] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+kern  :notice: [   47.371301] Sending DHCP requests ., OK
+kern  :info  : [   48.366762] IP-Config: Got DHCP answer from 10.0.2.2, my address is 10.0.2.15
+kern  :info  : [   48.368810] IP-Config: Complete:
+kern  :info  : [   48.370031]      device=eth0, hwaddr=52:54:00:12:34:56, ipaddr=10.0.2.15, mask=255.255.255.0, gw=10.0.2.2
+kern  :info  : [   48.372853]      host=vm-meta-316, domain=, nis-domain=(none)
+kern  :info  : [   48.374585]      bootserver=10.0.2.2, rootserver=10.0.2.2, rootpath=
+kern  :info  : [   48.374598]      nameserver0=10.0.2.3
+kern  :debug : [   48.379833] initcall ip_auto_config+0x0/0x816 returned 0 after 1041713 usecs
+kern  :debug : [   48.386136] calling  tcp_bpf_v4_build_proto+0x0/0xef @ 1
+kern  :debug : [   48.387802] initcall tcp_bpf_v4_build_proto+0x0/0xef returned 0 after 3 usecs
+kern  :debug : [   48.389938] calling  udp_bpf_v4_build_proto+0x0/0x9d @ 1
+kern  :debug : [   48.391844] initcall udp_bpf_v4_build_proto+0x0/0x9d returned 0 after 2 usecs
+kern  :debug : [   48.394115] calling  bpf_tcp_ca_kfunc_init+0x0/0x16 @ 1
+kern  :debug : [   48.395946] initcall bpf_tcp_ca_kfunc_init+0x0/0x16 returned 0 after 197 usecs
