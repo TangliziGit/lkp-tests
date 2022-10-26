@@ -15,7 +15,7 @@ LKP_SRC_ETC ||= LKP::Path.src('etc')
 LINUX_DEVICE_NAMES = IO.read("#{LKP_SRC_ETC}/linux-device-names").split("\n")
 LINUX_DEVICE_NAMES_RE = /\b(#{LINUX_DEVICE_NAMES.join('|')})\d+/.freeze
 
-INITCALL_LEVELS = {
+BOOT_LEVELS = {
   'cmdline' => 1,
   'early' => 1,
   'pure' => 2,
@@ -531,7 +531,7 @@ def timestamp_levels(error_stamps, dmesg_file)
         timestamp = $1
         initcall = $2
         level = initcall_level[initcall].to_s.split('_').first
-        map[timestamp] = INITCALL_LEVELS[level] if level
+        map[timestamp] = BOOT_LEVELS[level] if level
         # when late_initcall called, other level initcall may be still running
         break if level == 'late'
       end
@@ -542,12 +542,12 @@ def timestamp_levels(error_stamps, dmesg_file)
     kernel_cmdline = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel command line:' #{dmesg_file}]
     if kernel_cmdline.empty?
       last = error_stamps['last']
-      map[last] = INITCALL_LEVELS['cmdline'] if last
+      map[last] = BOOT_LEVELS['cmdline'] if last
     end
   else
     boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
     m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
-    map[m[1]] = INITCALL_LEVELS['boot-ok'] if m
+    map[m[1]] = BOOT_LEVELS['boot-ok'] if m
   end
 
   map
