@@ -541,12 +541,12 @@ def timestamp_levels(error_stamps, dmesg_file)
     end
   end
 
-  if map.empty?
+  last = error_stamps['last']
+  if map.empty? && last
     kernel_cmdline = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel command line:' #{dmesg_file}]
-    if kernel_cmdline.empty?
-      last = error_stamps['last']
-      map[last] = BOOT_LEVELS['cmdline'] if last
-    end
+    m = kernel_cmdline.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
+    # cmdline not exist or boot last time - cmdline time < 5s
+    map[last] = BOOT_LEVELS['cmdline'] if kernel_cmdline.empty? || (m && (Float(last) - Float(m[1])) < 5)
   else
     boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
     m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
