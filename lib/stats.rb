@@ -518,6 +518,25 @@ def bisectable_stat?(stat)
   stat !~ $stat_denylist
 end
 
+def stats_field_bootstage(matrix, stats_field)
+  return 0 unless stats_field =~ /^(dmesg|kmsg)\./
+
+  matrix[stats_field.sub(/\./, '.bootstage:')].to_a.reject(&:zero?).min || 0
+end
+
+def stats_field_crashed_bootstage(matrix, stats_field)
+  return nil unless stats_field =~ /^(dmesg|kmsg)\./
+
+  stat_bootstage = stats_field_bootstage(matrix, stats_field)
+  # ignore high boot stages which may be inaccurately.
+  return nil if stat_bootstage == 0 || stat_bootstage >= 8
+
+  last_bootstage = stats_field_bootstage(matrix, "#{stats_field.split('.').first}.last")
+  return nil if last_bootstage == 0 || last_bootstage >= 8
+
+  stat_bootstage == last_bootstage ? stat_bootstage : nil
+end
+
 def samples_remove_early_fails(matrix, samples, stat_boot_stage)
   return samples if stat_boot_stage.zero?
 
@@ -732,6 +751,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
                          'max' => max,
                          'nr_run' => v.size }
     changed_stats[k].merge! options
+    changed_stats[k]['crashed_bootstage'] ||= stats_field_crashed_bootstage(a, k) || stats_field_crashed_bootstage(b, k)
 
     next unless options['base_matrixes']
 
