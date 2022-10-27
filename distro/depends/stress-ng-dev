@@ -4,7 +4,7 @@ libattr1-dev
 libbsd-dev
 libcap-dev
 libgcrypt-dev
-libipsec-mb-dev
+libipsec-mb-dev (x86_64)
 libjudy-dev
 libkeyutils-dev
 libsctp-dev
