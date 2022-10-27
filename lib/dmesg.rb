@@ -521,6 +521,9 @@ end
 def timestamp_levels(error_stamps, dmesg_file)
   map = {}
 
+  initcall_file = ENV['INITCALL_FILE']
+  return map if initcall_file && !File.exist?(initcall_file.to_s)
+
   initcall_lines = %x[#{grep_cmd(dmesg_file)} -E " initcall [0-9a-zA-Z_]+\\\\+0x.* returned" #{dmesg_file}]
   unless initcall_lines.empty?
     initcall_level = initcall_levels(dmesg_file)
