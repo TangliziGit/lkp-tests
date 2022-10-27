@@ -18,16 +18,5 @@ echo "Running lz4 benchmark..."
 for i in $(seq $iterations)
 do
     echo Iterations: $i
-    if [ "$compression" = "1" ]
-    then
-      log_cmd ./lz4 -q -i10 -b1 -e1 $TESTFILE 2>&1
-    fi
-    if [ "$compression" = "3" ]
-    then
-      log_cmd ./lz4 -q -i10 -b3 -e3 $TESTFILE 2>&1
-    fi
-    if [ "$compression" = "9" ]
-    then
-      log_cmd ./lz4 -q -i10 -b9 -e9 $TESTFILE 2>&1
-    fi
+    log_cmd ./lz4 -q -i10 -b$compression -e$compression $TESTFILE 2>&1
 done
