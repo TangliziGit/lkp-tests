@@ -753,6 +753,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     changed_stats[k].merge! options
     changed_stats[k]['crashed_bootstage'] ||= stats_field_crashed_bootstage(a, k) || stats_field_crashed_bootstage(b, k)
 
+    changed_stats[k]['crashed_bootstage_check'] = stats_field_crashed_bootstage(a, k).nil? && stats_field_crashed_bootstage(b, k)
     next unless options['base_matrixes']
 
     changed_stats[k].delete('base_matrixes')
