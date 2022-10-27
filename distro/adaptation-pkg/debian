@@ -34,6 +34,7 @@ linkbench::
 linpack::
 lmbench3::
 ltp::
+lz4::
 makepkg::
 mce-log::
 mce-test::
@@ -64,11 +65,13 @@ perf-report-srcline: perf
 perf-sanity-tests: perf
 perf-stat: perf
 pft::
+phpbench::
 piglit::
 plzip::
 pmbench::
 pmdk::
 pm-qa::
+pybench::
 postmark::
 qperf::
 reaim::

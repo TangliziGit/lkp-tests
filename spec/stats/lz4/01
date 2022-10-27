@@ -1,0 +1,5 @@
+Running lz4 benchmark...
+Iterations: 1
+2022-10-21 22:26:00 ./lz4 -q -i10 -b1 -e1 ubuntu-18.04.3-desktop-amd64.iso
+bench 1.9.4 : input 2082816000 bytes, 10 seconds, 0 KB blocks
+-1   2082551303 (1.000) 7327.49 MB/s 8026.3 MB/s  desktop-amd64.iso

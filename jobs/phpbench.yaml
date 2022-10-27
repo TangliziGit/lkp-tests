@@ -1,0 +1,6 @@
+suite: phpbench
+testcase: phpbench
+category: benchmark
+
+phpbench:
+ iterations: 2000000

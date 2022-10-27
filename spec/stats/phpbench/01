@@ -1,0 +1,128 @@
+2022-10-19 20:58:11 php phpbench.php -i 2000000
+Starting the benchmark with 2000000 iterations.
+
+Test [test_unordered_functions] enabled.
+Test [test_foreach] enabled.
+Test [test_ord] enabled.
+PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; TestLocalObjectAssign has a deprecated constructor in /lkp/benchmarks/phpbench/tests/test_local_object_assign.php on line 3
+Test [test_empty_loop] enabled.
+Test [test_local_object_assign] enabled.
+Test [test_is_array] enabled.
+Test [test_mt_rand] enabled.
+Test [test_local_boolean_assign] enabled.
+Test [test_if_constant] enabled.
+Test [test_increment] enabled.
+Test [test_variable_variables] enabled.
+Test [test_ordered_functions] enabled.
+Test [test_compare_false] enabled.
+Test [test_do_while] enabled.
+PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; TestGetClass has a deprecated constructor in /lkp/benchmarks/phpbench/tests/test_get_class.php on line 3
+Test [test_constants] enabled.
+Test [test_string_append] enabled.
+Test [test_references] enabled.
+Test [test_sha1] enabled.
+Test [test_isset] enabled.
+Test [test_get_class] enabled.
+Test [test_time] enabled.
+Test [test_strlen] enabled.
+Test [test_local_array_assign] enabled.
+Test [test_comment_loop] enabled.
+Test [test_is_object] enabled.
+Test [test_arithmetic] enabled.
+Test [test_global_string_assign] enabled.
+Test [test_md5] enabled.
+Test [test_line] enabled.
+Test [test_bitwise] enabled.
+Test [test_local_string_assign] enabled.
+Test [test_while] enabled.
+Test [test_global_scalar_assign] enabled.
+Test [test_rand] enabled.
+Test [test_chr_var] enabled.
+Test [test_compare_unstrict] enabled.
+Test [test_is_type] enabled.
+Test [test_crc32] enabled.
+Test [test_array_operators] enabled.
+Test [test_ereg] enabled.
+Test [test_local_hash_assign] enabled.
+Test [test_chr_hardcoded] enabled.
+Test [test_local_scalar_assign] enabled.
+PHP Warning:  "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"? in /lkp/benchmarks/phpbench/tests/test_switch.php on line 36
+Test [test_switch] enabled.
+Test [test_compare_invert] enabled.
+Test [test_ordered_functions_references] enabled.
+Test [test_empty] enabled.
+Test [test_casting] enabled.
+Test [test_local_float_assign] enabled.
+Test [test_local_integer_assign] enabled.
+Test [test_do_while_break] enabled.
+Test [test_chr_fixed] enabled.
+Test [test_microtime] enabled.
+Test [test_compare] enabled.
+Test [test_compare_strict] enabled.
+Test [test_preg_match] enabled.
+
+                   test_arithmetic	   0.0552 seconds.
+              test_array_operators	   0.3872 seconds.
+                      test_bitwise	   0.0624 seconds.
+                      test_casting	   1.7079 seconds.
+                    test_chr_fixed	   0.7076 seconds.
+                test_chr_hardcoded	   0.7063 seconds.
+                      test_chr_var	   0.9566 seconds.
+                 test_comment_loop	   0.2451 seconds.
+                      test_compare	   0.2173 seconds.
+                test_compare_false	   0.0115 seconds.
+               test_compare_invert	   0.0139 seconds.
+               test_compare_strict	   0.0198 seconds.
+             test_compare_unstrict	   0.0709 seconds.
+                    test_constants	   0.1078 seconds.
+                        test_crc32	   0.0823 seconds.
+                     test_do_while	   1.0301 seconds.
+               test_do_while_break	   0.1802 seconds.
+                        test_empty	   0.0112 seconds.
+                   test_empty_loop	   0.2453 seconds.
+                         test_ereg	   0.1940 seconds.
+                      test_foreach	   1.3626 seconds.
+                    test_get_class	   0.0538 seconds.
+         test_global_scalar_assign	   0.2343 seconds.
+         test_global_string_assign	   0.3993 seconds.
+                  test_if_constant	   0.0314 seconds.
+                    test_increment	   0.0682 seconds.
+                     test_is_array	   0.0102 seconds.
+                    test_is_object	   0.0125 seconds.
+                      test_is_type	   0.0327 seconds.
+                        test_isset	   0.0152 seconds.
+                         test_line	   0.0245 seconds.
+           test_local_array_assign	   0.4488 seconds.
+         test_local_boolean_assign	   0.0510 seconds.
+           test_local_float_assign	   0.0507 seconds.
+            test_local_hash_assign	   0.0820 seconds.
+         test_local_integer_assign	   0.0515 seconds.
+          test_local_object_assign	   0.0579 seconds.
+          test_local_scalar_assign	   0.0851 seconds.
+          test_local_string_assign	   0.3152 seconds.
+                          test_md5	   0.2750 seconds.
+                    test_microtime	   0.6889 seconds.
+                      test_mt_rand	   0.0339 seconds.
+                          test_ord	   1.5618 seconds.
+            test_ordered_functions	   1.1651 seconds.
+ test_ordered_functions_references	   1.4052 seconds.
+                   test_preg_match	   0.1554 seconds.
+                         test_rand	   0.0335 seconds.
+                   test_references	   0.0294 seconds.
+                         test_sha1	   0.3601 seconds.
+                test_string_append	   0.2690 seconds.
+                       test_strlen	   0.0182 seconds.
+                       test_switch	   0.5558 seconds.
+                         test_time	   0.0674 seconds.
+          test_unordered_functions	   1.2978 seconds.
+           test_variable_variables	   0.1142 seconds.
+                        test_while	   1.0297 seconds.
+
+System     : Linux kenny-desktop 5.15.0-48-generic #54~20.04.1-Ubuntu SMP Thu Sep 1 16:17:26 UTC 2022 x86_64
+PHP version: 7.4.3
+PHPBench   : 0.8.1
+Date       : October 19, 2022, 8:58 pm
+Tests      : 56
+Iterations : 2000000
+Total time : 19 seconds
+Score      : 1027746 (higher is better)

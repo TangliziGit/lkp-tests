@@ -1,0 +1,21 @@
+pkgname=phpbench
+pkgver=1.1.6
+pkgrel=1
+url='http://www.pureftpd.org/project/phpbench/'
+arch=('i386' 'x86_64' 'riscv64')
+license=('MIT License')
+source=('http://phoronix-test-suite.com/benchmark-files/phpbench-081-patched2.zip')
+md5sums=('3e5fa1ad60261ff052bb38f505c8c4e5')
+
+build()
+{
+        mkdir -p "$srcdir/$pkgname/"
+        cd "$srcdir/$pkgname/"
+        unzip -o ../phpbench-081-patched2.zip
+}
+
+package()
+{
+        mkdir -p "$pkgdir/lkp/benchmarks/phpbench"
+        cp -r "$srcdir/$pkgname/phpbench-0.8.1-patched2/"* "$pkgdir/lkp/benchmarks/phpbench"
+}

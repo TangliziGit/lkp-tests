@@ -1,0 +1,21 @@
+pkgname=pybench
+pkgver=1.1.3
+pkgrel=1
+url='https://svn.python.org/projects/python/trunk/Tools/pybench/'
+arch=('i386' 'x86_64' 'riscv64')
+license=('custom')
+source=('http://www.phoronix-test-suite.com/benchmark-files/pybench-2018-02-16.tar.gz')
+md5sums=('e3ca0e887e4310896d32dd1cbd258a94')
+
+build()
+{
+        mkdir -p "$srcdir/$pkgname/"
+        cd "$srcdir/$pkgname/"
+        tar -zxf ../pybench-2018-02-16.tar.gz
+}
+
+package()
+{
+        mkdir -p "$pkgdir/lkp/benchmarks/pybench"
+        cp -r "$srcdir/$pkgname/pybench-2018-02-16/"* "$pkgdir/lkp/benchmarks/pybench"
+}

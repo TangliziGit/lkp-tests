@@ -32,6 +32,7 @@ liboop-dev: liboop
 linkbench:
 linpack::
 ltp::
+lz4::
 makepkg::
 mce-log::
 mce-test::
@@ -60,9 +61,11 @@ perf-report-srcline: perf
 perf-sanity-tests: perf
 perf-stat: perf
 pft::
+phpbench::
 piglit::
 plzip:: 
 pm-qa::
+pybench::
 postmark:: 
 qperf::
 reaim::
