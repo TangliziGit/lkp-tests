@@ -214,7 +214,7 @@ kexec_to_next_job()
 	echo "LKP: kexecing" > /dev/ttyS0 &
 	kexec -e 2>/dev/null
 
-	set_job_state "kexec_fail"
+	set_job_state "kexec_fail_from_job"
 
 	# in case kexec failed
 	echo "LKP: rebooting after kexec"
