@@ -570,6 +570,14 @@ def put_dmesg_stamps(error_stamps, dmesg_file)
   end
 end
 
+def put_early_bootstage(error_ids)
+  puts
+  initcall_file = ENV['INITCALL_FILE']
+  return if initcall_file && !File.exist?(initcall_file.to_s)
+
+  error_ids.each_key { |error_id| puts "bootstage:#{error_id}: 1" }
+end
+
 # when lkdtm is complete run, ignore dmesg
 def ignore_lkdtm_dmesg?(result_root)
   last_state = "#{result_root}/last_state"

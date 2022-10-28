@@ -1,0 +1,8 @@
+boot_failures: 1
+
+# BUG: kernel failed in early-boot .* last printk: Booting the kernel.
+BUG:kernel_failed_in_early-boot_stage,last_printk:Booting_the_kernel: 1
+message:BUG:kernel_failed_in_early-boot_stage,last_printk:Booting_the_kernel: BUG: kernel failed in early-boot stage, last printk: Booting the kernel.
+pattern:BUG:kernel_failed_in_early-boot_stage,last_printk:Booting_the_kernel: BUG: kernel failed in early-boot .* last printk: Booting the kernel.
+
+bootstage:BUG:kernel_failed_in_early-boot_stage,last_printk:Booting_the_kernel: 1

@@ -149,4 +149,8 @@ error_ids.each do |error_id, line|
   puts "pattern:#{error_id}: #{line}"
 end
 
-put_dmesg_stamps(error_stamps, dmesg_file)
+if error_stamps['last']
+  put_dmesg_stamps(error_stamps, dmesg_file)
+else
+  put_early_bootstage(error_ids)
+end

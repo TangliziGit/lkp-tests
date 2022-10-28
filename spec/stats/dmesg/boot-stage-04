@@ -1,0 +1,16 @@
+early console in setup code
+No EFI environment detected.
+early console in extract_kernel
+input_data: 0x03e3a0aa
+input_len: 0x01f31bcc
+output: 0x01000000
+output_len: 0x04ccedb0
+kernel_total_size: 0x05178000
+needed_size: 0x05178000
+
+Decompressing Linux... Parsing ELF... No relocation needed... done.
+Booting the kernel.
+convert early boot stage from hang to failed
+BUG: kernel failed in early-boot stage, last printk: Booting the kernel.
+Linux version 6.1.0-rc1 #1
+Command line: ip=::::vm-meta-4::dhcp root=/dev/ram0
