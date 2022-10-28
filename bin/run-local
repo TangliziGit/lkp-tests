@@ -119,7 +119,8 @@ job['rootfs'] ||= if File.exist? '/etc/os-release'
                   end
 job['nr_cpu'] ||= `nproc`.to_i
 job['memory'] ||= `grep -w '^memory:' #{LKP_SRC}/hosts/#{HOSTNAME}`.split(' ')[1].chomp
-job['compiler'] ||= File.symlink?('/usr/bin/gcc') ? File.readlink('/usr/bin/gcc') : 'gcc'
+job['compiler'] ||= File.realpath('/usr/bin/gcc').match(/gcc.*/).to_s
+job['compiler'] = 'gcc' if job['compiler'].empty?
 job['NO_NETWORK'] = 1
 job['LKP_LOCAL_RUN'] = 1
 
