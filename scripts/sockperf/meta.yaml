@@ -1,0 +1,28 @@
+metadata:
+        name: sockperf
+        summary: Network benchmarking utility for testing latency and throughput
+        description: |
+         sockperf is a network benchmarking utility over socket API that was
+         designed for testing performance (latency and throughput) of
+         high-performance systems (it is also good for testing performance of
+         regular networking systems as well). It covers most of the socket API
+         calls and options.
+        homepage: https://github.com/Mellanox/sockperf
+
+type: test
+depends:
+        debian: sockperf
+params:
+        runtime:
+                type: timedelta
+        msg_size:
+                type: bytes
+results:
+        throughput.TCP.msg_per_sec:
+                kpi: 1
+        throughput.TCP.BandWidth_MBps:
+                kpi: 1
+        throughput.UDP.msg_per_sec:
+                kpi: 1
+        throughput.UDP.BandWidth_MBps:
+                kpi: 1
