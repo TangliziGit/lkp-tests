@@ -1,0 +1,83 @@
+metadata:
+        summary: >
+          memtier_benchmark is a command line utility developed by Redis Labs
+          (formerly Garantia Data Ltd.) for load generation and bechmarking NoSQL
+          key-value databases.
+
+        description: |
+          memtier_benchmark is a command line utility developed by Redis Labs
+          (formerly Garantia Data Ltd.) for load generation and bechmarking NoSQL
+          key-value databases. It offers the following:
+
+            * Support for both Redis and Memcache protocols (text and binary)
+            * Multi-threaded multi-client execution
+            * Multiple configuration options, including:
+            * Read:Write ratio
+            * Random and sequential key name pattern policies
+            * Random or ranged key expiration
+            * Redis cluster
+            * ...and much more
+
+        homepage: https://github.com/RedisLabs/memtier_benchmark
+
+type: test
+depends:
+        debian:
+                autoconf
+                libpcre3-dev
+                libevent-dev
+                pkg-config
+                zlib1g-dev
+
+params:
+  n_ratio:
+  data_size:
+  requests:
+  key_pattern:
+  key_max:
+  n_client:
+  n_pipeline:
+
+results:
+  preload_duration:
+  total_sets_ops/s:
+  total_sets_latency_ms:
+  total_sets_kb/s:
+  total_gets_ops/s:
+  total_gets_hits/s:
+  total_gets_misses/s:
+  total_gets_latency_ms:
+  total_gets_kb/s:
+  total_totals_ops/s:
+  total_totals_hits/s:
+  total_totals_misses/s:
+  total_totals_latency_ms:
+  total_totals_kb/s:
+  avg_sets_ops/s:
+  avg_sets_latency_ms:
+  avg_sets_kb/s:
+  avg_gets_ops/s:
+  avg_gets_hits/s:
+  avg_gets_misses/s:
+  avg_gets_latency_ms:
+  avg_gets_kb/s:
+  gets_miss_rate_%:
+  avg_totals_ops/s:
+  avg_totals_hits/s:
+  avg_totals_misses/s:
+  avg_totals_latency_ms:
+  avg_totals_kb/s:
+  set_latency_90%_ms:
+  set_latency_95%_ms:
+  set_latency_99%_ms:
+  set_latency_99.9%_ms:
+  get_latency_90%_ms:
+  get_latency_95%_ms:
+  get_latency_99%_ms:
+  get_latency_99.9%_ms:
+
+ignoreStderr: |
+        \[RUN #[0-9]+\] Preparing benchmark client...
+        \[RUN #[0-9]+\] Launching threads now...
+        \[RUN *.*msec latency.*
+        modprobe: FATAL: Module dax_pmem_compat is in use.
