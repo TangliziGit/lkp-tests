@@ -577,6 +577,7 @@ def put_early_bootstage(error_ids)
   initcall_file = ENV['INITCALL_FILE']
   return if initcall_file && !File.exist?(initcall_file.to_s)
 
+  puts 'bootstage:last: 1'
   error_ids.each_key { |error_id| puts "bootstage:#{error_id}: 1" }
 end
 
