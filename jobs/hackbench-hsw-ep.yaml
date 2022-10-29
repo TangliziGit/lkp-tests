@@ -4,20 +4,19 @@ category: benchmark
 disable_latency_stats: 1
 
 nr_threads:
-- 1600%
+  - 1600%
 
 hackbench:
   iterations: 10
   mode:
-  - process
-  - threads
+    - process
+    - threads
   ipc:
-  - pipe
-  - socket
+    - pipe
+    - socket
 
 ---
-
 nr_threads:
-- 50%
+  - 50%
 
 hackbench.iterations: 10

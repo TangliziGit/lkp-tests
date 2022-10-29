@@ -14,7 +14,7 @@ get_time_ms()
 	echo $(($(date +%s%N)/1000000))
 }
 
-: ${runtime:=600}
+: "${runtime:=600}"
 [ -n "$bs" ] && opt_bs="bs=$bs"
 
 t=$(get_time_ms)

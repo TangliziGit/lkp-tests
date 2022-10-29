@@ -6,4 +6,4 @@ need_x: true
 
 phoronix-test-suite:
   test:
-  - battery-power-usage-1.0.0
+    - battery-power-usage-1.0.0

@@ -6,4 +6,4 @@ need_memory: 4G
 
 ltp:
   test:
-  - numa
+    - numa

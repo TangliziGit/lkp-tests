@@ -8,7 +8,7 @@ sleep_after_boot:
   sleep_time: 600
 
 services:
-   pmeter_server:
+  pmeter_server:
 
 runtime: 30m
 

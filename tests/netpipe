@@ -5,12 +5,28 @@
 ## the best of ttcp and netperf and visually represents the network
 ## performance under a variety of conditions.
 
+cd $BENCHMARK_ROOT/netpipe || die "no $BENCHMARK_ROOT/netpipe"
+
 [ -n "$direct_server_ips" ] && server=$direct_server_ips
 [ -z "$server" ] && server=127.0.0.1
 server=${server%% *}
 
+fixup_mpi()
+{
+	# fix 'make: mpicc: No such file or directory'
+	ln -sf /usr/bin/mpicc.openmpi /usr/bin/mpicc
+
+	# fix '/bin/sh: 1: mpirun: not found'
+	ln -sf /usr/bin/mpirun.openmpi /usr/bin/mpirun
+}
+
+fixup_mpi
+
+log_cmd make CFLAGS="-fcommon" $test || die "failed to compile $test"
+
 case $test in
-tcp )
-	log_cmd NPtcp -n 1000 -h $server 2>&1
+mpi )
+	echo "$server slots=1" > mpihost
+	log_cmd mpirun -np 1 --hostfile mpihost --allow-run-as-root NPmpi --repeats 1000 2>&1
 	;;
 esac

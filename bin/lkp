@@ -32,6 +32,7 @@ case "$lkp_command" in
 	'install')	lkp_command='install'		;;
 	'split')	lkp_command='split-job'		;;
 	'compile')	lkp_command='job2sh'		;;
+	'merge')	lkp_command='merge-remote-result'		;;
 	'run-monitor')	lkp_command='run-local-monitor.sh'		;;
 	'stop-monitor')	TMP=/tmp/lkp $LKP_SRC/bin/event/wakeup default-monitors; exit $?	;;
 	'run')

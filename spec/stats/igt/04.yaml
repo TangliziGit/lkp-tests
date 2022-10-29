@@ -1,0 +1,2 @@
+gem_exec_async.forked-writes.skip: 1
+gem_streaming_writes.batch-cpu.skip: 1

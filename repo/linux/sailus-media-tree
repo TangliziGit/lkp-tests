@@ -1,2 +1,5 @@
 url: git://linuxtv.org/sailus/media_tree.git
+git_am_branch: streams
+owner: Sakari Ailus <sakari.ailus@linux.intel.com>
+mail_cc: linux-media@vger.kernel.org
 notify_build_success_branch: .*

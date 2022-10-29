@@ -18,7 +18,7 @@ grep flags /proc/cpuinfo|grep -q ' msr ' || exit 0
 # skip unreliable machines
 [ "${HOSTNAME#*lkp-a0[1-9]}"	!= "$HOSTNAME" ] && exit 0
 
-modprobe msr 2>&1 || exit
+modprobe msr 2>&1
 
 for cpu_dir in /dev/cpu/[0-9]*
 do

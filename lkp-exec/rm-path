@@ -68,7 +68,7 @@ remove_from_mrtts()
 		[[ -d "$path" ]] || continue
 		for dir in $(find $path -type d); do
 			is_mrt "$dir" && echo "$dir"
-		done | lkp delete_mrts
+		done | $LKP_SRC/bin/lkp delete_mrts
 	done
 }
 
@@ -80,7 +80,7 @@ revert_unite_rt()
 			if is_local_run "$path"; then
 				$LKP_SRC/sbin/unite-stats -d "$path"
 			else
-				lkp reprocess -d "$path"
+				$LKP_SRC/bin/lkp reprocess -d "$path"
 			fi
 		fi
 	done
@@ -114,7 +114,7 @@ while getopts "y" opt; do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 for path; do
 	path=$(abs_path "$path")

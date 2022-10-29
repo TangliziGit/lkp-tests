@@ -54,7 +54,6 @@ while (line = $stdin.gets)
       prefix = $1 + $3
       no = $2
     else
-      prefix = prefix
       no = nil
     end
   end

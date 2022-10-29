@@ -54,7 +54,7 @@ class LinuxTestcasesTableSet
        pmbench linkbench rocksdb cassandra redis power-idle
        mongodb ycsb memtier mcperf fio-jbod cyclictest filebench igt
        autonuma-benchmark adrestia kernbench rt-app migratepages intel-ipsec-mb
-       simd-stress].freeze
+       simd-stress bpftrace stress-ng coremark tinymembench pybench phpbench lz4].freeze
   LINUX_TESTCASES =
     %w[analyze-suspend boot blktests cpu-hotplug ext4-frags ftq ftrace-onoff fwq
        galileo irda-kernel kernel-builtin kernel-selftests kvm-unit-tests kvm-unit-tests-qemu
@@ -62,12 +62,11 @@ class LinuxTestcasesTableSet
        qemu rcuscale rcutorture suspend suspend-stress trinity ndctl nfs-test hwsim
        idle-inject mdadm-selftests xsave-test nvml test-bpf mce-log perf-sanity-tests
        build-perf_test update-ucode reboot cat libhugetlbfs-test ocfs2test syzkaller
-       perf-test stress-ng fxmark kvm-kernel-boot-test bkc_ddt
+       perf-test fxmark kvm-kernel-boot-test bkc_ddt rdma-pyverbs
        xfstests packetdrill avocado v4l2 vmem perf-stat-tests cgroup2-test].freeze
   OTHER_TESTCASES =
-    %w[0day-boot-tests 0day-kbuild-tests build-dpdk build-nvml
-       build-qemu convert-lkpdoc-to-html convert-lkpdoc-to-html-css rsync-rootfs
-       health-stats hwinfo internal-lkp-service ipmi-setup debug
+    %w[build-dpdk build-nvml build-qemu convert-lkpdoc-to-html convert-lkpdoc-to-html-css rsync-rootfs
+       health-stats hwinfo ipmi-setup debug
        lkp-bug lkp-install-run lkp-services lkp-src pack lkp-qemu
        pack-deps makepkg makepkg-deps borrow dpdk-dts mbtest build-acpica build-ltp
        bust-shm-exit build-llvm_project upgrade-trinity build-0day-crosstools deploy-clang kmemleak-test kunit].freeze
@@ -328,7 +327,7 @@ def load_base_matrix(matrix_path, head_matrix, options)
     version = nil
     is_exact_match = false
     version, is_exact_match = git.gcommit(commit).last_release_tag
-    puts "project: #{project}, version: #{version}, is exact match: #{is_exact_match}" if ENV['LKP_VERBOSE']
+    log_debug "project: #{project}, version: #{version}, is_exact_match: #{is_exact_match}"
   rescue StandardError => e
     log_error e
     return nil
@@ -426,7 +425,8 @@ end
 
 def __function_stat?(stats_field)
   return false if stats_field.index('.time.')
-  return false if stats_field.index('.timestamp.')
+  return false if stats_field.index('.timestamp:')
+  return false if stats_field.index('.bootstage:')
   return true if $metric_failure.any? { |pattern| stats_field =~ %r{^#{pattern}} }
   return true if $metric_pass.any? { |pattern| stats_field =~ %r{^#{pattern}} }
 
@@ -442,26 +442,26 @@ def function_stat?(stats_field)
   end
 end
 
-def __is_latency(stats_field)
+def __latency_stat?(stats_field)
   $index_latency.keys.any? { |i| stats_field =~ /^#{i}$/ }
   false
 end
 
-def is_latency(stats_field)
-  $__is_latency_cache ||= {}
-  if $__is_latency_cache.include? stats_field
-    $__is_latency_cache[stats_field]
+def latency_stat?(stats_field)
+  $latency_stat_cache ||= {}
+  if $latency_stat_cache.include? stats_field
+    $latency_stat_cache[stats_field]
   else
-    $__is_latency_cache[stats_field] = __is_latency(stats_field)
+    $latency_stat_cache[stats_field] = __latency_stat?(stats_field)
   end
 end
 
-def is_failure(stats_field)
+def failure_stat?(stats_field)
   $metric_failure.each { |pattern| return true if stats_field =~ %r{^#{pattern}} }
   false
 end
 
-def is_pass(stats_field)
+def pass_stat?(stats_field)
   $metric_pass.each { |pattern| return true if stats_field =~ %r{^#{pattern}} }
   false
 end
@@ -516,6 +516,44 @@ def bisectable_stat?(stat)
   return true if stat =~ $stat_allowlist
 
   stat !~ $stat_denylist
+end
+
+def stats_field_bootstage(matrix, stats_field)
+  return 0 unless stats_field =~ /^(dmesg|kmsg)\./
+
+  matrix[stats_field.sub(/\./, '.bootstage:')].to_a.reject(&:zero?).min || 0
+end
+
+def stats_field_crashed_bootstage(matrix, stats_field)
+  return nil unless stats_field =~ /^(dmesg|kmsg)\./
+
+  stat_bootstage = stats_field_bootstage(matrix, stats_field)
+  # ignore high boot stages which may be inaccurately.
+  return nil if stat_bootstage == 0 || stat_bootstage >= 8
+
+  last_bootstage = stats_field_bootstage(matrix, "#{stats_field.split('.').first}.last")
+  return nil if last_bootstage == 0 || last_bootstage >= 8
+
+  stat_bootstage == last_bootstage ? stat_bootstage : nil
+end
+
+def samples_remove_early_fails(matrix, samples, stat_boot_stage)
+  return samples if stat_boot_stage.zero?
+
+  perf_samples = []
+  samples.each_with_index do |v, i|
+    stage = if matrix['dmesg.bootstage:last']
+              matrix['dmesg.bootstage:last'][i].to_i
+            elsif matrix['kmsg.bootstage:last']
+              matrix['kmsg.bootstage:last'][i].to_i
+            else
+              0
+            end
+    next if stage != 0 && stage < stat_boot_stage
+
+    perf_samples << v
+  end
+  perf_samples
 end
 
 def samples_remove_boot_fails(matrix, samples)
@@ -583,12 +621,12 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
   expand_matrix(b, options)
 
   b_monitors = {}
-  b.keys.each { |k| b_monitors[stat_key_base(k)] = true }
+  b.each_key { |k| b_monitors[stat_key_base(k)] = true }
 
-  b.keys.each { |k| a[k] = [0] * cols_a unless a.include?(k) }
+  b.each_key { |k| a[k] = [0] * cols_a unless a.include?(k) } # rubocop:disable Style/CombinableLoops
 
   a.each do |k, v|
-    log_verbose k
+    is_force_stat = options["force_#{k}"]
 
     next if v[-1].is_a?(String)
     next if options['perf'] && !perf_metric?(k)
@@ -596,25 +634,16 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     next if !options['more'] && !bisectable_stat?(k) && k !~ $report_allowlist_re
 
     is_function_stat = function_stat?(k)
-    if is_function_stat && k !~ /^(dmesg|kmsg|last_state|stderr)\./
+    if !is_force_stat && is_function_stat && k !~ /^(dmesg|kmsg|last_state|stderr)\./
       # if stat is packetdrill.packetdrill/gtests/net/tcp/mtu_probe/basic-v6_ipv6.fail,
       # base rt stats should contain 'packetdrill.packetdrill/gtests/net/tcp/mtu_probe/basic-v6_ipv6.pass'
       stat_base = k.sub(/\.[^.]*$/, '')
       # only consider pass and fail temporarily
-      next if k =~ /\.fail$/ && !b.keys.any? { |stat| stat == "#{stat_base}.pass" }
-      next if k =~ /\.pass$/ && !b.keys.any? { |stat| stat == "#{stat_base}.fail" }
+      next if k =~ /\.fail$/ && b.keys.none? { |stat| stat == "#{stat_base}.pass" }
+      next if k =~ /\.pass$/ && b.keys.none? { |stat| stat == "#{stat_base}.fail" }
     end
 
-    is_allowed_stat = false
-    if options["force_#{k}"]
-      if strict_kpi_stat?(k, nil)
-        is_allowed_stat = true
-      else
-        is_function_stat = true
-      end
-    end
-
-    is_latency_stat = is_latency k
+    is_latency_stat = latency_stat?(k)
     max_margin = if is_function_stat || is_latency_stat
                    0
                  else
@@ -656,10 +685,10 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     min_a, mean_a, max_a = get_min_mean_max sorted_a
     next unless max_a
 
-    if !is_allowed_stat && !changed_stats?(sorted_a, min_a, mean_a, max_a,
-                                           sorted_b, min_b, mean_b, max_b,
-                                           is_function_stat, is_latency_stat,
-                                           k, options)
+    if !is_force_stat && !changed_stats?(sorted_a, min_a, mean_a, max_a,
+                                         sorted_b, min_b, mean_b, max_b,
+                                         is_function_stat, is_latency_stat,
+                                         k, options)
       next
     end
 
@@ -691,7 +720,7 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
     y = 0 if y < 0
     ratio = MAX_RATIO if ratio > MAX_RATIO
 
-    if !is_allowed_stat && !(options['perf-profile'] && k =~ /^perf-profile\./)
+    if !is_force_stat && !(options['perf-profile'] && k =~ /^perf-profile\./)
       next unless ratio > 1.01 # time.elapsed_time only has 0.01s precision
       next unless ratio > 1.1 || perf_metric?(k)
       next unless reasonable_perf_change?(k, delta, max)
@@ -722,7 +751,9 @@ def __get_changed_stats(a, b, is_incomplete_run, options)
                          'max' => max,
                          'nr_run' => v.size }
     changed_stats[k].merge! options
+    changed_stats[k]['crashed_bootstage'] ||= stats_field_crashed_bootstage(a, k) || stats_field_crashed_bootstage(b, k)
 
+    changed_stats[k]['crashed_bootstage_check'] = stats_field_crashed_bootstage(a, k).nil? && stats_field_crashed_bootstage(b, k)
     next unless options['base_matrixes']
 
     changed_stats[k].delete('base_matrixes')
@@ -825,7 +856,7 @@ def add_stats_to_matrix(stats, matrix)
   matrix
 end
 
-def matrix_from_stats_files(stats_files, add_source = true, stats_field = nil)
+def matrix_from_stats_files(stats_files, stats_field = nil, add_source: true)
   matrix = {}
   stats_files.each do |stats_file|
     stats = load_json stats_file

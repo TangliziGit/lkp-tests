@@ -1,0 +1,15 @@
+2022-06-09 17:51:02 make run_tests -C dmabuf-heaps
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/dmabuf-heaps'
+TAP version 13
+1..1
+# selftests: dmabuf-heaps: dmabuf-heap
+# Testing heap: system
+# =======================================
+#   Testing allocation and importing:   OK
+#   Testing alloced 4k buffers are zeroed:  OK
+#   Testing alloced 1024k buffers are zeroed:  OK
+#   Testing (theoretical)older alloc compat:  OK
+#   Testing (theoretical)newer alloc compat:  OK
+#   Testing expected error cases:  OK
+ok 1 selftests: dmabuf-heaps: dmabuf-heap
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/dmabuf-heaps'

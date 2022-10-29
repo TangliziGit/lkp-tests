@@ -32,8 +32,11 @@ export MCE_TEST_SKIP=s3_s4_test
 create_edac_ref()
 {
 	# generate reference result file for EDAC
+
+	# shellcheck disable=SC2164
 	pushd cases/function/edac
 	./edac.sh &>/dev/null
+	# shellcheck disable=SC2164
 	popd
 }
 
@@ -42,7 +45,7 @@ test_all()
 	local file
 
 	log_cmd cp -af "$BENCHMARK_ROOT"/mce-test "$mount_points"
-	cd "$mount_points"/mce-test
+	cd "$mount_points"/mce-test || return
 
 	cat > $MCE_CASELIST <<EOF
 APEI-INJ cases/function/apei-inj/runtest.sh
@@ -71,13 +74,13 @@ EOF
 	fi
 	rm -rf "$mount_points"/mce-test
 
-	cd "$BENCHMARK_ROOT"/mce-test
+	cd "$BENCHMARK_ROOT"/mce-test || return
 	[ "$nr_partitions" -ge 1 ] || exit
 	partition=${partitions%% *}
 
 	[ -n "$duration" ] || duration=60
 
-	cd cases/stress/hwpoison || exit
+	cd cases/stress/hwpoison || return
 
 	# the latter hwpoison.sh script will call LTP project which will remove $TMP after run finished.
 	# currently, the variable TMP=/tmp/lkp contain various log file, so need to export TMP variable to temp dir.
@@ -108,7 +111,7 @@ test_choice()
 {
 	local file
 	log_cmd cp -af "$BENCHMARK_ROOT"/mce-test "$mount_points"
-	cd "$mount_points"/mce-test
+	cd "$mount_points"/mce-test || return
 	for i in ${mce_case}; do
 		if grep -q "^$i" "$MCE_SCENARIO_DIR"/*; then
 			grep -h "^$i" "$MCE_SCENARIO_DIR"/* | awk '{print $1" "$2}' >> $MCE_CASELIST

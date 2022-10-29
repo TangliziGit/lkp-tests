@@ -4,8 +4,8 @@ category: benchmark
 runtime: 300s
 
 nr_task:
-- 200%
-- 50%
+  - 200%
+  - 50%
 
 target: autoksyms_recursive
 
@@ -14,5 +14,5 @@ kbuild:
 ---
 disk: 1HDD
 fs:
-- ext4
-- btrfs
+  - ext4
+  - btrfs

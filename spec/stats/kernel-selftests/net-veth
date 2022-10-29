@@ -1,0 +1,21 @@
+2022-10-11 06:11:56 make -C ../../../tools/testing/selftests/net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4fe89d07dcc2804c8b562f6c7896a45643d34b2f/tools/testing/selftests/net'
+# selftests: net: veth.sh
+# default - gro flag                                           ok 
+#         - peer gro flag                                      ok 
+# with gro on - gro flag                                       ok 
+#         - peer gro flag                                      ok 
+#         - tso flag                                           ok 
+# default channels                                             fail rx:1:1 tx:1:1 combined:n/a:0
+# setting tx channels                                          ok 
+# setting both rx and tx channels                              ok 
+# bad setting: combined channels                               ok 
+# setting invalid channels nr                                  ok 
+# setting invalid channels nr                                  ok 
+# with xdp attached - gro flag                                 ok 
+#         - peer gro flag                                      ok 
+# decreasing tx channels with device down                      ok 
+#         - aggregation                                        ok 
+# increasing tx channels with device down                      ok 
+# aggregation again with default and TSO off                   ok 
+not ok 54 selftests: net: veth.sh

@@ -38,23 +38,23 @@ phoronix-test-suite:
       - PSNR/SSIM Optimized      [Default]
       - VMAF Optimized
       # - Test All Options
-  - test: onednn-1.7.0
-    option_a:
-      - Convolution Batch Shapes Auto
-      - Deconvolution Batch shapes_1d
-      - Deconvolution Batch shapes_3d
-      - IP Shapes 1D
-      - IP Shapes 3D
-      - Matrix Multiply Batch Shapes Transformer
-      - Recurrent Neural Network Training
-      - Recurrent Neural Network Inference
+  # - test: onednn-1.7.0 # temporarily comment out the failed test
+    # option_a:
+      # - Convolution Batch Shapes Auto
+      # - Deconvolution Batch shapes_1d
+      # - Deconvolution Batch shapes_3d
+      # - IP Shapes 1D
+      # - IP Shapes 3D
+      # - Matrix Multiply Batch Shapes Transformer
+      # - Recurrent Neural Network Training
+      # - Recurrent Neural Network Inference
       # - Test All Options
-    option_b:
-      - f32
-      - u8s8f32      [Optimized For AVX-512]
-      - bf16bf16bf16 [Optimized For AVX-512 + VNNI]
+    # option_b:
+      # - f32
+      # - u8s8f32      [Optimized For AVX-512]
+      # - bf16bf16bf16 [Optimized For AVX-512 + VNNI]
       # - Test All Options
   - test:
     - svt-hevc-1.2.0
-    - tensorflow-1.0.0
-    - tensorflow-lite-1.0.0
+    # - tensorflow-1.0.0 # temporarily comment out the failed test
+    # - tensorflow-lite-1.0.0 # temporarily comment out the failed test

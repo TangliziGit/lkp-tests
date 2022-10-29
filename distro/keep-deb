@@ -46,3 +46,7 @@ cmake
 fakeroot
 telnet
 traceroute
+openvswitch-common
+openvswitch-switch
+gcc-9
+mpi-default-dev

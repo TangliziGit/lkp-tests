@@ -19,5 +19,5 @@ pack_to=/osimage/deps/$rootfs
 mkdir -p "$pack_to"
 work_dir=$(mktemp -d /tmp/pack-deps-$BM_NAME-XXXXXXXXX)
 
-cd $work_dir
+cd $work_dir || exit
 build_depends_pkg $BM_NAME "$work_dir" && pack

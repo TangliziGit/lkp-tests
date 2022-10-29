@@ -2,14 +2,19 @@ suite: stream
 category: benchmark
 
 nr_threads:
-- 100%
-- 50%
-- 25%
+  - 100%
+  - 50%
+  - 25%
+
+iterations:
+  - 10x
 
 stream:
   array_size:
-  - 10000000 # 0.2GB
-  - 50000000 # 1GB
+    - 10000000 # 0.2GB
+    - 50000000 # 1GB
   omp:
-  - true
-  - false
+    - true
+    - false
+  loop:
+    - 100

@@ -92,8 +92,8 @@ ftrace_set_params()
 		fi
 	fi
 
-	: ${duration:=10}
-	: ${current_tracer:=nop}
+	: "${duration:=10}"
+	: "${current_tracer:=nop}"
 
 	# ftrace_test_save_time_delta
 	ftrace_reset

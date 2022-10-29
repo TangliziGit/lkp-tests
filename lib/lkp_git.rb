@@ -16,6 +16,7 @@ require "#{LKP_SRC}/lib/cache"
 require "#{LKP_SRC}/lib/assert"
 require "#{LKP_SRC}/lib/git_ext"
 require "#{LKP_SRC}/lib/constant"
+require "#{LKP_SRC}/lib/lkp_path"
 
 GIT_WORK_TREE ||= ENV['GIT_WORK_TREE'] || ENV['LKP_GIT_WORK_TREE'] || "#{GIT_ROOT_DIR}/linux"
 GIT_DIR ||= ENV['GIT_DIR'] || "#{GIT_WORK_TREE}/.git"
@@ -127,7 +128,7 @@ def __last_linus_release_tag(commit)
     return nil
   end
 
-  tag += "-rc#{rc}" if rc && rc > 0
+  tag += "-rc#{rc}" if rc && rc.positive?
   [tag, false]
 end
 
@@ -211,7 +212,7 @@ end
 
 def load_remotes
   remotes = {}
-  files = Dir["#{LKP_SRC}/repo/*/*"]
+  files = Dir[LKP::Path.src('repo', '*', '*')]
   files.each do |file|
     remote = File.basename file
     next if remote == 'DEFAULTS'

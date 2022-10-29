@@ -44,6 +44,10 @@ module Git
       !command('branch', ['--list', '-a', pattern]).empty?
     end
 
+    def branch_exist_in_remote?(remote_url, branch)
+      command("ls-remote -h #{remote_url} #{branch}").split.include?("refs/heads/#{branch}")
+    end
+
     def kernel_branch?(branch)
       return false unless command_lines('show', "#{branch}:").include?('Makefile')
       return false unless command('show', "#{branch}:Makefile").include?('KERNELRELEASE')
@@ -76,11 +80,11 @@ module Git
       if version && version >= 2
         tag = "v#{version}.#{patch_level}"
         tag += ".#{sub_level}" if version == 2
-        tag += "-rc#{rc}" if rc && rc > 0
+        tag += "-rc#{rc}" if rc && rc.positive?
 
         [tag, false]
       else
-        log_warn e
+        log_warn "version #{version.inspect} of #{commit_sha} is invalid"
 
         nil
       end
@@ -184,12 +188,12 @@ module Git
       command('rev-list --reverse HEAD |head -1')
     end
 
-    def command(cmd, opts = [], chdir = true, redirect = '', &block)
-      lib.command(cmd, opts, chdir, redirect, &block)
+    def command(cmd, opts = [], redirect = '', chdir: true, &block)
+      lib.command(cmd, opts, redirect, chdir: chdir, &block)
     end
 
-    def command_lines(cmd, opts = [], chdir = true, redirect = '')
-      lib.command_lines(cmd, opts, chdir, redirect)
+    def command_lines(cmd, opts = [], redirect = '', chdir: true)
+      lib.command_lines(cmd, opts, redirect, chdir: chdir)
     end
   end
 end

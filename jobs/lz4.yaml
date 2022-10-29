@@ -1,0 +1,11 @@
+suite: lz4
+testcase: lz4
+category: benchmark
+
+iterations:
+  - 1x
+lz4:
+  compression:
+   - 1
+   - 3
+   - 9

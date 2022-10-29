@@ -1,0 +1,12 @@
+bp_init_aperfmperf: early_initcall
+init_real_mode: early_initcall
+pci_mmcfg_late_insert_resources: late_initcall
+acpi_gpio_handle_deferred_request_irqs: late_initcall_sync
+clk_disable_unused: late_initcall_sync
+ftrace_check_sync: late_initcall_sync
+late_trace_init: late_initcall_sync
+latency_fsnotify_init: late_initcall_sync
+of_platform_sync_state_init: late_initcall_sync
+regulator_init_complete: late_initcall_sync
+software_resume: late_initcall_sync
+trace_eval_sync: late_initcall_sync

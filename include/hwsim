@@ -10,3 +10,4 @@ need_kconfig:
 - MAC80211_DEBUGFS: y
 - VETH: m
 - BRIDGE: m
+- MACSEC: m

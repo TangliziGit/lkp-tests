@@ -10,6 +10,7 @@ require "#{LKP_SRC}/lib/log"
 require "#{LKP_SRC}/lib/run_env"
 require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/lkp_path"
+require "#{LKP_SRC}/lib/yaml"
 
 LKP_SRC_ETC ||= LKP::Path.src('etc')
 
@@ -18,7 +19,9 @@ def event_counter?(name)
   $event_counter_prefixes.each do |prefix|
     return true if name.index(prefix) == 0
   end
-  false
+  $event_counter_patterns ||= load_regular_expressions("#{LKP_SRC_ETC}/event-counter-patterns")
+
+  name =~ $event_counter_patterns
 end
 
 def independent_counter?(name)
@@ -167,7 +170,7 @@ def create_stats_matrix(result_root)
   add_performance_per_watt(stats, matrix)
   add_path_length(stats, matrix)
   save_json(stats, "#{result_root}/stats.json")
-  save_json(matrix, "#{result_root}/matrix.json", true)
+  save_json(matrix, "#{result_root}/matrix.json", compress: true)
   if local_run?
     save_matrix_to_csv_file("#{result_root}/stats.csv", stats)
     save_matrix_to_csv_file("#{result_root}/matrix.csv", matrix)
@@ -240,7 +243,7 @@ def unite_remove_empty_stats(matrix)
   matrix.reject { |_k, v| v.empty? }
 end
 
-def unite_to(stats, matrix_root, max_cols = nil, delete = false)
+def unite_to(stats, matrix_root, max_cols = nil, delete: false)
   matrix_file = "#{matrix_root}/matrix.json"
 
   matrix = load_matrix_file("#{matrix_root}/matrix.json")
@@ -332,7 +335,7 @@ def sort_matrix(matrix, key)
   m
 end
 
-def save_matrix_as_csv(file, matrix, sep = ' ', _header = true, fill = -1)
+def save_matrix_as_csv(file, matrix, sep = ' ', fill = -1, _header: true)
   fill && cols = matrix.map { |_k, v| v.size }.max
   matrix.each do |k, vs|
     vs = Array vs
@@ -342,9 +345,9 @@ def save_matrix_as_csv(file, matrix, sep = ' ', _header = true, fill = -1)
   end
 end
 
-def save_matrix_to_csv_file(file_name, matrix, sep = ',', header = true)
+def save_matrix_to_csv_file(file_name, matrix, sep = ',', header: true)
   File.open(file_name, 'w') do |f|
-    save_matrix_as_csv(f, matrix, sep, header, nil)
+    save_matrix_as_csv(f, matrix, sep, nil, _header: header)
   end
 end
 
@@ -435,7 +438,7 @@ def unite_params(result_root)
   end
 end
 
-def unite_stats(result_root, delete = false)
+def unite_stats(result_root, delete: false)
   unless File.directory? result_root
     log_error "#{result_root} is not a directory"
     return false
@@ -451,9 +454,9 @@ def unite_stats(result_root, delete = false)
 
   stats['stats_source'] = "#{result_root}/stats.json"
 
-  unite_to(stats, _result_root, nil, delete)
+  unite_to(stats, _result_root, nil, delete: delete)
   begin
-    __matrix = unite_to(stats, __result_root, 100, delete)
+    __matrix = unite_to(stats, __result_root, 100, delete: delete)
     check_warn_test_error __matrix, result_root
   rescue StandardError => e
     log_warn e.formatted_headline

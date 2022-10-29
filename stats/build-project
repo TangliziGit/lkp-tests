@@ -16,7 +16,7 @@ fi
 . $C_ROOT/lib/kbuild.sh
 
 if [[ -d $RESULT_ROOT/make-stderr ]]; then
-	cd $RESULT_ROOT/make-stderr
+	cd $RESULT_ROOT/make-stderr || exit
 
 	error_files=(*-*)
 	KBUILD_OUTPUT="/build/[a-z]+/(src|obj)"

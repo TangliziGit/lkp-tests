@@ -1,6 +1,7 @@
 #!/bin/bash
 # - fs
 # - fs_type
+# - format
 # - mkfs
 # - mount
 # - mount_option
@@ -64,7 +65,9 @@ fs_options() {
 			def_mount="${def_mount},logbsize=262144"
 			def_mkfs="-f -d agcount=$nr_partitions"
 		}
-		ensure_mkfs='-f'
+		# mkfs.xfs v4.20.0 would set reflink=0 by default
+		# mkfs.xfs v5.10.0 would set reflink=1 by default, and conflict with DAX mount option, so need to set reflink=0 explicitly
+		ensure_mkfs='-f -mreflink=0'
 		;;
 	ext*)
 		ensure_mkfs='-q -F'
@@ -132,7 +135,9 @@ make_fs() {
 	local pids=
 	for dev in $bdevs
 	do
-		log_cmd mkfs -t $fs ${mkfs:-$def_mkfs} $ensure_mkfs $dev &
+		if [ ! "$format" = 'n' ]; then
+			log_cmd mkfs -t $fs ${mkfs:-$def_mkfs} $ensure_mkfs $dev &
+		fi
 		pids="${pids} $! "
 	done
 
@@ -159,7 +164,9 @@ mount_fs() {
 		mnt=${mnt:-/fs/$(basename $dev)}
 		log_cmd mkdir -p $mnt
 		probe_filesystem $fs
-		log_cmd mount -t $fs ${mount:-$def_mount} $mount_option $dev $mnt || exit
+		if ! is_null_blk $dev && ! is_mount_on_root $dev; then
+			log_cmd mount -t $fs ${mount:-$def_mount} $mount_option $dev $mnt || exit
+		fi
 		mount_points="${mount_points}$mnt "
 	done
 
@@ -204,12 +211,13 @@ case $fs in
 
 
 	tmpfs)
-		: ${nr_tmpfs:=1}
+		: "${nr_tmpfs:=1}"
 		mount_tmpfs $nr_tmpfs
 		;;
 
 	*)
 		. $LKP_SRC/lib/fs_ext.sh
+		[ "$format" = 'n' ] ||
 		[ "$persist" == "true" ] || {
 			if [ -n "$raid_device" ] || [ -n "$LKP_LOCAL_RUN" ]; then
 				destroy_fs

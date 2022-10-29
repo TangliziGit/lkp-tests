@@ -1,0 +1,11 @@
+boot_failures: 1
+
+# Kernel panic - not syncing: Out of memory
+Kernel_panic-not_syncing:Out_of_memory: 1
+message:Kernel_panic-not_syncing:Out_of_memory: [    0.323856][    T0] Kernel panic - not syncing: Out of memory
+pattern:Kernel_panic-not_syncing:Out_of_memory: Kernel panic - not syncing: Out of memory
+
+timestamp:last: 0.329640
+bootstage:last: 1
+timestamp:Kernel_panic-not_syncing:Out_of_memory: 0.323856
+bootstage:Kernel_panic-not_syncing:Out_of_memory: 1

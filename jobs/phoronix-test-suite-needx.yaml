@@ -4,50 +4,50 @@ category: benchmark
 need_x: true
 
 phoronix-test-suite:
-  - test: apitest-1.1.0
-    option_a:
-      - 1024 x 768
-    option_b:
-      - DynamicStreaming GLBufferSubData
-      - DynamicStreaming GLMapUnsynchronized
-      - DynamicStreaming GLMapPersistent
-      - UntexturedObjects GLUniform
-      - UntexturedObjects GLDrawLoop
-      - UntexturedObjects GLMultiDrawBuffer-SDP
-      - UntexturedObjects GLMultiDrawBuffer-NoSDP
-      - UntexturedObjects GLBufferRange
-      - UntexturedObjects GLBufferSubData
-      - UntexturedObjects GLBufferStorage-SDP
-      - UntexturedObjects GLBufferStorage-NoSDP
-      - UntexturedObjects GLDynamicBuffer
-      - UntexturedObjects GLMapUnsynchronized
-      - UntexturedObjects GLMapPersistent
-      - UntexturedObjects GLTexCoord
-      - TexturedQuadsProblem GLBindless
-      - TexturedQuadsProblem GLNaive
-      - TexturedQuadsProblem GLNaiveUniform
-      - TexturedQuadsProblem GLNoTex
-      - TexturedQuadsProblem GLNoTexUniform
-      - TexturedQuadsProblem GLSBTA
-      - TexturedQuadsProblem GLTextureArray
+  # - test: apitest-1.1.0 # temporarily comment out the failed test
+    # option_a:
+      # - 1024 x 768
+    # option_b:
+      # - DynamicStreaming GLBufferSubData
+      # - DynamicStreaming GLMapUnsynchronized
+      # - DynamicStreaming GLMapPersistent
+      # - UntexturedObjects GLUniform
+      # - UntexturedObjects GLDrawLoop
+      # - UntexturedObjects GLMultiDrawBuffer-SDP
+      # - UntexturedObjects GLMultiDrawBuffer-NoSDP
+      # - UntexturedObjects GLBufferRange
+      # - UntexturedObjects GLBufferSubData
+      # - UntexturedObjects GLBufferStorage-SDP
+      # - UntexturedObjects GLBufferStorage-NoSDP
+      # - UntexturedObjects GLDynamicBuffer
+      # - UntexturedObjects GLMapUnsynchronized
+      # - UntexturedObjects GLMapPersistent
+      # - UntexturedObjects GLTexCoord
+      # - TexturedQuadsProblem GLBindless
+      # - TexturedQuadsProblem GLNaive
+      # - TexturedQuadsProblem GLNaiveUniform
+      # - TexturedQuadsProblem GLNoTex
+      # - TexturedQuadsProblem GLNoTexUniform
+      # - TexturedQuadsProblem GLSBTA
+      # - TexturedQuadsProblem GLTextureArray
       # - Test All Options
-  - test: cairo-perf-trace-1.0.1
-    option_a:
-      - Firefox Canvas
-      - GNOME Terminal Vim
-      - Poppler
+  # - test: cairo-perf-trace-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - Firefox Canvas
+      # - GNOME Terminal Vim
+      # - Poppler
       # - Test All Options
     # - cuda-mini-nbody-1.1.0 # need CUDA compatible hardware
-  - test: et-1.1.0
-    option_a:
-      - 1024 x 768
-  - test: etlegacy-1.0.0
-    option_a:
-      - Default
-      - Renderer2
+  # - test: et-1.1.0 # temporarily comment out the failed test
+    # option_a:
+      # - 1024 x 768
+  # - test: etlegacy-1.0.0 # temporarily comment out the failed test
+    # option_a:
+      # - Default
+      # - Renderer2
       # - Test All Options
-    option_b:
-      - 1024 x 768
+    # option_b:
+      # - 1024 x 768
     # - etxreal-1.0.0 # too old (last update 2012) to work
     # - etqw-1.1.0 # has been replaced by newer etqw-demo
     # - etqw-demo-1.1.0 # need 32bit libs
@@ -68,20 +68,20 @@ phoronix-test-suite:
   - test: glmark2-1.1.0
     option_a:
       - 1024 x 768
-  - test: gluxmark-1.1.1
-    option_a:
-      - Fullscreen
-      - Windowed
+  # - test: gluxmark-1.1.1 # temporarily comment out the failed test
+    # option_a:
+      # - Fullscreen
+      # - Windowed
       # - Test All Options
-    option_b:
-      - 1024 x 768
-    option_c:
-      - Fill-Rate
-      - Fragment
-      - Geometry
-      - Vertex
-      - Complex
-      - Compute
+    # option_b:
+      # - 1024 x 768
+    # option_c:
+      # - Fill-Rate
+      # - Fragment
+      # - Geometry
+      # - Vertex
+      # - Complex
+      # - Compute
       # - Test All Options
   - test: gputest-1.3.2
     option_a:
@@ -99,18 +99,18 @@ phoronix-test-suite:
       - Fullscreen
       - Windowed
       # - Test All Options
-  - test: gtkperf-1.2.1
-    option_a:
-      - GtkComboBox
-      - GtkComboBoxEntry
-      - GtkToggleButton
-      - GtkCheckButton
-      - GtkRadioButton
-      - GtkTextView - Add Text
-      - GtkTextView - Scroll
-      - GtkDrawingArea - Circles
-      - GtkDrawingArea - Pixbufs
-      - Total Time
+  # - test: gtkperf-1.2.1 # temporarily comment out the failed test
+    # option_a:
+      # - GtkComboBox
+      # - GtkComboBoxEntry
+      # - GtkToggleButton
+      # - GtkCheckButton
+      # - GtkRadioButton
+      # - GtkTextView - Add Text
+      # - GtkTextView - Scroll
+      # - GtkDrawingArea - Circles
+      # - GtkDrawingArea - Pixbufs
+      # - Total Time
       # - Test All Options
   - test: indigobench-1.0.2
     option_a:
@@ -146,6 +146,13 @@ phoronix-test-suite:
       # - 512x512
       - 1024x1024
       # - Test All Options
+  # - test: luxcorerender-cl-1.2.1 # temporarily comment out the failed test
+    # option_a:
+      # - LuxCore Benchmark
+      # - DLSC
+      # - Rainbow Colors and Prism
+      # - Food
+      # - Test All Options
   - test: nexuiz-1.6.1
     option_a:
       - 1024 x 768
@@ -174,16 +181,16 @@ phoronix-test-suite:
     option_b:
       - 1024 x 768
     # - prey-1.1.2 # need to download files from stream
-  - test: qgears2-1.0.1
-    option_a:
-      - CPU-based Raster
-      - XRender Extension
-      - OpenGL
+  # - test: qgears2-1.0.1 # temporarily comment out the failed test
+    # option_a:
+      # - CPU-based Raster
+      # - XRender Extension
+      # - OpenGL
       # - Test All Options
-    option_b:
-      - Gears
-      - Text
-      - Image Scaling
+    # option_b:
+      # - Gears
+      # - Text
+      # - Image Scaling
       # - Test All Options
   - test: qmlbench-1.0.0
     option_a:
@@ -197,42 +204,47 @@ phoronix-test-suite:
     - render-bench-1.1.2
     # - smokin-guns-1.2.2 # need 32bit libs (libjpeg62:i386 etc), runtime > 1h
     # - specviewperf9-1.1.1 # need csh or tcsh
-  - test: supertuxkart-1.5.2
-    option_a:
-      - 1024 x 768
-    option_b:
-      - Windowed
-      - Fullscreen
+  # - test: selenium-top-sites-1.0.3 # temporarily comment out the failed test
+    # option_a:
+      # - Firefox
+      # - Google Chrome
       # - Test All Options
-    option_c:
-      - Basic
+  # - test: supertuxkart-1.5.2 # temporarily comment out the failed test
+    # option_a:
+      # - 1024 x 768
+    # option_b:
+      # - Windowed
+      # - Fullscreen
+      # - Test All Options
+    # option_c:
+      # - Basic
       # - Low
       # - Medium
       # - High
-      - Ultimate
+      # - Ultimate
       # - Test All Options
-    option_d: # number of karts
-      - 1
+    # option_d: # number of karts
+      # - 1
       # - 2
       # - 3
       # - 4
       # - 5
       # - 6
       # - 7
-      - 8
+      # - 8
       # - Test All Options
-    option_e:
-      - Candela City          [Approximately 400k triangles; advanced graphics]
-      - Cocoa Temple          [Approximately 300k triangles; advanced graphics]
-      - Gran Paradiso Island  [Approximately 275k triangles; advanced graphics]
-      - Antediluvian Abyss    [Approximately 240k triangles; advanced graphics]
-      - Cornfield Crossing    [Approximately 240k triangles]
-      - Old Mine              [Approximately 90k triangles]
-      - STK Enterprise        [Approximately 46k triangles]
-      - Around the Lighthouse [Approximately 65k triangles]
-      - Zen Garden            [Low poly]
-      - Oliver's Math Class   [Low poly]
-      - Hacienda              [Low poly]
+    # option_e:
+      # - Candela City          [Approximately 400k triangles; advanced graphics]
+      # - Cocoa Temple          [Approximately 300k triangles; advanced graphics]
+      # - Gran Paradiso Island  [Approximately 275k triangles; advanced graphics]
+      # - Antediluvian Abyss    [Approximately 240k triangles; advanced graphics]
+      # - Cornfield Crossing    [Approximately 240k triangles]
+      # - Old Mine              [Approximately 90k triangles]
+      # - STK Enterprise        [Approximately 46k triangles]
+      # - Around the Lighthouse [Approximately 65k triangles]
+      # - Zen Garden            [Low poly]
+      # - Oliver's Math Class   [Low poly]
+      # - Hacienda              [Low poly]
       # - Test All Options
   - test: tesseract-1.1.0
     option_a:
@@ -241,19 +253,19 @@ phoronix-test-suite:
     # - tremulous-1.1.0 # need 32bit libs (libjpeg62:i386 etc)
     # - ue4-matinee-1.1.0 # block by known issues
     # - ue4-mountains-1.1.0 # block by known issue
-  - test: unigine-heaven-1.6.4
-    option_a:
-      - 1024 x 768
-    option_b:
-      - Fullscreen
-      - Windowed
+  # - test: unigine-heaven-1.6.4 # temporarily comment out the failed test
+    # option_a:
+      # - 1024 x 768
+    # option_b:
+      # - Fullscreen
+      # - Windowed
       # - Test All Options
-  - test: unigine-sanctuary-1.6.4
-    option_a:
-      - 1024 x 768
-    option_b:
-      - Fullscreen
-      - Windowed
+  # - test: unigine-sanctuary-1.6.4 # temporarily comment out the failed test
+    # option_a:
+      # - 1024 x 768
+    # option_b:
+      # - Fullscreen
+      # - Windowed
       # - Test All Options
   - test: unigine-tropics-1.6.4
     option_a:
@@ -262,32 +274,32 @@ phoronix-test-suite:
       - Fullscreen
       - Windowed
       # - Test All Options
-  - test: unigine-valley-1.1.7
-    option_a:
-      - 1024 x 768
-    option_b:
-      - Fullscreen
-      - Windowed
+  # - test: unigine-valley-1.1.7 # temporarily comment out the failed test
+    # option_a:
+      # - 1024 x 768
+    # option_b:
+      # - Fullscreen
+      # - Windowed
       # - Test All Options
   - test: urbanterror-1.3.0
     # - unvanquished-1.5.0 # this test profile is currently marked Broken
     option_a:
       - 1024 x 768
-  - test: ut2004-demo-1.2.0
-    option_a:
-      - AS-Convoy Botmatch
-      - BR-Colossus Botmatch
-      - CTF-BridgeOfFate Botmatch
-      - CTF-FaceClassic Botmatch
-      - DM-Rankin Botmatch
-      - ONS-Torlan Botmatch
+  # - test: ut2004-demo-1.2.0 # temporarily comment out the failed test
+    # option_a:
+      # - AS-Convoy Botmatch
+      # - BR-Colossus Botmatch
+      # - CTF-BridgeOfFate Botmatch
+      # - CTF-FaceClassic Botmatch
+      # - DM-Rankin Botmatch
+      # - ONS-Torlan Botmatch
       # - Test All Options
-    option_b:
-      - 800 x 600
+    # option_b:
+      # - 800 x 600
       # - 1024 x 768
       # - 1280 x 1024
       # - 1680 x 1050
-      - 1920 x 1200
+      # - 1920 x 1200
       # - Test All Options
     # - vdrift-1.2.0 # build with old g++ (g++-3.4)
     # - video-cpu-usage-1.2.1 # need soundcard

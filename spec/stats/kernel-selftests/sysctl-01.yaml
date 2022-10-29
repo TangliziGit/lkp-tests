@@ -1,0 +1,7 @@
+sysctl.sysctl.sh.Checking_production_write_strict_setting.pass: 1
+sysctl.sysctl.sh.sysctl_test_0001.0.Writing_test_file.pass: 1
+sysctl.sysctl.sh.sysctl_test_0001.0.Testing_that_0x0000000100000000_fails_as_expected.pass: 1
+sysctl.sysctl.sh.sysctl_test_0001.0.Checking_ignoring_spaces_up_to_PAGE_SIZE_works_on_write.pass: 1
+sysctl.sysctl.sh.sysctl_test_0001.0.Checking_passing_PAGE_SIZE_of_spaces_fails_on_write.pass: 1
+sysctl.sysctl.sh.sysctl_test_0002.0.Writing_test_file.pass: 1
+sysctl.sysctl.sh.pass: 1

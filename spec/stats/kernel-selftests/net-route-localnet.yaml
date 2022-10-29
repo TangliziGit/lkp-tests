@@ -1,0 +1,3 @@
+net.route_localnet.sh.arp_announce.pass: 1
+net.route_localnet.sh.arp_ignore.pass: 1
+net.route_localnet.sh.pass: 1

@@ -2,8 +2,7 @@ suite: dd-write
 category: benchmark
 
 ftrace:
-  events:
-    balance_dirty_pages
+  events: balance_dirty_pages
     bdi_dirty_ratelimit
     global_dirty_state
     writeback_single_inode
@@ -12,23 +11,23 @@ runtime: 5m
 
 disk: 1HDD
 iosched:
-- kyber
+  - kyber
 fs:
-- ext4
+  - ext4
 
 fuse:
   mount_max: 1fuse
   thread_model:
-  - serialized
-  - multi_threaded
+    - serialized
+    - multi_threaded
   writeback_cache: wc
   write_ratelimit:
-  - 1Mbps
-  - 100Mbps
+    - 1Mbps
+    - 100Mbps
 
 nr_threads:
-- 1dd
-- 10dd
-- 100dd
+  - 1dd
+  - 10dd
+  - 100dd
 
 dd:

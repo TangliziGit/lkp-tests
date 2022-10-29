@@ -269,7 +269,7 @@ def add_stats(path)
   end
 
   result_path = ResultPath.new
-  return unless result_path.parse_result_root(File.realpath(path), local_run?)
+  return unless result_path.parse_result_root(File.realpath(path), is_local_run: local_run?)
 
   if $dim_not_a_param
     dim = result_path[$opt_dimension]
@@ -372,7 +372,7 @@ def setup_changed_stats
       matrix2 = load_json matrix_file2
       expand_matrix(matrix2, 'stat' => $opt_field)
       $all_index.each do |stat, weight|
-        next if stat.index('iostat\.') && !(k =~ /\/(dd-write)\//)
+        next if stat.index('iostat\.') && k !~ /\/(dd-write)\//
 
         avg1 = get_valid_average matrix1, stat
         next unless avg1
@@ -393,7 +393,7 @@ def setup_changed_stats
         $nr_gm[type] ||= 0
         $base_gm[type] ||= 0
         $head_gm[type] ||= 0
-        if weight > 0
+        if weight.positive?
           $nr_gm[type] += weight
           $base_gm[type] += weight * Math.log(avg1)
           $head_gm[type] += weight * Math.log(avg2)
@@ -487,7 +487,7 @@ def setup_dims
       [$opt_dims[1], $opt_dims[0]]
     ].each do |dim|
       system "#{GIT} merge-base --is-ancestor #{dim[0]} #{dim[1]}"
-      next unless $CHILD_STATUS.exitstatus.zero?
+      next unless $CHILD_STATUS.success?
 
       $opt_dims = dim
       commit_is_ancestor = true
@@ -510,7 +510,7 @@ def setup_dims
   end
 end
 
-def show_one_diff(stat, dim, v0, v, v0_stddev, v_stddev, is_float, is_exp, is_fail = false)
+def show_one_diff(stat, dim, v0, v, v0_stddev, v_stddev, is_float:, is_exp:, is_fail: false)
   if dim == $first_dim
     buf = ''
   else
@@ -584,7 +584,7 @@ def show_test_group(key)
   end
 
   puts
-  $dims.keys.each do |dim|
+  $dims.each_key do |dim|
     width = (dim == $first_dim ? ABS_WIDTH + ERR_WIDTH : REL_WIDTH + ABS_WIDTH + ERR_WIDTH)
     printf "#{'-' * width}  "
   end
@@ -627,9 +627,10 @@ end
 
 def show_delta(stat, key_g)
   is_fail = function_stat?(stat)
+  is_latency = latency_stat?(stat)
 
   dims = []
-  $cases.values.each { |v| dims += v.keys }
+  $cases.each_value { |v| dims += v.keys }
   if dims.uniq.size == 1
     puts "error: same dim #{dims.first} used, please use -d/--dimension"
     exit 1
@@ -638,14 +639,14 @@ def show_delta(stat, key_g)
   $cases.delete_if do |_rt, value|
     next true if value.size < 2
     next false if is_fail
-    next false if is_latency stat
+    next false if is_latency
     next false if $opt_no_hide_noises
 
     noisy = false
     value.each do |_k, v|
       next unless v.is_a?(Array) && v.size > 1
 
-      if v.standard_deviation.abs > v.average.abs / 2 || v.average < 0
+      if v.standard_deviation.abs > v.average.abs / 2 || v.average.negative?
         noisy = true
         break
       end
@@ -668,7 +669,7 @@ def show_delta(stat, key_g)
       puts 'testcase/testparams/testbox'
     end
 
-    $dims.keys.each do |dim|
+    $dims.each_key do |dim|
       width = (dim == $first_dim ? ABS_WIDTH + ERR_WIDTH : REL_WIDTH + ABS_WIDTH + ERR_WIDTH)
       printf "#{'-' * width}  "
     end
@@ -681,11 +682,11 @@ def show_delta(stat, key_g)
     value.each do |_k, v|
       case v
       when Array
-        v.each { |vv| is_float = true if vv.abs < 100 && vv != 0 && vv.is_a?(Float) }
-        v.each { |vv| is_exp   = true if vv.abs >= 100_000_000 }
+        is_float = v.any? { |vv| is_float = true if vv.abs < 100 && vv != 0 && vv.is_a?(Float) }
+        is_exp = v.any? { |vv| vv.abs >= 100_000_000 }
       else
         is_float = true if v.abs < 100 && v != 0 && v.is_a?(Float)
-        is_exp   = true if v.abs >= 100_000_000
+        is_exp = true if v.abs >= 100_000_000
       end
     end
   end
@@ -697,18 +698,18 @@ def show_delta(stat, key_g)
     result_path.parse_result_root(_rt)
     test = result_path.test_desc $opt_dimension, $dim_not_a_param
 
-    next if $group_by_test && !(test == key_g)
+    next if $group_by_test && test != key_g
 
     show_header(is_fail) unless $header_shown[is_fail]
 
     v0, v0_stddev = get_v_and_stddev value, $first_dim, is_fail
-    $dims.each do |dim, v|
+    $dims.each do |dim, _v|
       v, v_stddev = get_v_and_stddev value, dim, is_fail
 
-      show_one_diff stat, dim, v0, v, v0_stddev, v_stddev, is_float, is_exp, is_fail
+      show_one_diff stat, dim, v0, v, v0_stddev, v_stddev, is_float: is_float, is_exp: is_exp, is_fail: is_fail
       if is_fail
         $sum[dim] += v
-      elsif v > 0
+      elsif v.positive?
         $sum[dim] += Math.log(v)
       end
 
@@ -741,7 +742,7 @@ def show_delta(stat, key_g)
   v0 = $sum[$first_dim]
   v0_stddev = $stddev[$first_dim]
   $sum.each do |dim, v|
-    show_one_diff stat, dim, v0, v, v0_stddev, $stddev[dim], is_float, is_exp, is_fail
+    show_one_diff stat, dim, v0, v, v0_stddev, $stddev[dim], is_float: is_float, is_exp: is_exp, is_fail: is_fail
   end
   if is_fail
     puts "TOTAL #{$opt_field}"

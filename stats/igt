@@ -13,7 +13,7 @@ subtest_name = nil
 has_dynamic_subtest = false
 
 def valid_datetime?(datetime_str)
-  !!Time.parse(datetime_str)
+  Time.parse(datetime_str)
 rescue StandardError
   false
 end
@@ -48,7 +48,7 @@ while (line = $stdin.gets)
 
     subtest_name = $1
     has_dynamic_subtest = false
-  when /Subtest (.+): (SUCCESS|FAIL|CRASH)/
+  when /(^|\[.*\] )Subtest (.+): (SUCCESS|FAIL|CRASH|SKIP)/
     # [thread:4146] Subtest thread-performance-write: CRASH (0.580s)
     #
     # Subtest invalid-buffer: SUCCESS (0.000s)
@@ -73,12 +73,19 @@ while (line = $stdin.gets)
     # should ignore the 'Subtest default' results from 980 and 1521 to avoid duplicated stats
     next if test_name.nil? || has_dynamic_subtest
 
-    if subtest_name != $1
-      log_warn "subtest_name [#{subtest_name}] != $1 [#{$1}]"
+    # for SKIP test, no need start with "Starting subtest:"
+    # Starting subtest: pipe-C-256x256-bottom-edge
+    # Subtest pipe-C-256x256-bottom-edge: SUCCESS (3.159s)
+    # ...
+    # Subtest pipe-D-64x64-left-edge: SKIP
+    # Subtest pipe-D-64x64-right-edge: SKIP
+    # Subtest pipe-D-64x64-top-edge: SKIP
+    if subtest_name != $2 && $3 != 'SKIP'
+      log_warn "subtest_name [#{subtest_name}] != $2 [#{$2}]"
       exit 1
     end
 
-    if test_name == 'gem_shrink'
+    if %w(gem_shrink i915_pm_rps).include? test_name
       # some subtests of gem_shrink has duplication issue since v5.11-rc2
       # Subtest execbuf1-oom: CRASH (0.021s)
       #  #1 [killpg+0x40]
@@ -90,9 +97,17 @@ while (line = $stdin.gets)
       #  #4 [__libc_start_main+0xeb]
       #  #5 [_start+0x2a]
       # Subtest execbuf1-oom: CRASH (0.021s)
-      stats.add "#{test_name}.#{$1}", $2 unless stats.key? "#{test_name}.#{$1}"
+
+      # avoid duplication of reset and waitboost
+      # 2022-01-27 19:24:07 build/tests/i915_pm_rps --run-subtest reset
+      # Subtest reset: FAIL (2.276s)
+      # (i915_pm_rps:1591) igt_core-INFO: Subtest reset: FAIL (2.276s)
+      # 2022-01-27 19:24:10 build/tests/i915_pm_rps --run-subtest waitboost
+      # Subtest waitboost: FAIL (1.258s)
+      # (i915_pm_rps:1623) igt_core-INFO: Subtest waitboost: FAIL (1.258s)
+      stats.add "#{test_name}.#{$2}", $3 unless stats.key? "#{test_name}.#{$2}"
     else
-      stats.add "#{test_name}.#{$1}", $2
+      stats.add "#{test_name}.#{$2}", $3
     end
   when /^Dynamic subtest (.*): (SUCCESS|FAIL|CRASH)/
     # a 'dynamic subtest' is such like a 2nd level subtest under 'subtest' as below
@@ -104,6 +119,9 @@ while (line = $stdin.gets)
     has_dynamic_subtest = true
 
     stats.add "#{test_name}.#{subtest_name}.dynamic.#{$1}", $2
+  when /^LKP SKIP igt@(.*)@(.*)$/
+    # LKP SKIP igt@gem_streaming_writes@batch-cpu
+    stats.add "#{$1}.#{$2}", 'skip' unless stats.key? "#{$1}.#{$2}"
   end
 end
 

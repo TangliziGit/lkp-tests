@@ -1,0 +1,14 @@
+
+# IP-Config: Failed to open
+IP-Config:Failed_to_open_gretap0: 1
+message:IP-Config:Failed_to_open_gretap0: kern  :err   : [   47.356795] IP-Config: Failed to open gretap0
+pattern:IP-Config:Failed_to_open_gretap0: IP-Config: Failed to open
+
+# IP-Config: Failed to open
+IP-Config:Failed_to_open_erspan0: 1
+message:IP-Config:Failed_to_open_erspan0: kern  :err   : [   47.358191] IP-Config: Failed to open erspan0
+pattern:IP-Config:Failed_to_open_erspan0: IP-Config: Failed to open
+
+timestamp:last: 48.395946
+timestamp:IP-Config:Failed_to_open_gretap0: 47.356795
+timestamp:IP-Config:Failed_to_open_erspan0: 47.358191

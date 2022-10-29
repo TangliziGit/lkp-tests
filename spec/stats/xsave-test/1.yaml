@@ -1,0 +1,14 @@
+multi.0.skip: 1
+schedule.0.pass: 1
+schedule.1.pass: 1
+fork.0.fail: 1
+fork.1.fail: 1
+fork.2.fail: 1
+fork.3.fail: 1
+signal.0.pass: 1
+signal.1.pass: 1
+thread.0.pass: 1
+thread.1.pass: 1
+ptrace.0.pass: 1
+ptrace.1.pass: 1
+ptrace.2.pass: 1

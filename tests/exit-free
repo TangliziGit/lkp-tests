@@ -1,11 +1,11 @@
 #!/bin/sh
 
-strace -p `cat $TMP/pid-bg-proc-eatmem` 2>&1 &
-begin=`date +%s.%N`
+strace -p $(cat $TMP/pid-bg-proc-eatmem) 2>&1 &
+begin=$(date +%s.%N)
 echo "start: $begin"
-kill `cat $TMP/pid-bg-proc-eatmem`
+kill $(cat $TMP/pid-bg-proc-eatmem)
 wait
-end=`date +%s.%N`
+end=$(date +%s.%N)
 echo "end: $end"
-duration=`echo "$end-$begin" |bc`
+duration=$(echo "$end-$begin" |bc)
 echo "duration: $duration"

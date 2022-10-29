@@ -1,0 +1,42 @@
+From 028a5ff6adf102a778dc18d6897c719f431bda42 Mon Sep 17 00:00:00 2001
+From: Zou Yu <yux.zou@intel.com>
+Date: Tue, 24 May 2022 03:35:12 -0400
+Subject: [PATCH] SConstruct: update to python3 version
+
+Signed-off-by: Zou Yu <yux.zou@intel.com>
+---
+ SConstruct | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index 57d0054..05d3aa0 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -16,19 +16,19 @@ if sys.platform == 'darwin':
+ conf = env.Configure(config_h = "config.h")
+ conf.Define("__STDC_FORMAT_MACROS")
+ if not conf.CheckCXX():
+-    print "A compiler with C++11 support is required."
++    print("A compiler with C++11 support is required.")
+     Exit(1)
+-print "Checking for gengetopt...",
++print("Checking for gengetopt..."),
+ if env.Execute("@which gengetopt &> /dev/null"):
+-    print "not found (required)"
++    print("not found (required)")
+     Exit(1)
+-else: print "found"
++else: print("found")
+ if not conf.CheckLibWithHeader("event", "event2/event.h", "C++"):
+-    print "libevent required"
++    print("libevent required")
+     Exit(1)
+ conf.CheckDeclaration("EVENT_BASE_FLAG_PRECISE_TIMER", '#include <event2/event.h>', "C++")
+ if not conf.CheckLibWithHeader("pthread", "pthread.h", "C++"):
+-    print "pthread required"
++    print("pthread required")
+     Exit(1)
+ conf.CheckLib("rt", "clock_gettime", language="C++")
+ conf.CheckLibWithHeader("zmq", "zmq.hpp", "C++")
+--
+2.30.2

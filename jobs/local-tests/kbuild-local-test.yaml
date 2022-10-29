@@ -7,7 +7,7 @@ perf-profile:
 runtime: 10s
 
 nr_task:
-- 200%
+  - 200%
 
 target: autoksyms_recursive
 

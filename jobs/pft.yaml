@@ -6,7 +6,7 @@ perf-profile:
 
 runtime: 300s
 nr_task:
- - 50%
- - 100%
+  - 50%
+  - 100%
 
 pft:

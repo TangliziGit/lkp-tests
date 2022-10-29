@@ -8,7 +8,7 @@ kmemleak_is_enabled || exit 0
 
 setup_wait
 
-: ${interval:=10}
+: "${interval:=10}"
 
 # stop automatically scanning thread
 echo "scan=off" >/sys/kernel/debug/kmemleak

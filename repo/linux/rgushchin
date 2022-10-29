@@ -1,8 +1,8 @@
 url: https://github.com/rgushchin/linux.git
-owner: Roman Gushchin <guro@fb.com>
+owner: Roman Gushchin <roman.gushchin@linux.dev>
 notify_build_success_branch: .*
 private_report_branch: .*
 mail_cc:
-- Roman Gushchin <guro@fb.com>
+- Roman Gushchin <roman.gushchin@linux.dev>
 mail_to:
-- Roman Gushchin <guro@fb.com>
+- Roman Gushchin <roman.gushchin@linux.dev>

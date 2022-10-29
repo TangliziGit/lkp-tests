@@ -8,19 +8,19 @@ nr_task:
 
 will-it-scale:
   mode:
-  - thread
-  - process
+    - thread
+    - process
   test:
-  - brk1
-  - brk2
-  - dup1
-  - eventfd1
-  - fallocate1
-  - fallocate2
-  - futex1
-  - futex2
-  - futex3
-  - futex4
+    - brk1
+    - brk2
+    - dup1
+    - eventfd1
+    - fallocate1
+    - fallocate2
+    - futex1
+    - futex2
+    - futex3
+    - futex4
 
 ---
 # upto 40% CPU cycles may be used by latency stats
@@ -28,7 +28,7 @@ disable_latency_stats: 1
 
 will-it-scale:
   mode:
-  - thread
-  - process
+    - thread
+    - process
   test:
-  - context_switch1
+    - context_switch1

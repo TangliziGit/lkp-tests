@@ -1,12 +1,12 @@
 pkgname=rt-tests
-pkgver=2.1
+pkgver=2.4
 pkgrel=0
 pkgdesc="Suite of real-time tests - cyclictest, hwlatdetect, pip_stress, pi_stress, pmqtest, ptsematest, rt-migrate-test, sendme, signaltest, sigwaittest, svsematest"
 arch=('i386' 'x86_64')
 url="https://git.kernel.org/cgit/utils/rt-tests/rt-tests.git/"
 license=('GPL')
 source=("https://www.kernel.org/pub/linux/utils/rt-tests/rt-tests-$pkgver.tar.gz")
-md5sums=('6d3d5b5f07bbb306b1158a47228906ec')
+md5sums=('5b88a361399d27520be9e39d536720c9')
 
 build() {
         cd "$srcdir/$pkgname-$pkgver"

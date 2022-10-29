@@ -31,7 +31,7 @@ if [ -z "$delay" ]; then
 	fi
 fi
 
-: ${duration:=5}
+: "${duration:=5}"
 
 . $LKP_SRC/lib/wait.sh
 setup_wait

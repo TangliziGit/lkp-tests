@@ -18,12 +18,18 @@ while (line = $stdin.gets)
   when /\.\.\.\s+(.+)$/
     #     Testing \"branch-misses\" generalized event...               PASSED
     #     Testing PERF_FLAG_FD_OUTPUT flag...                        KNOWN KERNEL BUG
-    if testcase != ''
+    if testcase && testcase != ''
       stats.add testcase, $1
       testcase = ''
     end
   when /^(ignored_by_lkp)\s+(.*)\s+/
     stats.add $2, $1
+  when /^make -C\s(.*)/
+    # make -C lib
+    @make_case = $1
+  when /^make: \*\*\* (.*) (Error \d+|Stop\.)$/
+    # make: *** [Makefile:11: all] Error 2
+    stats.add @make_case.to_s, 'make_fail'
   end
 end
 

@@ -1,0 +1,5 @@
+# when result two same keyword 'JMP32_JSGT_K_operand_preserved_in_zext'
+
+[   33.042834] test_bpf: #745 JMP32_JSGT_K: operand preserved in zext jited:1 14 PASS
+[   33.051213] test_bpf: #746 JMP32_JSGE_K: operand preserved in zext jited:1 27 PASS
+[   33.059592] test_bpf: #747 JMP32_JSGT_K: operand preserved in zext jited:1 14 PASS

@@ -1,3 +1,4 @@
+[ 1457.701523] ------------[ cut here ]------------
 [ 1457.701527] WARNING: CPU: 1 PID: 0 at kernel/sched/clock.c:114 set_sched_clock_stable+0x66/0x70
 [ 1457.701527] Modules linked in: rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver netconsole sr_mod cdrom sg intel_powerclamp coretemp kvm_intel kvm irqbypass crct10dif_pclmul crc32_pclmul crc32c_intel snd_hda_codec_realtek ghash_clmulni_intel ppdev mxm_wmi pcbc snd_hda_codec_generic aesni_intel crypto_simd glue_helper cryptd pcspkr ahci libahci firewire_ohci libata snd_hda_intel firewire_core crc_itu_t snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_timer snd soundcore i7core_edac edac_core shpchp winbond_cir rc_core floppy parport_pc parport wmi acpi_cpufreq ip_tables
 [ 1457.701544] CPU: 1 PID: 0 Comm: swapper/1 Tainted: G        W I     4.10.0-rc3-00259-g9881b02 #1

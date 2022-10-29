@@ -11,7 +11,9 @@ nr_task: 8
 fio-setup-basic:
   rw: write
   bs: 4k
-  ioengine: sync
+  ioengine:
+    - sync
+    - io_uring
   test_size: 256g
 
 fio:

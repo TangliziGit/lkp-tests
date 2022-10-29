@@ -2,8 +2,7 @@ suite: dd-write-nfs
 category: benchmark
 
 ftrace:
-  events:
-    balance_dirty_pages
+  events: balance_dirty_pages
     bdi_dirty_ratelimit
     global_dirty_state
     writeback_single_inode
@@ -16,6 +15,6 @@ if role server:
 if role client:
   fs: nfsv4
   nr_threads:
-  - 2dd
+    - 2dd
   dd:
     bs: 4k

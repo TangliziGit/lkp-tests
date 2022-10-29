@@ -3,23 +3,22 @@ category: benchmark
 
 iterations: 1x
 nr_threads:
-- 1t
-- 64t
+  - 1t
+  - 64t
 
 disk: 1HDD
 
 fs:
-- xfs
-- ext4
-- btrfs
-- f2fs
+  - xfs
+  - ext4
+  - btrfs
 fs2:
-- nfsv4
-- 
+  - nfsv4
+  -
 
 fsmark:
   filesize: 4M
   test_size: 60G
   sync_method:
-  - NoSync
-  - fsyncBeforeClose
+    - NoSync
+    - fsyncBeforeClose

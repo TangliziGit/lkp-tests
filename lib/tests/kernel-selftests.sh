@@ -148,6 +148,10 @@ prepare_for_test()
 		llvm_ver=${llvm##*/}
 		export PATH=$PATH:/usr/lib/$llvm_ver/bin
 	}
+	# fix sh: 1: iptables: not found
+	command -v iptables >/dev/null || log_cmd ln -sf /usr/sbin/iptables-nft /usr/bin/iptables
+	# fix ip6tables: command not found
+	command -v ip6tables >/dev/null || log_cmd ln -sf /usr/sbin/ip6tables-nft /usr/bin/ip6tables
 }
 
 # Get testing env kernel config file
@@ -236,6 +240,13 @@ check_ignore_case()
 
 fixup_dma()
 {
+	[[ -f $linux_selftests_dir/include/linux/map_benchmark.h ]] && {
+		# /usr/include/linux/map_benchmark.h:19:2: error: unknown type name ‘__u64’
+		sed  -i '1i #include <linux/types.h>' $linux_selftests_dir/include/linux/map_benchmark.h
+		# dma_map_benchmark.c:13:10: fatal error: linux/map_benchmark.h: No such file or directory
+		cp $linux_selftests_dir/include/linux/map_benchmark.h /usr/include/linux
+	}
+
 	# need to bind a device to dma_map_benchmark driver
 	# for PCI devices
 	local name=$(ls /sys/bus/pci/devices/ | head -1)
@@ -287,6 +298,7 @@ fixup_net()
 
 	[ "$test" = "fcnal-test.sh" ] && [ "$atomic_test" ] && setup_fcnal_test_atomic
 
+	export CCINCLUDE="-I../bpf/tools/include"
 	log_cmd make -C ../../../tools/testing/selftests/net 2>&1 || return
 	log_cmd make install INSTALL_PATH=/usr/bin/ -C ../../../tools/testing/selftests/net 2>&1 || return
 }
@@ -351,6 +363,8 @@ fixup_firmware()
 			log_cmd systemctl restart systemd-udevd
 		fi
 	}
+
+	sed -i "s/timeout=165/timeout=300/" firmware/settings
 }
 
 fixup_gpio()
@@ -365,6 +379,11 @@ fixup_proc()
 {
 	# proc-fsconfig-hidepid.c:25:17: error: ‘__NR_fsopen’ undeclared (first use in this function); did you mean ‘fsopen’?
 	export CFLAGS="-I../../../../usr/include"
+
+	## this test caused soft timeout, error output: Assertion `rv == len' failed.
+	## The test error is caused by g_vsyscall set failed.
+	sed -i 's/proc-pid-vm//' proc/Makefile
+	echo "LKP SKIP proc.proc-pid-vm"
 }
 
 fixup_move_mount_set_group()
@@ -391,6 +410,12 @@ fixup_netfilter()
 	# RULE_APPEND failed (No such file or directory): rule in chain BROUTING.
 	# table `broute' is obsolete commands.
 	update-alternatives --set ebtables /usr/sbin/ebtables-legacy
+
+	echo "timeout=3600" >> netfilter/settings
+	sed -ie "s/[\t[:space:]]\.\.\/\.\.\/\.\.\/samples\/pktgen\/pktgen_bench_xmit_mode_netif_receive.sh/\.\.\/\.\.\/\.\.\/\.\.\/samples\/pktgen\/pktgen_bench_xmit_mode_netif_receive.sh/g" netfilter/nft_concat_range.sh
+	# separate function test and performance test in netfilter/nft_concat_range.sh
+	# [ "${quicktest}" = "1" ] && TESTS="reported_issues correctness concurrency timeout"
+	sed -i "s/^TESTS=/\[ \"\${quicktest}\" = \"1\" \] \&\& TESTS=/" netfilter/nft_concat_range.sh
 }
 
 fixup_lkdtm()
@@ -453,6 +478,12 @@ fixup_memfd()
 
 fixup_bpf()
 {
+	# fix the below error due to the incompatible version of binutils-dev on old kernel
+	# jit_disasm.c:105:17: error: too few arguments to function 'init_disassemble_info'
+	# 105 |                 init_disassemble_info(&info, stdout,)
+	[[ "$LKP_LOCAL_RUN" = "1" ]] || [[ -f ../../../tools/include/tools/dis-asm-compat.h ]] ||
+	log_cmd sed -i -z "s/extern void init_disassemble_info (struct disassemble_info \*dinfo, void \*stream,\n.*fprintf_ftype fprintf_func,\n.*fprintf_styled_ftype fprintf_styled_func);/extern void init_disassemble_info (struct disassemble_info \*dinfo, void \*stream, fprintf_ftype fprintf_func);/" /usr/include/dis-asm.h
+
 	log_cmd make -C ../../../tools/bpf/bpftool 2>&1 || return
 	log_cmd make install -C ../../../tools/bpf/bpftool 2>&1 || return
 	type ping6 && {
@@ -463,12 +494,20 @@ fixup_bpf()
 	sed -i 's/test_lirc_mode2_user//' bpf/Makefile
 	echo "LKP SKIP bpf.test_lirc_mode2_user"
 
+	## this test caused soft timeout in v6.0-rc1 ~ v6.0-rc3, test ok in v6.0-rc4 v6.0-rc5.
+	sed -i 's/test_sockmap//' bpf/Makefile
+	echo "LKP SKIP bpf.test_sockmap"
+
 	## test_tc_tunnel runs well but hang on perl process
 	sed -i 's/test_tc_tunnel.sh//' bpf/Makefile
 	echo "LKP SKIP bpf.test_tc_tunnel.sh"
 
 	sed -i 's/test_lwt_seg6local.sh//' bpf/Makefile
 	echo "LKP SKIP bpf.test_lwt_seg6local.sh"
+
+	## /test_xsk.sh causes soft_timeout due to commit 710ad98c363a (veth: Do not record rx queue hint in veth_xmit)
+	sed -i 's/test_xsk.sh//' bpf/Makefile
+	echo "LKP SKIP bpf.test_xsk.sh"
 
 	# some sh scripts actually need bash
 	# ./test_libbpf.sh: 9: ./test_libbpf.sh: 0: not found
@@ -492,6 +531,10 @@ fixup_bpf()
 		sed -i "s/test_kmod.sh//" bpf/Makefile
 		echo "LKP SKIP test_kmod.sh"
 	fi
+
+	sed -i 's/\/redirect_map_0/\/xdp_redirect_map_0/g' bpf/test_xdp_veth.sh
+	sed -i 's/\/redirect_map_1/\/xdp_redirect_map_1/g' bpf/test_xdp_veth.sh
+	sed -i 's/\/redirect_map_2/\/xdp_redirect_map_2/g' bpf/test_xdp_veth.sh
 }
 
 fixup_kmod()
@@ -506,6 +549,48 @@ fixup_kmod()
 	sed -i 's/0009\:150\:1/0009\:50\:1/' kmod/kmod.sh
 }
 
+fixup_fpu()
+{
+	modprobe test_fpu
+}
+
+fixup_kexec()
+{
+	# test_kexec_load.sh: 126: [: x86_64: unexpected operator
+	# test_kexec_file_load.sh: 99: [: x86_64: unexpected operator
+	# using bash to avoid "unexpected operator" warning.
+	sed -i 's/bin\/sh/bin\/bash/g' kexec/*.sh
+
+	# tail: cannot open '/boot/vmlinuz-6.0.0' for reading: No such file or directory
+	# the kernel image path on tbox is /opt/rootfs/tmp/pkg/linux/x86_64-rhel-8.3-kselftests/gcc-11/4fe89d07dcc2804c8b562f6c7896a45643d34b2f/vmlinuz-6.0.0
+	local kernel_image=/boot/vmlinuz-$(uname -r)
+	[[ -e $kernel_image ]] || {
+		kernel_image=/opt/rootfs/tmp$(grep -o "/pkg/linux/.*/vmlinuz-[^ ]*" /proc/cmdline)
+		[[ -e $kernel_image ]] && sed -i "s|/boot/vmlinuz-\`uname -r\`|$kernel_image|g" kexec/kexec_common_lib.sh
+	}
+}
+
+fixup_user_events()
+{
+	# dyn_test.c:9:10: fatal error: linux/user_events.h: No such file or directory
+	# user_events do not build unless you manually install user_events.h into usr/include/linux.
+	cp ../../../include/linux/user_events.h ../../../usr/include/linux/
+
+	# #  RUN           user.size_types ...
+	# # dyn_test.c:91:size_types:Expected -1 (-1) != Append("u:__test_event struct custom a 20") (-1)
+	# <-- block at here and reach timeout at last
+	sed -i 's/dyn_test//' user_events/Makefile
+
+	# avoid REMOVE usr/include/linux/user_events.h when make headers_install
+	sed -i 's/headers_install\: headers/headers_install\:/' ../../../Makefile
+}
+
+fixup_kvm()
+{
+	# SKIP - /dev/kvm not available (errno: 2)
+	lsmod | grep -q 'kvm_intel' || modprobe kvm_intel
+}
+
 prepare_for_selftest()
 {
 	if [ "$group" = "group-00" ]; then
@@ -515,13 +600,13 @@ prepare_for_selftest()
 		# subtest lib cause kselftest incomplete run, it's a kernel issue
 		# report [LKP] [software node] 7589238a8c: BUG:kernel_NULL_pointer_dereference,address
 		# lkdtm is unstable [validated 1] f825d3f7ed
-		selftest_mfs=$(ls -d [c-l]*/Makefile | grep -v -e ^ftrace -e ^livepatch -e ^lib -e ^cpufreq -e ^kvm -e ^firmware -e ^lkdtm -e ^locking)
+		selftest_mfs=$(ls -d [c-l]*/Makefile | grep -v -e ^ftrace -e ^livepatch -e ^lib -e ^cpufreq -e ^cgroup -e ^kvm -e ^firmware -e ^lkdtm -e ^locking)
 	elif [ "$group" = "group-02" ]; then
 		# m* is slow
 		# pidfd caused soft_timeout in kernel-selftests.splice.short_splice_read.sh.fail.v5.9-v5.10-rc1.2020-11-06.132952
 		selftest_mfs=$(ls -d [m-r]*/Makefile | grep -v -e ^rseq -e ^resctrl -e ^net -e ^netfilter -e ^rcutorture -e ^pidfd -e ^memory-hotplug)
 	elif [ "$group" = "group-03" ]; then
-		selftest_mfs=$(ls -d [t-z]*/Makefile | grep -v -e ^x86 -e ^tc-testing -e ^vm)
+		selftest_mfs=$(ls -d [t-z]*/Makefile | grep -v -e ^x86 -e ^tc-testing -e ^vm -e ^user_events)
 	elif [ "$group" = "mptcp" ]; then
 		selftest_mfs=$(ls -d net/mptcp/Makefile)
 	elif [ "$group" = "group-s" ]; then
@@ -529,7 +614,7 @@ prepare_for_selftest()
 	elif [ "$group" = "memory-hotplug" ]; then
 		selftest_mfs=$(ls -d memory-hotplug/Makefile)
 	else
-		# bpf cpufreq firmware kvm lib livepatch lkdtm net netfilter pidfd rcutorture resctrl rseq tc-testing vm x86
+		# bpf cpufreq cgroup firmware kvm lib livepatch lkdtm net netfilter pidfd rcutorture resctrl rseq tc-testing user_events vm x86
 		selftest_mfs=$(ls -d $group/Makefile)
 	fi
 }
@@ -560,10 +645,6 @@ fixup_vm()
 		sed -i "s#needmem=262144#needmem=$memory#" vm/$run_vmtests
 	}
 
-	sed -i 's/.\/compaction_test/echo -n LKP SKIP #.\/compaction_test/' vm/$run_vmtests
-	# ./userfaultfd anon 128 32
-	sed -i 's/.\/userfaultfd anon .*$/echo -n LKP SKIP #.\/userfaultfd/' vm/$run_vmtests
-
 	# /usr/include/bits/mman-linux.h:# define MADV_PAGEOUT     21/* Reclaim these pages.  */
 	# it doesn't exist in a old glibc<=2.28
 	grep -qw MADV_PAGEOUT /usr/include/x86_64-linux-gnu/bits/mman-linux.h 2>/dev/null || {
@@ -578,6 +659,9 @@ fixup_vm()
 		[[ $iterations -le 0 || ($nr_threads != "\$NUM_CPUS" && $nr_threads -le 0) ]] && die "Paramters: iterations or nr_threads must > 0"
 		sed -i 's/^STRESS_PARAM="nr_threads=$NUM_CPUS test_repeat_count=20"/STRESS_PARAM="nr_threads='$nr_threads' test_repeat_count='$iterations'"/' vm/test_vmalloc.sh
 	fi
+
+	# vm selftests may needs to run for more than 150s on some specific platforms and exceeds the default timeout 45s
+	echo 'timeout=600' > vm/settings
 }
 
 platform_is_skylake_or_snb()
@@ -786,30 +870,42 @@ fixup_subtest()
 		fixup_mount_setattr
 	elif [[ "$subtest" = "tc-testing" ]]; then
 		fixup_tc_testing # ignore return value so that doesn't abort the rest tests
+	elif [[ "$subtest" = "fpu" ]]; then
+		fixup_fpu
+	elif [[ "$subtest" = "kexec" ]]; then
+		fixup_kexec
+	elif [[ "$subtest" = "user_events" ]]; then
+		fixup_user_events
+	elif [[ "$subtest" = "kvm" ]]; then
+		fixup_kvm
 	fi
 	return 0
 }
 
 check_subtest()
 {
-	subtest_config="$subtest/config"
-	kernel_config="/lkp/kernel-selftests-kernel-config"
+	local subtest_config="$subtest/config"
+	local kernel_config="/lkp/kernel-selftests-kernel-config"
 
 	[[ -s "$subtest_config" ]] && get_kconfig "$kernel_config" && {
 		check_kconfig "$subtest_config" "$kernel_config"
 	}
 
+	# bpf/config.x86_64
+	subtest_config="$subtest/config.x86_64"
+	[[ -s "$subtest_config" ]] && {
+		check_kconfig "$subtest_config" "$kernel_config"
+	}
+
 	check_ignore_case $subtest && echo "LKP SKIP $subtest" && return 1
 
-	# zram: skip zram since 0day-kernel-tests always disable CONFIG_ZRAM which is required by zram
-	# for local user, you can enable CONFIG_ZRAM by yourself
 	# media_tests: requires special peripheral and it can not be run with "make run_tests"
 	# watchdog: requires special peripheral
 	# 1. requires /dev/watchdog device, but not all tbox have this device
 	# 2. /dev/watchdog: need support open/ioctl etc file ops, but not all watchdog support it
 	# 3. this test will not complete until issue Ctrl+C to abort it
 	# sched: https://www.spinics.net/lists/kernel/msg4062205.html
-	skip_filter="arm64 sparc64 powerpc zram media_tests watchdog sched"
+	skip_filter="arm64 sparc64 powerpc media_tests watchdog sched"
 	subtest_in_skip_filter "$skip_filter" && return 1
 	return 0
 }

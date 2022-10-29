@@ -1,0 +1,9 @@
+boot_failures: 1
+
+# BUG: soft lockup - CPU#0 stuck for 22s! [trinity-c0:6886]
+BUG:soft_lockup-CPU##stuck_for#s![trinity##]: 1
+message:BUG:soft_lockup-CPU##stuck_for#s![trinity##]: [  185.681694] watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [trinity-c0:6886]
+pattern:BUG:soft_lockup-CPU##stuck_for#s![trinity##]: BUG: soft lockup - CPU#0 stuck for 22s! [trinity-c0:6886]
+
+timestamp:last: 185.681694
+timestamp:BUG:soft_lockup-CPU##stuck_for#s![trinity##]: 185.681694

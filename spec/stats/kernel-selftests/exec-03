@@ -1,0 +1,22 @@
+2022-06-09 17:51:03 make run_tests -C exec
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613
+c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/exec'
+TAP version 13
+1..8
+# selftests: exec: null-argv
+# TAP version 13
+# 1..5
+# ok 1 execve(argv[0], str, NULL)
+# ok 2 execve(argv[0], NULL, NULL)
+# ok 3 execve(argv[0], NULL, envp)
+# ok 4 execve(argv[0], args, NULL)
+# ok 5 execve(argv[0], args, envp)
+# # Totals: pass:5 fail:0 xfail:0 xpass:0 skip:0 error:0
+ok 7 selftests: exec: null-argv
+# selftests: exec: binfmt_script.py
+# TAP version 1.3
+# 1..27
+# ok 1 - binfmt_script too-big (correctly failed bad exec)
+# ok 2 - binfmt_script exact (correctly failed bad exec)
+ok 8 selftests: exec: binfmt_script.py
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-4b0986a3613c92f4ec1bdc7f60ec66fea135991f/tools/testing/selftests/exec'

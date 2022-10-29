@@ -3,15 +3,17 @@
 # - nr_dev
 # - nr_part
 # - part_type
+# - ns_id
+# - ns_mode
 
 . "$LKP_SRC"/lib/nvdimm.sh
 
-: ${mode:=dax}
-: ${part_type:=-}
+: "${mode:=dax}"
+: "${part_type:=-}"
 
 keep_quiet()
 {
-	[ -n "quiet_mode" ]
+	[ -n "$quiet_mode" ]
 }
 
 __probe_devs()
@@ -30,7 +32,7 @@ __probe_devs()
 			;;
 	esac
 	rnr_dev=$(echo $rdevs | wc -w)
-	: ${nr_dev:=$rnr_dev}
+	: "${nr_dev:=$rnr_dev}"
 
 	if [ "$rnr_dev" -eq 0 ]; then
 		keep_quiet || echo "No $mode devices found!" >&2

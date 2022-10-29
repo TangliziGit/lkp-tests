@@ -8,24 +8,24 @@ nr_task:
 
 will-it-scale:
   mode:
-  - thread
-  - process
+    - thread
+    - process
   test:
-  - page_fault1
-  - page_fault2
-  - page_fault3
-  - pipe1
-  - poll1
-  - poll2
-  - posix_semaphore1
-  - pread1
-  - pread2
-  - pread3
-  - pthread_mutex1
-  - pthread_mutex2
-  - pthread_mutex3
-  - pthread_mutex4
-  - pthread_mutex5
-  - pwrite1
-  - pwrite2
-  - pwrite3
+    - page_fault1
+    - page_fault2
+    - page_fault3
+    - pipe1
+    - poll1
+    - poll2
+    - posix_semaphore1
+    - pread1
+    - pread2
+    - pread3
+    - pthread_mutex1
+    - pthread_mutex2
+    - pthread_mutex3
+    - pthread_mutex4
+    - pthread_mutex5
+    - pwrite1
+    - pwrite2
+    - pwrite3

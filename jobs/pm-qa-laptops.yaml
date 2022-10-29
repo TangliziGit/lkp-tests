@@ -3,10 +3,10 @@ category: functional
 
 pm-qa:
   test:
-  # - all
-  - cpufreq
-  - cpuhotplug
-  - thermal
-  - cpuidle
-  # - suspend
-  # - powertop
+    # - all
+    - cpufreq
+    - cpuhotplug
+    - thermal
+    - cpuidle
+    # - suspend
+    # - powertop

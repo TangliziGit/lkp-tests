@@ -3,5 +3,5 @@ category: benchmark
 
 linpack:
   test_memory_size:
-  - 80%
-  - 120%
+    - 80%
+    - 120%

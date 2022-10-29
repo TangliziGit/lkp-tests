@@ -11,21 +11,21 @@ reaim:
 nr_task: 1600%
 reaim:
   test:
-  - new_dbase
-  - dbase
-  - alltests
-  - shared
-  - custom
-  - compute
-  - aim9
+    - new_dbase
+    - dbase
+    - alltests
+    - shared
+    - custom
+    - compute
+    - aim9
 
 ---
 nr_task: 1600%
 reaim:
   test:
-  - fserver
-  - new_fserver
-  - high_systime
+    - fserver
+    - new_fserver
+    - high_systime
 
 ---
 disable_latency_stats: 1
@@ -54,13 +54,13 @@ nr_task: 100%
 reaim:
   nr_job: 3000
   test:
-  - new_dbase
-  - dbase
-  - fserver
-  - new_fserver
-  - custom
-  - shared
-  - compute
+    - new_dbase
+    - dbase
+    - fserver
+    - new_fserver
+    - custom
+    - shared
+    - compute
 
 ---
 nr_task: 100%
@@ -80,13 +80,13 @@ nr_task: 100%
 reaim:
   nr_job: 1000
   test:
-  - alltests
-  - aim9
+    - alltests
+    - aim9
 
 ---
 nr_task: 100%
 reaim:
   nr_job: 1000
   test:
-  - high_systime
-  - long
+    - high_systime
+    - long

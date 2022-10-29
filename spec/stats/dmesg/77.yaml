@@ -1,0 +1,15 @@
+boot_failures: 1
+
+# WARNING: possible circular locking dependency detected
+WARNING:possible_circular_locking_dependency_detected: 1
+message:WARNING:possible_circular_locking_dependency_detected: [   29.493344][    C1] WARNING: possible circular locking dependency detected
+pattern:WARNING:possible_circular_locking_dependency_detected: WARNING: possible circular locking dependency detected
+
+# WARNING: possible circular locking dependency detected .* is trying to acquire lock: at: try_to_wake_up+0x
+WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:up/0x: 1
+message:WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:up/0x: [   29.493344][    C1] WARNING: possible circular locking dependency detected ksoftirqd/1/16 is trying to acquire lock: at: try_to_wake_up+0x4c/0xd30 but task is already holding lock: at: up+0x1c/0xf0
+pattern:WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:up/0x: WARNING: possible circular locking dependency detected .* is trying to acquire lock: at: try_to_wake_up+0x
+
+timestamp:last: 29.493364
+timestamp:WARNING:possible_circular_locking_dependency_detected: 29.493344
+timestamp:WARNING:possible_circular_locking_dependency_detected_ksoftirqd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:up/0x: 29.493344

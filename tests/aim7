@@ -1,6 +1,7 @@
 #!/bin/sh
 # - test
 # - load
+# - nr_task
 
 ## AIM7 is a program written in C that forks many processes called
 ## tasks, each of which concurrently runs in random order a set of
@@ -10,7 +11,11 @@
 ## operations, pipe I/O, and compute-bound arithmetic loops.
 
 [ -n "$test" ] || exit
-[ -n "$load" ] || exit
+
+# Either 'load' or 'nr_task' should be set
+[ -z "$load" ] && [ -z "$nr_task" ] && exit
+
+[ -n "$nr_task" ] && load=$nr_task
 
 . $LKP_SRC/lib/reproduce-log.sh
 
@@ -44,7 +49,7 @@ EOF"
 
 run_aim()
 {
-	export PATH=`pwd`:$PATH
+	export PATH=$(pwd):$PATH
 
 	aim7_setup
 

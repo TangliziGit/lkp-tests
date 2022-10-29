@@ -39,7 +39,7 @@ do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 [[ $opt_date =~ [0-9]+d$ ]] && opt_date=${opt_date%d}
 [[ $opt_date =~ [0-9]+w$ ]] && opt_date=$((${opt_date%w} * 7))
@@ -95,7 +95,7 @@ cat "${files[@]}" >> $temp_file_unsort
 		done
 
 		if [[ "$flag_pattern" = "0" ]]; then
-			cmd="grep -h -E $pattern "${files[@]}""
+			cmd="grep -h -E $pattern ${files[@]}"
 			flag_pattern=1
 		else
 			cmd="$cmd | grep -E $pattern"
@@ -144,3 +144,5 @@ do
 	[[ ! "$opt_file" || -e "$path/$opt_file" ]] &&
 	show_one_path "$path/$opt_file"
 done < $temp_file_sort
+
+exit 0

@@ -6,7 +6,7 @@ need_memory: 1G
 disk: 4HDD
 
 fs:
-- udf
+  - udf
 
 xfstests:
   test:

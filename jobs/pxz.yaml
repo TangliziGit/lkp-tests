@@ -2,7 +2,7 @@ suite: pxz
 category: benchmark
 
 nr_threads:
-- 100%
-- 25%
+  - 100%
+  - 25%
 
 pxz:

@@ -2,12 +2,10 @@ url: git://anongit.freedesktop.org/drm/drm-tip
 git_am_branch: drm-tip
 mail_cc:
 - intel-gfx@lists.freedesktop.org
+- Intel-gfx@lists.freedesktop.org
 - dri-devel@lists.freedesktop.org
 owner: Daniel Vetter <daniel.vetter@intel.com>
-subsystems:
-- drm
-- i915
-- bxt
-- gen8
 belongs_to: i915
 test_old_branches: .*
+patch_based_on_branch:
+  '\[Intel-gfx\]': drm-tip

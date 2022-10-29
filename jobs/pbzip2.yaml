@@ -2,10 +2,10 @@ suite: pbzip2
 category: benchmark
 
 nr_threads:
-- 100%
-- 25%
+  - 100%
+  - 25%
 
 pbzip2:
   blocksize:
-  - 500K
-  - 900K
+    - 500K
+    - 900K

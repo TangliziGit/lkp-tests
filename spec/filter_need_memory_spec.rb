@@ -44,7 +44,7 @@ describe 'filters/need_memory' do
         f.write({ 'testcase' => 'testcase', 'need_memory' => '100%', 'nr_cpu' => system_free_mem_gb + 2 }.to_yaml)
       end
       job = Job.open(@test_yaml_file)
-      expect { job.expand_params }.to raise_error Job::ParamError
+      expect { redirect_to_string { job.expand_params } }.to raise_error Job::ParamError
     end
   end
 end

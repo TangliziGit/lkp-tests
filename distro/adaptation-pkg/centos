@@ -34,6 +34,7 @@ liboop-dev: liboop
 linkbench::
 linpack::
 ltp::
+lz4::
 makepkg::
 mce-log::
 mce-test::
@@ -48,6 +49,7 @@ ocfs2test::
 oltp::
 packetdrill::
 pbzip2::
+pepc::
 perf::
 perf-bench-futex: perf
 perf-c2c: perf
@@ -61,9 +63,11 @@ perf-report-srcline: perf
 perf-sanity-tests: perf
 perf-stat: perf
 pft::
+phpbench::
 piglit::
 plzip:: 
 pm-qa::
+pybench::
 postmark:: 
 qperf::
 reaim::
@@ -75,6 +79,7 @@ stutter::
 swapin: vm-scalability
 tbench::
 thrulay::
+tinymembench::
 trace-cmd::
 trinity:: 
 trinity-static-i386::

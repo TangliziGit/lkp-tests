@@ -41,7 +41,7 @@ trace_tab() {
 	    -e 's/[^0-9.-]\+/ /g'
 }
 
-trace=trace-global_dirty_state
+trace="trace-global_dirty_state"
 
 zcat ftrace.gz | trace_tab global_dirty_state | awk '!x[substr($1, 0, length($1)-6)]++' > $trace-flusher
 

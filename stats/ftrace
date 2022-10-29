@@ -8,7 +8,7 @@ require "#{LKP_SRC}/lib/lkp_path"
 
 RESULT_ROOT = ENV['RESULT_ROOT']
 TIME_DELTA  = YAML.load_file("#{RESULT_ROOT}/job.yaml")['time_delta'].to_f
-FMT_DIR     = "#{RESULT_ROOT}/trace_event/"
+FMT_DIR     = "#{RESULT_ROOT}/trace_event/".freeze
 
 KEY_PREFIX_MAPPING = YAML.load_file(LKP::Path.src('etc', 'ftrace_key_prefix'))
 BDI_DEV_MAPPING = YAML.load_file("#{RESULT_ROOT}/bdi_dev_mapping") if File.exist? "#{RESULT_ROOT}/bdi_dev_mapping"
@@ -45,7 +45,7 @@ def normlize_record(event, record, key_prefix_items, records)
 
   records['last_recorded_time'][key_prefix] = record['time']
 
-  records['yaml_files'][key_prefix] ||= File.new(RESULT_ROOT + '/' + "ftrace.#{key_prefix}.yaml", 'w', 0o664)
+  records['yaml_files'][key_prefix] ||= File.new("#{RESULT_ROOT}/ftrace.#{key_prefix}.yaml", 'w', 0o664)
 
   record.each do |k, v|
     next if key_prefix_items.include? k
@@ -91,7 +91,7 @@ def parse_event(event_fmt, records)
   return if fmt.nil?
 
   event = File.basename(event_fmt, '.fmt')
-  pattern = " ([0-9]\+\\.[0-9]\+): #{event}: "
+  pattern = " ([0-9]\+\\.[0-9]\+): #{event}: .*"
   replace = 'time: \\1\\n'
   index = 2
   while fmt =~ /([a-zA-Z_]+[ =]%(s|l?[ud]):? *)/

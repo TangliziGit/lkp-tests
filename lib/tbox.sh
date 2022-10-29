@@ -9,3 +9,4 @@ tbox_cant_kexec()
 
 	return 1
 }
+

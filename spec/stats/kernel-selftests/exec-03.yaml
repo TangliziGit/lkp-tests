@@ -1,0 +1,9 @@
+exec.null-argv.execve_argv[0]_str_NULL.pass: 1
+exec.null-argv.execve_argv[0]_NULL_NULL.pass: 1
+exec.null-argv.execve_argv[0]_NULL_envp.pass: 1
+exec.null-argv.execve_argv[0]_args_NULL.pass: 1
+exec.null-argv.execve_argv[0]_args_envp.pass: 1
+exec.null-argv.pass: 1
+exec.binfmt_script.py.binfmt_script_too-big_correctly_failed_bad_exec.pass: 1
+exec.binfmt_script.py.binfmt_script_exact_correctly_failed_bad_exec.pass: 1
+exec.binfmt_script.py.pass: 1

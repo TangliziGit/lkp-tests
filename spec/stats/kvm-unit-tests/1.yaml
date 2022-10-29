@@ -1,0 +1,4 @@
+apic-split.pass: 1
+vmexit_cpuid.pass: 1
+pks.skip: 1
+msr.fail: 1

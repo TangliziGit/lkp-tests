@@ -225,6 +225,8 @@ detect_system()
 		detect_libc_version $rootfs
 	fi
 	_system_name=$(printf '%s\n' "$_system_name" | sed 's/[ \/]/_/g')  #"${_system_name//[ \/]/_}"
+
+	# shellcheck disable=SC1012 # \t is just literal 't' here. For tab, use "$(printf '\t')" instead
 	_system_name_lowercase="$(echo ${_system_name} | \command \tr '[A-Z]' '[a-z]')"
 	_system_version=$(printf '%s\n' "$_system_version" | sed 's/[ \/]/_/g')  #${_system_version//[ \/]/_}"
 }

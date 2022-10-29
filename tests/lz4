@@ -1,0 +1,22 @@
+#!/bin/bash
+# - compression
+# - iterations
+
+. $LKP_SRC/lib/upload.sh
+. $LKP_SRC/lib/unit.sh
+. $LKP_SRC/lib/reproduce-log.sh
+
+cd $BENCHMARK_ROOT/lz4 || die "no $BENCHMARK_ROOT/lz4"
+
+TESTFILE=ubuntu-18.04.3-desktop-amd64.iso
+if [ ! -f "$TESTFILE" ]; then
+    wget http://old-releases.ubuntu.com/releases/18.04.3/$TESTFILE
+fi
+
+echo "Running lz4 benchmark..."
+
+for i in $(seq $iterations)
+do
+    echo Iterations: $i
+    log_cmd ./lz4 -q -i10 -b$compression -e$compression $TESTFILE 2>&1
+done

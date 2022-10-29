@@ -1,0 +1,6 @@
+url: https://github.com/yu-chen-surf/linux.git
+owner: Chen Yu <yu.c.chen@intel.com>
+notify_build_success_branch: .*
+private_report_branch: .*
+mail_to:
+- Chen Yu <yu.c.chen@intel.com>

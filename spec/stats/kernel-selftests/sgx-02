@@ -1,0 +1,30 @@
+2022-08-30 02:05:25 make run_tests -C sgx
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-65d5ef838f2028750c05940772d31b8ab4701ab1/tools/testing/selftests/sgx'
+TAP version 13
+1..1
+# selftests: sgx: test_sgx
+# TAP version 13
+# 1..16
+# # Starting 16 tests from 2 test cases.
+# #  RUN           enclave.unclobbered_vdso ...
+# #            OK  enclave.unclobbered_vdso
+# ok 1 enclave.unclobbered_vdso
+# #  RUN           enclave.unclobbered_vdso_oversubscribed ...
+# #            OK  enclave.unclobbered_vdso_oversubscribed
+# ok 2 enclave.unclobbered_vdso_oversubscribed
+# #  RUN           enclave.unclobbered_vdso_oversubscribed_remove ...
+# # main.c:402:unclobbered_vdso_oversubscribed_remove:Creating an enclave with 198705152 bytes heap may take a while ...
+# #      SKIP      System does not support SGX2
+# #            OK  enclave.unclobbered_vdso_oversubscribed_remove
+# ok 3 # SKIP System does not support SGX2
+# #  RUN           enclave.clobbered_vdso ...
+# #            OK  enclave.clobbered_vdso
+# ok 4 enclave.clobbered_vdso
+# #  RUN           enclave.tcs_permissions ...
+# #      SKIP      System does not support SGX2
+# #            OK  enclave.tcs_permissions
+# ok 8 # SKIP System does not support SGX2
+# # PASSED: 16 / 16 tests passed.
+# # Totals: pass:6 fail:0 xfail:0 xpass:0 skip:10 error:0
+ok 1 selftests: sgx: test_sgx
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-65d5ef838f2028750c05940772d31b8ab4701ab1/tools/testing/selftests/sgx'

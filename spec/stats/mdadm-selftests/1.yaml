@@ -1,0 +1,7 @@
+13imsm-r0_r0_2d-grow-r0_r0_4d.fail: 1
+13imsm-r0_r0_2d-grow-r0_r0_5d.fail: 1
+13imsm-r0_r0_3d-grow-r0_r0_4d.fail: 1
+13imsm-r0_r5_3d-grow-r0_r5_4d.fail: 1
+13imsm-r0_r5_3d-grow-r0_r5_5d.fail: 1
+13imsm-r5_r0_3d-grow-r5_r0_4d.fail: 1
+13imsm-r5_r0_3d-grow-r5_r0_5d.fail: 1

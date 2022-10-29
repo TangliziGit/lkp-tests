@@ -108,6 +108,11 @@ parse_packages_arch()
 	generic_packages=$(echo $generic_packages | sed 's/[^ ]*([^ ]*)//g')
 }
 
+map_python2_to_python3()
+{
+	generic_packages=$(echo "$generic_packages" | sed -e 's/python-/python3-/g' -e 's/python2-/python3-/g')
+}
+
 get_dependency_packages()
 {
 	local distro=$1
@@ -125,6 +130,14 @@ get_dependency_packages()
 	parse_packages_arch
 	[ "$distro" != "debian" ] && remove_packages_version && remove_packages_repository
 
+	# many python2 pkgs are not available in debian 11 and higher version source anymore
+	# do a general mapping from python-pkg to python3-pkg
+	[[ "$distro-$_system_version" =~ debian-1[1-9] ]] && map_python2_to_python3
+
+	# many python2 pkgs are not available in ubuntu 20.04 and higher version source anymore
+	# do a general mapping from python-pkg to python3-pkg
+	[[ "$distro-$_system_version" =~ ubuntu-2[0-9].* ]] && map_python2_to_python3
+
 	adapt_packages | sort | uniq
 }
 
@@ -133,7 +146,8 @@ get_build_dir()
 	echo "/tmp/build-$1"
 }
 
-build_depends_pkg() {
+build_depends_pkg()
+{
 	if [ "$1" = '-i' ]; then
 		# in recursion install the package with -i option
 		local INSTALL='-i'
@@ -192,14 +206,15 @@ build_depends_pkg() {
 	fi
 }
 
-parse_yaml() {
+parse_yaml()
+{
 	local s='[[:space:]]*'
 	local w='[a-zA-Z0-9_-]*'
 	local tmp_filter="$(mktemp /tmp/lkp-install-XXXXXXXXX)"
 
 	ls -LR $LKP_SRC/setup $LKP_SRC/monitors $LKP_SRC/tests $LKP_SRC/daemon > $tmp_filter
 	scripts=$(cat $1 | sed -ne "s|^\($s\):|\1|" \
-	         -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\2|p" \
+	         -e "s|^\($s\)\($w\)$s:${s}[\"']\(.*\)[\"']$s\$|\2|p" \
 	         -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\2|p" | grep -x -F -f \
 	         $tmp_filter | grep -v -e ':$' -e '^$' | sort -u)
 	rm "$tmp_filter"

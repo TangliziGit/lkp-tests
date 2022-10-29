@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'fileutils'
 require 'tmpdir'
 require "#{LKP_SRC}/lib/job"
+require "#{LKP_SRC}/lib/bash"
 
 describe 'filter/disk' do
   before(:all) do
@@ -41,7 +42,7 @@ describe 'filter/disk' do
         f.write({ 'testcase' => 'testcase', 'nr_hdd_partitions' => '1', 'disk' => '4HDD' }.to_yaml)
       end
       job = Job.open(@test_yaml_file)
-      expect { job.expand_params }.to raise_error Job::ParamError
+      expect { redirect_to_string { job.expand_params } }.to raise_error Job::ParamError
     end
   end
 
@@ -51,7 +52,7 @@ describe 'filter/disk' do
         f.write({ 'testcase' => 'testcase', 'disk' => '1HDD' }.to_yaml)
       end
       job = Job.open(@test_yaml_file)
-      expect { job.expand_params }.to raise_error Job::ParamError
+      expect { redirect_to_string { job.expand_params } }.to raise_error Job::ParamError
     end
   end
 end

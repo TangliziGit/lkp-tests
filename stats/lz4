@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/log"
+require "#{LKP_SRC}/lib/statistics"
+
+stats = Hash.new { |h, k| h[k] = [] }
+
+while (line = $stdin.gets)
+  case line
+  when /^-.*\(.*\)/
+    stats['compression_level'] = line.split[0].gsub('-', '')
+    stats['compression_MB_per_sec'] << line.split[3].to_f
+    stats['decompression_MB_per_sec'] << line.split[5].to_f
+  end
+end
+
+stats.each do |k, v|
+  if k != 'compression_level'
+    puts "#{k}: #{v.average.round(2)}"
+  else
+    puts "#{k}: #{v}"
+  end
+end

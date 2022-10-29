@@ -107,6 +107,7 @@ use_local_modules_initrds()
 	}
 }
 
+# shellcheck disable=SC2120
 download_initrd()
 {
 	local _initrd=
@@ -242,7 +243,7 @@ kexec_to_next_job()
 	echo "LKP: kexecing" > /dev/ttyS0 &
 	kexec -e 2>/dev/null
 
-	set_job_state "kexec_fail"
+	set_job_state "kexec_fail_from_job"
 
 	# in case kexec failed
 	echo "LKP: rebooting after kexec"

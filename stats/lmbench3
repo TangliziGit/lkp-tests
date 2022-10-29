@@ -41,6 +41,16 @@ def designated_file_size
   designated_hash
 end
 
+def read_mb_sec
+  bandwidth = 0
+  $stdin.each_line do |line|
+    break if line.chomp.empty?
+
+    bandwidth = line.split(' ')[1].to_f
+  end
+  bandwidth
+end
+
 null_io_array = []
 
 while (line = $stdin.gets)
@@ -273,6 +283,9 @@ while (line = $stdin.gets)
   when /^"mappings$/
     result_map = designated_file_size
     puts "Mmap_Latency: #{result_map['Mmap_Latency']}"
+
+  when /bw_mem/
+    puts "Mem.Bandwidth.MB/sec: #{read_mb_sec}"
   end
 end
 

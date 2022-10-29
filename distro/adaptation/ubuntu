@@ -9,7 +9,7 @@ bsdtar: libarchive-tools
 iblz4-1: liblz4-dev
 libbz2-1.0: libbz2-dev
 libcpupower-dev:
-libevent-2.0-5: libevent-dev
+libevent-2: libevent-dev
 libgcrypt-dev: libgcrypt11-dev
 libgflags2v5: libgflags-dev
 libhugetlbfs-bin: hugepages
@@ -17,6 +17,7 @@ libhugetlbfs: libhugetlbfs0
 libicu: libicu-dev
 libipsec-mb:
 libmariadbclient18: libmariadb3
+libmariadbclient-dev: libmariadb-dev-compat
 libntfs: libntfs-3g88
 libperl5: libperl5.26
 libsnappy1v5: libsnappy-dev
@@ -32,3 +33,6 @@ pmdk: pmdk-tools
 which: debianutils
 zlib1g: zlib1g-dev
 procps-ng: procps
+nasm: nasm
+btrfs-tools: btrfs-progs
+gtk3: gir1.2-gtk-3.0

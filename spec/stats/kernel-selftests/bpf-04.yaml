@@ -2,6 +2,14 @@ bpf.test_progs.mov.pass: 1
 bpf.test_progs.shift.pass: 1
 bpf.test_progs.addsub.pass: 1
 bpf.test_progs.mul.pass: 1
+bpf.test_progs.unknown_shift.pass: 1
+bpf.test_progs.unknown_mul.pass: 1
+bpf.test_progs.packet_const_offset.pass: 1
+bpf.test_progs.packet_variable_offset.pass: 1
+bpf.test_progs.packet_variable_offset_2.pass: 1
+bpf.test_progs.dubious_pointer_arithmetic.pass: 1
+bpf.test_progs.variable_subtraction.pass: 1
+bpf.test_progs.pointer_variable_subtraction.pass: 1
 bpf.test_progs.align.pass: 1
 bpf.test_progs.atomic_bounds.pass: 1
 bpf.test_progs.add.pass: 1
@@ -29,8 +37,11 @@ bpf.test_progs.xdp_attach.pass: 1
 bpf.test_progs.xdp_bpf2bpf.pass: 1
 bpf.test_progs.cpumap_with_progs.pass: 1
 bpf.test_progs.xdp_cpumap_attach.pass: 1
+bpf.test_progs.DEVMAP_with_programs_in_entries.pass: 1
+bpf.test_progs.Verifier_check_of_DEVMAP_programs.pass: 1
 bpf.test_progs.xdp_devmap_attach.pass: 1
 bpf.test_progs.xdp_info.pass: 1
 bpf.test_progs.xdp_link.pass: 1
 bpf.test_progs.xdp_noinline.pass: 1
 bpf.test_progs.xdp_perf.pass: 1
+bpf.test_progs.fail: 1

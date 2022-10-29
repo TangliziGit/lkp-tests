@@ -1,0 +1,25 @@
+#!/usr/bin/awk -f
+
+BEGIN {
+        item = ""
+}
+
+/^[a-z ]+ check ---/ {
+        item = $1
+        count = 0
+}
+
+/^PASS/ {
+        printf("%s.%d.pass: 1\n", item, count)
+        count++
+}
+
+/^FAIL/ {
+        printf("%s.%d.fail: 1\n", item, count)
+        count++
+}
+
+/^LKP SKIP [a-z ]+/ {
+	# LKP SKIP multi check
+        printf("%s.%d.skip: 1\n", $3, 0)
+}

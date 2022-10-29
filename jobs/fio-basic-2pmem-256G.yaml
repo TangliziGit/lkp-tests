@@ -33,6 +33,7 @@ fio-setup-basic:
     - sync
     - libaio
     - mmap
+    - io_uring
   test_size: 200G
 
 fio:
@@ -52,6 +53,7 @@ fio-setup-basic:
   ioengine:
     - sync
     - mmap
+    - io_uring
   test_size: 200G
 
 ---
@@ -70,4 +72,5 @@ fio-setup-basic:
     - sync
     - libaio
     - mmap
+    - io_uring
   test_size: 100G

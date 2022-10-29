@@ -9,13 +9,13 @@ size: 512G
 
 vm-scalability:
   test:
-  - anon-cow-rand-hugetlb
-  - anon-w-rand-hugetlb
+    - anon-cow-rand-hugetlb
+    - anon-w-rand-hugetlb
 
 ---
 size: 8T
 
 vm-scalability:
   test:
-  - anon-cow-seq-hugetlb
-  - anon-w-seq-hugetlb
+    - anon-cow-seq-hugetlb
+    - anon-w-seq-hugetlb

@@ -1,8 +1,6 @@
 suite: vmem
 category: functional
 
-branch: linus/master
-
 vmem:
   group:
     - vmmalloc

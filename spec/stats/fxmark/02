@@ -1,0 +1,9 @@
+## ssd:f2fs:MWUL:2:bufferedio
+# ncpu secs works works/sec
+2 0.000000 0.000000 -nan
+## ssd:f2fs:MWUL:1:bufferedio
+# ncpu secs works works/sec real.sec user.sec nice.sec sys.sec idle.sec iowait.sec irq.sec softirq.sec steal.sec guest.sec user.util nice.util sys.util idle.util iowait.util irq.util softirq.util steal.util guest.util
+
+1 0.146845 10048.000000 68425.891246 0.268148 0.08 0 0.15 0 0 0.03 0 0 0 30.7692 0 57.6923 0 0 11.5385 0 0 0
+
+### NUM_TEST_CONF  = 7

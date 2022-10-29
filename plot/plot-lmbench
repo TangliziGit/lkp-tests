@@ -1,0 +1,55 @@
+#! /bin/bash
+
+plot()
+{
+local data1="$1"
+local data2="$2"
+local data1_hostname="$3"
+local data2_hostname="$4"
+gnuplot <<EOF
+set terminal png medium size 1920,1080
+set output "lmbench_result_combined.png"
+set title "Memory Latency Benchmark"
+
+set xlabel "Memory Depth (MB)"
+set ylabel "Latency (ns)"
+
+set grid
+
+set style line 1 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 1   # --- blue
+set style line 2 lc rgb '#ad6000' lt 1 lw 2 pt 7 ps 1   # --- red
+
+plot "${data1}" using 1:2 with linespoints ls 1 smooth unique title "${data1_hostname}", \
+	 "${data2}" using 1:2 with linespoints ls 2 smooth unique title "${data2_hostname}" 
+
+EOF
+}
+
+data_set1="$1"
+data_set2="$2"
+
+if [[ -n "$data_set1" && -n "$data_set2" ]]; then
+
+	data1_path="$( dirname "$(realpath $data_set1)" )";
+	data2_path="$( dirname "$(realpath $data_set2)" )";
+	if [ -f ${data1_path}/job.yaml ]; then
+		data1_hostname="$( grep -r 'tbox_group:' ${data1_path}/job.yaml | tail -n1 | awk '{ print $2 }' )";
+	else
+		data1_hostname="DATA 1"
+	fi
+	
+	if [ -f ${data2_path}/job.yaml ]; then
+		data2_hostname="$( grep -r 'tbox_group:' ${data2_path}/job.yaml | tail -n1 | awk '{ print $2 }' )";
+	else
+		data2_hostname="DATA 2"
+	fi
+	
+	sed '1,2d' $1 > ./extract_data1
+	sed '1,2d' $2 > ./extract_data2
+	
+	plot ./extract_data1 ./extract_data2 "$data1_hostname" "$data2_hostname"
+	rm ./extract_data1 ./extract_data2
+
+else
+	echo "Usage: plot_lmbench <data file 1> <data file 2>"
+fi

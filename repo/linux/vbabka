@@ -1,1 +1,8 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git
+owner: Vlastimil Babka <vbabka@suse.cz>
+git_am_branch: slab-next
+mail_cc: linux-mm@kvack.org
+subsystems:
+- slab
+- slub
+- slob

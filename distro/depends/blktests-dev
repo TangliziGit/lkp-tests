@@ -1,4 +1,4 @@
-linux-libc-dev/unstable
+linux-libc-dev
 autopoint
 pkg-config
 gettext

@@ -1,0 +1,90 @@
+Iteration : 1
+2022-09-08 14:18:53 ./schbench -m 1 -t 16 -r 30 -s 30000 -c 30000
+warmup done, zeroing stats
+Latency percentiles (usec) runtime 10 (s) (770 total samples)
+	50.0th: 12208 (385 samples)
+	75.0th: 25440 (193 samples)
+	90.0th: 34240 (115 samples)
+	95.0th: 42688 (39 samples)
+	*99.0th: 51136 (31 samples)
+	99.5th: 54592 (5 samples)
+	99.9th: 61504 (2 samples)
+	min=27, max=61533
+Latency percentiles (usec) runtime 20 (s) (2354 total samples)
+	50.0th: 12592 (1177 samples)
+	75.0th: 27296 (589 samples)
+	90.0th: 33600 (353 samples)
+	95.0th: 42816 (118 samples)
+	*99.0th: 49600 (94 samples)
+	99.5th: 52032 (12 samples)
+	99.9th: 60608 (9 samples)
+	min=25, max=62970
+Latency percentiles (usec) runtime 30 (s) (3938 total samples)
+	50.0th: 11344 (1970 samples)
+	75.0th: 26912 (985 samples)
+	90.0th: 32960 (591 samples)
+	95.0th: 42432 (199 samples)
+	*99.0th: 50112 (154 samples)
+	99.5th: 51904 (20 samples)
+	99.9th: 58688 (16 samples)
+	min=13, max=62970
+Iteration : 2
+2022-09-08 14:19:23 ./schbench -m 1 -t 16 -r 30 -s 30000 -c 30000
+warmup done, zeroing stats
+Latency percentiles (usec) runtime 10 (s) (800 total samples)
+	50.0th: 11312 (402 samples)
+	75.0th: 27424 (198 samples)
+	90.0th: 39232 (120 samples)
+	95.0th: 43328 (41 samples)
+	*99.0th: 47936 (31 samples)
+	99.5th: 53312 (4 samples)
+	99.9th: 62144 (4 samples)
+	min=24, max=62178
+Latency percentiles (usec) runtime 20 (s) (2352 total samples)
+	50.0th: 11312 (1177 samples)
+	75.0th: 26592 (588 samples)
+	90.0th: 32960 (353 samples)
+	95.0th: 42816 (118 samples)
+	*99.0th: 50496 (93 samples)
+	99.5th: 53312 (13 samples)
+	99.9th: 58560 (8 samples)
+	min=24, max=62376
+Latency percentiles (usec) runtime 30 (s) (3920 total samples)
+	50.0th: 11056 (1960 samples)
+	75.0th: 25056 (980 samples)
+	90.0th: 32960 (612 samples)
+	95.0th: 42432 (174 samples)
+	*99.0th: 50496 (155 samples)
+	99.5th: 52800 (20 samples)
+	99.9th: 58560 (16 samples)
+	min=24, max=62376
+Iteration : 3
+2022-09-08 14:19:53 ./schbench -m 1 -t 16 -r 30 -s 30000 -c 30000
+warmup done, zeroing stats
+Latency percentiles (usec) runtime 10 (s) (787 total samples)
+	50.0th: 12208 (394 samples)
+	75.0th: 26912 (197 samples)
+	90.0th: 32960 (119 samples)
+	95.0th: 42688 (39 samples)
+	*99.0th: 45888 (31 samples)
+	99.5th: 51648 (4 samples)
+	99.9th: 63040 (3 samples)
+	min=28, max=63043
+Latency percentiles (usec) runtime 20 (s) (2369 total samples)
+	50.0th: 11824 (1185 samples)
+	75.0th: 28832 (592 samples)
+	90.0th: 33600 (356 samples)
+	95.0th: 43328 (128 samples)
+	*99.0th: 49600 (85 samples)
+	99.5th: 52800 (12 samples)
+	99.9th: 63040 (10 samples)
+	min=27, max=65963
+Latency percentiles (usec) runtime 30 (s) (3955 total samples)
+	50.0th: 11536 (1978 samples)
+	75.0th: 26976 (989 samples)
+	90.0th: 33856 (596 samples)
+	95.0th: 43200 (198 samples)
+	*99.0th: 50368 (155 samples)
+	99.5th: 52800 (20 samples)
+	99.9th: 62784 (16 samples)
+	min=23, max=65963

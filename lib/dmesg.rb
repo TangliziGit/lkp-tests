@@ -6,6 +6,7 @@ require "#{LKP_SRC}/lib/yaml"
 require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/string_ext"
 require "#{LKP_SRC}/lib/lkp_path"
+require "#{LKP_SRC}/lib/job"
 require "#{LKP_SRC}/lib/log"
 
 LKP_SRC_ETC ||= LKP::Path.src('etc')
@@ -13,6 +14,21 @@ LKP_SRC_ETC ||= LKP::Path.src('etc')
 # /c/linux% git grep '"[a-z][a-z_]\+%d"'|grep -o '"[a-z_]\+'|cut -c2-|sort -u
 LINUX_DEVICE_NAMES = IO.read("#{LKP_SRC_ETC}/linux-device-names").split("\n")
 LINUX_DEVICE_NAMES_RE = /\b(#{LINUX_DEVICE_NAMES.join('|')})\d+/.freeze
+
+BOOT_LEVELS = {
+  'cmdline' => 1,
+  'early' => 1,
+  'pure' => 2,
+  'core' => 3,
+  'postcore' => 4,
+  'arch' => 5,
+  'subsys' => 6,
+  'fs' => 7,
+  'device' => 8,
+  'module' => 8,
+  'late' => 9,
+  'boot-ok' => 10
+}.freeze
 
 require 'fileutils'
 require 'tempfile'
@@ -29,7 +45,7 @@ def fixup_dmesg(line)
   # break up mixed messages
   case line
   when /^<[0-9]>|^(kern  |user  |daemon):......: /
-    line = line
+    # line keeps no change
   when /(.+)(\[ *[0-9]{1,6}\.[0-9]{6}\] .*)/
     line = "#{$1}\n#{$2}"
   end
@@ -80,16 +96,30 @@ CALLTRACE_IGNORE_PATTERN = /(
 OOM1 = 'invoked oom-killer: gfp_mask='.freeze
 OOM2 = 'Out of memory and no killable processes...'.freeze
 
-def grep_crash_head(dmesg_file)
-  grep = if dmesg_file =~ /\.xz$/
-           'xzgrep'
-           # cat = 'xzcat'
-         else
-           'grep'
-           # cat = 'cat'
-         end
+def grep_cmd(dmesg_file)
+  if dmesg_file =~ /\.xz$/
+    'xzgrep'
+    # cat = 'xzcat'
+  else
+    'grep'
+    # cat = 'cat'
+  end
+end
 
-  raw_oops = %x[ #{grep} -a -E -e \\\\+0x -f #{LKP_SRC_ETC}/oops-pattern #{dmesg_file} |
+def concat_context_from_dmesg(dmesg_file, line)
+  line = line.resolve_invalid_bytes
+  if line =~ /(possible recursive locking detected|possible circular locking dependency detected)/
+    lines = `#{grep_cmd(dmesg_file)} -A30 -Fx "#{line.chomp}" #{dmesg_file} | grep -m4 -e "trying to acquire lock" -e "already holding lock" -e "at: .*" | sed 's/^.* at:/at:/'`.chomp.split("\n")
+    unless lines.empty?
+      new_line = "#{line.chomp} #{lines.map { |l| l.sub(/^\[.*\] /, '') }.join(' ')}"
+      return [line, new_line]
+    end
+  end
+  line
+end
+
+def grep_crash_head(dmesg_file)
+  raw_oops = %x[ #{grep_cmd(dmesg_file)} -a -E -e \\\\+0x -f #{LKP_SRC_ETC}/oops-pattern #{dmesg_file} |
        grep -v -E -f #{LKP_SRC_ETC}/oops-pattern-ignore ]
 
   return {} if raw_oops.empty?
@@ -108,8 +138,7 @@ def grep_crash_head(dmesg_file)
     oops_map["calltrace:#{$1}"] ||= line
   end
 
-  raw_oops.each_line do |line|
-    line = line.resolve_invalid_bytes
+  raw_oops.each_line.flat_map { |l| concat_context_from_dmesg(dmesg_file, l) }.each do |line|
     if line =~ oops_re
       oops_map[$1] ||= line
       has_oom = true if line.index(OOM1)
@@ -152,7 +181,7 @@ def grep_printk_errors(kmsg_file, kmsg)
     oops = `#{grep} -a -E -e 'segfault at' -e '^<[0123]>' -e '^kern  :(err   |crit  |alert |emerg ): ' #{kmsg_file} |
       sed -r 's/\\x1b\\[([0-9;]+m|[mK])//g' |
       grep -a -v -E -f #{LKP_SRC_ETC}/oops-pattern |
-      grep -a -v -F -f #{LKP_SRC_ETC}/kmsg-denylist;
+      grep -a -v -F -f #{LKP_SRC_ETC}/kmsg-denylist.raw;
       grep -Eo "[^ ]* runtime error:.*" #{kmsg_file} | sed 's/^/sanitizer./g';
       grep -Eo -e "Direct leak of .*allocated from:" -e "Indirect leak of .*allocated from:" -e "#[0-5] 0x[0-9a-z]{12} in .*" #{kmsg_file} |
       sed 's/^Indirect leak.*/|sanitizer.indirect_leak/g' | sed 's/^Direct leak.*/|sanitizer.direct_leak/g' |
@@ -163,7 +192,7 @@ def grep_printk_errors(kmsg_file, kmsg)
     # the dmesg file is from serial console
     oops = `#{grep} -a -F -f #{KTEST_USER_GENERATED_DIR}/printk-error-messages #{kmsg_file} |
       grep -a -v -E -f #{LKP_SRC_ETC}/oops-pattern |
-      grep -a -v -F -f #{LKP_SRC_ETC}/kmsg-denylist`
+      grep -a -v -F -f #{LKP_SRC_ETC}/kmsg-denylist.raw`
     oops += `grep -a -E -f #{LKP_SRC_ETC}/ext4-crit-pattern #{kmsg_file}` if kmsg.index 'EXT4-fs ('
     oops += `grep -a -E -f #{LKP_SRC_ETC}/xfs-alert-pattern #{kmsg_file}` if kmsg.index 'XFS ('
     oops += `grep -a -E -f #{LKP_SRC_ETC}/btrfs-crit-pattern #{kmsg_file}` if kmsg.index 'btrfs: '
@@ -172,23 +201,22 @@ def grep_printk_errors(kmsg_file, kmsg)
 end
 
 def common_error_id(line)
-  line = line.chomp
-  line.gsub!(/\b[3-9]\.[0-9]+[-a-z0-9.]+/, '#') # linux version: 3.17.0-next-20141008-g099669ed
-  line.gsub!(/\b[1-9][0-9]-[A-Z][a-z]+-[0-9]{4}\b/, '#') # Date: 28-Dec-2013
-  line.gsub!(/\b0x[0-9a-f]+\b/, '#') # hex number
-  line.gsub!(/\b[a-f0-9]{40}\b/, '#') # SHA-1
-  line.gsub!(/\b[0-9][0-9.]*/, '#') # number
-  line.gsub!(/#x\b/, '0x')
-  line.gsub!(/[\\"$]/, '~')
-  line.gsub!(/[ \t]/, ' ')
-  line.gsub!(/\ \ +/, ' ')
-  line.gsub!(/([^a-zA-Z0-9])\ /, '\1')
-  line.gsub!(/\ ([^a-zA-Z])/, '\1')
-  line.gsub!(/^\ /, '')
-  line.gsub!(/\  _/, '_')
-  line.tr!(' ', '_')
-  line.gsub!(/[-_.,;:#!\[(]+$/, '')
-  line
+  line.chomp
+      .gsub(/\b[3-9]\.[0-9]+[-a-z0-9.]+/, '#') # linux version: 3.17.0-next-20141008-g099669ed
+      .gsub(/\b[1-9][0-9]-[A-Z][a-z]+-[0-9]{4}\b/, '#') # Date: 28-Dec-2013
+      .gsub(/\b0x[0-9a-f]+\b/, '#') # hex number
+      .gsub(/\b[a-f0-9]{40}\b/, '#') # SHA-1
+      .gsub(/\b[0-9][0-9.]*/, '#') # number
+      .gsub(/#x\b/, '0x')
+      .gsub(/[\\"$]/, '~')
+      .gsub(/[ \t]/, ' ')
+      .gsub(/\ \ +/, ' ')
+      .gsub(/([^a-zA-Z0-9])\ /, '\1')
+      .gsub(/\ ([^a-zA-Z])/, '\1')
+      .gsub(/^\ /, '')
+      .gsub(/\  _/, '_')
+      .tr(' ', '_')
+      .gsub(/[-_.,;:#!*\[(]+$/, '')
 end
 
 # # <4>[  256.557393] [ INFO: possible circular locking dependency detected ]
@@ -325,6 +353,10 @@ def analyze_error_id(line)
     # [   13.708945 ] [<0000000013155f90>] usb_hcd_irq
     line = $1
     bug_to_bisect = oops_to_bisect_pattern line
+  when /(.*) \]---(.*)/
+    # [    0.049111 ][    T0 ] ---[ end Kernel panic - not syncing: Fatal exception ]---
+    line = "#{$1}#{$2}"
+    bug_to_bisect = oops_to_bisect_pattern line
   when /segfault at .* ip .* sp .* error/
     # [ 2062.833046] pmbench[5394]: segfault at b ip 00007f568fec1ca6 sp 00007f54c1bf9d80 error 4 in libc-2.28.so[7f568fea8000+148000]
     # [  834.411251 ] init[1]: segfault at ffffffffff600400 ip ffffffffff600400 sp 00007fff59f7caa8 error 15
@@ -358,10 +390,11 @@ def analyze_error_id(line)
 
   error_id = common_error_id(error_id)
 
-  error_id.gsub!(/#\]$/, '') unless error_id =~ /\[[^\]]+\]$/ # ---[ end Kernel panic - not syncing: __populate_section_memmap: Failed to allocate 5242880 bytes align=0x1000 nid=0 from=0x0000000001000000   ]---
   error_id.gsub!(/([a-z]:)[0-9]+\b/, '\1') # WARNING: at arch/x86/kernel/cpu/perf_event.c:1077 x86_pmu_start+0xaa/0x110()
   error_id.gsub!(/#:\[<#>\]\[<#>\]/, '') # RIP: 0010:[<ffffffff91906d8d>]  [<ffffffff91906d8d>] validate_chain+0xed/0xe80
   error_id.gsub!(/RIP:#:/, 'RIP:')       # RIP: 0010:__might_sleep+0x72/0x80
+  error_id.gsub!(/[^\/a-zA-Z0-9_]\w[0-9]+\W/, '#') # dmesg.BUG:soft_lockup-CPU##stuck_for#s![trinity-c0:#]
+  error_id.gsub!(/\W\w[0-9]+[^\/a-zA-Z0-9_]/, '#') # dmesg.BUG:soft_lockup-CPU##stuck_for#s![kworker/u258:#:#]
 
   [error_id, bug_to_bisect]
 end
@@ -429,7 +462,7 @@ def get_crash_calltraces(dmesg_file)
   dmesg_content.gsub!('kbuild/src/consumer/', '') if dmesg_content.include?('kbuild/src/consumer/')
 
   dmesg_content.each_line do |line|
-    if line =~ / BUG: | WARNING: | INFO: | UBSAN: | kernel BUG at /
+    if line =~ /---\[ cut here | BUG: | WARNING: | INFO: | UBSAN: | kernel BUG at /
       in_calltrace = true
       if end_calltrace
         index += 1
@@ -470,11 +503,82 @@ def get_crash_calltraces(dmesg_file)
   calltraces
 end
 
-def put_dmesg_stamps(error_stamps)
+def initcall_levels(dmesg_file = '')
+  initcall_file = ENV['INITCALL_FILE']
+  unless File.exist?(initcall_file.to_s)
+    return nil if dmesg_file.empty?
+
+    job_file = File.join(File.dirname(dmesg_file), 'job.yaml')
+    return nil unless File.exist?(job_file)
+
+    job = Job.open(job_file)
+    initcall_file = File.join(File.dirname(job['kernel']), 'initcalls.yaml')
+  end
+
+  YAML.load_file(initcall_file)
+rescue StandardError
+  nil
+end
+
+def timestamp_levels(error_stamps, dmesg_file)
+  map = {}
+
+  initcall_file = ENV['INITCALL_FILE']
+  return map if initcall_file && !File.exist?(initcall_file.to_s)
+
+  initcall_lines = %x[#{grep_cmd(dmesg_file)} -E " initcall [0-9a-zA-Z_]+\\\\+0x.* returned" #{dmesg_file}]
+  unless initcall_lines.empty?
+    initcall_level = initcall_levels(dmesg_file)
+    if initcall_level
+      initcall_lines.each_line do |line|
+        next unless line.resolve_invalid_bytes =~ /\[ *(\d{1,6}\.\d{6})\].* ([0-9a-zA-Z_]+)\+0x/
+
+        timestamp = $1
+        initcall = $2
+        level = initcall_level[initcall].to_s.split('_').first
+        map[timestamp] = BOOT_LEVELS[level] if level
+        # when late_initcall called, other level initcall may be still running
+        break if level == 'late'
+      end
+    end
+  end
+
+  last = error_stamps['last']
+  if map.empty? && last
+    kernel_cmdline = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel command line:' #{dmesg_file}]
+    m = kernel_cmdline.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
+    # cmdline not exist or boot last time - cmdline time < 5s
+    map[last] = BOOT_LEVELS['cmdline'] if kernel_cmdline.empty? || (m && (Float(last) - Float(m[1])) < 5)
+  else
+    boot_ok = %x[#{grep_cmd(dmesg_file)} -m1 -P '\\[ *[0-9]{1,6}.[0-9]{6}\\].* Kernel tests: Boot OK' #{dmesg_file}]
+    m = boot_ok.resolve_invalid_bytes.match(/\[ *(\d{1,6}\.\d{6})\]/)
+    map[m[1]] = BOOT_LEVELS['boot-ok'] if m
+  end
+
+  map
+end
+
+def put_dmesg_stamps(error_stamps, dmesg_file)
+  timestamp_level = timestamp_levels(error_stamps, dmesg_file)
   puts
   error_stamps.each do |error_id, timestamp|
     puts "timestamp:#{error_id}: #{timestamp}"
+    next if timestamp_level.empty?
+
+    at = timestamp_level.keys.bsearch_index { |t| t.to_f > timestamp.to_f } || timestamp_level.size
+    at = at.positive? ? at - 1 : at
+    last_timestamp = timestamp_level.keys[at]
+    puts "bootstage:#{error_id}: #{timestamp_level[last_timestamp]}"
   end
+end
+
+def put_early_bootstage(error_ids)
+  puts
+  initcall_file = ENV['INITCALL_FILE']
+  return if initcall_file && !File.exist?(initcall_file.to_s)
+
+  puts 'bootstage:last: 1'
+  error_ids.each_key { |error_id| puts "bootstage:#{error_id}: 1" }
 end
 
 # when lkdtm is complete run, ignore dmesg
@@ -484,4 +588,39 @@ def ignore_lkdtm_dmesg?(result_root)
   return true unless File.exist?(last_state)
 
   File.foreach(last_state).grep(/^is_incomplete_run: 1/).empty?
+end
+
+def stat_unittest(unittests)
+  found_unitest = false
+  unittests.each do |line|
+    if line =~ /### dt-test ### start of unittest/
+      found_unitest = true
+      next
+    end
+
+    next unless found_unitest
+    break if line =~ /### dt-test ### end of unittest - (\d+) passed, (\d+) failed/
+
+    # ### dt-test ### FAIL of_unittest_overlay_high_level():2475 overlay_base_root not initialized
+    if line =~ /(.*)### dt-test ### FAIL (.*)/
+      e = $2.gsub(/:|\d+/, '').gsub(' ', '_')
+      puts "unittest.#{e}.fail: 1"
+    end
+  end
+end
+
+# check possibly misplaced serial log
+def verify_serial_log(dmesg_lines)
+  return unless $PROGRAM_NAME =~ /dmesg/
+  return if RESULT_ROOT.nil? || RESULT_ROOT.empty?
+
+  dmesg_lines.grep(/RESULT_ROOT=/) do |line|
+    next if line =~ /(^|[0-9]\] )kexec -l | --initrd=| --append=|"$/
+    next unless line =~ / RESULT_ROOT=([A-Za-z0-9.,;_\/+%:@=-]+) /
+
+    rt = $1
+    next unless Dir.exist? rt # serial console is often not reliable
+
+    log_error "RESULT_ROOT mismatch in dmesg: #{RESULT_ROOT} #{rt}" if rt != RESULT_ROOT
+  end
 end

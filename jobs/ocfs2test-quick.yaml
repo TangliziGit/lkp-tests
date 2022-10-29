@@ -5,7 +5,7 @@ category: functional
 # Both HDD and SSD are OK.
 # If you want to use HDD, change 1SSD to 1HDD.
 disk:
-- 1HDD
+  - 1HDD
 
 size: 200G
 

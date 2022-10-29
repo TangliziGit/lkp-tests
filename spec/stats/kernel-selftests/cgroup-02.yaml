@@ -1,0 +1,10 @@
+cgroup.test_memcontrol.test_memcg_subtree_control.pass: 1
+cgroup.test_memcontrol.test_memcg_current.pass: 1
+cgroup.test_memcontrol.test_memcg_min.fail: 1
+cgroup.test_memcontrol.test_memcg_low.fail: 1
+cgroup.test_memcontrol.fail: 1
+cgroup.test_stress.sh.test_cgcore_internal_process_constraint.pass: 1
+cgroup.test_stress.sh.test_cgcore_top_down_constraint_enable.pass: 1
+cgroup.test_stress.sh.test_cgcore_top_down_constraint_disable.pass: 1
+cgroup.test_stress.sh.test_cgcore_no_internal_process_constraint_on_threads.skip: 1
+cgroup.test_stress.sh.pass: 1

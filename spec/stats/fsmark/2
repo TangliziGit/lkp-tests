@@ -1,0 +1,14 @@
+#  �  -d  /fs/nvme0n1p4/52  -d  /fs/nvme0n1p4/53  -d  /fs/nvme0n1p4/54  -d  /fs/nvme0n1p4/55  -d  /fs/nvme0n1p4/56  -d  /fs/nvme0n1p4/57  -d  /fs/nvme0n1p4/58  -d  /fs/nvme0n1p4/59  -d  /fs/nvme0n1p4/60  -d  /fs/nvme0n1p4/61  -d  /fs/nvme0n1p4/62  -d  /fs/nvme0n1p4/63  -d  /fs/nvme0n1p4/64  -n  240  -L  1  -S  1  -s  4194304  �      ��  ��      6���  ���  �  �      ���  ���  �  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��  �      ��          �                                              ��
+#	Version 3.3, 13 thread(s) starting at Thu Jan 27 17:36:48 2022
+#	Sync method: INBAND FSYNC: fsync() per file in write loop.
+#	Directories:  no subdirectories used
+#	File names: 40 bytes long, (16 initial bytes of time stamp with 24 random bytes at end of name)
+#	Files info: size 4194304 bytes, written with an IO size of 16384 bytes per write
+#	App overhead is time in microseconds spent in the test not doing file writing related system calls.
+
+FSUse%        Count         Size    Files/sec     App Overhead
+     7         3120      4194304        337.6            54976
+Average Files/sec:        337.0
+p50 Files/sec: 337
+p90 Files/sec: 337
+p99 Files/sec: 337

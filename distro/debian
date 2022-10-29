@@ -19,7 +19,7 @@ add_i386_package()
 download()
 {
 	echo apt-get -qq download $*
-	apt-get -qq download $*
+	apt-get -qq download $* || apt-get -qq download $*
 }
 
 hardlink_to_symlink()
@@ -60,7 +60,7 @@ install()
 				#   libreadline7_7.0-1_amd64.deb
 				#   libssl1.1_1.1.0d-2_amd64.deb
 				#   gawk_1%3a4.1.3+dfsg-0.1+b1_amd64.deb
-				echo $(basename $deb_filename) >> opt/deb/keep-deb.$BM_NAME
+				basename $deb_filename >> opt/deb/keep-deb.$BM_NAME
 			else
 				echo "error: $deb_pkgname is not exist." >&2
 				return 1
@@ -106,6 +106,11 @@ fixup_kernel-selftests()
 	ln -sf /usr/bin/lft.db ./usr/bin/lft
 	ln -sf /usr/bin/traceproto.db ./usr/bin/traceproto
 	ln -sf /usr/sbin/tcptraceroute.db ./usr/sbin/tcptraceroute
+}
+
+fixup_ltp()
+{
+	ln -sf /usr/sbin/in.telnetd ./usr/sbin/in.telnetd
 }
 
 pack()
@@ -173,14 +178,34 @@ save_package_deps_info()
 		echo "$PACKAGE_VERSION_LIST" > "opt/deb/${benchmark}-deps.packages"
 }
 
+do_apt_install()
+{
+	# chronic is provided by deps/pack.cgz, but nfs rootfs + run_on_local_disk environment,
+	# deps/pack.cgz will not be merged into the runtime rootfs currently.
+	# one by one installation improve the installation success rate.
+	if has_cmd chronic; then
+		chronic=$chronic
+	else
+		chronic=
+	fi
+	for package in $packages
+	do
+		$chronic apt-get -o Dpkg::Options::=--force-confdef \
+				 -o Dpkg::Options::=--force-confold \
+				 install -qq --no-upgrade $package >/tmp/apt-get_info 2>&1
+		grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
+	done
+}
+
 distro_install_depends()
 {
 	local script
 	local bm="$1"
 	local scripts=$(find $LKP_SRC/distro/depends/ -name "$bm" -o -name "${bm}.[0-9]")
+	local arch=$(get_system_arch)
 
 	export DEBIAN_FRONTEND=noninteractive
-	add_i386_package
+	[ "$arch" = "x86_64" ] && add_i386_package
 	update
 
 	fixup_preinstall
@@ -193,21 +218,11 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		# chronic is provided by deps/pack.cgz, but nfs rootfs + run_on_local_disk environment,
-		# deps/pack.cgz will not be merged into the runtime rootfs currently.
-		# one by one installation improve the installation success rate.
-		if has_cmd chronic; then
-			chronic=$chronic
-		else
-			chronic=
-		fi
-		for package in $packages
-		do
-			$chronic apt-get -o Dpkg::Options::=--force-confdef \
-					 -o Dpkg::Options::=--force-confold \
-					 install -qq --no-upgrade $package >/tmp/apt-get_info 2>&1
-			grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
-		done
+		do_apt_install
+
+		# some apt mirrors may have issue and fail in the first time of apt install
+		# so try for a second time if the first time fails
+		[[ $? -ne 0 ]] && do_apt_install
 	done
 }
 
@@ -237,6 +252,9 @@ fixup_distro_mirror()
 	# add extra apt source into sources.list
 	# use (cat ...; echo) to append new line at last
 	(cat $LKP_SRC/distro/apt-sources-list; echo) >> /etc/apt/sources.list
+
+	# remove testing and unstable source
+	sed -i -e '/testing/d' -e '/unstable/d' /etc/apt/sources.list
 }
 
 fixup_preinstall()
@@ -260,7 +278,7 @@ pack_benchmark_deps()
 	do
 		check_shared_package $BM_NAME
 
-		packages=$(echo $(get_dependency_packages $DISTRO $BM_NAME))
+		packages=$(get_dependency_packages $DISTRO $BM_NAME)
 
 		resolve_depends $packages
 
@@ -272,7 +290,7 @@ pack_benchmark_deps()
 		}
 
 		work_dir=$(mktemp -d /tmp/pack-deps-$BM_NAME-XXXXXXXX)
-		cd $work_dir
+		cd $work_dir || exit
 
 		save_package_deps_info $BM_NAME
 

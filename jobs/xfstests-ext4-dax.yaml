@@ -10,9 +10,9 @@ disk: 2pmem
 need_memory: 20G
 
 fs:
-- ext2
-- ext4
+  - ext2
+  - ext4
 
 xfstests:
   test:
-  - ext4-dax
+    - ext4-dax

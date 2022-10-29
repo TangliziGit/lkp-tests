@@ -1,0 +1,35 @@
+suite: stress-ng
+testcase: stress-ng
+category: benchmark
+
+nr_threads: 100%
+
+testtime:
+  - 30s
+
+stress-ng:
+  class:
+    - pts
+  test:
+    - cpu
+    - crypt
+    - memcpy
+    - qsort
+    - str
+    - vecmath
+    - matrix
+    - fork
+    - msg
+    - sem
+    - sock
+    - switch
+    - atomic
+    - cache
+    - malloc
+    - memfd
+    - mmap
+    - numa
+    - rdrand
+    - sendfile
+    - io-uring
+    - futex

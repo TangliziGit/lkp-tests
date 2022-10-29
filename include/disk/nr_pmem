@@ -3,3 +3,4 @@ need_kconfig:
 - BTT
 - BLK_DEV_PMEM
 - X86_PMEM_LEGACY
+- FS_DAX # to support pmem "mount_option: dax"

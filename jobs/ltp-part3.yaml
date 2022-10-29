@@ -5,14 +5,15 @@ need_memory: 4G
 
 ltp:
   test:
-  - fsx # stress test groups, but will not take too long time
-  - crypto
-  - fs_bind
-  - kernel_misc
-  - net.ipv6
-  - net.multicast
-  - net.tcp_cmds
-  - syscalls-ipc-00
-  - smoketest
-  - uevent
-  # - s390x_tests # designed to be executed in s390x environment (zVM or LPAR)
+    - fsx # stress test groups, but will not take too long time
+    - crypto
+    - fs_bind
+    - kernel_misc
+    - net.ipv6
+    - net.multicast
+    - net.tcp_cmds
+    - syscalls-ipc-00
+    - smoketest
+    - uevent
+    # - s390x_tests # designed to be executed in s390x environment (zVM or LPAR)
+    # - watchqueue # test broken

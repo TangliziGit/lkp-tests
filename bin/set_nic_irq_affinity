@@ -58,15 +58,15 @@ AFF=$1
 shift
 
 case "$AFF" in
-    remote)	[[ $1 =~ $num ]] && rnode=$1 && shift ;;
-    one)	[[ $1 =~ $num ]] && cnt=$1 && shift ;;
-    all)	;;
-    local)	;;
-    custom)	;;
-    [0-9]*)	;;
-    -h|--help)	usage ;;
-    "")		usage ;;
-    *)		IFACES=$AFF && AFF=all ;;	# Backwards compat mode
+	remote)    [[ $1 =~ $num ]] && rnode=$1 && shift ;;
+	one)       [[ $1 =~ $num ]] && cnt=$1 && shift ;;
+	all)       ;;
+	local)     ;;
+	custom)    ;;
+	[0-9]*)    ;;
+	-h|--help) usage ;;
+	"")        usage ;;
+	*)         IFACES=$AFF && AFF=all ;; # Backwards compat mode
 esac
 
 # append the interfaces listed to the string with spaces
@@ -90,17 +90,17 @@ set_affinity()
 	then
 		MASK_FILL=""
 		MASK_ZERO="00000000"
-		let "IDX = $VEC / 32"
-		for ((i=1; i<=$IDX;i++))
+		(( IDX = VEC / 32 ))
+		for ((i=1; i<=IDX;i++))
 		do
 			MASK_FILL="${MASK_FILL},${MASK_ZERO}"
 		done
 
-		let "VEC -= 32 * $IDX"
-		MASK_TMP=$((1<<$VEC))
+		(( VEC -= 32 * IDX ))
+		MASK_TMP=$((1<<VEC))
 		MASK=$(printf "%X%s" $MASK_TMP $MASK_FILL)
 	else
-		MASK_TMP=$((1<<$VEC))
+		MASK_TMP=$((1<<VEC))
 		MASK=$(printf "%X" $MASK_TMP)
 	fi
 
@@ -114,15 +114,17 @@ set_affinity()
 
 # Allow usage of , or -
 #
-parse_range () {
-        RANGE=${@//,/ }
-        RANGE=${RANGE//-/..}
-        LIST=""
-        for r in $RANGE; do
+parse_range ()
+{
+	RANGE=${@//,/ }
+	RANGE=${RANGE//-/..}
+	LIST=""
+	for r in $RANGE; do
 		# eval lets us use vars in {#..#} range
-                [[ $r =~ '..' ]] && r="$(eval echo {$r})"
+		# shellcheck disable=SC1083 # This { is literal. Check expression (missing ;/\n?) or quote it
+		[[ $r =~ '..' ]] && r="$(eval echo {$r})"
 		LIST+=" $r"
-        done
+	done
 	echo $LIST
 }
 
@@ -142,7 +144,7 @@ setaff()
 
 	irqs=$(grep "$queues" /proc/interrupts | cut -f1 -d:)
 	[ -z "$irqs" ] && irqs=$(grep $IFACE /proc/interrupts | cut -f1 -d:)
-	[ -z "$irqs" ] && irqs=$(for i in `ls -Ux /sys/class/net/$IFACE/device/msi_irqs` ;\
+	[ -z "$irqs" ] && irqs=$(for i in $(ls -Ux /sys/class/net/$IFACE/device/msi_irqs) ;\
 	                         do grep "$i:.*TxRx" /proc/interrupts | grep -v fdir | cut -f 1 -d : ;\
 	                         done)
 	[ -z "$irqs" ] && echo "Error: Could not find interrupts for $IFACE"
@@ -220,7 +222,7 @@ for IFACE in $IFACES; do
 done
 
 # check for irqbalance running
-IRQBALANCE_ON=`ps ax | grep -v grep | grep -q irqbalance; echo $?`
+IRQBALANCE_ON=$(ps ax | grep -v grep | grep -q irqbalance; echo $?)
 if [ "$IRQBALANCE_ON" = "0" ] ; then
 	echo " WARNING: irqbalance is running and will"
 	echo "          likely override this script's affinitization."

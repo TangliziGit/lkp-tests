@@ -51,6 +51,7 @@ size: 128G
 vm-scalability:
   test:
   - truncate
+  - truncate-seq
 
 ---
 size: 256G

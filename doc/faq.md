@@ -90,6 +90,14 @@ A: You may email to lkp@intel.com to reach all team members.
 I subscribed to 30+ lists, you can check the listing under the mailing-list/
 directory. Feel free to request for more inclusions.
 
+#### Q: How to make sure the patch testing on a right base branch?
+
+We suggest to use '--base' in `git format-patch` to provide the base tree info.
+Without the base branch, we'll calculate a possible branch to apply the patch
+which may cause the false positive, the introduction for '--base' can be found in
+https://www.kernel.org/doc/html/latest/process/submitting-patches.html#providing-base-tree-information
+or https://git-scm.com/docs/git-format-patch#_base_tree_information
+
 #### Q: How can I test my patch in private?
 
 A: You may git-send-email to patch-test@kernel.org (TODO: create the address).

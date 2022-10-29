@@ -24,6 +24,26 @@ require "#{LKP_SRC}/lib/log"
 ENV['PATH'] = ENV['PATH'] + ":#{LKP_SRC}/bin"
 ENV['BENCHMARK_ROOT'] = '/lkp/benchmarks'
 
+$not_unite = false
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: proc-local [-n] [RESULT_ROOT]'
+
+  opts.separator ''
+  opts.separator 'options:'
+
+  opts.on('-n', '--not-unite', 'Do not unite the result') do
+    $not_unite = true
+  end
+
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+end
+
+opt_parser.parse!(ARGV)
+
 result_root = (ARGV[0] && File.absolute_path(ARGV[0])) || Dir.getwd
 
 jobfile = "#{result_root}/job.yaml"
@@ -37,7 +57,7 @@ rescue StandardError
 end
 
 _result_root = job._result_root
-if _result_root != File.dirname(result_root)
+if !$not_unite && _result_root != File.dirname(result_root)
   log_warn "_rt doesn't match rt: #{_result_root} vs. #{result_root}"
   exit 1
 end
@@ -52,6 +72,9 @@ FileUtils.rm Dir.glob("#{result_root}/*.json{,.gz,.xz}")
 system job_script, 'extract_stats'
 
 stats = create_stats_matrix result_root
+
+exit(0) if $not_unite
+
 stats['stats_source'] = "#{result_root}/stats.json"
 unite_to(stats, _result_root)
 system("#{LKP_SRC}/sbin/unite-params", result_root)

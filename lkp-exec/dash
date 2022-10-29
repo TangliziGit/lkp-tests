@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rc_file=$(tempfile --prefix=lkp-)
+rc_file=$(mktemp -d /tmp/lkp-XXXXXX)
 trap "rm -rf $rc_file" EXIT
 
 for lib in debug.sh common.sh misc.sh wget.sh job-init.sh bootstrap.sh job.sh env.sh; do

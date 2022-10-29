@@ -1,0 +1,96 @@
+2022-10-19 08:28:57 make quicktest=1 run_tests -C timens
+
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-21ef9e7031c1b2d51db5b2bfba2019e7fa3451cf/tools/testing/selftests/timens'
+
+TAP version 13
+
+1..8
+
+# selftests: timens: timens
+
+# 1..10
+
+# ok 1 Passed for CLOCK_BOOTTIME (syscall)
+
+# ok 2 Passed for CLOCK_BOOTTIME (vdso)
+
+# ok 3 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+# ok 4 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+# ok 5 Passed for CLOCK_MONOTONIC (syscall)
+
+# ok 6 Passed for CLOCK_MONOTONIC (vdso)
+
+# ok 7 Passed for CLOCK_MONOTONIC_COARSE (syscall)
+
+# ok 8 Passed for CLOCK_MONOTONIC_COARSE (vdso)
+
+# ok 9 Passed for CLOCK_MONOTONIC_RAW (syscall)
+
+# ok 10 Passed for CLOCK_MONOTONIC_RAW (vdso)
+
+# # Totals: pass:8 fail:0 xfail:0 xpass:0 skip:2 error:0
+
+ok 1 selftests: timens: timens
+
+# selftests: timens: timerfd
+
+# 1..3
+
+# ok 1 clockid=7
+
+# ok 2 clockid=1
+
+# ok 3 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+# # Totals: pass:2 fail:0 xfail:0 xpass:0 skip:1 error:0
+
+# 1..3
+
+ok 2 selftests: timens: timerfd
+
+# selftests: timens: timer
+
+# 1..3
+
+# ok 1 clockid=7
+
+# ok 2 clockid=1
+
+# ok 3 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+# # Totals: pass:2 fail:0 xfail:0 xpass:0 skip:1 error:0
+
+# 1..3
+
+ok 3 selftests: timens: timer
+
+# selftests: timens: clock_nanosleep
+
+# 1..4
+
+# ok 1 clockid: 1 abs:0
+
+# ok 2 clockid: 1 abs:1
+
+# ok 3 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+# ok 4 # SKIP CLOCK_BOOTTIME_ALARM isn't supported
+
+# # Totals: pass:2 fail:0 xfail:0 xpass:0 skip:2 error:0
+
+ok 4 selftests: timens: clock_nanosleep
+
+# selftests: timens: procfs
+
+# 1..2
+
+# ok 1 Passed for /proc/uptime
+
+# ok 2 Passed for /proc/stat btime
+
+# # Totals: pass:2 fail:0 xfail:0 xpass:0 skip:0 error:0
+
+ok 5 selftests: timens: procfs
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-21ef9e7031c1b2d51db5b2bfba2019e7fa3451cf/tools/testing/selftests/timens'

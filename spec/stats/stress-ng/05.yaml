@@ -1,0 +1,5 @@
+longjmp.pass: 1
+longjmp.ops: 29475415
+longjmp.ops_per_sec: 491240.30
+longjmp.nanoseconds_per_longjmp_call.pass: 1
+longjmp.nanoseconds_per_longjmp_call: 53.66

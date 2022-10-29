@@ -6,15 +6,15 @@ nr_threads: 100%
 disk: 1HDD
 
 testtime:
-- 60s
+  - 60s
 
 stress-ng:
   class:
-  - device
+    - device
   test:
-  - dev
-  - full
-  - loop
-  - 'null'
-  - urandom
-  - zero
+    - dev
+    - full
+    - loop
+    - "null"
+    - urandom
+    - zero

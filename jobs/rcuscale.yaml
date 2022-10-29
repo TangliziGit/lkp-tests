@@ -6,7 +6,8 @@ runtime: 300s
 
 rcuscale:
   scale_type:
-  - rcu
-  - srcu
-  - srcud
-  - tasks
+    - rcu
+    - srcu
+    - srcud
+    - tasks
+    - tasks-tracing

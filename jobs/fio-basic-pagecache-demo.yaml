@@ -11,7 +11,7 @@ numactl:
 
 disk: 1SSD
 fs:
-- ext4
+  - ext4
 
 drop_caches:
 sysctl:
@@ -42,6 +42,7 @@ fio-setup-basic:
     - randwrite
   ioengine:
     - psync
+    - io_uring
   test_size: 64G
   nr_files: 1
   filesize: 16G

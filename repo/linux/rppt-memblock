@@ -1,4 +1,8 @@
 url: git://git.kernel.org/pub/scm/linux/kernel/git/rppt/memblock.git
+git_am_branch: for-next
+mail_cc: linux-mm@kvack.org
 notify_build_success_branch: .*
 owner: Mike Rapoport <rppt@kernel.org>
 mail_cc: Mike Rapoport <rppt@kernel.org>
+subsystems:
+- memblock

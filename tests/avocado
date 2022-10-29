@@ -31,14 +31,14 @@ EOT
 get_test()
 {
 	## avocado list will list all available tests
-	log_cmd avocado list >> /tmp/all_tests
+	log_cmd avocado list $BENCHMARK_ROOT/avocado/examples/tests >> /tmp/all_tests
 	## There are two type tests: INSTRUMENTED and SIMPLE.
 	## Don't test SIMPLE, all_tests will be splited.
 	log_cmd sed -i "/^SIMPLE/d" /tmp/all_tests
 	## Format all_test.
 	## Before: INSTRUMENTED /lkp/benchmarks/avocado/examples/tests/abort.py:AbortTest.test
-	## After: abort.py:AbortTest.test
-	gawk -F "tests/" '{print $2 > "/tmp/all_test"}' /tmp/all_tests
+	## After: /lkp/benchmarks/avocado/examples/tests/abort.py:AbortTest.test
+	gawk '{print $2 > "/tmp/all_test"}' /tmp/all_tests
 }
 
 split_test()

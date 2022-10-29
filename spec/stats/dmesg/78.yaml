@@ -1,0 +1,21 @@
+boot_failures: 1
+
+# WARNING: possible circular locking dependency detected
+WARNING:possible_circular_locking_dependency_detected: 1
+message:WARNING:possible_circular_locking_dependency_detected: [   54.757348][  T223] WARNING: possible circular locking dependency detected
+pattern:WARNING:possible_circular_locking_dependency_detected: WARNING: possible circular locking dependency detected
+
+# WARNING: possible circular locking dependency detected .* is trying to acquire lock: at: try_to_wake_up+0x
+WARNING:possible_circular_locking_dependency_detected_bootlogd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:__wake_up_common_lock/0x: 1
+message:WARNING:possible_circular_locking_dependency_detected_bootlogd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:__wake_up_common_lock/0x: [   54.757348][  T223] WARNING: possible circular locking dependency detected bootlogd/223 is trying to acquire lock: at: try_to_wake_up+0x4c/0xd30 but task is already holding lock: at: __wake_up_common_lock+0x5b/0xe0
+pattern:WARNING:possible_circular_locking_dependency_detected_bootlogd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:__wake_up_common_lock/0x: WARNING: possible circular locking dependency detected .* is trying to acquire lock: at: try_to_wake_up+0x
+
+# UBSAN: Undefined behaviour in include/linux/rhashtable.h:.*
+UBSAN:Undefined_behaviour_in_include/linux/rhashtable.h: 1
+message:UBSAN:Undefined_behaviour_in_include/linux/rhashtable.h: [   54.765421][   T95] UBSAN: Undefined behaviour in include/linux/rhashtable.h:297:9
+pattern:UBSAN:Undefined_behaviour_in_include/linux/rhashtable.h: UBSAN: Undefined behaviour in include/linux/rhashtable.h:.*
+
+timestamp:last: 54.778936
+timestamp:WARNING:possible_circular_locking_dependency_detected: 54.757348
+timestamp:WARNING:possible_circular_locking_dependency_detected_bootlogd_is_trying_to_acquire_lock:at:try_to_wake_up_but_task_is_already_holding_lock:at:__wake_up_common_lock/0x: 54.757348
+timestamp:UBSAN:Undefined_behaviour_in_include/linux/rhashtable.h: 54.765421

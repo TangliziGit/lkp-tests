@@ -1,0 +1,44 @@
+
+# NOTICE
+NOTICE: 1
+message:NOTICE: <0>[    4.742666][    T1] **     NOTICE     **
+pattern:NOTICE: NOTICE
+
+# IOMMU DebugFS
+IOMMU_DebugFS: 1
+message:IOMMU_DebugFS: <0>[    4.744667][    T1] **  IOMMU DebugFS   **
+pattern:IOMMU_DebugFS: IOMMU DebugFS
+
+# This means that
+This_means_that: 1
+message:This_means_that: <0>[    4.746668][    T1] ** This means that  **
+pattern:This_means_that: This means that
+
+# IOMMU data structures
+IOMMU_data_structures: 1
+message:IOMMU_data_structures: <0>[    4.747668][    T1] ** IOMMU data structures **
+pattern:IOMMU_data_structures: IOMMU data structures
+
+# system.
+system: 1
+message:system: <0>[    4.748669][    T1] ** system.                                            **
+pattern:system: system.
+
+# If you see this message
+If_you_see_this_message: 1
+message:If_you_see_this_message: <0>[    4.750668][    T1] ** If you see this message   **
+pattern:If_you_see_this_message: If you see this message
+
+# report this immediately to your vendor!
+report_this_immediately_to_your_vendor: 1
+message:report_this_immediately_to_your_vendor: <0>[    4.751666][    T1] ** report this immediately to your vendor!         **
+pattern:report_this_immediately_to_your_vendor: report this immediately to your vendor!
+
+timestamp:last: 4.754668
+timestamp:NOTICE: 4.742666
+timestamp:IOMMU_DebugFS: 4.744667
+timestamp:This_means_that: 4.746668
+timestamp:IOMMU_data_structures: 4.747668
+timestamp:system: 4.748669
+timestamp:If_you_see_this_message: 4.750668
+timestamp:report_this_immediately_to_your_vendor: 4.751666

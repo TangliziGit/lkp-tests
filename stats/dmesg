@@ -62,21 +62,6 @@ end
 
 dmesg_lines = fixup_dmesg_file(dmesg_file)
 
-# check possibly misplaced serial log
-def verify_serial_log(dmesg_lines)
-  return unless $PROGRAM_NAME =~ /dmesg/
-  return if RESULT_ROOT.nil? || RESULT_ROOT.empty?
-
-  dmesg_lines.grep(/RESULT_ROOT=/) do |line|
-    next if line =~ /(^|[0-9]\] )kexec -l | --initrd=| --append=|"$/
-    next unless line =~ / RESULT_ROOT=([A-Za-z0-9.,;_\/+%:@=-]+) /
-
-    rt = $1
-    next unless Dir.exist? rt # serial console is often not reliable
-
-    log_error "RESULT_ROOT mismatch in dmesg: #{RESULT_ROOT} #{rt}" if rt != RESULT_ROOT
-  end
-end
 verify_serial_log(dmesg_lines)
 
 error_ids = {}
@@ -113,29 +98,11 @@ lines.reverse_each do |line|
 end
 
 if ignore_lkdtm_dmesg?(RESULT_ROOT)
-  put_dmesg_stamps(error_stamps)
+  put_dmesg_stamps(error_stamps, dmesg_file)
   exit
 end
 
-def stat_unittest(unittests)
-  found_unitest = false
-  unittests.each do |line|
-    if line =~ /### dt-test ### start of unittest/
-      found_unitest = true
-      next
-    end
-    next unless found_unitest
-    break if line =~ /### dt-test ### end of unittest - (\d+) passed, (\d+) failed/
-
-    # ### dt-test ### FAIL of_unittest_overlay_high_level():2475 overlay_base_root not initialized
-    if line =~ /(.*)### dt-test ### FAIL (.*)/
-      e = $2.gsub(/:|\d+/, '').gsub(' ', '_')
-      puts "unittest.#{e}.fail: 1"
-    end
-  end
-end
-
-stat_unittest(lines) if $PROGRAM_NAME =~ /kmsg/
+stat_unittest(lines) if $PROGRAM_NAME =~ /dmesg/
 
 oops_map.each do |bug_to_bisect, line|
   line.chomp!
@@ -182,4 +149,8 @@ error_ids.each do |error_id, line|
   puts "pattern:#{error_id}: #{line}"
 end
 
-put_dmesg_stamps(error_stamps)
+if error_stamps['last']
+  put_dmesg_stamps(error_stamps, dmesg_file)
+else
+  put_early_bootstage(error_ids)
+end

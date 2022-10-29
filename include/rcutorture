@@ -1,5 +1,18 @@
+need_kernel_version:
+- '>= v4.17, gcc'
+- '>= v5.12, clang'
 need_kconfig:
 - RCU_TORTURE_TEST: m
 - SECURITY_LOADPIN_ENABLED: n, <= v4.19
-- SECURITY_LOADPIN_ENFORCE: n, v4.20
+- SECURITY_LOADPIN_ENFORCE: n, v4.20-rc1
 - MODULE_UNLOAD: y
+# 3b6e1dd42317 (rcutorture: Allow rcutorture without RCU Tasks)
+- RCU_EXPERT: y
+- FORCE_TASKS_RCU: y, v5.19-rc1
+- TASKS_RCU: y
+# 40c1278aa7cd (rcutorture: Allow rcutorture without RCU Tasks Trace)
+- FORCE_TASKS_TRACE_RCU: y, v5.19-rc1
+- TASKS_TRACE_RCU: y, v5.8-rc1
+# 4c3f7b0e1e88 (rcutorture: Allow rcutorture without RCU Tasks Rude)
+- FORCE_TASKS_RUDE_RCU: y, v5.19-rc1
+- TASKS_RUDE_RCU: y, v5.8-rc1

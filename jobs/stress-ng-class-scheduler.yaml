@@ -3,50 +3,49 @@ category: benchmark
 
 nr_threads: 100%
 
-
 testtime:
-- 60s
+  - 60s
 
 sysctl:
-- sc_pid_max: 4194304
+  - sc_pid_max: 4194304
 
 stress-ng:
   class:
-  - scheduler
+    - scheduler
   test:
-  - affinity
-  - clone
-  - close
-  - cyclic
-  - daemon
-  - dnotify
-  - eventfd
-  - fanotify
-  - fault
-  - fifo
-  - fork
-  - futex
-  - hrtimers
-  - inotify
-  - kill
-  - mmapfork
-  - mq
-  - msg
-  - nanosleep
-  - netlink-proc
-  - netlink-task
-  - nice poll
-  - pthread
-  - schedpolicy
-  - sem
-  - sem-sysv
-  - session
-  - sleep
-  - softlockup
-  - switch
-  - tee
-  - vfork
-  - vforkmany
-  - wait
-  - yield
-  - zombie
+    - affinity
+    - clone
+    - close
+    - cyclic
+    - daemon
+    - dnotify
+    - eventfd
+    - fanotify
+    - fault
+    - fifo
+    - fork
+    - futex
+    - hrtimers
+    - inotify
+    - kill
+    - mmapfork
+    - mq
+    - msg
+    - nanosleep
+    - netlink-proc
+    - netlink-task
+    - nice poll
+    - pthread
+    - schedpolicy
+    - sem
+    - sem-sysv
+    - session
+    - sleep
+    - softlockup
+    - switch
+    - tee
+    - vfork
+    - vforkmany
+    - wait
+    - yield
+    - zombie

@@ -2,14 +2,14 @@ suite: lib-micro
 category: benchmark
 
 test:
-- fast
-- all
+  - fast
+  - all
 
 nr_task:
-- 1
-- 100%
+  - 1
+  - 100%
 
 lib-micro:
   samples:
-  - 10000
-  - 100000
+    - 10000
+    - 100000

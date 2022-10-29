@@ -1,15 +1,100 @@
 need_kconfig:
+% if ___.group == "group-00"
+- KUNIT: y, v5.5-rc1
+- KUNIT_DEBUGFS: y, v5.7-rc1
+- KUNIT_ALL_TESTS: m, v5.8-rc1
+
 - BITFIELD_KUNIT: m, v5.10-rc1
 - BITS_TEST: m, v5.9-rc1
 - CMDLINE_KUNIT_TEST: m, v5.11-rc1
-- EXT4_KUNIT_TESTS: m, v5.6-rc1
-- KUNIT: m, v5.5-rc1
-- KUNIT_ALL_TESTS: m, v5.8-rc1
+- EXT4_KUNIT_TESTS: m, v5.5-rc1
+- HASH_KUNIT_TEST: m, v5.17-rc1
 - KUNIT_EXAMPLE_TEST: n, v5.5-rc1
 - KUNIT_TEST: n, v5.5-rc1
 - LINEAR_RANGES_TEST: m, v5.8-rc1
 - LIST_KUNIT_TEST: m, v5.5-rc1
+- MEMCPY_KUNIT_TEST: m, v5.16-rc1
+- NETDEV_ADDR_LIST_TEST: m, v5.17-rc1
+- RESOURCE_KUNIT_TEST: m, v5.11-rc1
+- RTC_LIB_KUNIT_TEST: m, v5.15-rc1
+- SYSCTL_KUNIT_TEST: m, v5.5-rc1
+- TIME_KUNIT_TEST: m, v5.14-rc1
+- TEST_LIST_SORT: m
+- TEST_SORT: m
+
+- FAT_FS: m
+- FAT_KUNIT_TEST: m, v5.15-rc1
+
+- KASAN: y
+- KASAN_KUNIT_TEST: m, v5.10-rc1
+
+- TRACEPOINTS: y
+- KFENCE: y, v5.12-rc1
+- KFENCE_KUNIT_TEST: m, v5.12-rc1
+
 - MPTCP: y, v5.6-rc1
 - MPTCP_KUNIT_TEST: m, v5.13-rc1
-- RESOURCE_KUNIT_TEST: m, v5.11-rc1
-- SYSCTL_KUNIT_TEST: m, v5.5-rc1
+
+- RATIONAL: y
+- RATIONAL_KUNIT_TEST: m, v5.14-rc1
+
+- SLUB_DEBUG: y
+- SLUB_KUNIT_TEST: m, v5.14-rc1
+
+# below are kunit test configs of bool type
+- DRIVER_PE_KUNIT_TEST: y, v5.13-rc1
+- PM_QOS_KUNIT_TEST: y, v5.5-rc1
+- USB4: y, v5.6-rc1
+- USB4_KUNIT_TEST: y, v5.9-rc1
+
+- SECURITY_APPARMOR: y
+- SECURITY_APPARMOR_KUNIT_TEST: y, v5.6-rc1
+
+% elsif ___.group == "group-01"
+# below are not kunit test
+- STRING_SELFTEST: m
+- PHYLIB: y
+- INET: y
+- NET_SELFTESTS: y, v5.13-rc1
+- TEST_DIV64: m, v5.13-rc1
+- TEST_BPF: m
+- TEST_MIN_HEAP: m, v5.7-rc1
+- TEST_USER_COPY: m
+- TEST_STRSCPY: m, v5.2-rc1
+- TEST_STATIC_KEYS: m
+- TEST_SIPHASH: m, v5.17-rc1
+- TEST_SCANF: m, v5.14-rc1
+- TEST_PRINTF: m
+- TEST_KSTRTOX: m
+- TEST_STRING_HELPERS: m
+- TEST_BITMAP: m
+- TEST_UUID: m
+- TEST_XARRAY: m
+- TEST_OVERFLOW: m, <= v5.17
+- TEST_RHASHTABLE: m
+- TEST_IDA: m
+- TEST_MEMCAT_P: m
+- TEST_UDELAY: m
+- TEST_VMALLOC: m, v5.1-rc1
+- DYNAMIC_DEBUG: y
+- LIVEPATCH: y
+- TEST_LIVEPATCH: m, v5.1-rc1
+- TEST_MEMINIT: m, v5.3-rc1
+- TRANSPARENT_HUGEPAGE: y
+- DEVICE_PRIVATE: y
+- TEST_HMM: m, v5.8-rc1
+- TEST_FREE_PAGES: m, v5.10-rc1
+- KCOV_INSTRUMENT_ALL: n
+- TEST_FPU: m, v5.9-rc1
+- TEST_BITOPS: m, v5.8-rc1
+- TEST_ASYNC_DRIVER_PROBE: m
+- SPI_LOOPBACK_TEST: m
+- GLOB_SELFTEST: m
+- DYNAMIC_FTRACE: y
+- BUILDTIME_MCOUNT_SORT: y, v5.17-rc1
+- FTRACE_SORT_STARTUP_TEST: y, v5.17-rc1
+- DRM_DEBUG_SELFTEST: m, v4.18-rc1
+- CRC32: y
+- CRC32_SELFTEST: m
+- ATOMIC64_SELFTEST: m
+% end

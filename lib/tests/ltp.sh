@@ -19,8 +19,11 @@ build_ltp()
 	./configure --prefix=$1
 	make || return
 
-	# fix rpc test cases, linking to libtirpc-dev will make the tests failed in debian
-	sed -i "s/^LDLIBS/#LDLIBS/" testcases/network/rpc/rpc-tirpc/tests_pack/Makefile.inc || return
+	local distro=$(basename $rootfs)
+	if [[ ! "$distro" =~ "debian-12" ]]; then
+		# fix rpc test cases, linking to libtirpc-dev will make the tests failed in debian
+		sed -i "s/^LDLIBS/#LDLIBS/" testcases/network/rpc/rpc-tirpc/tests_pack/Makefile.inc || return
+	fi
 	rebuild testcases/network/rpc/rpc-tirpc/tests_pack/rpc_suite/rpc/rpc_createdestroy_svc_destroy || return
 	rebuild testcases/network/rpc/rpc-tirpc/tests_pack/rpc_suite/rpc/rpc_createdestroy_svcfd_create || return
 	rebuild testcases/network/rpc/rpc-tirpc/tests_pack/rpc_suite/rpc/rpc_regunreg_xprt_register || return
@@ -88,6 +91,12 @@ workaround_env()
 			echo "can not install mkisofs"
 		fi
 	}
+
+	# fix CONF: 'iptables' not found
+	command -v iptables >/dev/null || log_cmd ln -sf /usr/sbin/iptables-nft /usr/bin/iptables
+
+	# fix CONF: 'ip6tables' not found
+	command -v ip6tables >/dev/null || log_cmd ln -sf /usr/sbin/ip6tables-nft /usr/bin/ip6tables
 }
 
 specify_tmpdir()
@@ -122,13 +131,18 @@ test_setting()
 		# match logic of is_excluded
 		sed -i "s/\t/ /g" runtest/fs_ext4
 		;;
-	lvm.local)
+	lvm.local-*)
 		export LTPROOT=${PWD}
 		export PATH="$PATH:$LTPROOT/testcases/bin"
 		# Creates runtest/lvm.local with testcases for all locally supported FS types
 		log_cmd testcases/bin/generate_lvm_runfile.sh
 		# Creates 2 LVM volume groups and mounts logical volumes for all locally supported FS types
 		log_cmd testcases/bin/prepare_lvm.sh
+
+		# split test to avoid soft_timeout
+		cd runtest
+		$LKP_SRC/tools/split-tests lvm.local 2 lvm.local-
+		cd -
 		;;
 	mm-oom|mm-min_free_kbytes)
 		local pid_job="$(cat $TMP/run-job.pid)"
@@ -164,7 +178,7 @@ test_setting()
 		export P11_USER_PWD="HELLO7"
 		export NEW_P11_USER_PWD="HELLO8"
 		;;
-	ltp-aiodio.part[24]|dio-0*|io)
+	ltp-aiodio.part[24]-0*|dio-0*|io)
 		specify_tmpdir || exit
 		;;
 	syscalls-ipc-msgstress)
@@ -201,7 +215,7 @@ test_setting()
 		sed -i "1s/^/::1 ${HOSTNAME}\n/" /etc/hosts
 		sed -i "1s/^/127.0.0.1 ${HOSTNAME}\n/" /etc/hosts
 		;;
-	net.rpc)
+	net.rpc_tests)
 		systemctl start openbsd-inetd || exit
 		cp netkit-rusers/bin/rup /usr/bin/
 		;;
@@ -215,13 +229,16 @@ test_setting()
 		# fix 'Unable to make dir /test/growfiles/XXX' error
 		mkdir -p /test/growfiles
 		;;
+	tracing)
+		export LTP_TIMEOUT_MUL=5
+		;;
 	esac
 }
 
 cleanup_ltp()
 {
 	case "$test" in
-	lvm.local)
+	lvm.local-*)
 		export LTPROOT=${PWD}
 		export PATH="$PATH:$LTPROOT/testcases/bin"
 		# remove LVM volume groups created by prepare_lvm.sh and release the associated loop devices

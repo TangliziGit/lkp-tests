@@ -1,3 +1,5 @@
+[  249.206338] ------------[ cut here ]------------
+[  249.207346] rq->cpu != smp_processor_id()
 [  249.207361] WARNING: CPU: 0 PID: 13 at kernel/sched/core.c:7244 balance_push (kernel/sched/core.c:7244 (discriminator 13)) 
 [  249.209018] Modules linked in: rcutorture torture input_leds led_class rtc_cmos qemu_fw_cfg evdev
 [  249.210255] CPU: 0 PID: 13 Comm: rcub/0 Not tainted 5.10.0-rc5-00090-gae7927023243 #1

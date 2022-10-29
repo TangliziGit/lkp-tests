@@ -9,7 +9,7 @@ describe 'filter/need_kconfig.rb' do
     FileUtils.chmod 'go+rwx', @tmp_dir
 
     File.open(File.join(@tmp_dir, 'context.yaml'), 'w') do |f|
-      f.write({ 'rc_tag' => 'v5.0-rc1' }.to_yaml)
+      f.write({ 'rc_tag' => 'v5.0-rc1', 'kconfig' => 'i386-randconfig' }.to_yaml)
     end
 
     File.open(File.join(@tmp_dir, '.config'), 'w') do |f|
@@ -38,6 +38,27 @@ describe 'filter/need_kconfig.rb' do
       job = generate_job <<~EOF
               need_kconfig:
               - X: n
+      EOF
+      expect { job.expand_params }.to raise_error Job::ParamError
+    end
+  end
+
+  context 'when X is required to be n on x86_64' do
+    it 'does not filter the i386 job' do
+      job = generate_job <<~EOF
+              need_kconfig:
+              - X: n, x86_64
+      EOF
+
+      job.expand_params
+    end
+  end
+
+  context 'when X is required to be n on i386' do
+    it 'filters the i386 job' do
+      job = generate_job <<~EOF
+              need_kconfig:
+              - X: n, i386
       EOF
       expect { job.expand_params }.to raise_error Job::ParamError
     end

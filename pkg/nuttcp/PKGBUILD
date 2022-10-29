@@ -1,16 +1,16 @@
 pkgname=nuttcp
-pkgver=8.1.4
+pkgver=8.2.2
 pkgrel=1
 pkgdesc="TCP/UDP network testing tool - simple, easy to use, with interesting feature set."
 arch=(i386 x86_64)
-url="http://nuttcp.org/nuttcp/nuttcp-8.1.4"
+url="http://nuttcp.org/nuttcp"
 license=('GPL')
-source=("http://nuttcp.org/${pkgname}/${pkgname}-${pkgver}/bin/${pkgname}-${pkgver}.x86_64")
+source=("http://nuttcp.org/${pkgname}/${pkgname}-${pkgver}/bin/${pkgname}-${pkgver}.fc32.x86_64")
 md5sums=('SKIP')
 
 package()
 {
 	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
 	cd "${srcdir}"
-	install -D "${pkgname}-${pkgver}.x86_64" "${benchmark_path}/${pkgname}"
+	install -D "${pkgname}-${pkgver}.fc32.x86_64" "${benchmark_path}/${pkgname}"
 }

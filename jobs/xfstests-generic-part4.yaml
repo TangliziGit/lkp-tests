@@ -6,48 +6,49 @@ need_memory: 2G
 disk: 4HDD
 
 fs:
-- ext2
-- ext4
-- xfs
-- btrfs
-- f2fs
-- udf
+  - ext2
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
+  - udf
+  # - ocfs2 # mount.ocfs2 known bug
+
+xfstests:
+  test:
+    - generic-231
+    - generic-group-25
+    - generic-group-26
+    - generic-group-27
+    - generic-group-28
+    - generic-group-29
+    - generic-group-30
+    - generic-group-31
+    - generic-group-32
+    - generic-group-33
+    - generic-group-34
+
+---
+fs:
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
+  - udf
+
+xfstests:
+  test:
+    - generic-logdev
+
+---
+fs:
+  - ext2
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 # - ocfs2 # mount.ocfs2 known bug
 
 xfstests:
   test:
-  - generic-231
-  - generic-group-25
-  - generic-group-26
-  - generic-group-27
-  - generic-group-28
-  - generic-group-29
-  - generic-group-30
-  - generic-group-31
-  - generic-group-32
-
----
-fs:
-- ext2
-- ext4
-- xfs
-- btrfs
-- f2fs
-- udf
-
-xfstests:
-  test:
-  - generic-logdev
-
----
-fs:
-- ext2
-- ext4
-- xfs
-- btrfs
-- f2fs
-# - ocfs2 # mount.ocfs2 known bug
-
-xfstests:
-  test:
-  - generic-525
+    - generic-525

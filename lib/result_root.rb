@@ -27,8 +27,8 @@ class ResultRoot < CResultRoot
   private
 
   def initialize(path)
-    @path = path
-    @path.freeze
+    super(path)
+
     @axes = calc_axes
   end
 
@@ -231,7 +231,7 @@ class MResultRoot
   end
 
   def completions
-    open(COMPLETIONS_FILE, 'r') do |f|
+    File.open(COMPLETIONS_FILE, 'r') do |f|
       f.each_line
        .map { |line| Completion.new line }
        .sort_by { |cmp| -cmp.time.to_i }
@@ -296,7 +296,7 @@ class MResultRootCollection
     return enum_for(__method__) unless block_given?
 
     cmdline = "grep -he '#{pattern}' #{KTEST_PATHS_DIR}/*/????-??-??-*"
-    @other_conditions.values.each do |ocond|
+    @other_conditions.each_value do |ocond|
       cmdline += " | grep -e '#{ocond}'"
     end
     cmdline += " | sed -e 's#[0-9]\\+/$##' | sort | uniq"
@@ -343,13 +343,13 @@ def convert_one_mresult_root(_rt)
     n.update_desc do |desc|
       desc.update(_rt.desc)
     end
-    n.index(true)
+    n.index(force: true)
     true
   end
 end
 
 def create_mresult_root_tables
-  MResultRootTableSet.create_tables_layout(true)
+  MResultRootTableSet.create_tables_layout(force: true)
 end
 
 def convert_all_mresult_root(date_from_in = nil, date_to_in = nil)

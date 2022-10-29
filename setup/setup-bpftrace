@@ -1,0 +1,39 @@
+#!/bin/sh
+# - interval
+# - kernel_function
+
+: "${interval:=10}"
+: "${kernel_function:="__alloc_pages_nodemask"}"
+
+cat > "$TMP_RESULT_ROOT"/latency.bt <<EOF
+#!/usr/bin/env bpftrace
+
+BEGIN
+{
+        printf("Tracing $interval s...Hit Ctrl-C to end.\n");
+}
+
+kprobe:$kernel_function
+{
+        @start[cpu] = nsecs;
+}
+
+kretprobe:$kernel_function
+/@start[cpu]/
+{
+        @cpu[cpu] = stats((nsecs - @start[cpu]) / 1000);
+        delete(@start[cpu]);
+}
+
+interval:s:$interval
+{
+        printf("%-8s: %-8s %-14s %-14s\n","CPU_ID","HITS", "AVG_LAT_us","TOTAL_LAT_us");
+        print(@cpu);
+        clear(@cpu);
+}
+
+END
+{
+        clear(@start);
+}
+EOF

@@ -1,2 +1,4 @@
 url: https://github.com/amir73il/linux
 owner: Amir Goldstein <amir73il@gmail.com>
+mail_to: Amir Goldstein <amir73il@gmail.com>
+private_report_branch: .*

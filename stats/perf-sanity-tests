@@ -12,7 +12,7 @@ while (line = $stdin.gets)
     stats.add $2, 'fail'
   when /([\d.]+:) (.*): Ok$/
     stats.add $2, 'pass'
-  when /([\d.]+:) (.*): [Skip$|Skip .*]/
+  when /([\d.]+:) (.*): (Skip$|Skip .*)/
     stats.add $2, 'skip'
   when /ignored_by_lkp: (.*)/
     stats.add $1, 'ignored_by_lkp'

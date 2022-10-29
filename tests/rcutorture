@@ -16,10 +16,15 @@ cpuhotplug)
         ;;
 esac
 
-[ ! -z "$torture_type" ] && args=${args}" torture_type=$torture_type"
+[ -n "$torture_type" ] && args=${args}" torture_type=$torture_type"
 
-log_cmd modprobe rcutorture $args ||
-die "failed to load rcutorture module, try to enable CONFIG_RCU_TORTURE_TEST as module and build rcutorture.ko"
+log=$(log_cmd modprobe rcutorture $args 2>&1) || {
+	echo "$log"
+	echo "$log" | grep -q "Invalid argument" ||
+	die "failed to load rcutorture module, try to enable CONFIG_RCU_TORTURE_TEST as module and build rcutorture.ko"
+	echo "$torture_type-torture: Skip"
+	exit
+}
 
 log_cmd sleep $runtime
 

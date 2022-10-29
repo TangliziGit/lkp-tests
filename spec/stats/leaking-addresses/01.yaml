@@ -17,7 +17,6 @@ proc..smp_locks.: 1
 proc..rodata.: 1
 proc.blacklist.-0xffffffff81c00890asm_exc_divide_error: 1
 proc..init.text.: 1
-proc.modules.btrfs15319041-Live: 1
 proc..init.data.: 1
 proc..text.unlikely.: 1
 proc..ref.data.: 1
@@ -61,6 +60,6 @@ proc..orc_unwind.: 1
 proc.devices.B_KEY=1000000000007ff980000000007fffebeffdfffefffff: 1
 proc..note.gnu.build-id.: 1
 proc..text.: 1
-leaking_number: 63
+leaking_number: 62
 total_number: 150498
 result.fail: 1

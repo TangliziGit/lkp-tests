@@ -10,7 +10,7 @@
 
 cd /sys/kernel/debug/tracing || die "no /sys/kernel/debug/tracing"
 
-: ${runtime:=300}
+: "${runtime:=300}"
 
 do_test()
 {

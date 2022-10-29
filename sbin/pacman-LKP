@@ -11,10 +11,10 @@ REMOVE=0
 
 . $LKP_SRC/lib/lkp_path.sh
 
-: ${PACMAN:=$0}
-: ${BUILDDIR:=$LKP_SRC/tmp-pkg}
-: ${PKGEXT:=tar.gz}
-: ${DBFILE:=$BUILDDIR/installed}
+: "${PACMAN:=$0}"
+: "${BUILDDIR:=$LKP_SRC/tmp-pkg}"
+: "${PKGEXT:=tar.gz}"
+: "${DBFILE:=$BUILDDIR/installed}"
 export PACMAN BUILDDIR PKGEXT DBFILE
 
 have_function() {

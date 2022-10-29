@@ -6,8 +6,8 @@ nr_threads: 1
 
 disk: 3HDD
 md:
-- RAID0
-- RAID5
+  - RAID0
+  - RAID5
 
 fs: ext4
 fs2: nfsv4

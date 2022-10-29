@@ -4,3 +4,4 @@ libnuma-dev
 gcc
 libc-dev
 gnuplot
+gawk

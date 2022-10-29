@@ -1,0 +1,8 @@
+2022-02-28 07:04:37 build/tests/gem_exec_async --run-subtest forked-writes
+IGT-Version: 1.26-g57049558 (x86_64) (Linux: 5.17.0-rc6 x86_64)
+Test requirement not met in function drm_open_driver, file ../lib/drmtest.c:573:
+Test requirement: !(fd<0)
+No known gpu found for chipset flags 0x1 (intel)
+Last errno: 2, No such file or directory
+Subtest forked-writes: SKIP
+LKP SKIP igt@gem_streaming_writes@batch-cpu

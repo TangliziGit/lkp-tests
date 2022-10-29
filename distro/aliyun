@@ -115,7 +115,7 @@ pack_benchmark_deps()
 
 		check_shared_package $BM_NAME
 
-		packages=$(echo $(get_dependency_packages $DISTRO $BM_NAME))
+		packages=$(get_dependency_packages $DISTRO $BM_NAME)
 
 		cleanup_installed_depends_rpms $packages
 		local ocfs2_tools_name=$(echo "$packages" | grep 'ocfs2-tools')

@@ -1,0 +1,5 @@
+url: https://github.com/LuBaolu/intel-iommu.git
+notify_build_success_branch: .*
+owner: Baolu Lu <baolu.lu@linux.intel.com>
+mail_to: Baolu Lu <baolu.lu@linux.intel.com>
+private_report_branch: .*

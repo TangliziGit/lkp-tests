@@ -30,39 +30,41 @@
 # - create_only
 # - run
 # - thread
+# - testfile
 
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/common.sh
 . $LKP_SRC/lib/unit.sh
 . $LKP_SRC/lib/debug.sh
+. $LKP_SRC/lib/fs_ext.sh
 
 [ -n "$test_size" ] || die "test_size must be specified for fio"
 
 test_size=$(to_byte $test_size)
 size=$((test_size / nr_task))
 
-: ${bs:=4k}
-: ${ioengine:=sync}
-: ${runtime:=300}
-: ${rw:=write}
-: ${iodepth:=32}
-: ${direct:=0}
-: ${fallocate:=posix}
-: ${invalidate:=1}
-: ${nr_task:=1}
-: ${nr_files:=1}
-: ${filesize:=$size}
-: ${io_size:=$size}
-: ${file_service_type:=roundrobin}
-: ${random_distribution:=random}
-: ${pre_read:=0}
-: ${ioscheduler:=none}
-: ${ramp_time:=0}
-: ${loops:=0}
-: ${allow_mounted_write:=1}
-: ${create_only:=1}
-: ${thread:=0}
-: ${run:=1}
+: "${bs:=4k}"
+: "${ioengine:=sync}"
+: "${runtime:=300}"
+: "${rw:=write}"
+: "${iodepth:=32}"
+: "${direct:=0}"
+: "${fallocate:=posix}"
+: "${invalidate:=1}"
+: "${nr_task:=1}"
+: "${nr_files:=1}"
+: "${filesize:=$size}"
+: "${io_size:=$size}"
+: "${file_service_type:=roundrobin}"
+: "${random_distribution:=random}"
+: "${pre_read:=0}"
+: "${ioscheduler:=none}"
+: "${ramp_time:=0}"
+: "${loops:=0}"
+: "${allow_mounted_write:=1}"
+: "${create_only:=1}"
+: "${thread:=0}"
+: "${run:=1}"
 
 direct=$(parse_bool $direct)
 raw_disk=$(parse_bool $raw_disk)
@@ -230,16 +232,34 @@ parse_numa_mem_policy
 parse_numa_cpu_nodes
 
 no=0
+
 for storage in $storages; do
 	if [ "$raw_disk" = 1 ]; then
 		storage_setup="filename=$storage"
 	elif [ -n "$test_filename" ]; then
 		storage_setup="filename=$test_filename"
+	elif is_null_blk /dev/$(basename $storage); then
+		storage_setup="filename=/dev/nullb0"
+	elif is_mount_on_root /dev/$(basename $storage); then
+		[ -d "/lkp/benchmarks/fio" ] || mkdir /lkp/benchmarks/fio
+		if [ "$testfile" = 'y' ]; then
+			storage_setup="\
+directory=/lkp/benchmarks/fio
+filename=fio_testfile_local
+"
+		else
+			storage_setup="directory=/lkp/benchmarks/fio"
+		fi
+	elif [ "$testfile" = 'y' ]; then
+		storage_setup="\
+directory=$storage
+filename=fio_testfile
+"
 	else
 		storage_setup="directory=$storage"
 	fi
         if [ "$ioengine" = "sg" ]; then
-                dev_src=`findmnt $storage -no source`
+                dev_src=$(findmnt $storage -no source)
                 storage_setup="filename=$dev_src\nallow_mounted_write=1"
         fi
 	create_task="\

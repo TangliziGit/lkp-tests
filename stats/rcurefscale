@@ -30,4 +30,6 @@ while (line = $stdin.gets)
   end
 end
 
-puts "#{type}.duration_per_loop.ns: #{runs.sum / runs.size}"
+# for rcurefscale, both boot issue and kernel panic will lead to no result
+# of rcurefscale, i.e., empty "runs"
+puts "#{type}.duration_per_loop.ns: #{runs.sum / runs.size}" if !runs.empty? && type

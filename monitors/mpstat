@@ -18,7 +18,7 @@ mpstat="/lkp/benchmarks/sysstat/usr/local/bin/mpstat"
 	mpstat="mpstat"
 }
 
-: ${interval:=1}
+: "${interval:=1}"
 
 if parse_bool -q "$per_node"; then
 	opt_node="-n"

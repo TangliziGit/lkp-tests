@@ -7,19 +7,18 @@ nr_threads: 32t
 disk: 1HDD
 
 fs:
-- xfs
-- ext4
-- btrfs
-- f2fs
-fs2:
-- nfsv4
-- 
+  - xfs
+  - ext4
+  - btrfs
+fs2: nfsv4
 
 fsmark:
   filesize: 16MB
-  test_size: 60G
+  test_size: 15G
   sync_method:
-  - NoSync
-  - fsyncBeforeClose
+    - NoSync
+    - fsyncBeforeClose
   nr_directories: 16d
   nr_files_per_directory: 256fpd
+
+timeout: 40m

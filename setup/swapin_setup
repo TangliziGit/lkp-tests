@@ -4,7 +4,7 @@
 
 USEMEM=$BENCHMARK_ROOT/vm-scalability/usemem
 
-if [ ! -n "$size" ]; then
+if [ -z "$size" ]; then
 	echo "size not specified" >&2
 	exit 1
 fi

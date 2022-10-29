@@ -5,4 +5,4 @@ need_memory: 1G
 
 libhugetlbfs-test:
   pagesize:
-  - 2MB
+    - 2MB

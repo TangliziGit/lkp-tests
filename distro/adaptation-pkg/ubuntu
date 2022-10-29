@@ -32,6 +32,7 @@ linkbench::
 linpack::
 lmbench3::
 ltp::
+lz4::
 makepkg::
 mce-log::
 mce-test::
@@ -49,6 +50,7 @@ oltp::
 otc_ddt::
 packetdrill::
 pbzip2::
+pepc::
 perf::
 perf-bench-futex: perf
 perf-c2c: perf
@@ -62,10 +64,12 @@ perf-report-srcline: perf
 perf-sanity-tests: perf
 perf-stat: perf
 pft::
+phpbench::
 piglit::
 plzip::
 pmbench::
 pm-qa::
+pybench::
 postmark::
 qperf::
 reaim::
@@ -84,6 +88,7 @@ sysbench-mutex::
 sysbench-threads::
 tbench::
 thrulay::
+tinymembench::
 trace-cmd::
 trinity::
 trinity-static-i386::
@@ -113,5 +118,8 @@ toplev: pmu-tools
 kvm-kernel-boot-test::
 vmem::
 phoronix-test-suite::
+bpftrace::
 kernbench::
 rt-app::
+coremark::
+fio::

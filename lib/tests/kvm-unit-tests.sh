@@ -58,7 +58,7 @@ load_kvm_param()
 		modprobe -r kvm || return
 	}
 
-	modprobe kvm force_emulation_prefix=y || return
+	modprobe kvm force_emulation_prefix=y enable_vmware_backdoor=Y || return
 	modprobe kvm_intel nested=y allow_smaller_maxphyaddr=y || return
 
 	return 0

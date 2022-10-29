@@ -1,0 +1,24 @@
+pkgname=pepc
+pkgver=git
+pkgrel=1
+url='https://github.com/intel/pepc.git'
+arch=('x86_64')
+license=('GPL')
+source=('https://github.com/intel/pepc.git')
+md5sums=('SKIP')
+
+build()
+{
+	cd $srcdir/pepc
+	git checkout release
+	echo '#!/usr/bin/python3' > pepc
+	git archive --format zip HEAD >> pepc
+	chmod ug+x pepc
+}
+
+package()
+{
+	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}/bin"
+	mkdir -p $benchmark_path
+	cp -af $srcdir/pepc/pepc $benchmark_path
+}

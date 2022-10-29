@@ -1,0 +1,15 @@
+2022-10-21 08:10:17 stress-ng --timeout 60 --times --verify --metrics-brief --longjmp 48
+stress-ng: info:  [4230] setting to a 60 second run per stressor
+stress-ng: info:  [4230] dispatching hogs: 48 longjmp
+stress-ng: info:  [4230] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s
+stress-ng: info:  [4230]                           (secs)    (secs)    (secs)   (real time) (usr+sys time)
+stress-ng: info:  [4230] longjmp        29475415     60.00   2843.29      0.10    491240.30       10366.28
+stress-ng: info:  [4230] miscellaneous metrics:
+stress-ng: info:  [4230] longjmp             53.66 nanoseconds per longjmp call (average per stressor)
+stress-ng: info:  [4230] for a 60.12s run time:
+stress-ng: info:  [4230]    2885.76s available CPU time
+stress-ng: info:  [4230]    2843.29s user time   ( 98.53%)
+stress-ng: info:  [4230]       0.10s system time (  0.00%)
+stress-ng: info:  [4230]    2843.39s total time  ( 98.53%)
+stress-ng: info:  [4230] load average: 32.44 9.90 3.45
+stress-ng: info:  [4230] successful run completed in 60.12s (1 min, 0.12 secs)

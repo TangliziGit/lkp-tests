@@ -1,0 +1,57 @@
+From 53b46ebadf07ae5a71c61c030be1a879cf3c71de Mon Sep 17 00:00:00 2001
+From: Zou Yu <yux.zou@intel.com>
+Date: Wed, 8 Jun 2022 14:26:05 +0800
+Subject: [PATCH] ku-latency.c: rename var index to kuIndex
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix following issue:
+
+```
+ku-latency.c: In function ‘main’:
+ku-latency.c:181:43: error: ‘SO_TIMESTAMP’ undeclared (first use in this function); did you mean ‘__TIMESTAMP__’?
+  181 |     rc = setsockopt(inSocket, SOL_SOCKET, SO_TIMESTAMP, (int *) &timestampOn, sizeof(timestampOn));
+      |                                           ^~~~~~~~~~~~
+      |                                           __TIMESTAMP__
+ku-latency.c:181:43: note: each undeclared identifier is reported only once for each function it appears in
+ku-latency.c:228:33: error: ‘SCM_TIMESTAMP’ undeclared (first use in this function)
+  228 |             cmsg->cmsg_type  == SCM_TIMESTAMP &&
+      |                                 ^~~~~~~~~~~~~
+==> ERROR: A failure occurred in package().
+```
+
+Signed-off-by: Zou Yu <yux.zou@intel.com>
+---
+ ku-latency.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ku-latency.c b/ku-latency.c
+index 1af0184..47b6eed 100644
+--- a/ku-latency.c
++++ b/ku-latency.c
+@@ -71,7 +71,7 @@ static int                 totalUsec;
+ static int                 totalPackets;
+ 
+ static int                 latencies[NUM_LATENCIES];
+-static int                 index;
++static int                 kuIndex;
+ static int                 rollingAverage;
+ 
+ static bool                keepRunning;
+@@ -243,9 +243,9 @@ int main(int argc, char **argv)
+         ++totalPackets;
+         
+         rollingAverage  += timediff;
+-        rollingAverage  -= latencies[index];
+-        latencies[index] = timediff;
+-        index = (index + 1) % NUM_LATENCIES;
++        rollingAverage  -= latencies[kuIndex];
++        latencies[kuIndex] = timediff;
++        kuIndex = (kuIndex + 1) % NUM_LATENCIES;
+         
+         printf("Total Average                : %d/%d = %.2f us\n", totalUsec, 
+                                                                    totalPackets, 
+-- 
+2.30.2
+

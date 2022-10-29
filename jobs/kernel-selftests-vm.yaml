@@ -1,8 +1,11 @@
 suite: kernel-selftests
 category: functional
 
-kconfig: x86_64-rhel-8.3-kselftests
+sysctl:
+  sc_nr_hugepages: 2
 
 kernel-selftests:
   group:
-  - vm
+    - vm
+# memfd_secret default is disable, should add kernel cmdline to enable
+# kernel_cmdline: secretmem.enable=1

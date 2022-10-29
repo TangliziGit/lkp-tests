@@ -4,10 +4,10 @@
 # - insert
 # - simple1
 
-: ${nr_threads:=1}
-: ${duration:=300}
-: ${insert:=0}
-: ${simple1:=0}
+: "${nr_threads:=1}"
+: "${duration:=300}"
+: "${insert:=0}"
+: "${simple1:=0}"
 
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/tests/cassandra.sh
@@ -20,11 +20,13 @@ export JRE_HOME=${JAVA_HOME}/jre
 export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
 
-# Cassandra server usually takes about 15 seconds to launch successfully.
-# Here waiting for 25 seconds to ensure the daemon can be launched successfully before the client tries to connect it.
-
-echo "waiting for 25 seconds for launching cassandra server..."
-sleep 25
+echo "waiting for launching cassandra server..."
+while ! lsof -i:9042
+do
+    # Cassandra server usually takes about 15 seconds to launch successfully.
+    # Here waiting for 25 seconds to ensure the daemon can be launched successfully before the client tries to connect it.
+    sleep 25
+done
 
 database="$BENCHMARK_ROOT"/cassandra/tools/cqlstress-example.yaml
 

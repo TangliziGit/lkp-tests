@@ -334,22 +334,39 @@ export_ip_mac()
 	[ -n "$SCHED_HOST" ] && PUB_MAC=$(echo "$PUB_MAC" | tr : -)
 }
 
+echo_to_tty()
+{
+	echo "LKP: stdout: $$: $@"
+
+	for ttys in ttyS0 ttyS1 ttyS2 ttyS3
+	do
+		echo "LKP: $ttys: $$: $@" > /dev/$ttys 2>/dev/null
+	done
+}
+
 announce_bootup()
 {
 	local version="$(cat /proc/sys/kernel/version 2>/dev/null| cut -f1 -d' ' | cut -c2-)"
 	local release="$(cat /proc/sys/kernel/osrelease 2>/dev/null)"
 
+	echo_to_tty 'Kernel tests: Boot OK!'
+
 	# make sure to output something if serial console is not ttyS0
 	# this helps diagnose serial console connections
-	for ttys in ttyS0 ttyS1 ttyS2 ttyS3
-	do
-		echo "LKP: HOSTNAME $HOSTNAME, MAC $PUB_MAC, IP $PUB_IP, kernel $release $version, serial console /dev/$ttys" > /dev/$ttys 2>/dev/null
-	done
+	echo_to_tty "HOSTNAME $HOSTNAME, MAC $PUB_MAC, kernel $release $version"
 }
 
 redirect_stdout_stderr()
 {
-	has_cmd tail || return
+	[ -c /dev/kmsg ] || {
+		echo_to_tty "/dev/kmsg doesn't exist"
+		return 1
+	}
+
+	has_cmd tail || {
+		echo_to_tty "tail cmd doesn't exist"
+		return 1
+	}
 
 	if is_docker; then
 		[ -e /tmp/stdout ] || touch /tmp/stdout
@@ -563,14 +580,14 @@ cleanup_pkg_cache()
 wait_load_disk()
 {
 	local load_disk=$1
-	# set the max time of wait is 30s
+	# set the max time of wait is 150s
 	for i in $(seq 30)
 	do
 		# eg: /dev/disk/by-id/ata-WDC_WD1002FAEX-00Z3A0_WD-WCATRC577623-part2
 		ls $load_disk >/dev/null 2>&1 && return
 		# eg: LABEL=LKP-ROOTFS
 		blkid | grep -q ${load_disk#*=} && return
-		sleep 1
+		sleep 5
 	done
 
 	return 1
@@ -689,6 +706,15 @@ show_default_gateway()
 	fi
 }
 
+show_gateway_mac()
+{
+	if has_cmd ip; then
+		ip neigh | grep "$1" | awk '{print $5}'
+	else
+		arp "$1" | grep "$1" | awk '{print $3}'
+	fi
+}
+
 show_default_interface()
 {
 	if has_cmd ip; then
@@ -711,8 +737,9 @@ netconsole_init()
 	# Select the interface that can access netconsole server
 	netconsole_interface=$(show_default_interface)
 	[ -n "$netconsole_server" ] || return
+	netconsole_server_mac=$(show_gateway_mac "$netconsole_server")
 	# eth0 is default interface if netconsole_interface is null.
-	modprobe netconsole netconsole=@/$netconsole_interface,$netconsole_port@$netconsole_server/
+	modprobe netconsole netconsole=@/$netconsole_interface,$netconsole_port@$netconsole_server/$netconsole_server_mac
 }
 
 download_job()

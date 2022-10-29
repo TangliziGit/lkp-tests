@@ -1,2 +1,5 @@
 url: git://anongit.freedesktop.org/drm/drm-misc
-owner: Daniel Vetter <daniel.vetter@intel.com>
+owner: Thomas Zimmermann <tzimmermann@suse.de>
+git_am_branch: drm-misc-next
+mail_cc:
+- dri-devel@lists.freedesktop.org

@@ -8,21 +8,21 @@ nr_task:
 
 will-it-scale:
   mode:
-  - thread
-  - process
+    - thread
+    - process
   test:
-  - getppid1
-  - lock1
-  - lock2
-  - lseek1
-  - lseek2
-  #  - malloc1
-  - malloc2
-  - mmap1
-  - mmap2
-  - open1
-  - open2
-  - open3
+    - getppid1
+    - lock1
+    - lock2
+    - lseek1
+    - lseek2
+    #  - malloc1
+    - malloc2
+    - mmap1
+    - mmap2
+    - open1
+    - open2
+    - open3
 
 ---
 nr_task:
@@ -32,6 +32,6 @@ nr_task:
 
 will-it-scale:
   mode:
-  - process
+    - process
   test:
-  - malloc1
+    - malloc1

@@ -1,0 +1,26 @@
+[   29.493342][    T5] Workqueue: events request_firmware_work_func
+[   29.493343][    C1] ======================================================
+[   29.493344][    T5] Call Trace:
+[   29.493344][    C1] WARNING: possible circular locking dependency detected
+[   29.493344][    C1] 5.4.63-00081-gc37cc199da2b4 #1 Not tainted
+[   29.493346][    T5]  dump_stack+0x7c/0xbe
+[   29.493347][    C1] ------------------------------------------------------
+[   29.493347][    C1] ksoftirqd/1/16 is trying to acquire lock:
+[   29.493348][    T5]  ubsan_epilogue+0x8/0x21
+[   29.493349][    C1] eae3453c (&p->pi_lock
+[   29.493351][    T5]  ubsan_type_mismatch_common.cold+0x37/0xb4
+[   29.493351][    C1] ){-.-.}, at: try_to_wake_up+0x4c/0xd30
+[   29.493353][    T5]  __ubsan_handle_type_mismatch_v1+0x2b/0x31
+[   29.493354][    C1] 
+[   29.493354][    C1] but task is already holding lock:
+[   29.493356][    T5]  restore_regulatory_settings+0xc1e/0xc40
+[   29.493356][    C1] 43ec2610 ((console_sem).lock
+[   29.493358][    T5]  ? mutex_lock_nested+0x1a/0x20
+[   29.493358][    C1] ){-.-.}, at: up+0x1c/0xf0
+[   29.493359][    C1] 
+[   29.493360][    T5]  regdb_fw_cb+0x5d/0x100
+[   29.493361][    C1] which lock already depends on the new lock.
+[   29.493362][    T5]  ? restore_regulatory_settings+0xc40/0xc40
+[   29.493363][    C1] 
+[   29.493364][    T5]  request_firmware_work_func+0x58/0xfb
+[   29.493364][    C1] the existing dependency chain (in reverse order) is:

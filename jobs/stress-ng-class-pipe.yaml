@@ -3,18 +3,17 @@ category: benchmark
 
 nr_threads: 100%
 
-
 testtime:
-- 60s
+  - 60s
 
 stress-ng:
   class:
-  - pipe
+    - pipe
   test:
-  - fifo
-  - pipe
-  - pipeherd
-  - sendfile
-  - splice
-  - tee
-  - vm-splice
+    - fifo
+    - pipe
+    - pipeherd
+    - sendfile
+    - splice
+    - tee
+    - vm-splice

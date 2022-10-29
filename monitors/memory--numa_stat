@@ -21,7 +21,12 @@ fi
 
 if [ -z "$interval" ]; then
 	case $file in
-		*)		interval=1  ;;
+		memory.numa_stat)
+			interval=10
+			;;
+		*)
+			interval=1
+			;;
 	esac
 fi
 
@@ -31,7 +36,7 @@ setup_wait
 while :
 do
 	echo time: $(date +%s)
-	cd "$cgdir"
+	cd "$cgdir" || exit
 	for cg in $cgname*; do
 		[ -f "$cg/$file" ] || continue
 		echo "cgroup: $cg"

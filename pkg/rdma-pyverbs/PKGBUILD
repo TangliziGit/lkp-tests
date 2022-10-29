@@ -1,0 +1,27 @@
+pkgname=rdma-pyverbs
+pkgver=git
+pkgrel=1
+url='https://github.com/linux-rdma/rdma-core'
+arch=('i386' 'x86_64')
+license=('GPLv2')
+source=('https://github.com/linux-rdma/rdma-core.git')
+md5sums=('SKIP')
+
+build()
+{
+	local pyverbs="/lkp/benchmarks/${pkgname}"
+	cd $srcdir/rdma-core
+	mkdir -p /lkp/benchmarks || return
+	mv $srcdir/rdma-core $pyverbs
+	cd $pyverbs
+	./build.sh
+}
+
+package()
+{
+	local pyverbs="/lkp/benchmarks/${pkgname}"
+	local benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
+
+	mkdir -p $benchmark_path
+	cp -af $pyverbs/* $benchmark_path
+}

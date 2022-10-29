@@ -10,10 +10,10 @@ monitor_delay: 10
 disk: 1HDD
 
 fs:
- - ext4
- - xfs
- - btrfs
+  - ext4
+  - xfs
+  - btrfs
 
 fs2:
- - cifs
- - nfs
+  - cifs
+  - nfs

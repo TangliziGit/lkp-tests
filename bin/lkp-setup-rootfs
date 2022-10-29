@@ -36,7 +36,8 @@ EOF
 }
 
 boot_init || {
-	echo "LKP: rebooting due to boot init failure"
+	echo_to_tty "LKP: rebooting due to boot init failure"
+
 	set_tbox_wtmp 'rebooting'
 	start_reboot_watchdog
 	reboot_tbox 2>/dev/null && exit 1
@@ -355,7 +356,7 @@ while true; do
 	# install lkp & test suite depends
 	install_depends "${install_depend_packages_all}"
 
-	echo $LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp
+	echo_to_tty $LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp
 	$LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp $job
 
 	is_docker && {
@@ -364,7 +365,7 @@ while true; do
 	}
 	
 	if tbox_cant_kexec || job_force_reboot || noreboot_too_many_cycles; then
-		echo "LKP: rebooting forcely"
+		echo_to_tty "LKP: rebooting forcely"
 		set_tbox_wtmp 'rebooting'
 		# Avoid get stuck in yocto minimal rootfs.
 		# LKP: rebooting

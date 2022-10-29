@@ -1,0 +1,27 @@
+2022-09-05 07:02:48 make run_tests -C net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'
+TAP version 13
+1..67
+# selftests: net: run_afpackettests
+# --------------------
+# running psock_fanout test
+# --------------------
+# test: datapath 0x2000 ports 8000,8002
+# info: count=0,0, expect=0,0
+# info: count=20,20, expect=20,20
+# info: count=20,20, expect=20,20
+# OK. All tests passed
+# [PASS]
+# --------------------
+# running psock_tpacket test
+# --------------------
+# test: TPACKET_V1 with PACKET_RX_RING .................... 100 pkts (14200 bytes)
+# OK. All tests passed
+# [PASS]
+# --------------------
+# running txring_overwrite test
+# --------------------
+# read: a (0x61)
+# read: b (0x62)
+# [PASS]
+ok 9 selftests: net: run_afpackettests

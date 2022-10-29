@@ -9,6 +9,10 @@ bytes = 0
 kbps = []
 throughput = []
 median = []
+bytes_fault = 0
+kbps_fault = []
+throughput_fault = []
+median_fault = []
 free_secs = []
 ret = {}
 ret['warned'] = false
@@ -37,6 +41,9 @@ while (line = $stdin.gets)
   when /(\d+) bytes truncated in ([0-9.]+)-([0-9.]+) seconds/
     bytes += $1.to_i
     kbps << ($1.to_i >> 10) / ($2.to_f - $3.to_f)
+  when /(\d+) bytes faulted in ([0-9.]+)-([0-9.]+) seconds/
+    bytes_fault += $1.to_i
+    kbps_fault << ($1.to_i >> 10) / ($2.to_f - $3.to_f)
   when /\d+ \* \d+ bytes migrated, \d+ usecs, (\d+) MB.s/
     bytes += $1.to_i
     puts "migrate_mbps: #{$1}"
@@ -47,25 +54,32 @@ while (line = $stdin.gets)
     free_secs << $1.to_i / 1_000_000.0
   when /\.\/case-[a-z-]+/
     add_one_sample(kbps, throughput, median, ret)
+    add_one_sample(kbps_fault, throughput_fault, median_fault, ret)
     kbps.clear
+    kbps_fault.clear
   end
 end
 
 add_one_sample(kbps, throughput, median, ret)
+add_one_sample(kbps_fault, throughput_fault, median_fault, ret)
 exit if throughput.empty?
 
-# Relative standard deviation
-stddev = if throughput.size > 1
-           throughput.standard_deviation / throughput.average
-         else
-           kbps.standard_deviation * kbps.size / kbps.average
-         end
+def cal_stddev(throughput, kbps)
+  return throughput.standard_deviation / throughput.average if throughput.size > 1
 
-median_stddev = if median.size > 1
-                  median.standard_deviation / median.average
-                else
-                  0
-                end
+  kbps.standard_deviation * kbps.size / kbps.average
+end
+
+def cal_median_stddev(median)
+  return median.standard_deviation / median.average if median.size > 1
+
+  0
+end
+
+# Relative standard deviation
+stddev = cal_stddev(throughput, kbps)
+
+median_stddev = cal_median_stddev(median)
 
 printf "throughput: %d\n", throughput.average
 if kbps.empty?
@@ -77,3 +91,12 @@ printf "free_time:  %g\n", free_secs.average unless free_secs.empty?
 printf "median: %d\n", median.average
 printf "median_stddev%%: %g\n", median_stddev * 100
 printf "workload: %.2f\n", bytes.to_f / 1024
+
+unless throughput_fault.empty?
+  printf "throughput_fault: %d\n", throughput_fault.average
+  stddev = cal_stddev(throughput_fault, kbps_fault)
+  printf "stddev_fault%%:   %g\n", stddev * 100
+  median_fault_stddev = cal_median_stddev(median_fault)
+  printf "median_fault: %d\n", median_fault.average
+  printf "median_fault_stddev%%: %g\n", median_fault_stddev * 100
+end

@@ -1,0 +1,5 @@
+suite: tinymembench
+testcase: tinymembench
+category: benchmark
+
+tinymembench:

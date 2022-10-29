@@ -12,4 +12,5 @@ done
 
 # to silence the "expected" failure explicitly:
 #    modprobe: ERROR: could not insert 'tcrypt': Resource temporarily unavailable
-exit 0
+
+log_cmd dmesg | grep -Ee "tcrypt:|/sbin/modprobe tcrypt|testing speed of|operations in|opers/sec|bytes/sec"

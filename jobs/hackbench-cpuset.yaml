@@ -11,8 +11,8 @@ iterations: 10
 
 hackbench:
   mode:
-  - process
-  - threads
+    - process
+    - threads
   ipc:
-  - pipe
-  - socket
+    - pipe
+    - socket

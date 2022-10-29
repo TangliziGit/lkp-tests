@@ -1,0 +1,3 @@
+cgroup.test_memcontrol.fail: 1
+cgroup.test_core.pass: 1
+cgroup.test_cpu.skip: 1

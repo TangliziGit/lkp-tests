@@ -2,3 +2,5 @@
 19raid6repair
 # soft_timeout
 10ddf-geometry
+# soft_timeout, run over 7 hours
+00multipath

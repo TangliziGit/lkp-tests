@@ -12,6 +12,7 @@
 # - rdma.max
 # - pids.max
 
+. $LKP_SRC/lib/common.sh
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/debug.sh
 . $LKP_SRC/lib/cgroup.sh
@@ -22,7 +23,7 @@ CGROUP2_MNT=/cgroup2
 
 : "${cg_count:=1}"
 
-if [ -z "$cg_bind"] && [ "$cg_count" -eq 1 ]; then
+if [ -z "$cg_bind" ] && [ "$cg_count" -eq 1 ]; then
 	cg_bind=1
 fi
 
@@ -32,11 +33,11 @@ clear_cgroup
 #clear cgroups and subsystem controllers mount point for v2 version
 clear_cgroup2
 
-create_one_cgroup2()
+setup_one_cgroup2()
 {
 	local cgname=$1
-	#Bind all the subsystem controller to a unified hierarchy, and create a cgroup
-	create_cgroup2 $CGROUP2_MNT $cgname
+
+	create_one_cgroup2 $CGROUP2_MNT $cgname
 
 	#Set the parameter defined in the jobfile and enable the cgroup
 	env | grep -F '_46_' |
@@ -60,9 +61,12 @@ create_one_cgroup2()
 	done
 }
 
+#Bind all the subsystem controller to a unified hierarchy
+init_cgroup2 $CGROUP2_MNT
+
 for i in $(seq 1 "$cg_count"); do
 	name="$testcase.$i"
-	create_one_cgroup2 $name
+	setup_one_cgroup2 $name
 	cgroup_names="$cgroup_names $name"
 done
 

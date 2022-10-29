@@ -6,7 +6,7 @@ need_kconfig:
 - BLK_DEV
 - ND_BTT: m
 - ND_PFN: m
-- ND_BLK: m
+- ND_BLK: m, <= v5.17
 - ACPI_NFIT: m
 - DEV_DAX: m
 - DEV_DAX_PMEM: m

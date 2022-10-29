@@ -1,0 +1,8 @@
+net/mptcp.diag.sh.no_msk_on_netns_creation.pass: 1
+net/mptcp.diag.sh.after_MPC_handshake.pass: 1
+net/mptcp.diag.sh.chk_remote_key.pass: 1
+net/mptcp.diag.sh.chk_no_fallback.pass: 1
+net/mptcp.diag.sh.check_fallback.pass: 1
+net/mptcp.diag.sh.many_msk_socket_present.pass: 1
+net/mptcp.diag.sh.msk_in_use_statistics.pass: 1
+net/mptcp.diag.sh.pass: 1

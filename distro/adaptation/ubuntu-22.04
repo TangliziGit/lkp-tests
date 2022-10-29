@@ -1,0 +1,8 @@
+python: python-is-python3
+libunwind8: libunwind-14
+libunwind-dev: libunwind-14-dev
+libperl5: libperl5.34
+perl-modules-5: perl-modules-5.34
+libx32gcc1: libx32gcc-s1
+lib32gcc-dev: lib32gcc-12-dev
+libx32gcc-dev: libx32gcc-12-dev

@@ -54,13 +54,15 @@ rescue StandardError => e
 end
 
 def bash(cmd)
-  `bash -c #{Shellwords.escape(cmd)}`
-  raise $CHILD_STATUS.exitstatus unless $CHILD_STATUS.exitstatus.zero?
+  output = `bash -c #{Shellwords.escape(cmd)}`
+  puts output unless output.empty?
+
+  raise "bash exitstatus: #{$CHILD_STATUS.exitstatus}" unless $CHILD_STATUS.success?
 end
 
 desc 'Run syntax check'
 task :syntax do
-  executables = `find -type f -executable ! -path "./.git*" ! -size +100k`.split("\n").join(' ')
+  executables = `find -type f -executable ! -path "./.git*" ! -path "./vendor*" ! -size +100k`.split("\n").join(' ')
 
   bash "grep -s -l '^#!/.*ruby$' #{executables} | xargs -n1 ruby -c >/dev/null"
   bash "grep -s -l '^#!/.*bash$' #{executables} | xargs -n1 bash -n"
@@ -69,5 +71,19 @@ task :syntax do
   puts 'syntax OK'
 end
 
+desc 'Run shellcheck'
+task :shellcheck do
+  executables = `find -type f -executable ! -path "./.git*"  ! -path "./vendor*" ! -size +100k | xargs grep -s -l -e '^#!/.*bash$' -e '^#!/bin/sh$'`.split("\n").join(' ')
+
+  format = ENV['format'] || 'tty'
+
+  base_cmd = "shellcheck -S warning -f #{format}"
+  base_cmd += " -i #{ENV['code']}" if ENV['code']
+
+  bash "#{base_cmd} #{executables}"
+
+  puts 'shellcheck OK'
+end
+
 desc 'Run code check'
-task code: %i[syntax spec rubocop]
+task code: %i[syntax shellcheck rubocop spec]

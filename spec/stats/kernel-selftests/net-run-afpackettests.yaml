@@ -1,0 +1,4 @@
+net.run_afpackettests.psock_fanout.pass: 1
+net.run_afpackettests.psock_tpacket.pass: 1
+net.run_afpackettests.txring_overwrite.pass: 1
+net.run_afpackettests.pass: 1

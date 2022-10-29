@@ -9,13 +9,18 @@
 
 ## Build linux kernel
 
-: ${runtime:=300}
-: ${build_kconfig:=defconfig}
+: "${runtime:=300}"
+: "${build_kconfig:=defconfig}"
 
 [ -n "$target" ] || target=vmlinux
 
 run_kbuild()
 {
+	# when using gcc-11 instead of gcc-9, there is this error.
+	# /usr/bin/ld: scripts/dtc/dtc-parser.tab.o:(.bss+0x20): multiple definition of `yylloc'
+	log_cmd rm /usr/bin/gcc
+	log_cmd ln -s /usr/bin/gcc-9 /usr/bin/gcc
+
 	start_time=$(date +%s)
 	iterations=0
 	while true; do
@@ -47,7 +52,7 @@ run_kbuild()
 linux_src="$BENCHMARK_ROOT/kbuild/linux"
 [ -d "$linux_src" ] || die "no kernel source code in $BENCHMARK_ROOT/kbuild/linux"
 
-: ${kbuild_work_dirs:=$linux_src}
+: "${kbuild_work_dirs:=$linux_src}"
 
 kbuild_tmp_dir="$TMP/kbuild"
 i=0

@@ -11,4 +11,4 @@ subsystems:
 - dma
 - gpio
 notify_build_success_branch: .*
-no_merge_branch: ixp4
+no_merge_branch: ixp4|ixp4xx-cleanup-v5.16-rc1

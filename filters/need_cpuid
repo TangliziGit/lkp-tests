@@ -36,7 +36,7 @@ Skylake=85
 Whiskey_Lake_U=142
 Core=15
 
-model_key=`echo $model | sed -e 's/[[:blank:]]/_/g' -e 's/-/_/g'`
+model_key=$(echo $model | sed -e 's/[[:blank:]]/_/g' -e 's/-/_/g')
 cpuid=${!model_key}
 
 if (( need_cpuid > cpuid )); then

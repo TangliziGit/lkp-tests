@@ -1,5 +1,3 @@
-LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
-
 require 'spec_helper'
 require "#{LKP_SRC}/lib/lkp_path"
 

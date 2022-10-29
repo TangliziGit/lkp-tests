@@ -2,8 +2,7 @@ suite: dd-write
 category: benchmark
 
 ftrace:
-  events:
-    balance_dirty_pages
+  events: balance_dirty_pages
     bdi_dirty_ratelimit
     global_dirty_state
     writeback_single_inode
@@ -12,23 +11,22 @@ runtime: 5m
 
 disk: 4HDD
 md:
-- JBOD
-- RAID0
-- RAID5
+  - JBOD
+  - RAID0
+  - RAID5
 iosched:
-- kyber
+  - kyber
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
 fs2:
-- nfsv4
-- 
+  - nfsv4
+  -
 
 nr_threads:
-- 1dd
-- 10dd
-- 100dd
+  - 1dd
+  - 10dd
+  - 100dd
 
 dd:

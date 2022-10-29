@@ -3,6 +3,11 @@
 # - test_memory_size
 # - mode
 # - test
+# - nr_parallelism
+# - size
+# - stride
+# - standalone
+# - op
 
 ## lmbench is a suite of simple, portable, ANSI/C microbenchmarks for
 ## UNIX/POSIX. In general, it measures two key features: latency and
@@ -26,14 +31,6 @@
 ##   Memory read latency
 ## Miscellanious
 ##   Processor clock rate calculation
-
-test_memory_size=$(($test_memory_size/1024/1024))
-
-# The bigger test memory range, the more accurate the results, but larger sizes
-# take somewhat longer to run the benchmark.
-# If test memory size greater than 10GB, bcopy test may take more than 30mins.
-# So limit the the maximum test memory size to 10GB.
-[ "$test_memory_size" -gt 10240 ] && test_memory_size=10240
 
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/debug.sh
@@ -199,21 +196,77 @@ show_result()
 	cat $BENCHMARK_ROOT/lmbench3/results/${system_type}/* || die "no test result found"
 }
 
+plot() {
+hostname="$1"
+gnuplot <<EOF
+set terminal png medium size 1920,1080
+set output "lmbench_result.png"
+set title "Memory Latency Benchmark (Size=${size} Stride=${stride})"
+
+set xlabel "Memory Depth (MB)"
+set ylabel "Latency (ns)"
+
+set grid
+
+set style line 1 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 1   # --- blue
+
+plot "${LMBENCH_RESULT}" using 1:2 with linespoints ls 1 smooth unique title "${hostname}"
+
+EOF
+}
+
+if [ ${standalone} != "1" ]; then
+	test_memory_size=$((test_memory_size/1024/1024))
+
+	# The bigger test memory range, the more accurate the results, but larger sizes
+	# take somewhat longer to run the benchmark.
+	# If test memory size greater than 10GB, bcopy test may take more than 30mins.
+	# So limit the the maximum test memory size to 10GB.
+	[ "$test_memory_size" -gt 10240 ] && test_memory_size=10240
+
+fi
+
+
 cd $BENCHMARK_ROOT/lmbench3 || {
 	echo "ERROR: lmbench benchmark has not been installed yet"
-	exit -1
+	exit 1
 }
 
 make 2>&1 || die "failed to build lmbench3"
 system_type=$os_arch
 
-case "$mode" in
-	'all') run_lmbench3_all ;;
-	'hardware') run_lmbench3_hardware ;;
-	'os') run_lmbench3_os ;;
-	'development') run_lmbench3_development ;;
-	*) echo "invalid running mode:$mode in lmbench3" && exit -1
-	esac
+if [ ${standalone} != "1" ]; then
 
-show_result
-sleep 100
+	case "$mode" in
+		'all') run_lmbench3_all ;;
+		'hardware') run_lmbench3_hardware ;;
+		'os') run_lmbench3_os ;;
+		'development') run_lmbench3_development ;;
+		*) echo "invalid running mode:$mode in lmbench3" && exit 1
+		esac
+
+	show_result
+else
+
+	case "$test" in
+		'lat_mem_rd')
+			TEST_BIN_PATH="$(find bin/ -maxdepth 2 -name lat_mem_rd)"
+			echo "Running memory load latency..."
+			log_cmd ./${TEST_BIN_PATH} -P ${nr_parallelism} ${size} ${stride} > $TMP_RESULT_ROOT/lmbench3 2>&1 
+
+			LMBENCH_RESULT="$TMP_RESULT_ROOT/extract-lmbench3"
+			sed '1,2d' $TMP_RESULT_ROOT/lmbench3 > ${LMBENCH_RESULT}
+
+			plot ${testbox}
+
+			rm ${LMBENCH_RESULT}
+			mv lmbench_result.png $TMP_RESULT_ROOT/lmbench_result.png
+		;;
+		'bw_mem')
+			TEST_BIN_PATH="$(find bin/ -maxdepth 2 -name bw_mem)"
+			echo "Running memory bandwitch test..."
+			log_cmd ./${TEST_BIN_PATH} -P ${nr_parallelism} ${size} ${op} > $TMP_RESULT_ROOT/lmbench3 2>&1
+		;;
+		*) echo "invalid test:$test in lmbench3" && exit 1
+	esac
+fi

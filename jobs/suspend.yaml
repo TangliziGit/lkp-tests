@@ -2,11 +2,13 @@ suite: suspend
 category: functional
 kernel_cmdline: "initcall_debug log_buf_len=4M no_console_suspend ignore_loglevel"
 
+force_reboot: 1
+
 runtime: 300s
 iterations: 10x
 presync: presync
 
 suspend:
   mode:
-  - mem
-  - freeze
+    - mem
+    - freeze

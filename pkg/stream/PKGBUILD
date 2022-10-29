@@ -1,7 +1,7 @@
 pkgname=stream
 pkgver=1
 pkgrel=1
-arch=('i386' 'x86_64')
+arch=('i386' 'x86_64' 'riscv64')
 url="https://gitee.com/thesamename/STREAM"
 license=('GPL')
 source=("https://gitee.com/thesamename/STREAM/raw/master/stream.c")
@@ -9,5 +9,5 @@ md5sums=('SKIP')
 
 package() {
 	mkdir -p "${pkgdir}/lkp/benchmarks/${pkgname}"
-	cp "$srcdir/stream.c" "${pkgdir}/lkp/benchmarks/${pkgname}"
+	cp "$srcdir/$pkgname/stream.c" "${pkgdir}/lkp/benchmarks/${pkgname}"
 }

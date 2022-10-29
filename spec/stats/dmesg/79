@@ -1,0 +1,18 @@
+[   48.791471][ T1352] ======================================================
+[   48.791472][ T1352] WARNING: possible circular locking dependency detected
+[   48.791473][ T1352] 6.0.0-rc2-00046-g28f0f3c44b5c #1 Not tainted
+[   48.791474][ T1352] ------------------------------------------------------
+[   48.791475][ T1352] ovsdb-server/1352 is trying to acquire lock:
+[   48.791476][ T1352] ffffffff85513b18 ((console_sem).lock){....}-{2:2}, at: down_trylock+0x13/0x80
+[   48.791485][ T1352]
+[   48.791485][ T1352] but task is already holding lock:
+[   48.791485][ T1352] ffff8881315bd820 (&ctx->lock){....}-{2:2}, at: perf_event_context_sched_out+0x27b/0x14c0
+[   48.980975][ T1351] ======================================================
+[   48.980976][ T1351] WARNING: possible circular locking dependency detected
+[   48.980977][ T1351] 6.0.0-rc2-00045-ge577bb17a1ea #1 Not tainted
+[   48.980978][ T1351] ------------------------------------------------------
+[   48.980979][ T1351] ovsdb-server/1351 is trying to acquire lock:
+[   48.980980][ T1351] ffffffff85513b98 ((console_sem).lock){-...}-{2:2}, at: down_trylock+0x13/0x80
+[   48.980991][ T1351]
+[   48.980991][ T1351] but task is already holding lock:
+[   48.980991][ T1351] ffff888199e56c20 (&ctx->lock){....}-{2:2}, at: perf_event_context_sched_out+0x27b/0x14c0

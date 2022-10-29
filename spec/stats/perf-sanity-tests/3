@@ -1,0 +1,5 @@
+pcieport 0000:00:01.0: PME: Signaling with IRQ 122
+pcieport 0000:00:1c.0: PME: Signaling with IRQ 123
+i40e 0000:01:00.0: PCI-Express: Speed 8.0GT/s Width x8
+i40e 0000:01:00.1: PCI-Express: Speed 8.0GT/s Width x8
+ata1.00: ATA-9: ST1000DM003-1ER162, CC45, max UDMA/133

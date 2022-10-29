@@ -2,15 +2,16 @@ suite: fio-jbod
 category: benchmark
 
 disk:
-- 12HDD
+  - 12HDD
 fs:
-- ext4
+  - ext4
 
 fio:
   rw:
-  - randwrite
+    - randwrite
   ioengine:
-  - sync
+    - sync
+    - io_uring
   bs: 4k
   group_file_number: 8
   sub_group_number: 8

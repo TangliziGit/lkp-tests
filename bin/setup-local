@@ -3,6 +3,7 @@
 require 'optparse'
 require 'ostruct'
 require 'fileutils'
+require 'English'
 
 HOSTNAME = ENV['HOSTNAME'] || `hostname`.chomp
 ENV['LKP_SRC'] ||= File.dirname File.dirname File.realpath $PROGRAM_NAME
@@ -14,7 +15,7 @@ require "#{LKP_SRC}/lib/distro_info"
 require "#{LKP_SRC}/lib/install"
 require "#{LKP_SRC}/lib/constant"
 
-TMP = "#{LKP_SRC}/tmp"
+TMP = "#{LKP_SRC}/tmp".freeze
 
 if `whoami`.chomp != 'root'
   puts 'Please run as root to install packages'
@@ -119,7 +120,7 @@ def install_benchmarks(script, distro)
 
   if File.basename(File.realpath("#{LKP_SRC}/pack/#{script}")) == 'perf'
     `perf -v 2>/dev/null`
-    return if $?.success?
+    return if $CHILD_STATUS.success?
   end
 
   pkg_name = "#{script.tr('_', '-')}-LKP"

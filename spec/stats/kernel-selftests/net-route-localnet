@@ -1,0 +1,25 @@
+2022-09-05 07:02:48 make run_tests -C net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'
+TAP version 13
+1..67
+# selftests: net: route_localnet.sh
+# run arp_announce test
+# net.ipv4.conf.veth0.route_localnet = 1
+# PING 127.25.3.14 (127.25.3.14) from 127.25.3.4 veth0: 56(84) bytes of data.
+# 64 bytes from 127.25.3.14: icmp_seq=1 ttl=64 time=0.227 ms
+#
+# --- 127.25.3.14 ping statistics ---
+# 5 packets transmitted, 5 received, 0% packet loss, time 4095ms
+# rtt min/avg/max/mdev = 0.087/0.118/0.227/0.054 ms
+# ok
+# run arp_ignore test
+# net.ipv4.conf.veth0.route_localnet = 1
+# PING 127.25.3.14 (127.25.3.14) from 127.25.3.4 veth0: 56(84) bytes of data.
+# 64 bytes from 127.25.3.14: icmp_seq=1 ttl=64 time=0.279 ms
+#
+# --- 127.25.3.14 ping statistics ---
+# 5 packets transmitted, 5 received, 0% packet loss, time 4071ms
+# rtt min/avg/max/mdev = 0.085/0.298/0.942/0.330 ms
+# ok
+ok 40 selftests: net: route_localnet.sh
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'

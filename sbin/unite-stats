@@ -33,4 +33,4 @@ opts.parse!(ARGV)
 
 result_root = ARGV[0] || ENV['RESULT_ROOT']
 
-unite_stats result_root, delete
+unite_stats result_root, delete: delete

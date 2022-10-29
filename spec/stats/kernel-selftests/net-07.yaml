@@ -23,6 +23,7 @@ net.tls.global.keysizes.pass: 1
 net.tls.tls_basic.base_base.pass: 1
 net.tls.tls.12_gcm.sendfile.pass: 1
 net.tls.tls.12_gcm.send_then_sendfile.pass: 1
+net.tls.tls.12_gcm.multi_chunk_sendfile.fail: 1
 net.tls.tls.12_gcm.recv_max.pass: 1
 net.tls.tls.12_gcm.recv_small.pass: 1
 net.tls.tls.12_gcm.msg_more.pass: 1

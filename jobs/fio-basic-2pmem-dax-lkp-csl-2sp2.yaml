@@ -31,6 +31,7 @@ fio-setup-basic:
     - 128B
   ioengine:
     - libpmem
+    - io_uring
   test_size: 100G
   iodepth: 1
 fio:

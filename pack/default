@@ -66,7 +66,7 @@ pack_deb()
 	Description: LKP dependent packages
 	EOF
 
-	cd /tmp
+	cd /tmp || return
 	dpkg-deb --build $pkg_name
 }
 
@@ -124,7 +124,7 @@ pack_pkg()
 	local pkg_name="${BM_NAME//_/-}-LKP"
 
 	rm -fr "/tmp/$pkg_name"
-	rm -fr "$BUILD_DIR/$pkg_name"
+	rm -fr "${BUILD_DIR:?}/$pkg_name" || return
 
 	if [[ "$BM_NAME" != "lkp-src" ]]; then
 		[[  "$(ls -A $BM_ROOT)" ]] || return 0
@@ -147,7 +147,11 @@ post_cleanup()
 
 cleanup()
 {
-	[[ $source_package ]] && rm -f  "$BUILD_DIR/${source_package}"
-	[[ $source_dir     ]] && rm -fr "$BUILD_DIR/${source_dir}"
+	[[ $source_package ]] && {
+		rm -f  "${BUILD_DIR:?}/${source_package}" || return
+	}
+	[[ $source_dir     ]] && {
+		rm -fr "${BUILD_DIR:?}/${source_dir}" || return
+	}
 	post_cleanup
 }

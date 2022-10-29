@@ -19,31 +19,31 @@ category: functional
 #  torture_param(int, readdelay, 0, "Read-side delay in nanoseconds.");
 
 nr_threads: # nreaders
- - 50%
- - 75% # default
- - 100%
- - 200%
+  - 50%
+  - 75% # default
+  - 100%
+  - 200%
 
 rcurefscale:
   scale_type:
-  - rcu
-  - srcu
-  - rcu-trace
-  - rcu-tasks
-  - refcnt
-  - rwlock
-  - rwsem
-  - lock
-  - lock-irq
-  - acqrel
-  - clock
+    - rcu
+    - srcu
+    - rcu-trace
+    - rcu-tasks
+    - refcnt
+    - rwlock
+    - rwsem
+    - lock
+    - lock-irq
+    - acqrel
+    - clock
   loops:
-  - 10000 # default
-  - 100000
+    - 10000 # default
+    - 100000
   readdelay:
-  - 0 # default
-  - 10
-  - 100
+    - 0 # default
+    - 10
+    - 100
   nruns:
-  - 30 # default
+    - 30 # default
   # - 300 # help to re-enable it in v5.17

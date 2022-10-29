@@ -1,1 +1,2 @@
 /bin/dmesg \| grep -i perf may provide additional information.
+.*: SyntaxWarning: .* with a literal. Did you mean .*?

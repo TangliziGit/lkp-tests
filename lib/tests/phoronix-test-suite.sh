@@ -140,7 +140,7 @@ reduce_runtimes()
 	local test=$1
 	local target=${environment_directory}/../test-profiles/pts/${test}/test-definition.xml
 	[ -f $target.bak ] || cp $target $target.bak
-	sed -i 's,<TimesToRun>3</TimesToRun>,<TimesToRun>1</TimesToRun>,' "$target"
+	sed -i 's,<TimesToRun>.</TimesToRun>,<TimesToRun>1</TimesToRun>,' "$target"
 }
 
 # fix issue: [NOTICE] Undefined: min_result in pts_test_result_parser:478
@@ -509,6 +509,7 @@ fixup_x264_opencl_install()
 patch_to_detect_wrong_test_option()
 {
 	local target=/usr/share/phoronix-test-suite/pts-core/objects/pts_user_io.php
+	sed -i '/lkp_count/d' $target
 	sed -i "277a \$lkp_count = 1;" "$target"
 	sed -i "281a if (\$lkp_count > 2) {echo 'Wrong test option' . PHP_EOL;exit;}" "$target"
 	sed -i "282a \$lkp_count++;" "$target"
@@ -721,6 +722,15 @@ run_test()
 			fixup_sqlite $test || die "failed to fixup test $test"
 			;;
 		cyclictest-*|parboil-*|cp2k-*|llvm-test-suite-*|blender-*|svt-av1-*|helsing-*|build-gcc-*|core-latency-*|jxrendermark-*|renaissance-*)
+			# 96 cpu, 128G memory tbox, run once cost about
+			# cyclictest-1.0.0: 2m
+			# cp2k-1.2.0: 30m
+			# renaissance-1.1.1: 6m
+			# llvm-test-suite-1.0.0: 15m
+			#
+			# 12 cpu, 16G memory tbox, run once cost about
+			# jxrendermark-1.2.4: 3m
+			# blender-1.9.0: 14m
 			reduce_runtimes $test || die "failed to reduce run times when run $test"
 			;;
 		blogbench-*)

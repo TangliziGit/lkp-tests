@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1087,SC2140,SC1007,SC2101
 #
 #   makepkg - make packages compatible for use with pacman
 #   Generated from makepkg.sh.in; do not edit by hand.
@@ -1245,6 +1246,7 @@ generate_one_checksum() {
 	echo ")"
 }
 
+# shellcheck disable=SC2120
 generate_checksums() {
 	msg "$(gettext "Generating checksums for source files...")"
 
@@ -1500,7 +1502,7 @@ check_pgpsigs() {
 		fingerprint=
 		trusted=
 		parse_gpg_statusfile "$statusfile"
-		if (( ! $success )); then
+		if (( ! success )); then
 			printf '%s' "$(gettext "FAILED")" >&2
 			case "$status" in
 				"missingkey")
@@ -1701,7 +1703,7 @@ run_function() {
 			local i=1
 			while true; do
 				if [[ -f $BUILDLOG.$i ]]; then
-					i=$(($i +1))
+					i=$((i +1))
 				else
 					break
 				fi
@@ -3784,7 +3786,7 @@ fi
 if { [[ -z $SIGNPKG ]] && check_buildenv "sign" "y"; } || [[ $SIGNPKG == 'y' ]]; then
 	SIGNPKG='y'
 	if ! gpg --list-key ${GPGKEY} &>/dev/null; then
-		if [[ ! -z $GPGKEY ]]; then
+		if [[ -n $GPGKEY ]]; then
 			error "$(gettext "The key %s does not exist in your keyring.")" "${GPGKEY}"
 		else
 			error "$(gettext "There is no key in your keyring.")"
@@ -3901,7 +3903,10 @@ elif (( !REPKG )); then
 
 	if (( CLEANBUILD )); then
 		msg "$(gettext "Removing existing %s directory...")" "\$srcdir/"
-		rm -rf "$srcdir"/*
+		rm -rf "${srcdir:?}"/* || {
+			error "$(gettext "rm -rf $srcdir/* failed")"
+			exit 1
+		}
 	fi
 
 	extract_sources

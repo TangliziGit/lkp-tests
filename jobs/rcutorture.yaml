@@ -6,10 +6,15 @@ runtime: 300s
 
 rcutorture:
   test:
-  - default
-  - cpuhotplug
+    - default
+    - cpuhotplug
   torture_type:
-  - rcu
-  - srcu
-  - srcud
-  - tasks
+    - rcu
+    - srcu
+    - srcud
+    - tasks
+    - tasks-rude
+    - tasks-tracing
+    - busted
+    - busted_srcud
+    - trivial

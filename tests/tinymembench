@@ -1,0 +1,8 @@
+#!/bin/sh
+# - tinymembench
+
+. $LKP_SRC/lib/reproduce-log.sh
+
+cd $BENCHMARK_ROOT/tinymembench || die "no $BENCHMARK_ROOT/tinymembench"
+
+log_cmd ./tinymembench || die "failed to run tinymembench"

@@ -3,7 +3,7 @@
 
 . $LKP_SRC/lib/reproduce-log.sh
 
-if [ ! -n "$policy" ]; then
+if [ -z "$policy" ]; then
 	log_echo "pcie aspm policy not specified"
 	exit 1
 fi

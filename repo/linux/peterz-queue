@@ -1,5 +1,5 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git
-owner: Ingo Molnar <mingo@kernel.org>
+owner: Peter Zijlstra <peterz@infradead.org>
 subsystems:
 - x86
 - fpu
@@ -12,3 +12,4 @@ clone_from_upsteam_repos:
 - tip
 belongs_to: general scheduler
 branch_denylist: x86/mm
+no_merge_branch: perf/core

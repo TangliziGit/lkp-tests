@@ -3,15 +3,14 @@ category: benchmark
 
 disk: 1HDD
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
 fs1:
-- nfsv4
+  - nfsv4
 
 postmark:
   number:
-  - {{ fs == 'ext4' ? '5000n' : '20000n' }}
+    - {{ fs == 'ext4' ? '5000n' : '20000n' }}
   trans: 30000s
   subdirs: 100d

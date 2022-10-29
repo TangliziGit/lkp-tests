@@ -1,0 +1,19 @@
+[    0.302242][    T0] Kernel command line: ip=::::vm-meta-249::dhcp root=/dev/ram0 RESULT_ROOT=/result/boot/1/vm-snb/debian-11.1-i386-20220923.cgz/i386-randconfig-a016-20211118/gcc-11/36cb6494429bd64b27b7ff8b4af56f8e526da2b4/1 BOOT_IMAGE=/pkg/linux/i386-randconfig-a016-20211118/gcc-11/36cb6494429bd64b27b7ff8b4af56f8e526da2b4/vmlinuz-6.0.0-rc1-00007-g36cb6494429b branch=linus/master job=/lkp/jobs/scheduled/vm-meta-249/boot-1-debian-11.1-i386-20220923.cgz-36cb6494429bd64b27b7ff8b4af56f8e526da2b4-20221026-94848-9yy5xx-1.yaml user=lkp ARCH=i386 kconfig=i386-randconfig-a016-20211118 commit=36cb6494429bd64b27b7ff8b4af56f8e526da2b4 vmalloc=256M initramfs_async=0 page_owner=on initcall_debug max_uptime=600 LKP_SERVER=internal-lkp-server selinux=0 debug apic=debug sysrq_always_enabled rcupdate.rcu_cpu_stall_timeout=100 net.ifnames=0 printk.devkmsg=on panic=-1 softlockup_panic=1 nmi_watchdog=panic oops=panic load_ramdisk=2 prompt_ramdisk=0 drbd.minor_count=8 systemd.log_level=err ignore_log
+[    0.303104][    T0] sysrq: sysrq always enabled.
+[    0.312470][    T0] ignoring the deprecated load_ramdisk= option
+[    0.313698][    T0] Unknown kernel command line parameters "RESULT_ROOT=/result/boot/1/vm-snb/debian-11.1-i386-20220923.cgz/i386-randconfig-a016-20211118/gcc-11/36cb6494429bd64b27b7ff8b4af56f8e526da2b4/1 BOOT_IMAGE=/pkg/linux/i386-randconfig-a016-20211118/gcc-11/36cb6494429bd64b27b7ff8b4af56f8e526da2b4/vmlinuz-6.0.0-rc1-00007-g36cb6494429b branch=linus/master job=/lkp/jobs/scheduled/vm-meta-249/boot-1-debian-11.1-i386-20220923.cgz-36cb6494429bd64b27b7ff8b4af56f8e526da2b4-20221026-94848-9yy5xx-1.yaml user=lkp ARCH=i386 kconfig=i386-randconfig-a016-20211118 commit=36cb6494429bd64b27b7ff8b4af56f8e526da2b4 max_uptime=600 LKP_SERVER=internal-lkp-server selinux=0 apic=debug softlockup_panic=1 nmi_watchdog=panic prompt_ramdisk=0 vga=normal", will be passed to user space.
+[    0.321742][    T0] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.322574][    T0] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.323373][    T0] allocation of page_ext failed.
+[    0.323856][    T0] Kernel panic - not syncing: Out of memory
+[    0.324478][    T0] CPU: 0 PID: 0 Comm: swapper Not tainted 6.0.0-rc1-00007-g36cb6494429b #1
+[    0.325326][    T0] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-4 04/01/2014
+[    0.326327][    T0] Call Trace:
+[    0.326638][    T0]  ? show_stack+0x3b/0x43
+[    0.327086][    T0]  dump_stack_lvl+0x2a/0x64
+[    0.327490][    T0]  dump_stack+0xd/0x10
+[    0.327846][    T0]  panic+0xe1/0x235
+[    0.328196][    T0]  page_ext_init_flatmem+0xd5/0xda
+[    0.328690][    T0]  start_kernel+0x1d6/0x4e9
+[    0.329156][    T0]  i386_start_kernel+0x47/0x49
+[    0.329640][    T0]  startup_32_smp+0x15c/0x160

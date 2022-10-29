@@ -14,7 +14,7 @@ wu_lat = []
 def puts_one_task(task, run, period, slack, wu_lat)
   return if task.nil?
 
-  if run.size > 0
+  if run.size.positive?
     # first 2 line data unstable observed sometimes.
     # could consider to skip first 2 line to wait stable data
     # TODO

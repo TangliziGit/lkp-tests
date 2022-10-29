@@ -118,7 +118,9 @@ replace_script_partition_val()
 create_job_initrd()
 {
 	local job_sh=$CACHE_DIR/${job_file%.yaml}.sh
-	[[ -d $CACHE_DIR/$job_initrd_dir ]] && rm -rf "$CACHE_DIR/$job_initrd_dir"
+	[[ -d $CACHE_DIR/$job_initrd_dir ]] && {
+		rm -rf "${CACHE_DIR:?}/$job_initrd_dir" || return
+	}
 	mkdir -p $CACHE_DIR/$job_initrd_dir
 	cp $job_script $job_sh
 	chmod +x $job_sh
@@ -197,7 +199,7 @@ do
 	esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 unset DISPLAY
 
@@ -242,7 +244,8 @@ create_lkp_src_initrd()
 	lkp_initrd=$CACHE_DIR/lkp-$arch-$src_sig.cgz
 	[[ -f $lkp_initrd ]] || {
 		archive="${CACHE_DIR}"
-		
+
+		# shellcheck disable=SC2164
 		pushd "$LKP_SRC/pkg/lkp-src"
 		LKP_USER="$user" PACMAN=true BUILDDIR=/tmp/$USER CARCH=$arch PKGEXT=.cgz CGZDEST="$CACHE_DIR/lkp-$arch.cgz" \
 		$LKP_SRC/sbin/makepkg --config $(lkp_src)/etc/makepkg.conf -e
@@ -251,6 +254,7 @@ create_lkp_src_initrd()
 			exit 1
 		}
 		mv $CACHE_DIR/lkp-$arch.cgz $lkp_initrd
+		# shellcheck disable=SC2164
 		popd
 	}
 }
@@ -302,11 +306,8 @@ fi
 
 LKP_USER="lkp"
 if [ -z $QEMU_MODEL ]; then
-	if get_job_env $job_script 'model' | grep -q 'qemu-system-i386'; then
-		QEMU_MODEL='qemu-system-i386'
-	else
-		QEMU_MODEL='qemu-system-x86_64'
-	fi
+	QEMU_MODEL=$(get_job_env $job_script 'model')
+	[[ $QEMU_MODEL =~ qemu-system ]] || QEMU_MODEL="qemu-system-x86_64 -enable-kvm"
 fi
 
 run_kvm()
@@ -327,8 +328,8 @@ run_kvm()
 	netdev_option="-device e1000,netdev=net0 "
 	netdev_option+="-netdev user,id=net0"
 	KVM_COMMAND=(
-		$QEMU_MODEL -enable-kvm
-		-fsdev local,id=test_dev,path=$vm_result_path,security_model=none -device virtio-9p-pci,fsdev=test_dev,mount_tag=$mount_tag
+		$QEMU_MODEL
+		-fsdev "local,id=test_dev,path=$vm_result_path,security_model=none" -device "virtio-9p-pci,fsdev=test_dev,mount_tag=$mount_tag"
 		-kernel ${opt_kernel_image:-$kernel_file}
 		-append "$bootloader_append ip=dhcp result_service=$mount_tag"
 		$initrd_option
@@ -336,7 +337,7 @@ run_kvm()
 		-m $mem_mb
 		-no-reboot
 		-watchdog i6300esb
-		-rtc base=localtime
+		-rtc "base=localtime"
 		$qemu_netdev_option
 		$qemu_console_option
 		$QEMU_DRIVE_OPTION

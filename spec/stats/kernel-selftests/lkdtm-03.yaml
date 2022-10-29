@@ -1,0 +1,2 @@
+lkdtm.PANIC.sh.skip: 1
+lkdtm.BUG.sh.pass: 1

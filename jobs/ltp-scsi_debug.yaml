@@ -5,7 +5,7 @@ need_memory: 4G
 
 ltp:
   test:
-  - scsi_debug.part1-00
-  - scsi_debug.part1-01
-  - scsi_debug.part1-02
-  - scsi_debug.part1-03
+    - scsi_debug.part1-00
+    - scsi_debug.part1-01
+    - scsi_debug.part1-02
+    - scsi_debug.part1-03

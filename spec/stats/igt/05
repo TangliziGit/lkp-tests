@@ -1,0 +1,13 @@
+2022-03-13 17:28:10 build/tests/perf --run-subtest i915-ref-count
+IGT-Version: 1.26-g9c79047f (x86_64) (Linux: 5.17.0-rc7-05852-g3ef7241753d8 x86_64)
+Starting subtest: i915-ref-count
+Test requirement not met in function init_sys_info, file ../tests/i915/perf.c:897:
+Test requirement: intel_perf
+Subtest i915-ref-count: SKIP (0.001s)
+(perf:5907) CRITICAL: Test assertion failure function __igt_unique____real_main4909, file ../tests/i915/perf.c:4937:
+(perf:5907) CRITICAL: Failed assertion: drm_fd == -1
+(perf:5907) CRITICAL: error: 4 != -1
+Test perf failed.
+**** DEBUG ****
+(perf:5907) DEBUG: baseline ref count (drm fd closed) = 1
+(perf:5907) igt_core-INFO: Subtest i915-ref-count: SKIP (0.001s)

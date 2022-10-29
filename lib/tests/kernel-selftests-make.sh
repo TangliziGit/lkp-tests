@@ -78,9 +78,9 @@ run_tests()
 		check_subtest || continue
 
 		(
-		check_makefile $subtest || log_cmd make TARGETS=$subtest 2>&1
-
 		fixup_subtest $subtest || exit
+
+		check_makefile $subtest || log_cmd make TARGETS=$subtest 2>&1
 
 		make_group_tests
 
@@ -90,6 +90,11 @@ run_tests()
 		if [[ $test =~ ^vmalloc\-(performance|stress)$ ]]; then
 			log_cmd vm/test_vmalloc.sh ${test##vmalloc-} 2>&1
 			log_cmd dmesg | grep -E '(Summary|All test took)' 2>&1
+		elif [[ $test =~ ^protection_keys ]]; then
+			echo "# selftests: vm: $test"
+			log_cmd vm/$test 2>&1
+		elif [[ $category = "functional" ]]; then
+			log_cmd make quicktest=1 run_tests -C $subtest 2>&1
 		else
 			log_cmd make run_tests -C $subtest 2>&1
 		fi

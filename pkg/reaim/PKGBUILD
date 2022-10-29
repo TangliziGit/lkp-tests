@@ -23,7 +23,7 @@ build()
 	./bootstrap
 	LDFLAGS=-laio \
 	./configure --prefix=$benchmark_path
-	make
+	make CFLAGS="-fcommon -I$srcdir/osdl-aim-7/include -D_GNU_SOURCE -lm"
 }
 
 package()

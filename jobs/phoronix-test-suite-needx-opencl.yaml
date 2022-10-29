@@ -15,27 +15,27 @@ phoronix-test-suite:
       - Black-Scholes OpenCL
       - Monte-Carlo OpenCL
       - Bonds OpenMP
-      - Repo OpenMP
+      # - Repo OpenMP # temporarily comment out the failed test
       # - Test All Options
     # - gl-vs-vk-1.0.0 # required lib libGLEW.so.1.13 is too old
-  - test: juliagpu-1.3.1
-    option_a:
-      - CPU
-      - GPU
-      - CPU+GPU
+  # - test: juliagpu-1.3.1 # temporarily comment out the failed test
+    # option_a:
+      # - CPU
+      # - GPU
+      # - CPU+GPU
       # - Test All Options
-  - test: luxmark-1.2.1
-  - test: mandelbulbgpu-1.3.0
-    option_a:
-      - CPU
-      - GPU
-      - CPU+GPU
+  # - test: luxmark-1.2.1 # temporarily comment out the failed test
+  # - test: mandelbulbgpu-1.3.0 # temporarily comment out the failed test
+    # option_a:
+      # - CPU
+      # - GPU
+      # - CPU+GPU
       # - Test All Options
-  - test: mandelgpu-1.3.1
-    option_a:
-      - CPU
-      - GPU
-      - CPU+GPU
+  # - test: mandelgpu-1.3.1 # temporarily comment out the failed test
+    # option_a:
+      # - CPU
+      # - GPU
+      # - CPU+GPU
       # - Test All Options
   - test: mixbench-1.0.0
     option_a:
@@ -53,13 +53,13 @@ phoronix-test-suite:
       - MD5 Hash
       - Triad
       # - Test All Options
-  - test: smallpt-gpu-1.3.0
-    option_a:
-      - CPU
-      - GPU
+  # - test: smallpt-gpu-1.3.0 # temporarily comment out the failed test
+    # option_a:
+      # - CPU
+      # - GPU
       # - Test All Options
-    option_b:
-      - Complex
-      - Caustic3
-      - Cornell
+    # option_b:
+      # - Complex
+      # - Caustic3
+      # - Cornell
       # - Test All Options

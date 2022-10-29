@@ -27,7 +27,8 @@ build_rusers()
 
 	# below url was from http://sourceforge.net/projects/rstatd/
 	# in SPECS/rusers.spec
-	wget -c "https://newcontinuum.dl.sourceforge.net/project/rstatd/rstatd/4.0.1/rpc.rstatd-4.0.1.tar.gz" -O - | tar -xz || exit 1
+
+	wget --no-check-certificate -c "https://sourceforge.net/projects/rstatd/files/rstatd/4.0.1/rpc.rstatd-4.0.1.tar.gz/download" -O - | tar -xz || exit 1
 
 	for p in $(grep ^Patch SPECS/rusers.spec | awk '{print $2}')
 	do
@@ -39,6 +40,11 @@ build_rusers()
 	cd rpc*/ || return
 	./configure --prefix="${benchmark_path}"/netkit-rusers
 
+	local distro=$(basename $rootfs)
+	if [[ "$distro" =~ "debian-12" ]]; then
+		sed -i '/^DEFAULT_INCLUDES =/ s/$/ -I\/usr\/include\/tirpc/' Makefile
+		sed -i '/^LIBS =/ s/$/ -ltirpc/' Makefile
+	fi
 	make
 }
 
@@ -170,6 +176,7 @@ split_syscalls_tests()
 
 	grep -v -f syscalls-timer -f syscalls-tgkill -f syscalls-setsockopt06 -f syscalls-numa syscalls -f $standalone_file > syscalls-rest || return
 	$LKP_SRC/tools/split-tests syscalls-rest 8 syscalls-
+	$LKP_SRC/tools/split-tests cve 8 cve-
 	hide syscalls-rest
 	hide syscalls
 }
@@ -195,6 +202,12 @@ split_tests()
 
 	$LKP_SRC/tools/split-tests scsi_debug.part1 4 scsi_debug.part1-
 	hide scsi_debug.part1
+
+	$LKP_SRC/tools/split-tests ltp-aiodio.part2 2 ltp-aiodio.part2-
+	hide ltp-aiodio.part2
+
+	$LKP_SRC/tools/split-tests ltp-aiodio.part4 2 ltp-aiodio.part4-
+	hide ltp-aiodio.part4
 
 	# net_stress.appl
 	grep "ssh" net_stress.appl > net_stress.appl-ssh || return

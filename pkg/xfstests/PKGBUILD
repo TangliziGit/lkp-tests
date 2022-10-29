@@ -47,8 +47,16 @@ generate_exclude_files()
 	# ext2/exclude  ext3/exclude  ext4/exclude  local/exclude  nfs/exclude  reiserfs/exclude  tmpfs/exclude
 	for fs in ext2 ext4
 	do
-		wget -O $benchmark_path/tests/exclude/$fs https://git.kernel.org/pub/scm/fs/ext2/xfstests-bld.git/plain/kvm-xfstests/test-appliance/files/root/fs/$fs/exclude || return
+		wget --no-check-certificate -O $benchmark_path/tests/exclude/$fs https://git.kernel.org/pub/scm/fs/ext2/xfstests-bld.git/plain/test-appliance/files/root/fs/$fs/exclude || return
 	done
+
+	# In xfstests-dev/tests/generic/605 generic/606 generic/607 generic/608 mount options is "dax=always"
+	# _require_scratch_dax_mountopt "dax=always"
+	# ext2 do not support -o dax=always, so ignore these test cases
+	cd $benchmark_path/tests
+	grep "dax=always" generic -R | cut -d':' -f1 | sort -u >> $benchmark_path/tests/exclude/ext2
+	cd -
+
 	# cifs exclude files, https://wiki.samba.org/index.php/Xfstesting-cifs
 	wget https://wiki.samba.org/images/d/db/Xfstests.exclude.very-slow.txt -O $benchmark_path/tests/cifs/exclude.very-slow.txt || return
 	wget https://wiki.samba.org/images/b/b0/Xfstests.exclude.incompatible-smb3.txt -O $benchmark_path/tests/cifs/exclude.incompatible-smb3.txt || return
@@ -67,6 +75,13 @@ generate_special_require_tests()
 {
 	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
 	cd ${srcdir}/xfstests-dev || return
+
+	for fs in generic ext4 udf ocfs2 nfs btrfs xfs overlay shared ceph f2fs perf cifs
+	do
+		# "006 dangerous_fuzzers" in tests/ext4/group.list => "006" in ext4-dangerous_fuzzers
+		# "054 auto quick dangerous_fuzzers" in tests/ext4/group.list => "054" in ext4-dangerous_fuzzers
+		grep "dangerous_fuzzers" tests/$fs/group.list | cut -d' ' -f1 > $benchmark_path/tests/$fs-dangerous_fuzzers
+	done
 
 	git grep -l "_require_realtime" | grep tests/xfs | awk -F/ '{ print $3 }' | grep -v -f <(cat $benchmark_path/tests/xfs-*) > $benchmark_path/tests/xfs-external
 	git grep -L "_require_realtime" $(git grep -l "_require_scratch_reflink" $(git grep -l "_require_xfs_scratch_rmapbt" | grep tests/xfs))  | awk -F/ '{print $3}' | grep -v -f <(cat $benchmark_path/tests/xfs-*) > $benchmark_path/tests/xfs-reflink-rmapbt
@@ -107,7 +122,7 @@ package()
 	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
 	cp -af $srcdir/xfstests-dev/* $benchmark_path
 
-	wget -O $benchmark_path/tools/find-api-violations.sh https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git/plain/tools/find-api-violations.sh || return
+	wget --no-check-certificate -O $benchmark_path/tools/find-api-violations.sh https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git/plain/tools/find-api-violations.sh || return
 
 	generate_exclude_files || return
 

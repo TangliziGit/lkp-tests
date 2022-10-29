@@ -1,0 +1,11 @@
+suite: kernel-selftests
+testcase: kernel-selftests
+category: functional
+
+kernel-selftests:
+  group:
+    - net
+  test:
+    - fib_nexthops.sh
+
+timeout: 1h

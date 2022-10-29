@@ -1,5 +1,10 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/acme/linux.git
 owner: Arnaldo Carvalho de Melo <acme@redhat.com>
+git_am_branch: perf/core
+mail_cc: linux-perf-users@vger.kernel.org
+maintained_subsystems:
+- PERFORMANCE EVENTS SUBSYSTEM
 subsystems:
 - tools
 - wip
+- perf

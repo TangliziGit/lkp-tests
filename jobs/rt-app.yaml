@@ -3,10 +3,10 @@ category: benchmark
 
 rt-app:
   workload:
-  - mp3-long
-  - mp3-short
-  - browser-long
-  - browser-short
-  - spreading-tasks
-  #- video-long
-  #- video-short
+    - mp3-long
+    - mp3-short
+    - browser-long
+    - browser-short
+    - spreading-tasks
+    #- video-long
+    #- video-short

@@ -1,5 +1,8 @@
 url: https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git
+git_am_branch: sysctl-next
 owner: Luis Chamberlain <mcgrof@kernel.org>
+maintained_subsystems:
+- PROC SYSCTL
 subsystems:
 - firmware
 - modsign

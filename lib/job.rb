@@ -9,6 +9,7 @@ require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/hash"
 require "#{LKP_SRC}/lib/erb"
 require "#{LKP_SRC}/lib/log"
+require "#{LKP_SRC}/lib/bash"
 require 'fileutils'
 require 'yaml'
 require 'json'
@@ -92,7 +93,7 @@ def hash_key_re_string(hash, re_k, exist=nil)
   nil
 end
 
-def for_each_in(ah, set, pk = nil)
+def for_each_in(ah, set, pk = nil, &block)
   ah.each do |k, v|
     next if k == 'pp' || k == 'ss'
 
@@ -100,9 +101,7 @@ def for_each_in(ah, set, pk = nil)
     yield pk, ah, k, v if set.include?(k)
     next unless v.is_a?(Hash)
 
-    for_each_in(v, set, k) do |pk, h, k, v|
-      yield pk, h, k, v
-    end
+    for_each_in(v, set, k, &block)
   end
 end
 
@@ -159,8 +158,8 @@ def atomic_save_yaml_json(object, file)
     else
       lines = YAML.dump(object)
       # create comment lines from symbols
-      lines.gsub!(/^:#(.*): $/, "\n#\\1")
-      lines.gsub!(/^\? :#(.*)\n: $/, "\n#\\1")
+      lines.gsub!(/^:#(.*):( |)$/, "\n#\\1")
+      lines.gsub!(/^\? :#(.*)\n:( |)$/, "\n#\\1")
     end
     file.write(lines)
   end
@@ -244,7 +243,7 @@ class Job
     comment_to_symbol file.sub("#{lkp_src}/", '')
   end
 
-  def load(jobfile, expand_template = false)
+  def load(jobfile, expand_template: false)
     yaml = File.read jobfile
     # give a chance
     if yaml.size.zero? && !File.size(jobfile).zero?
@@ -276,9 +275,9 @@ class Job
           hash.delete_if { |k| d_keys.include? k }
         end
 
-        revise_hash(hash, load_include_yamls(@default_yamls), false) unless @default_yamls.empty?
-        revise_hash(hash, load_include_yamls(@override_yamls), true) unless @override_yamls.empty?
-        revise_hash(hash, @overrides, true) unless @overrides.empty?
+        revise_hash(hash, load_include_yamls(@default_yamls), overwrite_top_keys: false) unless @default_yamls.empty?
+        revise_hash(hash, load_include_yamls(@override_yamls), overwrite_top_keys: true) unless @override_yamls.empty?
+        revise_hash(hash, @overrides, overwrite_top_keys: true) unless @overrides.empty?
 
         hash.delete_if { |key, _| key.is_a?(String) && key.start_with?('#!') }
         @jobs.concat(multi_args(hash)) # return [hash] or [h1,h2]
@@ -453,8 +452,8 @@ class Job
     return nil unless File.exist? file
 
     context_hash = deepcopy(@defaults)
-    revise_hash(context_hash, job, true)
-    revise_hash(context_hash, @overrides, true)
+    revise_hash(context_hash, job, overwrite_top_keys: true)
+    revise_hash(context_hash, @overrides, overwrite_top_keys: true)
     begin
       defaults = load_yaml(file, context_hash)
     rescue KeyError
@@ -463,7 +462,7 @@ class Job
     if defaults.is_a?(Hash) && !defaults.empty?
       @defaults.delete_if { |key, _| defaults.has_key?(key) }
       @defaults[source_file_symkey(file)] = nil
-      revise_hash(@defaults, defaults, true)
+      revise_hash(@defaults, defaults, overwrite_top_keys: true)
       @defaults.merge!(@overrides)
     end
     @file_loaded[file] = true
@@ -484,9 +483,9 @@ class Job
     load_hosts_config
   end
 
-  def load_defaults(first_time = true)
+  def load_defaults(first_time: true)
     if @job.include? :no_defaults
-      merge_defaults first_time
+      merge_defaults first_time: first_time
       return
     end
 
@@ -509,7 +508,7 @@ class Job
       expand_each_in(job, @dims_to_expand) do |h, k, v|
         h.delete(k) if v.is_a?(Array)
       end
-      expand_params(false)
+      expand_params(run_scripts: false)
     end
     @jobx = nil
 
@@ -552,14 +551,14 @@ class Job
       load_one['ALL']
     end
 
-    merge_defaults first_time
+    merge_defaults first_time: first_time
   end
 
-  def merge_defaults(first_time = true)
-    revise_hash(@job, @defaults, false)
+  def merge_defaults(first_time: true)
+    revise_hash(@job, @defaults, overwrite_top_keys: false)
     @defaults = {}
 
-    revise_hash(@job, @cmdline_defaults, false)
+    revise_hash(@job, @cmdline_defaults, overwrite_top_keys: false)
 
     return unless first_time
 
@@ -568,7 +567,7 @@ class Job
     key = comment_to_symbol('user overrides')
     @job.delete key
     @job[key] = nil
-    revise_hash(@job, @overrides, true)
+    revise_hash(@job, @overrides, overwrite_top_keys: true)
   end
 
   def save(jobfile)
@@ -619,8 +618,7 @@ class Job
   def init_program_options
     @referenced_programs = {}
     @program_options = {
-      'cluster' => '-',
-      'ucode' => '='
+      'cluster' => '-'
     }
     programs = available_programs(:workload_elements)
     for_each_in(@job, programs) do |_pk, _h, k, _v|
@@ -887,18 +885,16 @@ class Job
     @dims_to_expand.merge @program_options.keys
   end
 
-  def expand_each_in(ah, set)
+  def expand_each_in(ah, set, &block)
     ah.each do |k, v|
       yield ah, k, v if set.include?(k) || (v.is_a?(String) && v =~ /{{(.*)}}/m)
       next unless v.is_a?(Hash)
 
-      expand_each_in(v, set) do |h, k, v|
-        yield h, k, v
-      end
+      expand_each_in(v, set, &block)
     end
   end
 
-  def each_job
+  def each_job(&block)
     expand_each_in(@job, @dims_to_expand) do |h, k, v|
       if v.is_a?(String) && v =~ /^(.*){{(.*)}}(.*)$/m
         head = $1.lstrip
@@ -911,20 +907,20 @@ class Job
                else
                  "#{head}#{expr}#{tail}"
                end
-        each_job { |job| yield job }
+        each_job(&block)
         h[k] = v
         return
       elsif v.is_a?(Array)
         v.each do |vv|
           h[k] = vv
-          each_job { |job| yield job }
+          each_job(&block)
         end
         h[k] = v
         return
       end
     end
     job = deepcopy self
-    job.load_defaults false
+    job.load_defaults first_time: false
     job.delete :no_defaults
     job.delete :expand_params
     yield job
@@ -1074,7 +1070,7 @@ class Job
     hash[key] = replace_symbol_keys(output) if output
   end
 
-  def evaluate_param(hash, _key, val, script)
+  def evaluate_param(_hash, _key, val, script)
     hash = @jobx.merge(___: val)
     expr = File.read script
     expand_expression(hash, expr, script)
@@ -1103,12 +1099,13 @@ class Job
   end
 
   def run_filter(_hash, _key, _val, script)
-    system @filter_env, script, unsetenv_others: true
-
-    raise Job::ParamError, "#{script}: exitstatus #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus && $CHILD_STATUS.exitstatus != 0
+    Bash.call2(@filter_env, script, unsetenv_others: true) do |stdout, _stderr, status|
+      puts stdout
+      raise Job::ParamError, "#{script}: exitstatus #{status}"
+    end
   end
 
-  def expand_params(run_scripts = true)
+  def expand_params(run_scripts: true)
     @jobx ||= deepcopy @job
     maps, ruby_scripts, misc_scripts = param_files
     begin
@@ -1218,7 +1215,7 @@ class Job
     @job.include?(k)
   end
 
-  def has_key?(k)
+  def key?(k)
     @job.include?(k)
   end
 
@@ -1262,9 +1259,9 @@ class JobEval < Job
 end
 
 class << Job
-  def open(jobfile, expand_template = false)
+  def open(jobfile, expand_template: false)
     j = new
-    j.load(jobfile, expand_template) && j
+    j.load(jobfile, expand_template: expand_template) && j
   end
 end
 

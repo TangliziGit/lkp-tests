@@ -13,5 +13,5 @@ kbuild:
 ---
 disk: 1HDD
 fs:
-- ext4
-- btrfs
+  - ext4
+  - btrfs

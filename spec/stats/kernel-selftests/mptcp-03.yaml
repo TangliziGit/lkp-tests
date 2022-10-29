@@ -9,4 +9,5 @@ net/mptcp.simult_flows.sh.unbalanced_bwidth_with_unbalanced_delay_-_reverse_dire
 net/mptcp.simult_flows.sh.unbalanced_bwidth_with_opposed_unbalanced_delay.pass: 1
 net/mptcp.simult_flows.sh.unbalanced_bwidth_with_opposed_unbalanced_delay_-_reverse_direction.pass: 1
 net/mptcp.simult_flows.sh.pass: 1
+net/mptcp.mptcp_sockopt.sh.all_packets_had_packet_mark_set.pass: 1
 net/mptcp.mptcp_sockopt.sh.pass: 1

@@ -1,2 +1,3 @@
 suggest_kconfig:
-- PERF_EVENTS: y
+  - PERF_EVENTS: y
+  - BPF_SYSCALL: y

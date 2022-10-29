@@ -1,0 +1,35 @@
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-eb68d7dd0a22955f0dc02307aafbca67e0be64c3/tools/testing/selftests/cgroup'
+TAP version 13
+1..7
+# selftests: cgroup: test_memcontrol
+# Test 1 ok - test_memcg_subtree_control
+# Test 1 ok - test_memcg_subtree_control
+# Test 1 ok - test_memcg_subtree_control
+# Test 2 ok - test_memcg_current
+# Test 3 not ok - test_memcg_min
+# Test 3 not ok - test_memcg_min
+# Test 3 not ok - test_memcg_min
+# Test 3 not ok - test_memcg_min
+# Test 4 not ok - test_memcg_low
+# Test 3 not ok - test_memcg_min
+# Test 4 not ok - test_memcg_low
+#
+Test 1 not ok - selftests: cgroup: test_memcontrol # TIMEOUT 300 seconds
+# selftests: cgroup: test_core
+# Test 1 ok - test_cgcore_internal_process_constraint
+# Test 2 ok - test_cgcore_top_down_constraint_enable
+# Test 3 ok - test_cgcore_top_down_constraint_disable
+# Test 4 ok # SKIP test_cgcore_no_internal_process_constraint_on_threads
+# Test 5 ok - test_cgcore_parent_becomes_threaded
+# Test 6 ok - test_cgcore_invalid_domain
+# Test 7 ok - test_cgcore_populated
+# Test 8 ok - test_cgcore_proc_migration
+# Test 9 ok - test_cgcore_thread_migration
+# Test 10 ok - test_cgcore_destroy
+# Test 11 ok - test_cgcore_lesser_euid_open
+# Test 12 ok - test_cgcore_lesser_ns_open
+Test 3 ok - selftests: cgroup: test_core
+# selftests: cgroup: test_cpu
+# 1..0 # SKIP Failed to set cpu controller
+Test 6 ok - selftests: cgroup: test_cpu # SKIP
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-eb68d7dd0a22955f0dc02307aafbca67e0be64c3/tools/testing/selftests/cgroup'

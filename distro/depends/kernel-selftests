@@ -1,6 +1,7 @@
-gcc-8
-g++-8
-gcc-8-multilib
+gcc
+g++
+gcc-multilib
+libbpf-dev
 libc6-dev
 libc-bin
 libc6/unstable
@@ -26,21 +27,20 @@ flex
 python3
 python3-scapy
 libreadline-dev
-iproute2/buster-backports
+iproute2
 ethtool
 uuid-runtime
 libdrm-dev
-linux-libc-dev/unstable
+linux-libc-dev
 linux-libc-dev-amd64-cross
 net-tools
 netcat-openbsd
 zlib1g-dev
 libhugetlbfs-dev
-g++
 libssl-dev
 libasound2-dev
-libc-dev-bin/unstable
-nftables/unstable
+libc-dev-bin
+nftables
 ebtables
 sendip
 ipvsadm
@@ -51,12 +51,10 @@ lib64gomp1 (i386)
 lib64itm1 (i386)
 lib64atomic1 (i386)
 lib64asan3 (i386)
-libc6-amd64/unstable (i386)
-libc6-dev-amd64/unstable (i386)
-lib64gcc-8-dev (i386)
-libx32gcc-8-dev (i386)
+libc6-amd64 (i386)
+libc6-dev-amd64 (i386)
+lib64gcc-dev (i386)
 python-docutils
-bpftool
 jq
 socat
 netsniff-ng
@@ -64,3 +62,13 @@ traceroute
 conntrack
 iperf3
 tshark
+iptables
+openvswitch-common
+openvswitch-switch
+tcpdump
+arping
+linux-perf
+file
+llvm-dev
+attr
+pesign

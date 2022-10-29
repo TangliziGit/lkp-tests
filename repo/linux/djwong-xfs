@@ -2,7 +2,8 @@ url: https://git.kernel.org/pub/scm/linux/kernel/git/djwong/xfs-linux.git
 integration_testing_branches: djwong-devel
 owner: Darrick J. Wong <darrick.wong@oracle.com>
 notify_build_success_branch: .*
-mail_cc: Darrick J. Wong <darrick.wong@oracle.com>
+private_report_branch: .*
+mail_to: Darrick J. Wong <darrick.wong@oracle.com>
 subsystems:
 - xfs
 - libxfs

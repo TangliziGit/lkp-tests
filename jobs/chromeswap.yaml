@@ -11,16 +11,16 @@ swap:
 
 chromeswap:
   selection:
-  - uniform
-  - sequential
-  - exponential
+    - uniform
+    - sequential
+    - exponential
 
   nr_procs:
-  - 5
+    - 5
 
   swap_targets:
-  - 0.25
-  - 0.5
-  - 0.75
+    - 0.25
+    - 0.5
+    - 0.75
 
   runtime: 300

@@ -3,17 +3,17 @@ category: benchmark
 
 reaim:
   test:
-  - aim9
-  - alltests
-  - all_utime
-  - compute
-  - custom
-  - dbase
-  - five_sec
-  - fserver
-  - high_systime
-  - long
-  - new_dbase
-  - new_fserver
-  - shared
-  - short
+    - aim9
+    - alltests
+    - all_utime
+    - compute
+    - custom
+    - dbase
+    - five_sec
+    - fserver
+    - high_systime
+    - long
+    - new_dbase
+    - new_fserver
+    - shared
+    - short

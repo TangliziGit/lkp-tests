@@ -11,6 +11,6 @@ package() {
 	cd $srcdir
 	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
 	mkdir -p "${benchmark_path}"
-	gcc -o ${benchmark_path}/ku-latency ku-latency.c -lrt -Wall
+	gcc -o ${benchmark_path}/ku-latency ku-latency.c -lrt -Wall -D_GNU_SOURCE
 	gcc -o ${benchmark_path}/send-data send-data.c -lrt -Wall
 }

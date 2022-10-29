@@ -11,9 +11,16 @@ leaking_number = 0
 
 while (line = $stdin.gets)
   case line
+  when /^\[\d+ modules\] .+(Live|Loading|Unloading) .+/
+    # skip the line about kernel modules
+    next
+  when /addr:.*vm_flags:.*anon_vma:.*mapping:.*index:/
+    # [  223.066648 ] addr:00005586d8f2b000 vm_flags:00000075 anon_vma:0000000000000000 mapping:ffff88810b5aaa98 index:3b
+    next
   when /Total number of results.*: (.*)/
     total_number = $1
-  when /^\[ +([\d.]+)\](.*)/
+  when /^\[ +([\d.]+)\] (.*)/
+    # [    2.205829] mapped IOAPIC to ffffffffff5fb000 (fec00000)
     results["dmesg.#{$2.sub!(/\b(0x)?ffff[[:xdigit:]]{12}\b/, '').delete(' ')}"] = 1
     leaking_number += 1
   when /^\[\d+ ([^\d])([^\]]+)\](.*)/

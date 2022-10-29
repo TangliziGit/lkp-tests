@@ -3,9 +3,9 @@ category: benchmark
 
 disk: 1SSD
 fs:
-- ext4
-- xfs
-- btrfs
+  - ext4
+  - xfs
+  - btrfs
 
 runtime: 300s
 nr_task: 8
@@ -14,8 +14,8 @@ fio-setup-basic:
   rw: write
   bs: 4k
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
   test_size: 256g
 
 fio:
@@ -27,8 +27,8 @@ fio-setup-basic:
   rw: randwrite
   bs: 4M
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
   test_size: 256g
 
 ---
@@ -40,8 +40,8 @@ fio-setup-basic:
   rw: randwrite
   bs: 4k
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
   test_size: 256g
 
 ---
@@ -53,8 +53,8 @@ fio-setup-basic:
   rw: randwrite
   bs: 4k
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
   test_size: 256g
 
 ---
@@ -66,8 +66,8 @@ fio-setup-basic:
   rw: randwrite
   bs: 4k
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
   test_size: 256g
 
 ---
@@ -78,7 +78,9 @@ nr_task: 4
 fio-setup-basic:
   rw: write
   bs: 4k
-  ioengine: libaio
+  ioengine:
+    - libaio
+    - io_uring
   test_size: 256g
 
 ---
@@ -91,6 +93,6 @@ fio-setup-basic:
   direct: direct
   bs: 4k
   ioengine:
-  - sync
-  - io_uring
+    - sync
+    - io_uring
   test_size: 256g

@@ -11,7 +11,7 @@ is_begin_of_subtest = false
 while (line = $stdin.gets)
   line = line.resolve_invalid_bytes
 
-  if line =~ /The test quit with a non-zero exit status|The test run did not produce a result|Wrong test option|testname is empty/
+  if line =~ /The test quit with a non-zero exit status|The test run did not produce a result|Wrong test option|testname is empty|PHP Parse error/
     log_warn line
     exit 1
   end
@@ -27,7 +27,7 @@ while (line = $stdin.gets)
     exit 1
   when %r{(pts|system)/(\S+)-[0-9.]+}
     test_name = Regexp.last_match[2]
-    if line =~ /(pts|system)\/(\S+)-[0-9.]+ \[(?<params>.+)\]/
+    if line =~ /(?:pts|system)\/(?:\S+)-[0-9.]+ \[(?<params>.+)\]/
       params = Regexp.last_match[:params] # "Test: Furmark - Resolution: 800 x 600 - Mode: Windowed"
       test_subname << params.split(' - ')                                           # ["Test: Furmark", "Resolution: 800 x 600", "Mode: Windowed"]
                             .map { |param| param.split(': ').last.gsub(/\s+/, '') } # ["Furmark", "800x600", "Windowed"]

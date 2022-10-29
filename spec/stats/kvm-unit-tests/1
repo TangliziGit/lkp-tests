@@ -1,0 +1,5 @@
+2022-08-01 18:10:39 ./run_tests.sh
+[32mPASS[0m apic-split (56 tests)
+[32mPASS[0m vmexit_cpuid
+[33mSKIP[0m pks (0 tests)
+[31mFAIL[0m msr (timeout; duration=90s)

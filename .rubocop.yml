@@ -1,6 +1,13 @@
 AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
+  SuggestExtensions: false
+
+Metrics:
+  Enabled: false
+
+Style/EvalWithLocation:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
@@ -80,11 +87,21 @@ Security/YAMLLoad:
 Style/FormatStringToken:
   Enabled: false
 
+Style/FloatDivision:
+  Exclude:
+    - 'stats/pmbench'
+
+Naming/AccessorMethodName:
+  Exclude:
+    - 'lib/compare.rb'
+    - 'lib/data_store.rb'
+    - 'lib/nresult_root.rb'
+    - 'lib/property.rb'
+    - 'lib/result_root.rb'
+
 Naming/MethodParameterName:
   Enabled: false
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
-Layout/HeredocIndentation:
-  Enabled: false

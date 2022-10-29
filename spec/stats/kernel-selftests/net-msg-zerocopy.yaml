@@ -1,0 +1,3 @@
+net.msg_zerocopy.sh.ipv4_tcp_-z_-t_1.pass: 1
+net.msg_zerocopy.sh.ipv6_tcp_-z_-t_1.pass: 1
+net.msg_zerocopy.sh.pass: 1

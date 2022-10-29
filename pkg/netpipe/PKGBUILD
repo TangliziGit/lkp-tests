@@ -2,31 +2,18 @@
 # Contributor: Gilles CHAUVIN <gcnweb at gmail dot com>
 
 pkgname=netpipe
-pkgver=3.7.2
-pkgrel=2
+pkgver=5.1.4
+pkgrel=4
 pkgdesc="A protocol independent performance tool that visually represents the network performance."
-url="https://fossies.org/linux/privat/old/NetPIPE-3.7.2.tar.gz/"
+url="https://fossies.org/linux/privat/NetPIPE-5.1.4.tar.gz"
 depends=()
 optdepends=('tcsh: for nplaunch script')
-source=(https://fossies.org/linux/privat/old/NetPIPE-$pkgver.tar.gz)
+source=(https://fossies.org/linux/privat/NetPIPE-$pkgver.tar.gz)
 arch=('i386' 'x86_64')
 license=('GPL')
-sha256sums=('13dac884ff52951636f651c421f5ff4a853218a95aa28a4a852402ee385a2ab8')
-
-prepare() {
-  cd "$srcdir"/NetPIPE-$pkgver
-  sed -r 's#\$cwd/##' -i bin/nplaunch
-}
-
-build() {
-  cd "$srcdir"/NetPIPE-$pkgver
-  make memcpy tcp
-}
+sha256sums=('738abeb9665877332d4b0cada2f15f766259809d0e31a29e327bfbf86b7e0183')
 
 package() {
-  cd "$srcdir"/NetPIPE-$pkgver
-  install -Dm0755 bin/nplaunch  "$pkgdir"/usr/bin/nplaunch
-  install -Dm0755 NPmemcpy      "$pkgdir"/usr/bin/NPmemcpy
-  install -Dm0755 NPtcp         "$pkgdir"/usr/bin/NPtcp
-  install -Dm0644 dox/netpipe.1 "$pkgdir"/usr/share/man/man1/netpipe.1
+	mkdir -p "${pkgdir}/lkp/benchmarks"
+	cp -af "$srcdir"/NetPIPE-$pkgver "${pkgdir}/lkp/benchmarks/$pkgname"
 }

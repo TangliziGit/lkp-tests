@@ -1,0 +1,31 @@
+From 64cf175563af3b036297e33000f7a5af8165632f Mon Sep 17 00:00:00 2001
+From: Zou Yu <yux.zou@intel.com>
+Date: Wed, 8 Jun 2022 15:26:35 +0800
+Subject: [PATCH] src/Makefile: change sequence of options for gcc
+
+Change sequence of options for gcc in makefile, place compilation before
+linking to avoid errors like the following:
+
+```
+/usr/bin/ld: udp_server.o: in function `on_udp_write':
+/tmp/lkp/nepim/src/nepim-0.53/src/udp_server.c:589: undefined reference to `_oop_continue'
+```
+
+Signed-off-by: Zou Yu <yux.zou@intel.com>
+---
+ src/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index fba26cc..8789e22 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -105,4 +105,4 @@ clean:
+ build: clean default
+ 
+ $(TARGET): $(OBJ)
+-	$(CC) $(LDFLAGS) -o $@ $^
++	$(CC) -o $@ $^ $(LDFLAGS)
+-- 
+2.30.2
+

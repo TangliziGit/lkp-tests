@@ -53,7 +53,6 @@ proc._ksymtab.: 1
 proc.blacklist.-0xffffffff81c00890asm_exc_divide_error: 1
 proc..rodata.cst16.bswap_mask.: 1
 proc.uevent.KEY=1000000000007ff980000000007fffebeffdfffefffff: 1
-proc.modules.btrfs15319041-Live: 1
 proc..altinstr_aux.: 1
 proc..orc_unwind.: 1
 proc..note.gnu.build-id.: 1
@@ -61,6 +60,6 @@ proc..exit.text.: 1
 proc.printk_formats._CPU_ON: 1
 proc..rodata.cst16.mask1.: 1
 proc._ex_table.: 1
-leaking_number: 63
+leaking_number: 62
 total_number: 150867
 result.fail: 1

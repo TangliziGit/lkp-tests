@@ -12,4 +12,4 @@ nr_task:
 
 unixbench:
   test:
-  - shell1
+    - shell1

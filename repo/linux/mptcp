@@ -1,12 +1,11 @@
 url: https://github.com/multipath-tcp/mptcp_net-next.git
-integration_testing_branches: export
-branch_allowlist: export
+integration_testing_branches:
+- export
+- export-net
+branch_allowlist: export|export-net
 branch_denylist: .*
 mail_cc:
 - mptcp@lists.linux.dev
 owner:
 - Mat Martineau <mathew.j.martineau@linux.intel.com>
 - Matthieu Baerts <matthieu.baerts@tessares.net>
-subsystems:
-- mptcp
-notify_build_success_branch: .*

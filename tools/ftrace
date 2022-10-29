@@ -300,7 +300,7 @@ start_trace()
 do_ftrace_on()
 {
 	# kprobes must be set firstly, otherwise, checking events will fail
-	[ -n "kprobes" ] && {
+	[ -n "$kprobes" ] && {
 		save_kprobes
 		set_kprobes
 	}
@@ -446,7 +446,7 @@ ftrace_run()
 	[ "$1" = "--" ] || usage
 	shift
 
-	: ${output:=$(normalize "$@").trace}
+	: "${output:=$(normalize "$@").trace}"
 
 	do_ftrace_on
 	"$@"

@@ -1,0 +1,18 @@
+pkgname=coremark
+pkgver=git
+pkgrel=1
+arch=('i386' 'x86_64' 'riscv64')
+url="https://github.com/eembc/coremark.git"
+license=('GPL')
+source=("https://github.com/eembc/coremark.git")
+md5sums=('SKIP')
+
+build()
+{
+	cd "${srcdir}/${pkgname}"
+	make XCFLAGS="$CFLAGS -DMULTITHREAD=`nproc` -DUSE_FORK=1" compile
+}
+package() {
+	mkdir -p "${pkgdir}/lkp/benchmarks/${pkgname}"
+	cp -af "$srcdir/${pkgname}/"* "${pkgdir}/lkp/benchmarks/${pkgname}"
+}

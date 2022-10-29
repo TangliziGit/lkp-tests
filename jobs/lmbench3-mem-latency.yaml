@@ -1,0 +1,16 @@
+suite: lmbench3
+testcase: lmbench3
+category: benchmark
+
+standalone: 1
+
+lmbench3:
+    test:
+        - lat_mem_rd
+    nr_parallelism:
+        - 1
+    size:
+        - 128
+    stride:
+        - 64
+        - 4096

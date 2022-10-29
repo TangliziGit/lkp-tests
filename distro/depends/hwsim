@@ -19,11 +19,14 @@ libconfig-dev
 iproute2
 python-openssl
 python-gobject
+python-gi
+python-gi-cairo
+gtk3
 python-dbus
 wpasupplicant
 crda
 wireless-regdb
-libevent-2.1-6
+libevent-2
 python-netifaces
 openssl
 tcpdump

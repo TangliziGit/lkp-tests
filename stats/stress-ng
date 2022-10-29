@@ -32,6 +32,9 @@ while (line = $stdin.gets)
   # stress-ng: fail:  [2694] metrics-check: stressor metrics corrupted, data is compromised
   next if line =~ /fail:/
 
+  # stress-ng: info:  [4230] miscellaneous metrics:
+  next if line =~ /miscellaneous metrics:/
+
   # stress-ng: info:  [2694] for a 494.74s run time:
   # stress-ng: info:  [2694]   47495.22s available CPU time
   # stress-ng: info:  [2694]   25864.19s user time   ( 54.46%)

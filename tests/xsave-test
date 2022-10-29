@@ -1,0 +1,29 @@
+#!/bin/bash
+
+cd $BENCHMARK_ROOT/xsave-test/test-xsave || exit
+
+platform_is_ivb_or_snr()
+{
+	# FIXME: Model number: ivb: 58, ivb-2ep1: 62, snr: 134
+	local model=$(lscpu | grep 'Model:' | awk '{print $2}')
+	[[ -z "$model" ]] && die "FIXME: unknown platform cpu model number"
+	[[ $model -eq 58 ]] || [[ $model -eq 62 ]] || [[ $model -eq 134 ]]
+}
+
+platform_is_ivb_or_snr && {
+	# before
+	# echo multi thread check
+	# echo multi thread check ---------------------------------------- >> $LOG_BAT
+	# $EXE_BAT/avxmdb >> $LOG_BAT
+	# sudo $EXE_BAT/avxmdb >> $LOG_BAT
+	#
+	# after
+	# LKP SKIP multi check
+	sed -i 's/^echo multi thread check$/echo LKP SKIP multi check/g' BAT-xsave.sh
+	sed -i '/^echo multi thread check ---/d' BAT-xsave.sh
+	sed -i '/avxmdb/d' BAT-xsave.sh
+}
+
+./BAT-xsave.sh
+
+cat BAT-xsave.log

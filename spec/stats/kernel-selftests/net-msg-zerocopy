@@ -1,0 +1,22 @@
+2022-09-05 07:02:48 make run_tests -C net
+make: Entering directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'
+TAP version 13
+1..67
+# selftests: net: msg_zerocopy.sh
+# ipv4 tcp -t 1
+# tx=20683 (1290 MB) txc=0 zc=n
+# rx=10343 (1290 MB)
+# ipv4 tcp -z -t 1
+# tx=12651 (789 MB) txc=12651 zc=n
+# rx=6327 (789 MB)
+# ok
+# ipv6 tcp -t 1
+# tx=18184 (1134 MB) txc=0 zc=n
+# rx=9093 (1134 MB)
+# ipv6 tcp -z -t 1
+# tx=11669 (728 MB) txc=11669 zc=n
+# rx=5836 (728 MB)
+# ok
+# OK. All tests passed
+ok 22 selftests: net: msg_zerocopy.sh
+make: Leaving directory '/usr/src/perf_selftests-x86_64-rhel-8.3-kselftests-3d7cb6b04c3f3115719235cc6866b10326de34cd/tools/testing/selftests/net'

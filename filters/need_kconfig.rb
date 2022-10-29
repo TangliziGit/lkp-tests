@@ -6,12 +6,11 @@ require 'yaml'
 require "#{LKP_SRC}/lib/kernel_tag"
 require "#{LKP_SRC}/lib/log"
 
-def read_kernel_version_from_context
+def load_kernel_context
   context_file = File.expand_path '../context.yaml', kernel
   raise Job::ParamError, "context.yaml doesn't exist: #{context_file}" unless File.exist?(context_file)
 
-  context = YAML.load(File.read(context_file))
-  context['rc_tag']
+  YAML.load(File.read(context_file))
 end
 
 def read_kernel_kconfigs
@@ -19,6 +18,10 @@ def read_kernel_kconfigs
   raise Job::ParamError, ".config doesn't exist: #{kernel_kconfigs}" unless File.exist?(kernel_kconfigs)
 
   File.read kernel_kconfigs
+end
+
+def kernel_match_arch?(kernel_arch, expected_archs)
+  expected_archs.include? kernel_arch
 end
 
 def kernel_match_kconfig?(kernel_kconfigs, expected_kernel_kconfig)
@@ -45,43 +48,21 @@ def kernel_match_kconfig?(kernel_kconfigs, expected_kernel_kconfig)
   end
 end
 
-def kernel_match_version?(kernel_version, expected_kernel_versions)
-  kernel_version = KernelTag.new(kernel_version)
-
-  expected_kernel_versions.all? do |expected_kernel_version|
-    match = expected_kernel_version.match(/(?<operator>==|!=|<=|>|>=)?\s*(?<kernel_tag>v[0-9]\.\d+(-rc\d+)*)/)
-    raise Job::SyntaxError, "Wrong syntax of kconfig setting: #{expected_kernel_versions}" if match.nil? || match[:kernel_tag].nil?
-
-    operator = match[:operator] || '>='
-
-    # rli9 FIXME: hack code to handle <=
-    # Take below example, MEMORY_HOTPLUG_SPARSE is moved in 5.16-rc1, thus we configure
-    # as <= 5.15. But we use rc_tag to decide the kernel of commit, 50f9481ed9fb or other
-    # commit now use kernel v5.15 to compare. This matches the <= and expects MEMORY_HOTPLUG_SPARSE
-    # is y, which leads to job filtered wrongly on these commits.
-    #
-    # fa55b7dcdc43 ("Linux 5.16-rc1")
-    # c55a04176cba ("Merge tag 'char-misc-5.16-rc1' ...")
-    # 50f9481ed9fb ("mm/memory_hotplug: remove CONFIG_MEMORY_HOTPLUG_SPARSE")
-    # 8bb7eca972ad ("Linux 5.15")
-    #
-    # To workaround this, change operator to < to mismatch the kernel
-    operator = '<' if operator == '<='
-
-    kernel_version.method(operator).call(KernelTag.new(match[:kernel_tag]))
-  end
-end
-
 def check_all(kernel_kconfigs)
   uncompiled_kconfigs = []
 
-  kernel_version = read_kernel_version_from_context
+  context = load_kernel_context
+  kernel_version = context['rc_tag']
+  kernel_arch = context['kconfig'].split('-').first
 
   $___.each do |e|
     if e.instance_of? Hashugar
       config_name, config_options = e.to_hash.first
       # to_s is for "CMA_SIZE_MBYTES: 200"
       config_options = config_options.to_s.split(',').map(&:strip)
+
+      expected_archs, config_options = config_options.partition { |option| option =~ /^(i386|x86_64)$/ }
+      next unless expected_archs.empty? || kernel_match_arch?(kernel_arch, expected_archs)
 
       expected_kernel_versions, config_options = config_options.partition { |option| option =~ /v\d+\.\d+/ }
       # ignore the check of kconfig type if kernel is not within the valid range

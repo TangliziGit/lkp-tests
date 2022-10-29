@@ -1,0 +1,25 @@
+pkgname=bpftrace
+pkgver=git
+pkgrel=1
+pkgdesc="bpftrace is a high-level tracing language for Linux enhanced Berkeley Packet Filter (eBPF) available in recent Linux kernels"
+arch=(x86_64)
+url="https://github.com/iovisor/bpftrace"
+license=(Apache License V2)
+depends=('')
+source=('https://github.com/iovisor/bpftrace.git')
+md5sums=('SKIP')
+
+build()
+{
+    cd bpftrace
+    git checkout v0.14_release
+    mkdir build; cd build
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    make
+}
+
+package()
+{
+    cd bpftrace/build
+    make DESTDIR="$pkgdir/" install
+}

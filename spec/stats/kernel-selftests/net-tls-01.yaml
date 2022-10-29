@@ -1,0 +1,12 @@
+net.tls.global.non_established.pass: 1
+net.tls.global.keysizes.pass: 1
+net.tls.global.no_pad.fail: 1
+net.tls.global.tls_v6ops.skip: 1
+net.tls.tls_basic.base_base.pass: 1
+net.tls.tls.12_aes_gcm.sendfile.pass: 1
+net.tls.tls.12_aes_gcm.send_then_sendfile.pass: 1
+net.tls.tls.12_aes_gcm.multi_chunk_sendfile.pass: 1
+net.tls.tls.12_aes_gcm.recv_max.pass: 1
+net.tls.tls.12_aes_gcm.recv_small.pass: 1
+net.tls.tls.12_aes_gcm.splice_cmsg_to_pipe.skip: 1
+net.tls.tls.12_aes_gcm.splice_dec_cmsg_to_pipe.skip: 1

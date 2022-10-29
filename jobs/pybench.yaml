@@ -1,0 +1,7 @@
+suite: pybench
+testcase: pybench
+category: benchmark
+
+pybench:
+  rounds: 20
+  warp: 10

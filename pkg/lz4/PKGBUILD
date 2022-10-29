@@ -1,0 +1,21 @@
+pkgname=lz4
+pkgver=git
+pkgrel=1
+url='https://github.com/lz4/lz4/'
+arch=('i386' 'x86_64' 'riscv64')
+license=('GPL2' 'BSD')
+source=('https://github.com/lz4/lz4.git')
+md5sums=('SKIP')
+
+build()
+{
+	cd $srcdir/lz4
+	make -j $(nproc)
+}
+
+package()
+{
+	benchmark_path="${pkgdir}/lkp/benchmarks/${pkgname}"
+	mkdir -p $benchmark_path
+	cp -a "$srcdir/lz4/lz4" $benchmark_path
+}

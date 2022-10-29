@@ -1,0 +1,14 @@
+# selftests: lkdtm: PANIC.sh
+ok 1 selftests: lkdtm: PANIC.sh # SKIP
+
+# selftests: lkdtm: BUG.sh
+ok 2 selftests: lkdtm: BUG.sh
+
+# selftests: lkdtm: PANIC.sh
+ok 1 selftests: lkdtm: PANIC.sh # SKIP
+
+# selftests: lkdtm: BUG.sh
+ok 2 selftests: lkdtm: BUG.sh
+
+# selftests: lkdtm: PANIC.sh
+ok 1 selftests: lkdtm: PANIC.sh # SKIP

@@ -7,4 +7,5 @@ subsystems:
 - rcu
 - rcutorture
 branch_denylist: dev
+branch_kindred_pattern: .[0-9]{4}\.[01][0-9]\.[01][0-9][a-z]
 notify_build_success_branch: .*

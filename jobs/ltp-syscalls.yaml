@@ -5,20 +5,20 @@ need_memory: 4G
 
 disk: 1HDD
 fs:
-- ext4
-- xfs
-- btrfs
-- f2fs
+  - ext4
+  - xfs
+  - btrfs
+  - f2fs
 
 ltp:
   test:
-  - syscalls-00
-  - syscalls-01
-  - syscalls-02
-  - syscalls-03
-  - syscalls-04
-  - syscalls-05
-  - syscalls-06
-  - syscalls-07
-  - writev03.writev03 # run standalone
-  # - syscalls-setsockopt06 # need about 25mins
+    - syscalls-00
+    - syscalls-01
+    - syscalls-02
+    - syscalls-03
+    - syscalls-04
+    - syscalls-05
+    - syscalls-06
+    - syscalls-07
+    - writev03.writev03 # run standalone
+    # - syscalls-setsockopt06 # need about 25mins

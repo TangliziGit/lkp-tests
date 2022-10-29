@@ -52,3 +52,10 @@ parameters:
         bcopy:
         mem:
         ops:
+        bw_mem:
+        lat_mem_rd:
+    standalone: "set to 1 to run standalone test. Currently supported bw_mem and lat_mem_rd only."
+    nr_parallelism: "number of parallel process"
+    size: "fix memory size"
+    stride: "stride size"
+    op: "operation: rd wr rdwr cp fwr frd fcp bzero bcopy"

@@ -56,7 +56,7 @@ libdrm-dev: libdrm-devel
 libdw-dev: libdwarf-devel
 libegl1-mesa-dev: mesa-libEGL-devel
 libelf-dev: elfutils-libelf-devel
-libevent-2.1-6: libevent
+libevent-2: libevent
 libevent-dev: libevent-devel
 libfabric-dev: libfabric-devel
 libfdt-dev:
@@ -339,3 +339,4 @@ openssh-client: openssh-clients
 postgresql-server: postgresql
 xsltproc: libxslt
 nasm: nasm.x86_64
+libpython2.7: python2-libs

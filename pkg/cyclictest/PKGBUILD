@@ -2,7 +2,7 @@ pkgname=cyclictest
 pkgver=2.1
 pkgrel=1
 pkgdesc="Cyclictest is a high resolution test program"
-arch=('i386' 'x86_64')
+arch=('i386' 'x86_64' 'riscv64')
 url="https://git.kernel.org/pub/scm/utils/rt-tests/rt-tests"
 license=('GPL')
 source=("https://git.kernel.org/pub/scm/utils/rt-tests/rt-tests.git")
@@ -10,7 +10,7 @@ md5sums=('SKIP')
 
 package() {
 	cd "$srcdir/rt-tests"
-	git checkout -b stable/v${pkgver} origin/stable/v${pkgver}
+	git checkout -b stable/v${pkgver} v${pkgver}
 	make prefix="${pkgdir}/lkp/benchmarks/${pkgname}"
 	make prefix="${pkgdir}/lkp/benchmarks/${pkgname}" install
 }

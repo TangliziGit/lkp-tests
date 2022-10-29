@@ -4,10 +4,10 @@ category: benchmark
 disk: 2HDD
 
 fs:
-- xfs
-- ext4
-- btrfs
+  - xfs
+  - ext4
+  - btrfs
 iosched:
-- kyber
+  - kyber
 
 iozone:

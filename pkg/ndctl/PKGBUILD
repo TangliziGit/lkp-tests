@@ -9,12 +9,13 @@ md5sums=('SKIP')
 
 build() {
 	cd "$srcdir/${pkgname}"
-	./autogen.sh
-	./configure CFLAGS='-g -O0' --enable-test --disable-docs --prefix=/lkp/benchmarks
-	make
+	[[ -e '/usr/include/iniparser.h' ]] || cp /usr/include/iniparser/* /usr/include/
+	meson setup build
+	meson configure -Dtest=enabled -Ddocs=disabled -Drootprefix=/lkp/benchmarks -Dprefix=/lkp/benchmarks build
+	meson compile -C build
 }
 
 package() {
 	cd "$srcdir/${pkgname}"
-	make DESTDIR="${pkgdir}" install
+	DESTDIR="${pkgdir}" meson install -C build
 }

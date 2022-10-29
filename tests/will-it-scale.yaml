@@ -26,6 +26,7 @@ parameters:
  test:
  mode: [process, thread, both]
  nr_task:
+ smt: [0, 1]
 
 results:
  will-it-scale.scalability:

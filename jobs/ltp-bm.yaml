@@ -6,8 +6,8 @@ need_physical_tbox: true
 
 ltp:
   test:
-  - syscalls-tgkill
-  - syscalls-timer
+    - syscalls-tgkill
+    - syscalls-timer
 
 ---
 oom-killer:
@@ -15,5 +15,5 @@ oom-killer:
 
 ltp:
   test:
-  - mm-oom
-  - mm-min_free_kbytes
+    - mm-oom
+    - mm-min_free_kbytes

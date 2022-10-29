@@ -197,6 +197,10 @@ module Git
         tag || sha[0..9]
       end
 
+      def files
+        @base.command("diff-tree --no-commit-id --name-only -r #{sha}").split
+      end
+
       def fixed?(branch)
         short_sha = sha[0..7]
         !@base.command("log --grep 'Fixes:' #{sha}..#{branch} | grep \"Fixes: #{short_sha}\"").empty?
