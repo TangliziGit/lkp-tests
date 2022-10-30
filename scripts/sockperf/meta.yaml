@@ -9,7 +9,7 @@ metadata:
          calls and options.
         homepage: https://github.com/Mellanox/sockperf
 
-type: test
+type: workload
 depends:
         debian: sockperf
 params:

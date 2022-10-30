@@ -20,7 +20,7 @@ metadata:
 
         homepage: https://github.com/RedisLabs/memtier_benchmark
 
-type: test
+type: workload
 depends:
         debian:
                 autoconf
