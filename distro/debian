@@ -8,7 +8,7 @@ shopt -s nullglob
 
 update()
 {
-	apt-get -qq update
+	apt-get -q update
 }
 
 add_i386_package()
@@ -18,8 +18,8 @@ add_i386_package()
 
 download()
 {
-	echo apt-get -qq download $*
-	apt-get -qq download $* || apt-get -qq download $*
+	echo apt-get -q download $*
+	apt-get -q download $* || apt-get -q download $*
 }
 
 hardlink_to_symlink()
@@ -192,7 +192,7 @@ do_apt_install()
 	do
 		$chronic apt-get -o Dpkg::Options::=--force-confdef \
 				 -o Dpkg::Options::=--force-confold \
-				 install -qq --no-upgrade $package >/tmp/apt-get_info 2>&1
+				 install -q --no-upgrade $package >/tmp/apt-get_info 2>&1
 		grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
 	done
 }
@@ -259,7 +259,7 @@ fixup_distro_mirror()
 
 fixup_preinstall()
 {
-	apt-get install -qqf
+	apt-get install -qf
 }
 
 fixup_arch_install()
@@ -269,7 +269,7 @@ fixup_arch_install()
 
 	dpkg --add-architecture i386
 	update
-	apt --allow-remove-essential --fix-broken install -qq -o=APT::Architecture="i386"
+	apt --allow-remove-essential --fix-broken install -q -o=APT::Architecture="i386"
 }
 
 pack_benchmark_deps()

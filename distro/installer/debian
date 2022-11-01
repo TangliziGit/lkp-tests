@@ -6,7 +6,7 @@ arch=$(get_system_arch)
 # Debian package installation
 export DEBIAN_FRONTEND=noninteractive
 [ "$arch" = "x86_64" ] &&
-dpkg --add-architecture i386 && apt-get -qq update
+dpkg --add-architecture i386 && apt-get -q update
 apt-get -o Dpkg::Options::="--force-confdef" \
      -o Dpkg::Options::="--force-confold" \
-     -qq install "$@"
+     -q install "$@"
