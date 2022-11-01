@@ -218,6 +218,31 @@ remove_rpms()
 	done
 }
 
+commit_comment()
+{
+        owner="src-oepkgs"
+	repo_name=${upstream_repo##*/}
+        [ $1 == "install-rpm_success" ] && result="SUCCESS" || result="FAILED"
+	mount_repo=$(echo $mount_repo_addr | sed 's/:20018//')
+	testing_repo="[testing_repo]($mount_repo/)"
+	result_url="https://api.compass-ci.openeuler.org$result_root/output"
+	pub_repo=$(echo $mount_repo | sed 's;https://api.compass-ci.openeuler.org/rpm/testing/openeuler;https://repo.oepkgs.net/openEuler/rpm/openEuler;')
+	oepkgs_repo="[Oepkg_repo]($pub_repo/)"
+	result_detail="[report]($result_url)"
+
+	body="|Arch|Result|Result_Detail|Testing_repo|Oepkgs_repo|\n|---|---|---|---|---|\n|$(arch)|$result|$result_detail|$testing_repo|$oepkgs_repo|"
+	data='{"access_token": "'$secrets_my_token'", "body": "'$body'"}'
+	curl -sS --header 'Content-Type: application/json;charset=UTF-8' -XPOST "https://gitee.com/api/v5/repos/$owner/$repo_name/commits/$upstream_commit/comments" -d "${data}" > /dev/null
+}
+
+die()
+{
+	[ -n "$upstream_commit" ] && [ -n "$secrets_my_token" ] && commit_comment "install-rpm_failed"
+	echo "$@"
+	exit 99
+}
+
+
 [ -n "${pr_merge_reference_name}" ] || {
 	distro_install_depends install-rpm
 	add_repo
@@ -226,6 +251,7 @@ remove_rpms()
 	echo_src_rpm_location
 	echo_rpm_license
 }
+
 install_rpms
 [ -n "${pr_merge_reference_name}" ] || {
 	query_group
@@ -238,3 +264,5 @@ ldd_test
 [ -n "${do_remove_rpms}" ] && {
 	remove_rpms
 }
+
+[ -n "$upstream_commit" ] && [ -n "$secrets_my_token" ] && commit_comment "install-rpm_success"

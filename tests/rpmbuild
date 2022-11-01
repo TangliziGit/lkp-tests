@@ -24,11 +24,15 @@
 ([ -n "$depend_upstream_repo" ] || [ -n "$custom_repo_name" ]) || die "custom_repo_name is empty"
 
 dest_dir="/rpm/upload/${os}-${os_version}/${custom_repo_name}"
-rpmdev_dir="/home/lkp/rpmbuild"
+rpmdev_dir="/root/rpmbuild"
+rpm_dest="${dest_dir}/${os_arch}/Packages"
+src_rpm_dest="${dest_dir}/source/Packages"
 
 declare -a reverse_depends
 die()
 {
+	[ -n $upstream_commit ] && [ -n $secrets_my_token ] && build_comment "rpmbuild_failed"
+	[ -n "$pr_num" ] && [ -n "$secrets_my_token" ] && build_comment "rpmbuild_failed"
 	rpmbuild_email "rpmbuild_failed"
 	echo "$@"
 	exit 99
@@ -38,9 +42,7 @@ from_git()
 {
 	package_name=${upstream_repo##*/}
 	package_name=${package_name%%.git*}
-	rpm_dest="${dest_dir}/${os_arch}/Packages"
 	tmp_rpm_dest="/tmp${rpm_dest}/$id"
-	src_rpm_dest="${dest_dir}/source/Packages"
 
 	init_workspace
 	download_upstream_repo
@@ -125,9 +127,6 @@ from_srpm()
 {
 	[ -n "$repo_addr" ] || die "repo_addr is empty"
 
-	rpm_dest="${dest_dir}/${os_arch}/Packages"
-	src_rpm_dest="${dest_dir}/source/Packages"
-
 	install_srpm
 }
 
@@ -178,7 +177,7 @@ install_srpm()
 {
 	add_user_mock
 
-	su lkp -c "rpm -i --nosignature ${repo_addr} >/dev/null" || su lkp -c "rpm -i --nosignature ${repo_addr}/${upstream_repo} >/dev/null" || die "failed to install source rpm: ${repo_addr}/${upstream_repo}"
+	su lkp -c "rpm -i --nosignature ${repo_addr} >/dev/null" || su lkp -c "rpm -i --nosignature ${repo_addr}/${upstream_repo} >/dev/null" || die "failed to install source rpm: ${repo_addr}"
 }
 
 build_rpm()
@@ -220,6 +219,7 @@ localinstall_dependent_package()
 	wget -c -r -np -nd -R index.html "${SRV_HTTP_PROTOCOL:-https}://${SCHED_HOST}:${SRV_HTTP_RPM_PORT:-20012}$depend_rpm_dest/" || die "failed to download local depend rpms"
 	yum localinstall -y *.rpm || die "failed to local install rpms"
 }
+
 show_rpm_files()
 {
 	find ${rpmdev_dir}/RPMS -type f -name "*.rpm"
@@ -316,6 +316,26 @@ update_srpm_list()
 	curl -sS -H 'Content-Type: Application/json' -XPOST ${SCHED_HOST}:${SCHED_PORT}/repo/set-srpm-info -d "${data}"
 }
 
+build_comment()
+{
+	owner="src-oepkgs"
+	repo_name=${upstream_repo##*/}
+	[ $(arch) == "aarch64" ] && aarch64="yes" || x86_64="yes"
+	[ $1 == "rpmbuild_success" ] && result="SUCCESS" || result="FAILED"
+	result_url="https://api.compass-ci.openeuler.org$result_root/output"
+	result_detail="[report]($result_url)"
+	body="|Arch|Check_Arch|Build_Result|Result_Detail|\n|---|---|---|---|\n|$(arch)|Yes|$result|$result_detail|"
+
+	data='{"access_token": "'$secrets_my_token'", "body": "'$body'"}'
+	[ -n "$pr_num" ] || [ -n "$upstream_commit" ] && [ -n "$secrets_my_token" ] && {
+		curl -sS --header 'Content-Type: application/json;charset=UTF-8' -XPOST "https://gitee.com/api/v5/repos/$owner/$repo_name/commits/$upstream_commit/comments" -d "${data}" > /dev/null
+	}
+	[ -n "$pr_num" ] && [ -n "$secrets_my_token" ] && {
+		curl -sS --header 'Content-Type: application/json;charset=UTF-8' -XPOST "https://gitee.com/api/v5/repos/$owner/$repo_name/pulls/$pr_num/comments" -d '{"access_token": "'$secrets_my_token'", "body": "'$body'"}' >/dev/null
+	}
+}
+
+
 add_repo
 yum_repo_retry
 if [ -n "$upstream_repo" ]; then
@@ -328,7 +348,13 @@ build_rpm
 [ $? = 0 ] && update_srpm_list
 [ -n "$depend_upstream_repo" ] && exit 0
 #detect_reverse_depends
+if [ -n "$pr_num" ] && [ -n "$secrets_my_token" ];then
+	cd $rpmdev_dir/RPMS/ &&  yum localinstall -y ./*/*
+	[ $? -eq 0 ] && build_comment "rpmbuild_success" && exit
+	[ $? -ne 0 ] && build_comment "rpmbuild_failed" && exit
+fi
 upload_rpm_pkg
 update_repo_mq
-#[ -n "$upstream_commit" ] && rpmbuild_email "rpmbuild_success"
-#exit 0
+
+[ -n "$upstream_commit" ] && [ -n "$secrets_my_token" ] && build_comment "rpmbuild_success"
+exit 0
