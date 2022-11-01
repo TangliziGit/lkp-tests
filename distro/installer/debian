@@ -9,5 +9,4 @@ export DEBIAN_FRONTEND=noninteractive
 dpkg --add-architecture i386 && apt-get -qq update
 apt-get -o Dpkg::Options::="--force-confdef" \
      -o Dpkg::Options::="--force-confold" \
-     -qq install $*
-grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
+     -qq install "$@"
