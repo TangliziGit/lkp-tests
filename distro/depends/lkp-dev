@@ -28,4 +28,4 @@ bison
 libssl-dev
 libipc-run-perl
 file
-libtirpc-devel
+libtirpc-dev

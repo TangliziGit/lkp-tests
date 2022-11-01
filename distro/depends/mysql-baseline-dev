@@ -6,7 +6,7 @@ openssl-devel
 libtool
 tar
 rpcgen
-libtirpc-devel
+libtirpc-dev
 bison
 bc
 git
