@@ -288,6 +288,7 @@ libmysqlclient-dev: mysql-devel
 libipc-run-perl:
 libklibc-dev:
 libpython2.7:
+libpython3.7:
 network-manager: NetworkManager
 gdbserver: gdb-gdbserver
 init-system-helpers:
