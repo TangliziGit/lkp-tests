@@ -3,3 +3,4 @@ gnupg
 gettext
 ncurses-bin
 binutils
+fakeroot
