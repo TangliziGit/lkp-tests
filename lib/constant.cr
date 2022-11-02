@@ -5,7 +5,7 @@ require "./run_env"
 DEVEL_HOURLY_KCONFIGS = %w(x86_64-rhel-7.6).freeze
 GIT_ROOT_DIR = "/lkp/repo".freeze
 
-TESTCASE_AXIS_KEY = "testcase".freeze
+TESTCASE_AXIS_KEY = "suite".freeze
 COMMIT_AXIS_KEY = "commit".freeze
 TBOX_GROUP_AXIS_KEY = "tbox_group".freeze
 
