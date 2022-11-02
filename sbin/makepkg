@@ -311,6 +311,9 @@ get_downloadclient() {
 
 	# ensure specified program is installed
 	local program="${agent%% *}"
+	if [[ $program = ${program#*/} ]]; then
+		program=$(which $program)
+	fi
 	if [[ ! -x $program ]]; then
 		local baseprog="${program##*/}"
 		error "$(gettext "The download program %s is not installed.")" "$baseprog"

@@ -16,7 +16,7 @@ if [ -n "$HTTP_PROXY_HOST" ]; then
 		((i++))
 	done
 
-	command curl -k ${array[*]}
+	/usr/bin/curl -k "${array[@]}"
 else
-	command curl "$@"
+	/usr/bin/curl "$@"
 fi
