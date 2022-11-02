@@ -117,7 +117,7 @@ upgrade() {
 	local INSTALL_DIR="$SRC_DIR/$pkg_name-lkp"
 	[ -d "$INSTALL_DIR" ] || mkdir "$INSTALL_DIR"
 	[ -d "$SRC_DIR/.install" ] || mkdir "$SRC_DIR/.install"
-	tar -zxf "$@" -C "$INSTALL_DIR"
+	tar -axf "$@" -C "$INSTALL_DIR"
 	mv $INSTALL_DIR/.[^.]* "$SRC_DIR/.install"
 	(
 		[ -f "$SRC_DIR/.install/.INSTALL" ] && source "$SRC_DIR/.install/.INSTALL"
