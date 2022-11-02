@@ -25,7 +25,7 @@ def tbox_group?(hostname)
 end
 
 class ResultPath < Hash
-  MAXIS_KEYS = %w[tbox_group testcase path_params rootfs kconfig compiler commit].freeze
+  MAXIS_KEYS = %w[tbox_group suite path_params rootfs kconfig compiler commit].freeze
   AXIS_KEYS = (MAXIS_KEYS + ['run']).freeze
 
   PATH_SCHEME = {
@@ -48,10 +48,10 @@ class ResultPath < Hash
   }.freeze
 
   def path_scheme
-    if self['testcase'] =~ /^kvm:/
-      PATH_SCHEME[self['testcase']] || PATH_SCHEME['kvm:default']
+    if self['suite'] =~ /^kvm:/
+      PATH_SCHEME[self['suite']] || PATH_SCHEME['kvm:default']
     else
-      PATH_SCHEME[self['testcase']] || PATH_SCHEME['default']
+      PATH_SCHEME[self['suite']] || PATH_SCHEME['default']
     end
   end
 
@@ -59,7 +59,7 @@ class ResultPath < Hash
     dirs = rt.sub(/#{RESULT_ROOT_DIR}/, '').split('/')
     dirs.shift if dirs[0] == ''
 
-    self['testcase'] = dirs.shift
+    self['suite'] = dirs.shift
     ps = path_scheme
 
     ndirs = dirs.size
@@ -88,7 +88,7 @@ class ResultPath < Hash
   def assemble_result_root(skip_keys = nil)
     dirs = [
       RESULT_ROOT_DIR,
-      self['testcase']
+      self['suite']
     ]
 
     path_scheme.each do |key|
@@ -111,7 +111,7 @@ class ResultPath < Hash
   def test_desc_keys(dim, dim_not_a_param)
     dim = /^#{dim}$/ if dim.instance_of? String
 
-    keys = ['testcase'] + path_scheme
+    keys = ['suite'] + path_scheme
     keys.delete_if { |key| key =~ dim } if dim_not_a_param
 
     default_removal_pattern = /compiler|^rootfs$|^kconfig$/
@@ -139,7 +139,7 @@ class ResultPath < Hash
   def params_file
     [
       RESULT_ROOT_DIR,
-      self['testcase'],
+      self['suite'],
       'params.yaml'
     ].join '/'
   end
