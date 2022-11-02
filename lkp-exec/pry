@@ -2,6 +2,7 @@
 
 for i in $LKP_SRC/lib/*.rb
 do
+	[[ $i =~ lib/docker2openeuler.rb ]] && continue
 	opt_libs+="-r $i "
 done
 
