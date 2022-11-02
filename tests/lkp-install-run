@@ -1,0 +1,30 @@
+#!/bin/bash
+# - script
+# - job
+
+cd $LKP_SRC || exit
+make
+lkp install
+
+check_install_script()
+{
+	test -x $1 || return
+	lkp install $1
+}
+
+check_install_job()
+{
+	test -f $1 || return
+	local atomic_job=$(lkp split --any $1)
+	atomic_job=${atomic_job##* ./}
+	lkp install $atomic_job
+	lkp run $atomic_job
+}
+
+if [[ $script ]]; then
+	check_install_script monitors/$script
+	check_install_script setup/$script
+	check_install_script tests/$script
+elif [[ $job ]]; then
+	check_install_job jobs/$job
+fi

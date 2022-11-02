@@ -1,0 +1,10 @@
+suite: lkp-install-run
+
+lkp-install-run:
+        script:
+                - unixbench
+                - lmbench3
+                - stream
+                - fio
+                - lib-micro
+                - netperf
