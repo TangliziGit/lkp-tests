@@ -158,7 +158,8 @@ makepkg_install() {
 	[ -n "$FORCE_MODE" ] && force_opt="-f"
 	if [ -d "$LKP_SRC/pkg/$pkg" ]; then
 		(
-			cd "$LKP_SRC/pkg/$pkg" && \
+			cd "$LKP_SRC/pkg/$pkg" || exit
+			echo "Building package with: $LKP_SRC/pkg/$pkg/PKGBUILD"
 			PACMAN="$LKP_SRC/sbin/pacman-LKP" CARCH=$arch BUILDDIR="$LKP_SRC/tmp-pkg" \
 			"$LKP_SRC/sbin/makepkg" --config "$(lkp_src)/etc/makepkg.conf" -s -i --skippgpcheck "$force_opt"
 		)
@@ -216,7 +217,7 @@ install_packages() {
 	[ -n "$generic_packages" -a "$generic_packages" != " " ] || return
 
 	[ "$distro" = "debian" ] && remove_packages_repository
-	echo "Use: $LKP_SRC/distro/installer/$distro install $generic_packages"
+	echo "Installing packages with: $LKP_SRC/distro/installer/$distro install $generic_packages"
 	[ -n "$DRY_RUN" ] && return
 
 	if [ "$distro" = "centos" -o "$distro" = "aliyun" ]; then
