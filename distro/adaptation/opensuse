@@ -24,3 +24,4 @@ ntpdate: ntp
 openjdk: java-10-openjdk
 linux-base: perf
 net-tools: net-tools-deprecated
+linux-cpupower: cpupower

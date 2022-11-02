@@ -84,7 +84,7 @@ trace-cmd::
 trinity:: 
 trinity-static-i386::
 trinity-static-x86_64::
-turbostat::
+linux-cpupower::
 unixbench::
 vm-scalability:: 
 will-it-scale::
