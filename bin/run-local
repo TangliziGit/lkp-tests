@@ -133,6 +133,7 @@ result_root = create_result_root(_result_root)
 exit unless result_root
 ENV['RESULT_ROOT'] = result_root
 ENV['TMP_RESULT_ROOT'] = result_root
+puts "RESULT_ROOT=" + result_root
 
 jobx = Job2sh.new(job.to_hash)
 unless jobx.expand_params
@@ -157,6 +158,8 @@ system "#{LKP_SRC}/bin/run-with-job", job_script, "#{LKP_SRC}/bin/post-run"
 system "#{LKP_SRC}/bin/event/wakeup", 'job-finished'
 
 job.save "#{result_root}/job.yaml"
+
+puts "Job results saved to " + result_root
 
 system job_script, 'extract_stats'
 
