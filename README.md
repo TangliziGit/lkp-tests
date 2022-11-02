@@ -2,8 +2,10 @@
 
 ## Getting started
 
+For now, lkp install/run can only run by root user.
+
 ```
-	git clone https://github.com/intel/lkp-tests.git
+	git clone https://gitee.com/compass-ci/lkp-tests
 
 	cd lkp-tests
 	make install
@@ -18,7 +20,6 @@
 	ls lkp-tests/jobs
 	
 	# install the common dependencies for lkp
-	# Note: lkp doesn't support ruby >= 3.0, default ruby version should be 2.x
 	lkp install
 ```
 
