@@ -223,7 +223,8 @@ perl-modules: perl-CPAN
 pkg-config: pkgconfig
 python-minimal: python2
 python-numpy: numpy
-python-openssl: pyOpenSSL
+python-openssl: python2-pyOpenSSL
+python3-openssl: python3-pyOpenSSL
 python3-all-dev: python3-devel
 python3-dev: python3-devel
 python3-pkg-resources: python3-setuptools

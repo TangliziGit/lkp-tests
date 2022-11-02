@@ -61,6 +61,7 @@ nfs-kernel-server: nfs-utils
 perl-base:
 perl-modules-5: perl-module-build
 python-minimal: python2
+python3-minimal: python3
 qemu-system-x86: qemu
 ruby-gnuplot:
 sg3-utils: sg3_utils

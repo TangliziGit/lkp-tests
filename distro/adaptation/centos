@@ -168,18 +168,17 @@ pixz: pxz
 pkg-config: pkgconfig
 plzip:
 postmark:
-python: python2
 python3-mako: python-pyramid-mako
 python3-markupsafe: python34-markupsafe
 python3-numpy: python36-numpy
 python3: python34
 python3-six: python36-six
-python-dev: platform-python-devel
+python3-dev: platform-python-devel
 python-minimal: python2
 python3-minimal: python3
-python-numpy: numpy
-python-openssl: pyOpenSSL
-python-pkg-resources: python-setuptools
+python3-numpy: numpy
+python3-openssl: pyOpenSSL
+python3-pkg-resources: python-setuptools
 qemu-utils: qemu-img
 rstatd: rusers-server
 rt-tests: numactl-devel

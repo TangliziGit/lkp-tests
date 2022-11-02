@@ -1,10 +1,10 @@
 binutils
 linux-perf
-python
+python3
 libzstd-dev
 default-jdk
 libdw1
 libunwind8
-libpython2.7
+libpython3.11
 libbinutils
 libbabeltrace-ctf1
