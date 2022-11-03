@@ -8,6 +8,8 @@ shopt -s nullglob
 
 support_repo_epel()
 {
+	[ ${DISTRO^^} == "CENTOS" ] || return 0
+
 	if ! rpm -q epel-release >/dev/null; then
 		yum install -y epel-release >/dev/null 2>&1
 	fi
@@ -19,7 +21,7 @@ distro_install_depends()
 	local bm="$1"
 	local scripts=$(find $LKP_SRC/distro/depends/ -name "$bm" -o -name "${bm}.[0-9]")
 
-	[ ${DISTRO^^} == "CENTOS" ] && support_repo_epel
+	support_repo_epel
 
 	for script in $scripts
 	do
@@ -59,7 +61,7 @@ pack_benchmark()
 
 yum_download()
 {
-	[ ${DISTRO^^} == "CENTOS" ] && support_repo_epel
+	support_repo_epel
 
 	echo "yum install -y --downloadonly --skip-broken $@ | grep -e \"No\ package .*\ available\""
 	yum install -y --downloadonly --skip-broken "$@" | grep -e "No\ package .*\ available" && exit 1
