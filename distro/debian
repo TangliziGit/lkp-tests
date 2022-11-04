@@ -13,15 +13,7 @@ update()
 
 ospkg_update()
 {
-	update
-}
-
-ospkg_install()
-{
-	ospkg_update_ratelimit
-
-	do_apt_install "$*" ||
-	do_apt_install "$@"
+	apt-get -q update
 }
 
 add_i386_package()
@@ -191,7 +183,7 @@ save_package_deps_info()
 		echo "$PACKAGE_VERSION_LIST" > "opt/deb/${benchmark}-deps.packages"
 }
 
-do_apt_install()
+ospkg_install()
 {
 	# chronic is provided by deps/pack.cgz, but nfs rootfs + run_on_local_disk environment,
 	# deps/pack.cgz will not be merged into the runtime rootfs currently.
@@ -231,11 +223,11 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		do_apt_install $packages
+		ospkg_install $packages
 
 		# some apt mirrors may have issue and fail in the first time of apt install
 		# so try for a second time if the first time fails
-		[[ $? -ne 0 ]] && do_apt_install $packages
+		[[ $? -ne 0 ]] && ospkg_install $packages
 	done
 }
 
