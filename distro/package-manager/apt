@@ -19,7 +19,7 @@ ospkg_install()
 	do
 		$chronic apt-get -o Dpkg::Options::=--force-confdef \
 				 -o Dpkg::Options::=--force-confold \
-				 install -q --no-upgrade $package >/tmp/apt-get_info 2>&1
+				 install -q -y --no-upgrade $package >/tmp/apt-get_info 2>&1
 		grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
 	done
 }
