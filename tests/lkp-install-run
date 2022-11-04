@@ -26,6 +26,10 @@ check_install_job()
 	test -f $1 || return
 	local atomic_job=$(lkp split --any $1)
 	atomic_job=${atomic_job##* ./}
+
+	# don't run too long time
+	sed -i 's/^runtime: [0-9].*/runtime: 10/' $atomic_job
+
 	lkp install $atomic_job
 	lkp run $atomic_job
 }
