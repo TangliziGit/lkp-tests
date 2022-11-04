@@ -3,5 +3,7 @@
 os=$1
 shift
 
+[[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
+
 source $LKP_SRC/distro/$os
 ospkg_update_install "$@"
