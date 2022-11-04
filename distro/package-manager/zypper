@@ -7,11 +7,13 @@ ospkg_update()
 
 ospkg_install()
 {
-	local pkg nopkgs
+	local pkg nopkgs err
 	for pkg
 	do
 		nopkgs=$(rpm --quiet --query $pkg | awk '{print $2}')
-		[[ -n $nopkgs ]] &&
-		$SUDO zypper -q install -y $nopkgs
+		[[ -n $nopkgs ]] || continue
+		$SUDO zypper -q install -y $nopkgs || err=$?
 	done
+
+	return $err
 }

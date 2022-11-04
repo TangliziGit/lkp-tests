@@ -7,11 +7,15 @@ ospkg_update()
 
 ospkg_install()
 {
+	local err=
+
 	for pkg
 	do
 		$SUDO pacman -Qq --noconfirm $pkg > /dev/null ||
-		$SUDO pacman -Syq --noconfirm  --needed $pkg >/tmp/pacman_info 2>&1
+		$SUDO pacman -Syq --noconfirm  --needed $pkg >/tmp/pacman_info 2>&1 || err=$?
 		[ -f /tmp/pacman_info ] && grep -v "warning: could not get file information for *" /tmp/pacman_info
 	done
+
+	return $err
 }
 

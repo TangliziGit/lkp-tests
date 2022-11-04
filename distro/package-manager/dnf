@@ -7,11 +7,13 @@ ospkg_update()
 
 ospkg_install()
 {
-	local pkg nopkgs
+	local pkg nopkgs err
 	for pkg
 	do
 		nopkgs=$(rpm --query $pkg | awk '{print $2}')
-		[[ -n $nopkgs ]] &&
-		$SUDO yum install -y -q $nopkgs
+		[[ -n $nopkgs ]] || continue
+		$SUDO yum install -y -q $nopkgs || err=$?
 	done
+
+	return $err
 }
