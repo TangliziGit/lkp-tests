@@ -11,6 +11,19 @@ update()
 	apt-get -q update
 }
 
+ospkg_update()
+{
+	update
+}
+
+ospkg_install()
+{
+	ospkg_update_ratelimit
+
+	do_apt_install "$@" ||
+	do_apt_install "$@"
+}
+
 add_i386_package()
 {
 	dpkg --add-architecture i386
@@ -188,7 +201,7 @@ do_apt_install()
 	else
 		chronic=
 	fi
-	for package in $packages
+	for package
 	do
 		$chronic apt-get -o Dpkg::Options::=--force-confdef \
 				 -o Dpkg::Options::=--force-confold \
@@ -218,11 +231,11 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		do_apt_install
+		do_apt_install $packages
 
 		# some apt mirrors may have issue and fail in the first time of apt install
 		# so try for a second time if the first time fails
-		[[ $? -ne 0 ]] && do_apt_install
+		[[ $? -ne 0 ]] && do_apt_install $packages
 	done
 }
 
