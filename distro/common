@@ -53,6 +53,14 @@ ospkg_update_ratelimit()
 	ospkg_update
 }
 
+ospkg_update_install()
+{
+	ospkg_update_ratelimit
+
+	ospkg_install "$*" ||
+	ospkg_install "$@"
+}
+
 update()
 {
 	:
