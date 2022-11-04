@@ -12,6 +12,20 @@ update()
 	pacman -Syy >/dev/null
 }
 
+ospkg_update()
+{
+	pacman -Syy
+}
+
+ospkg_install()
+{
+	for pkg
+	do
+		pacman -Qq --noconfirm $pkg > /dev/null || pacman -Syq --noconfirm  --needed $pkg >/tmp/pacman_info 2>&1
+		[ -f /tmp/pacman_info ] && grep -v "warning: could not get file information for *" /tmp/pacman_info
+	done
+}
+
 pack_benchmark_deps()
 {
 	setup_proxy
@@ -93,11 +107,7 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		for pkg in $packages
-		do
-			pacman -Qq --noconfirm $pkg > /dev/null || pacman -Syq --noconfirm  --needed $pkg >/tmp/pacman_info 2>&1
-			[ -f /tmp/pacman_info ] && grep -v "warning: could not get file information for *" /tmp/pacman_info
-		done
+		ospkg_install $packages
 	done
 }
 
