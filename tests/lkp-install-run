@@ -2,6 +2,15 @@
 # - script
 # - job
 
+# Direct usage:
+#
+# job=stream.yaml tests/lkp-install-run
+#
+# cd tests
+# script=stream ./lkp-install-run
+
+[[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
+
 cd $LKP_SRC || exit
 make
 lkp install
