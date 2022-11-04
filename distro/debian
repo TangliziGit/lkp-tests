@@ -20,7 +20,7 @@ ospkg_install()
 {
 	ospkg_update_ratelimit
 
-	do_apt_install "$@" ||
+	do_apt_install "$*" ||
 	do_apt_install "$@"
 }
 
