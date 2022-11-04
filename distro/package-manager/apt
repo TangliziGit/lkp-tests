@@ -2,7 +2,7 @@
 
 ospkg_update()
 {
-	apt-get -q update
+	$SUDO apt-get -q update
 }
 
 ospkg_install()
@@ -11,13 +11,13 @@ ospkg_install()
 	# deps/pack.cgz will not be merged into the runtime rootfs currently.
 	# one by one installation improve the installation success rate.
 	if has_cmd chronic; then
-		chronic=$chronic
+		chronic=chronic
 	else
 		chronic=
 	fi
 	for package
 	do
-		$chronic apt-get -o Dpkg::Options::=--force-confdef \
+		$SUDO $chronic apt-get -o Dpkg::Options::=--force-confdef \
 				 -o Dpkg::Options::=--force-confold \
 				 install -q -y --no-upgrade $package >/tmp/apt-get_info 2>&1
 		grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info

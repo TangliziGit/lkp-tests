@@ -1,33 +1,31 @@
 #!/bin/bash
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
-PROJECT_DIR=$(dirname $SCRIPT_DIR)
+LKP_SRC=$(dirname $SCRIPT_DIR)
 
-. $PROJECT_DIR/lib/env.sh
-
-[ $(id -u) != 0 ] && SUDO=sudo
+. $LKP_SRC/lib/env.sh
+. $LKP_SRC/distro/common
 
 # choose install function base on common Package Manager
 linux_dep()
 {
 	get_package_manager
+	source $LKP_SRC/distro/package-manager/$installer
 
 	local common_packages="ruby rubygems make gcc diffutils util-linux lftp hostname sudo gzip git"
 
 	case "$installer" in
-	apt-get)
-		export DEBIAN_FRONTEND=noninteractive
-		$SUDO "$installer" update
-		$SUDO "$installer" install -yqm $common_packages ruby-dev libssl-dev g++ uuid-runtime
+	apt)
+		ospkg_update_install $common_packages ruby-dev libssl-dev g++ uuid-runtime
 		;;
 	dnf|yum)
-		$SUDO "$installer" install -y --skip-broken $common_packages gcc-c++ ruby-devel
+		ospkg_update_install $common_packages gcc-c++ ruby-devel
 		;;
 	pacman)
-		$SUDO "$installer" -Sy --noconfirm --needed $common_packages
+		ospkg_update_install $common_packages
 		;;
 	zypper)
-		$SUDO "$installer" install -y $common_packages gcc-c++ ruby-devel
+		ospkg_update_install $common_packages gcc-c++ ruby-devel
 		;;
 	*)
 		echo "Unknown Package Manager! please install dependencies manually." && exit 1
@@ -39,7 +37,7 @@ get_package_manager()
 {
 	has_cmd "yum" && installer="yum"
 	has_cmd "dnf" && installer="dnf" && return
-	has_cmd "apt-get" && installer="apt-get" && return
+	has_cmd "apt" && installer="apt" && return
 	has_cmd "pacman" && installer="pacman" && return
 	has_cmd "zypper" && installer="zypper" && return
 }

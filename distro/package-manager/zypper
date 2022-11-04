@@ -12,6 +12,6 @@ ospkg_install()
 	do
 		nopkgs=$(rpm --quiet --query $pkg | awk '{print $2}')
 		[[ -n $nopkgs ]] &&
-		zypper -q install -y $nopkgs
+		$SUDO zypper -q install -y $nopkgs
 	done
 }
