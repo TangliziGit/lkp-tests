@@ -42,6 +42,17 @@ install_runtime_depends()
 	:
 }
 
+ospkg_update_ratelimit()
+{
+	local today=$(date +%F)
+	local tsfile=/tmp/ospkg_update_ratelimit-$today
+
+	test -f $tsfile && return
+	touch $tsfile
+
+	ospkg_update
+}
+
 update()
 {
 	:
