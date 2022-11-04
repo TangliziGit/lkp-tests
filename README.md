@@ -111,7 +111,7 @@ As for now, lkp-tests still needs to run as root.
 
 If you want to add support for your Linux distribution you will need
 an installer file which allows us to install dependencies per job. For
-examples look at: distro/installer/* files.
+examples look at: distro/$os files.
 
 Since packages can have different names we provide an adaptation mapping for a
 base Ubuntu package (since development started with that) to your own

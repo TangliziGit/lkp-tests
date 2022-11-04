@@ -4,6 +4,7 @@ shopt -s nullglob
 
 . $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
+. $LKP_SRC/distro/package-manager/dnf
 . $LKP_SRC/lib/debug.sh
 
 support_repo_epel()
@@ -12,6 +13,12 @@ support_repo_epel()
 
 	if ! rpm -q epel-release >/dev/null; then
 		yum install -y epel-release >/dev/null 2>&1
+	fi
+
+	if [ ${DISTRO^^} == "OPENEULER" ]; then
+		yum makecache timer >/dev/null
+	else
+		yum makecache fast >/dev/null
 	fi
 }
 
@@ -35,10 +42,7 @@ distro_install_depends()
 		local ocfs2_tools_name=$(echo "$packages" | grep 'ocfs2-tools')
 		[ -n "$ocfs2_tools_name" ] && install_ocfs2_tools "$ocfs2_tools_name"
 
-		for pkg in $packages
-		do
-			rpm --quiet --query $pkg || yum install -y -q $pkg
-		done
+		ospkg_install $packages
 	done
 }
 

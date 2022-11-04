@@ -4,14 +4,10 @@ shopt -s nullglob
 
 . $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
+. $LKP_SRC/distro/package-manager/apt
 . $LKP_SRC/lib/debug.sh
 
 update()
-{
-	apt-get -q update
-}
-
-ospkg_update()
 {
 	apt-get -q update
 }
@@ -181,25 +177,6 @@ save_package_deps_info()
 		echo "$PACKAGE_LIST" | grep -F -f "$LKP_SRC/distro/keep-deb" > "opt/deb/sequence-deb.$benchmark"
 	[ -n "$PACKAGE_VERSION_LIST" ] && \
 		echo "$PACKAGE_VERSION_LIST" > "opt/deb/${benchmark}-deps.packages"
-}
-
-ospkg_install()
-{
-	# chronic is provided by deps/pack.cgz, but nfs rootfs + run_on_local_disk environment,
-	# deps/pack.cgz will not be merged into the runtime rootfs currently.
-	# one by one installation improve the installation success rate.
-	if has_cmd chronic; then
-		chronic=$chronic
-	else
-		chronic=
-	fi
-	for package
-	do
-		$chronic apt-get -o Dpkg::Options::=--force-confdef \
-				 -o Dpkg::Options::=--force-confold \
-				 install -q --no-upgrade $package >/tmp/apt-get_info 2>&1
-		grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
-	done
 }
 
 distro_install_depends()

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+os=$1
+shift
+
+source $LKP_SRC/distro/$os
+ospkg_update_install "$@"

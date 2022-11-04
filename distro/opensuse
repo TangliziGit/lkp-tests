@@ -4,6 +4,7 @@ shopt -s nullglob
 
 . $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
+. $LKP_SRC/distro/package-manager/zypper
 . $LKP_SRC/lib/debug.sh
 
 distro_install_depends()
@@ -21,10 +22,7 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		for pkg in $packages
-		do
-			rpm --quiet --query $pkg || zypper install -y $pkg >&/dev/null
-		done
+		ospkg_install $packages
 	done
 }
 

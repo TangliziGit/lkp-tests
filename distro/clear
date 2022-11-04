@@ -4,6 +4,7 @@ shopt -s nullglob
 
 . $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
+. $LKP_SRC/distro/package-manager/dnf
 . $LKP_SRC/lib/debug.sh
 
 distro_install_depends()
@@ -21,7 +22,7 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		$LKP_SRC/distro/installer/clear $packages
+		$LKP_SRC/distro/installer clear $packages
 	done
 }
 
@@ -159,7 +160,7 @@ pack_benchmark_deps()
 		do
 			swupd bundle-list | grep -qw "^$p$" && continue
 			swupd bundle-list -a | grep -qw "^$p$" || return
-			$LKP_SRC/distro/installer/clear $p 2>&1 | grep -v "Out of memory"
+			$LKP_SRC/distro/installer clear $p 2>&1 | grep -v "Out of memory"
 
 			uninstalled_bundles="$uninstalled_bundles $p"
 		done

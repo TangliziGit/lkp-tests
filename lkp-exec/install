@@ -217,7 +217,7 @@ install_packages() {
 	[ -n "$generic_packages" -a "$generic_packages" != " " ] || return
 
 	[ "$distro" = "debian" ] && remove_packages_repository
-	echo "Installing packages with: $LKP_SRC/distro/installer/$distro install $generic_packages"
+	echo "Installing packages with: $LKP_SRC/distro/installer $distro $generic_packages"
 	[ -n "$DRY_RUN" ] && return
 
 	if [ "$distro" = "centos" -o "$distro" = "aliyun" ]; then
@@ -228,7 +228,7 @@ install_packages() {
 		fi
 	fi
 
-	$LKP_SRC/distro/installer/$distro $generic_packages || {
+	$LKP_SRC/distro/installer $distro $generic_packages || {
 		echo "Cannot install some packages in $LKP_SRC/distro/depends/${script}"
 		exit 1
 	}
@@ -308,7 +308,7 @@ distro=$_system_name_lowercase
 DISTRO=$distro
 export DISTRO
 
-[ -x $LKP_SRC/distro/installer/$distro ] || {
+[ -x $LKP_SRC/distro/$distro ] || {
 	echo "Not a supported system, cannot install packages."
 	exit 1
 }

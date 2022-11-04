@@ -109,7 +109,7 @@ def install_packages(script, distro)
   packages |= dev_packages
   return if packages.empty?
 
-  return if system "#{LKP_SRC}/distro/installer/#{distro}", *packages
+  return if system "#{LKP_SRC}/distro/installer", distro, *packages
 
   puts "Cannot install some packages in #{LKP_SRC}/distro/#{distro}/#{script}"
   exit 1
@@ -147,7 +147,7 @@ end
 distroinfo = LKP::DistroInfo.instance
 distro = distroinfo.systemnamel
 
-unless File.executable? "#{LKP_SRC}/distro/installer/#{distro}"
+unless File.executable? "#{LKP_SRC}/distro/#{distro}"
   puts "Unsupport #{distro} system, cannot install packages."
   exit 1
 end

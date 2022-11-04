@@ -171,7 +171,7 @@ build_depends_pkg()
 	local dev_debs=$(get_dependency_packages $DISTRO ${script}-dev)
 	debs="$(echo $debs $dev_debs | tr '\n' ' ')"
 	if [ -n "$debs" ] && [ "$debs" != " " ]; then
-		$LKP_SRC/distro/installer/$DISTRO $debs
+		$LKP_SRC/distro/installer $DISTRO $debs
 	fi
 
 	local packages="$(get_dependency_packages ${DISTRO} ${script} pkg)"

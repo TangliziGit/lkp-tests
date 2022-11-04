@@ -1,0 +1,17 @@
+#!/bin/bash
+
+ospkg_update()
+{
+	support_repo_epel
+}
+
+ospkg_install()
+{
+	local pkg nopkgs
+	for pkg
+	do
+		nopkgs=$(rpm --quiet --query $pkg | awk '{print $2}')
+		[[ -n $nopkgs ]] &&
+		yum install -y -q $nopkgs
+	done
+}

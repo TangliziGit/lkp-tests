@@ -1,0 +1,17 @@
+#!/bin/bash
+
+ospkg_update()
+{
+	:
+}
+
+ospkg_install()
+{
+	local pkg nopkgs
+	for pkg
+	do
+		nopkgs=$(rpm --quiet --query $pkg | awk '{print $2}')
+		[[ -n $nopkgs ]] &&
+		zypper -q install -y $nopkgs
+	done
+}
