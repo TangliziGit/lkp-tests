@@ -143,12 +143,24 @@ EOT
 	}
 }
 
+bundle_install() {
+	local ruby_version=$(ruby --version)
+	if [[ "$ruby_version" != "${ruby_version#ruby 3}" ]]; then
+		bundle install
+	elif [[ "$ruby_version" != "${ruby_version#ruby 2}" ]]; then
+		BUNDLE_GEMFILE=Gemfile.2 bundle install
+	else
+		echo "unknown ruby version: $ruby_version"
+		exit 1
+	fi
+}
+
 bundle_install_china() {
 	local tmpdir=$(mktemp -d /tmp/lkp-install-china-XXXXXX)
 	trap "rm -rf $tmpdir" EXIT
 	cp $LKP_SRC/Gemfile $tmpdir/Gemfile
 	cp $LKP_SRC/Gemfile.lock $tmpdir/Gemfile.lock
-	(cd $tmpdir || exit; bundle config --local mirror.https://rubygems.org https://gems.ruby-china.com; bundle install)
+	(cd $tmpdir || exit; bundle config --local mirror.https://rubygems.org https://gems.ruby-china.com; bundle_install)
 }
 
 makepkg_install() {
@@ -290,7 +302,7 @@ install_base_support()
 		(
 			cd $LKP_SRC || exit
 			gem install bundler
-			bundle install
+			bundle_install
 		)
 	fi
 
