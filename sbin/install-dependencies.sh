@@ -66,6 +66,8 @@ run()
 
 	install_gem_pkg
 
+	make -C bin/event wakeup
+
 	$SUDO $LKP_SRC/bin/lkp install
 }
 
@@ -78,5 +80,18 @@ export CCI_REPOS=$(dirname $PWD)
 export PATH=\$PATH:\$LKP_SRC/sbin:\$LKP_SRC/bin"
 }
 
+symlink_lkp()
+{
+	if [[ $(id -u) = 0 && "${LKP_SRC}" != "${LKP_SRC#/root}" ]]; then
+		local target_dir_bin=/usr/local/bin	# global install
+	else
+		local target_dir_bin=${HOME}/bin
+	fi
+
+	mkdir -p $target_dir_bin
+	ln -sf $LKP_SRC/bin/lkp $target_dir_bin/lkp
+}
+
 run
 set_env
+symlink_lkp

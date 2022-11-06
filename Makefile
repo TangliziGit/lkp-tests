@@ -1,19 +1,9 @@
-ifeq ($(TARGET_DIR_BIN), )
-    TARGET_DIR_BIN := /usr/local/bin
-endif
+all: install
 
-ifneq ($(shell whoami), root)
-    TARGET_DIR_BIN := $${HOME}/bin
-endif
-
-all: subsystem install
-
-subsystem:
+wakeup:
 	$(MAKE) -C bin/event wakeup
 
 install:
-	mkdir -p $(TARGET_DIR_BIN)
-	ln -sf $(shell pwd)/bin/lkp $(TARGET_DIR_BIN)/lkp
 	bash sbin/install-dependencies.sh
 
 .PHONY: doc
