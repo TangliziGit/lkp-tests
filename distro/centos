@@ -7,21 +7,6 @@ shopt -s nullglob
 . $LKP_SRC/distro/package-manager/dnf
 . $LKP_SRC/lib/debug.sh
 
-support_repo_epel()
-{
-	[ ${DISTRO^^} == "CENTOS" ] || return 0
-
-	if ! rpm -q epel-release >/dev/null; then
-		yum install -y epel-release >/dev/null 2>&1
-	fi
-
-	if [ ${DISTRO^^} == "OPENEULER" ]; then
-		yum makecache timer >/dev/null
-	else
-		yum makecache fast >/dev/null
-	fi
-}
-
 distro_install_depends()
 {
 	local script
