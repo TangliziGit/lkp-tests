@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
-LKP_SRC=$(dirname $SCRIPT_DIR)
+export LKP_SRC=$(dirname $SCRIPT_DIR)
 
 . $LKP_SRC/lib/env.sh
 . $LKP_SRC/distro/common
@@ -65,6 +65,8 @@ run()
 	fi
 
 	install_gem_pkg
+
+	$SUDO $LKP_SRC/bin/lkp install
 }
 
 set_env()
