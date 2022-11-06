@@ -12,7 +12,7 @@ REMOVE=0
 . $LKP_SRC/lib/lkp_path.sh
 
 : "${PACMAN:=$0}"
-: "${BUILDDIR:=$LKP_SRC/tmp-pkg}"
+: "${BUILDDIR:=$HOME/.cache/lkp-tests/pkg-builddir}"
 : "${PKGEXT:=tar.gz}"
 : "${DBFILE:=$BUILDDIR/installed}"
 export PACMAN BUILDDIR PKGEXT DBFILE
