@@ -10,7 +10,7 @@ ospkg_install()
 	local pkg nopkgs err
 	for pkg
 	do
-		nopkgs=$(rpm --quiet --query $pkg | awk '{print $2}')
+		nopkgs=$(rpm --query $pkg | awk '{print $2}')
 		[[ -n $nopkgs ]] || continue
 		$SUDO zypper -q install -y $nopkgs || err=$?
 	done
