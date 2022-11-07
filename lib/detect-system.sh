@@ -238,6 +238,11 @@ detect_system()
 
 get_system_arch()
 {
-	detect_system_arch
+	if [[ -n "$1" ]]; then
+		# this may fail if file/readelf is not installed
+		detect_system_arch $1
+	else
+		_system_arch=$(command arch)
+	fi
 	echo $_system_arch
 }
