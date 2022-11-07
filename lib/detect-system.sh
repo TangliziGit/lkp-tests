@@ -187,19 +187,6 @@ detect_system()
 		_system_name="Fedora"
 		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9]+' ${rootfs}/etc/fedora-release | head -n 1)"
 	elif
-		[ -f ${rootfs}/etc/redhat-release ] && [ ! -f ${rootfs}/etc/oracle-release ]
-	then
-		_system_name="$(
-		GREP_OPTIONS="" \command \grep -Eo 'CentOS|ClearOS|Mageia|PCLinuxOS|Scientific|ROSA Desktop|OpenMandriva' ${rootfs}/etc/redhat-release 2>/dev/null | \command \head -n 1 | \command \sed "s/ //"
-		)"
-		_system_name="${_system_name:-RedHat}"
-		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/redhat-release  | \command \awk -F. 'NR==1{print $1}' | head -n 1)"
-	elif
-		[ -f ${rootfs}/etc/centos-release ]
-	then
-		_system_name="CentOS"
-		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/centos-release  | \command \awk -F. '{print $1}' | head -n 1)"
-	elif
 		[ -f ${rootfs}/etc/oracle-release ]
 	then
 		_system_name="Oracle"
@@ -216,6 +203,25 @@ detect_system()
 	then
 		_system_name="openEuler"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
+	elif
+		[ -f ${rootfs}/etc/os-release ] &&
+			GREP_OPTIONS="" \command \grep "ID=\"anolis\"" ${rootfs}/etc/os-release >/dev/null
+	then
+		_system_name="anolis"
+		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
+	elif
+		[ -f ${rootfs}/etc/redhat-release ] && [ ! -f ${rootfs}/etc/oracle-release ]
+	then
+		_system_name="$(
+		GREP_OPTIONS="" \command \grep -Eo 'CentOS|ClearOS|Mageia|PCLinuxOS|Scientific|ROSA Desktop|OpenMandriva' ${rootfs}/etc/redhat-release 2>/dev/null | \command \head -n 1 | \command \sed "s/ //"
+		)"
+		_system_name="${_system_name:-RedHat}"
+		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/redhat-release  | \command \awk -F. 'NR==1{print $1}' | head -n 1)"
+	elif
+		[ -f ${rootfs}/etc/centos-release ]
+	then
+		_system_name="CentOS"
+		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/centos-release  | \command \awk -F. '{print $1}' | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/os-release ]
 	then
