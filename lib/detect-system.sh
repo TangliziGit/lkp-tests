@@ -210,6 +210,12 @@ detect_system()
 		_system_name="anolis"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
 	elif
+		[ -f ${rootfs}/etc/os-release ] &&
+			GREP_OPTIONS="" \command \grep "ID=\"rocky\"" ${rootfs}/etc/os-release >/dev/null
+	then
+		_system_name="rocky"
+		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
+	elif
 		[ -f ${rootfs}/etc/redhat-release ] && [ ! -f ${rootfs}/etc/oracle-release ]
 	then
 		_system_name="$(

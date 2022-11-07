@@ -3,6 +3,12 @@
 # $ docker run -ti -v /c/lkp-tests:/c/lkp-tests ubuntu:22.04 bash
 # root@4f87b1825220:/# cd /c/lkp-tests/
 # root@4f87b1825220:/c/lkp-tests# sbin/add-distro-packages.sh
+#
+# You may need enable more repos
+# For oracle/rocky etc.
+# # sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/*
+# For debian,
+# # sed -i 's/main$/main non-free contrib/' /etc/apt/sources.list
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 export LKP_SRC=$(dirname $SCRIPT_DIR)
