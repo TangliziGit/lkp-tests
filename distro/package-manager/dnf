@@ -20,16 +20,15 @@ ospkg_install()
 
 support_repo_epel()
 {
-	[ ${DISTRO^^} == "CENTOS" ] || return 0
+	[ ${_system_name_lowercase} == "centos" ] || return 0
 
 	if ! rpm -q epel-release >/dev/null; then
 		yum install -y epel-release >/dev/null 2>&1
 	fi
 
-	if [ ${DISTRO^^} == "OPENEULER" ]; then
+	if [ ${_system_name_lowercase} == "openeuler" ]; then
 		yum makecache timer >/dev/null
 	else
 		yum makecache fast >/dev/null
 	fi
 }
-
