@@ -19,3 +19,8 @@ ospkg_install()
 	return $err
 }
 
+ospkg_list()
+{
+	pacman -Ss | grep -E -o '^[a-z]+/[^ ]+' | cut -f2 -d/ |
+		grep -v -E '\-(docs)$' | sort -u
+}

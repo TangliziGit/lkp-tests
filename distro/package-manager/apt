@@ -28,3 +28,9 @@ ospkg_install()
 
 	return $err
 }
+
+ospkg_list()
+{
+	apt list 2>/dev/null | awk -F/ '/\// { print $1 }' |
+		grep -v '\-doc$' | sort -u
+}

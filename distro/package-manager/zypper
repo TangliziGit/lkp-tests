@@ -17,3 +17,9 @@ ospkg_install()
 
 	return $err
 }
+
+ospkg_list()
+{
+	zypper packages | cut -f3 -d'|' | tr -d ' '| grep -A99999 '^[0-9]' |
+		grep -v -E '\-(doc|help|debuginfo|debugsource)$' | sort -u
+}

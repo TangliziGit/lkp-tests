@@ -18,6 +18,12 @@ ospkg_install()
 	return $err
 }
 
+ospkg_list()
+{
+	dnf list --all -q | cut -f1 -d. |
+		grep -v -E '\-(doc|help|debuginfo|debugsource)$' | sort -u
+}
+
 support_repo_epel()
 {
 	[ ${_system_name_lowercase} == "centos" ] || return 0
