@@ -1,0 +1,184 @@
+apache2: httpd
+apt-file:
+arping: iputils
+autopoint: gettext
+autotools-dev: autoconf
+bind9: bind
+binutils-dev: binutils-devel
+build-essential: make automake gcc gcc-c++ kernel-devel rpm-build
+cgroup-tools: libcgroup-tools
+cron: cronie
+dpkg-dev: dpkg-devel
+exfat-fuse: exfatprogs
+freeglut3: freeglut
+fsmark: fs_mark
+gdbserver: gdb-gdbserver
+gfortran: gcc-gfortran
+install-info: info
+iozone3:
+iproute2: iproute
+junit4: junit
+klibc-utils:
+llvm-dev: llvm-devel
+libacl1-dev: libacl-devel
+libaio1: libaio
+libaio-dev: libaio-devel
+libarchive13: libarchive
+libarchive-dev: libarchive-devel
+libattr1: libattr
+libattr1-dev: libattr-devel
+libaudit-dev: audit-libs-devel
+libblas3: blas
+libblkid-dev: libblkid-devel
+libc6-dev-x32:
+libcairo2-dev: cairo-devel
+libcap2: libcap
+libcap-dev: libcap-devel
+libcap-ng-dev: libcap-ng-devel
+libcunit1-dev: CUnit-devel
+libconfig-dev: libconfig-devel
+libdbd-mysql-perl: libdbi-dbd-mysql
+libdbi-perl: perl-DBI
+libdbus-1-dev: dbus-devel
+libdrm-dev: libdrm-devel
+libdw-dev: elfutils-devel
+libegl1-mesa-dev: mesa-libEGL-devel
+libelf1: elfutils-libelf
+libelf-dev: elfutils-devel
+libedit-dev: libedit-devel
+libexpat1-dev: expat-devel
+libevent-dev: libevent-devel
+libfabric-dev: libfabric-devel
+libffi-dev: libffi-devel
+libfdt-dev: libfdt-devel
+libfuse-dev: fuse-devel
+libgbm-dev: mesa-libgbm-devel
+libgmp-dev: gmp-devel
+libgl1-mesa-dev: mesa-libGL-devel
+libglib2.0-0: glib
+libglib2.0-dev: glib2-devel
+libgomp1: libgomp
+libgoogle-perftools-dev: gperftools-devel
+libhwloc-dev: hwloc-devel
+libiberty-dev: binutils-devel
+libjson-c-dev: json-c-devel
+libjpeg-dev: libjpeg-turbo-devel
+libklibc-dev:
+libkmod2: kmod-libs
+libkmod-dev: kmod-devel
+liblzma-dev: xz-devel
+libldap2-dev: openldap-devel
+libmnl-dev: libmnl-devel
+libncurses5-dev: ncurses-devel
+libnl-3-200: libnl3
+libnl-3-dev: libnl3-devel
+libnl-genl-3-200: libnl3
+libnl-genl-3-dev: libnl3-devel
+libnl-route-3-dev: libnl3-devel
+libntfs-3g883: ntfs-3g
+libnuma1: numactl
+libnuma-dev: numactl-devel
+liboath-dev: liboath-devel
+liboop-dev:
+libopencryptoki0: opencryptoki-libs
+libpcap0.8-dev: libpcap-devel
+libpcap0.8: libpcap
+libpcap-dev: libpcap-devel
+libpciaccess-dev: libpciaccess-devel
+libperl5.32: perl-libs
+libpixman-1-dev: pixman-devel
+libpopt0: popt
+libpopt-dev: popt-devel
+libreadline-dev: compat-readline5-devel
+libsctp1: lksctp-tools
+libsctp-dev: lksctp-tools-devel
+libseccomp2: libseccomp
+libselinux1:
+libsqlite3-dev: libsqlite3x-devel
+libssl1.1: openssl-devel
+libssl-dev: openssl-devel
+libsnappy-dev: snappy-devel
+libtool-bin: libtool
+libudev1: systemd-libs
+libudev-dev: systemd-devel
+libunwind-dev: libunwind-devel
+libuuid1: libuuid
+libuv1-dev: libuv-devel
+libvirt-dev: libvirt-devel
+libvirt-daemon-system: libvirt-client libvirt-daemon
+libvirt-clients: libvirt-client
+libx11-xcb-dev: libX11-devel
+libxml2-dev: libxml2-devel
+libyaml-dev: libyaml-devel
+libyaml-cpp-dev: yaml-cpp-devel
+linux-base:
+linux-libc-dev: kernel-headers
+linux-perf: perf
+ncurses-bin: ncurses
+netcat-openbsd: nmap-ncat
+network-manager: NetworkManager
+nfs-common: nfs-utils
+nfs-kernel-server: nfs-utils
+openbsd-inetd: xinetd
+perl-base: perl
+perl-modules-5.32: perl
+pkg-config: pkgconf-pkg-config
+plzip:
+postmark:
+rstatd: rusers-server
+rusersd: rusers-server
+rt-tests: numactl-devel
+ruby-dev: ruby-devel
+sg3-utils: sg3_utils
+tshark: wireshark
+uuid-dev: libuuid-devel
+update-inetd:
+uuid-runtime: util-linux
+wpasupplicant: wpa_supplicant
+xfslibs-dev: xfsprogs-devel
+xinit: xorg-x11-xinit
+xorg:
+xsltproc: libxslt
+xutils-dev: imake
+xz-utils: xz
+zlib1g: zlib
+zlib1g-dev: zlib-devel
+protobuf-compiler: protobuf
+locales: glibc-common
+libprotobuf-dev: protobuf-devel
+libpmem1: libpmem
+libpmem-dev: libpmem-devel
+openjdk-11-jdk: java-11-openjdk
+libunwind8: libunwind
+libipc-run-perl: perl-IPC-Run
+libapparmor1:
+libapparmor-dev:
+libasound2-dev: alsa-lib-devel
+libbsd0: libbsd
+libbsd-dev: libbsd-devel
+libgcrypt20: libgcrypt
+libgcrypt20-dev: libgcrypt-devel
+libgdbm-dev: gdbm-devel
+libipsec-mb-dev:
+libkeyutils1: keyutils-libs
+libkeyutils-dev: keyutils-libs-devel
+libbz2-dev: bzip2-devel
+libzstd-dev: libzstd-devel
+libtirpc-dev: libtirpc-devel
+libbabeltrace-dev: libbabeltrace-devel
+libbabeltrace-ctf-dev: libbabeltrace-devel
+libgtk2.0-dev: gtk2-devel
+libperl-dev: perl-devel
+libslang2-dev: slang-devel
+libmariadb3: mariadb-connector-c
+libmount-dev: libmount-devel
+python3-dev: python3-devel
+systemtap-sdt-dev: systemtap-sdt-devel
+initramfs-tools:
+init-system-helpers:
+network-manager: NetworkManager
+javahelper:
+junit4: junit
+linux-base:
+openssh-client: openssh-clients
+libpython3.9: python3-libs

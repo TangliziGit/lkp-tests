@@ -1,0 +1,70 @@
+apache2: apache
+apt-file: pkgfile
+autotools-dev: autoconf
+binutils-dev: binutils
+libarchive-tools:
+cgroup-tools: cgmanager
+dpkg-dev: dpkg
+freeglut3: freeglut
+iozone3: iozone
+klibc-utils:
+libarchive13: libarchive
+libacl1-dev: acl
+libaio1: libaio
+libaio-dev: libaio
+libattr1-dev: attr
+libc6-dev: glibc
+libdrm-dev: libdrm
+libgles2-mesa: mesa
+libglib2.0-0: glib2
+libhwloc-dev: hwloc
+libiberty-dev:
+libklibc-dev:
+libnl-3-200: libnl
+libnl-3-dev: libnl
+libnl-genl-3-200: libnl
+libnl-genl-3-dev: libnl
+libnuma1: numactl
+liboop-dev: liboop
+libpcap0.8-dev: libpcap
+libpcap0.8: libpcap
+libperl5.32:
+libpopt0: popt
+libpopt-dev: popt
+libsctp-dev: lksctp-tools
+libsqlite3-dev: sqlite
+libssl-dev: openssl
+libx11-xcb-dev: libx11
+linux-libc-dev:
+ncurses-bin: ncurses
+netpipe-lam: netpipe
+netpipe-mpich2: netpipe
+netpipe-openmpi: netpipe
+netpipe-pvm: netpipe
+netpipe-tcp: netpipe
+nfs-common: nfs-utils
+nfs-kernel-server: nfs-utils
+perl-base:
+perl-modules-5.32: perl-module-build
+python3-minimal: python
+qemu-system-x86: qemu-base
+ruby-gnuplot:
+sg3-utils: sg3_utils
+xfslibs-dev: xfsprogs
+xinit: xorg-xinit
+xsltproc: libxslt
+xutils-dev: imake
+xz-utils: xz
+libtirpc3: libtirpc
+initramfs-tools:
+openssh-server: openssh
+openssh-client: openssh
+autopoint: gettext
+g++: gcc
+libarchive13: libarchive
+libbz2-1.0: bzip2
+libssl1.1: openssl
+libtool-bin: libtool
+linux-perf: perf
+ruby-dev: ruby
+libtirpc-dev:
