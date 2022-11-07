@@ -22,7 +22,7 @@ metadata:
 
 type: workload
 depends:
-        debian:
+        debian@11:
                 autoconf
                 libpcre3-dev
                 libevent-dev

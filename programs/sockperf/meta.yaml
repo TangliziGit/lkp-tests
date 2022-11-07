@@ -11,7 +11,7 @@ metadata:
 
 type: workload
 depends:
-        debian: sockperf
+        debian@11: sockperf
 params:
         runtime:
                 type: timedelta

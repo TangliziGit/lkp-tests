@@ -14,8 +14,8 @@ metadata:
 
 type: monitor
 depends:
-        openeuler: perf
-        debian: linux-perf
+        openeuler@20.03: perf
+        debian@11: linux-perf
 params:
     event:
                 doc: "[ldlat-loads|ldlat-stores] :: PMU event :: All as default"
