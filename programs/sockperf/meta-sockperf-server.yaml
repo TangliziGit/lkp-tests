@@ -1,5 +1,5 @@
 metadata:
-        name: sockperf
+        name: sockperf-server
         summary: Network benchmarking utility for testing latency and throughput
         description: |
          sockperf is a network benchmarking utility over socket API that was
