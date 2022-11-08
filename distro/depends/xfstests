@@ -9,12 +9,12 @@ quota
 sed
 fio
 libaio1
-libreadline5
+libreadline8
 e2fsprogs
 btrfs-progs
 indent
 lvm2
-libssl
+libssl1.1
 dump
 file
 libgdbm-dev

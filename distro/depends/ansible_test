@@ -1,5 +1,5 @@
 python3-pip
 gcc
-python3-devel
-libffi-devel
-openssl-devel
+python3-dev
+libffi-dev
+libssl-dev

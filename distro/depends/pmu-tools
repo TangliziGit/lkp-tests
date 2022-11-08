@@ -5,6 +5,6 @@ libzstd-dev
 default-jdk
 libdw1
 libunwind8
-libpython3.7
+libpython3.9
 libbinutils
 libbabeltrace-ctf1

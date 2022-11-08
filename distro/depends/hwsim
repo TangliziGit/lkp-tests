@@ -16,15 +16,12 @@ libnl-genl-3-dev
 libconfig-dev
 iproute2
 python3-openssl
-python-gobject
 python3-gi
 python3-gi-cairo
-gtk3
 python3-dbus
 wpasupplicant
 crda
 wireless-regdb
-libevent-2
 python3-netifaces
 openssl
 tcpdump
@@ -36,6 +33,5 @@ net-tools
 libxml2-dev
 libcurl4-gnutls-dev
 python3
-python3-crypto
 python3-pyrad
 python3-six

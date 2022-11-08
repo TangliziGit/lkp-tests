@@ -1,6 +1,6 @@
 make
 gcc
-libc-dev
+libc6-dev
 net-tools
 libtirpc-dev
 linux-base

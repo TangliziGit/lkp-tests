@@ -26,7 +26,7 @@ libarchive-tools: libarchive bsdtar
 libarchive13: libarchive
 libasound2-dev: alsa-lib-devel
 libattr1-dev: libattr-devel
-libattr1: libattr
+libattr1: attr
 libaudit-dev: audit-devel
 libbabeltrace-ctf-dev: libbabeltrace-devel
 libbz2-dev: bzip2-devel
@@ -41,8 +41,8 @@ libcap2: libcap
 libclang-dev: clang-devel
 libconfig-dev: libconfig-devel
 libcunit1-dev: CUnit-devel
-libcurl4-gnutls-dev: curl-devel
-libcurl4-openssl-dev: curl-devel
+libcurl4-gnutls-dev: libcurl-devel
+libcurl4-openssl-dev: libcurl-devel
 libdbd-mysql-perl: perl-DBD-MySQL
 libdbi-perl: perl-DBI
 libdbus-1-dev: dbus-devel
@@ -70,7 +70,7 @@ libgflags-dev: gflags-devel
 libgfrpc0: glusterfs
 libgfxdr0: glusterfs
 libgl1-mesa-dev: mesa-libGL-devel
-libgles2-mesa: mesa-libGLES
+libgles2-mesa: 
 libglib2.0-0: glib
 libglib2.0-dev: glib2-devel
 libglusterfs0: glusterfs
@@ -97,7 +97,6 @@ libkeyutils-dev: keyutils-libs-devel
 libkeyutils1: keyutils-libs
 libkmod-dev: kmod-devel
 libkmod2: kmod-libs
-libkrb5-dbg: krb5-debuginfo
 libldap-2.4-2: openldap
 libldap2-dev: openldap-devel
 libleveldb-dev: leveldb-devel
@@ -193,7 +192,7 @@ nfs-kernel-server: nfs-utils
 nilfs-tools: nilfs-utils
 openbsd-inetd: xinetd
 perl-base: perl
-pkg-config: pkgconfig
+pkg-config: pkgconf
 python3-openssl: python3-pyOpenSSL
 python3-all-dev: python3-devel
 python3-dev: python3-devel
@@ -211,7 +210,6 @@ tshark: wireshark
 update-inetd: xinetd
 uuid-dev: uuid-devel
 uuid-runtime: uuid
-wireless-regdb: crda
 wireshark-common: wireshark
 wpasupplicant: wpa_supplicant
 xfslibs-dev: xfsprogs-devel
@@ -220,7 +218,7 @@ xutils-dev: imake xorg-x11-util-macros
 xz-utils: xz
 zlib1g-dev: zlib-devel
 zlib1g: zlib
-default-jdk: java-1.8.0-openjdk-devel
+default-jdk: java-latest-openjdk
 libv4l-dev: v4l-utils-devel
 docker.io: docker-engine
 gengetopt: gnu-getopt
@@ -253,8 +251,10 @@ gdbserver: gdb-gdbserver
 init-system-helpers:
 javahelper:
 lsb-release:
-openjdk-17-jdk: java-1.8.0-openjdk
+openjdk-17-jdk: java-11-openjdk
 ruby-full: ruby ruby-devel rubygem-rdoc
 linux-base:
 openssh-server: openssh
 openssh-client: openssh openssh-clients
+debianutils: which
+libjson11-1: json-lib

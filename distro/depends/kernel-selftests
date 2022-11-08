@@ -4,8 +4,6 @@ gcc-multilib
 libbpf-dev
 libc6-dev
 libc-bin
-libc6/unstable
-libc6-dev
 rsync
 make
 libcap-ng-dev
@@ -46,14 +44,14 @@ sendip
 ipvsadm
 libmnl-dev
 libkeyutils-dev
-lib64gcc1 (i386)
-lib64gomp1 (i386)
-lib64itm1 (i386)
-lib64atomic1 (i386)
-lib64asan3 (i386)
-libc6-amd64 (i386)
-libc6-dev-amd64 (i386)
-lib64gcc-dev (i386)
+lib64gcc1:i386
+lib64gomp1:i386
+lib64itm1:i386
+lib64atomic1:i386
+lib64asan3:i386
+libc6-amd64:i386
+libc6-dev-amd64:i386
+lib64gcc-dev:i386
 python3-docutils
 jq
 socat

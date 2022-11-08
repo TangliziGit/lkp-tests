@@ -45,8 +45,8 @@ make
 automake
 udisks2
 dosfstools
-exfat-fuse/unstable
-exfat-utils/unstable
+exfat-fuse
+exfat-utils
 libntfs-3g883
 ntfs-3g
 ethtool

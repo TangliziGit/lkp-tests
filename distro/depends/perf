@@ -3,5 +3,5 @@ linux-perf
 libunwind8
 libzstd-dev
 numactl
-libpython3.7
+libpython3.9
 python3-setuptools

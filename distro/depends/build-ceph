@@ -5,13 +5,11 @@ btrfs-progs
 cmake
 cpio
 cryptsetup-bin
-cython
 cython3
 debhelper
 default-jdk
 dh-exec
 dh-python
-dh-systemd
 gdisk
 git
 gperf

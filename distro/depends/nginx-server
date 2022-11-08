@@ -1,5 +1,4 @@
 gcc
-glibc
 ethtool
 libssl-dev
 zlib1g-dev

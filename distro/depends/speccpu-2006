@@ -1,8 +1,8 @@
 wget
 gcc
-gcc-c++
+g++
 make
 numactl
-gcc-gfortran
-libnsl
+gfortran
+libnsl2
 tar
