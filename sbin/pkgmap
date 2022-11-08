@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require "#{LKP_SRC}/lib/pkgmap"
+require 'optparse'
+require 'ostruct'
+
+opt_from_os = nil
+opt_to_os = nil
+
+options = OptionParser.new do |opts|
+  opts.banner = 'Usage:
+    pkgmap --to-os=xxx@ver:arch --from-os=yyy@ver:arch PKGS...
+    pkgmap --to-os=xxx@ver:arch SCRIPTS...
+
+Example:
+    pkgmap --to-os=openeuler@22.03:aarch64 --from-os=debian@11 util-linux linux-perf
+    pkgmap --to-os=openeuler@22.03:aarch64 stream
+  '
+
+  opts.separator ''
+  opts.separator 'options:'
+
+  opts.on('--from-os OS', 'source OS') do |os_spec|
+    opt_from_os = os_spec
+  end
+
+  opts.on('--to-os OS', 'target OS') do |os_spec|
+    opt_to_os = os_spec
+  end
+
+  opts.on_tail('-h', '--help', 'show this message') do
+    puts opts
+    exit
+  end
+end
+
+options.parse!(ARGV)
+
+if ARGV.size.zero?
+  puts options
+  exit
+end
+
+package_mapper = PackageMapper.new
+
+if opt_from_os
+  show_hset package_mapper.map_pkgs(ARGV, opt_from_os, opt_to_os)
+  exit
+end
+
+show_hset package_mapper.map_programs(ARGV, opt_to_os)
