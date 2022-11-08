@@ -1,0 +1,26 @@
+#!/bin/bash
+
+[ -n "$LKP_SRC" ] || export LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
+
+cd "$LKP_SRC" || exit
+
+for program
+do
+	mkdir -p programs/$program/jobs
+	git mv tests/$program.yaml programs/$program/meta.yaml
+	git mv tests/$program programs/$program/run
+	git mv stats/$program programs/$program/parse
+	git mv jobs/$program*.yaml programs/$program/jobs/
+	cat >> link <<-EOF
+	ln -s ../programs/$program/run tests/$program
+	git add tests/$program
+	ln -s ../programs/$program/parse stats/$program
+	git add stats/$program
+	EOF
+	test -d pkg/$program && {
+		git mv pkg/$program/PKGBUILD programs/$program/PKGBUILD
+		git mv pkg/$program/* programs/$program/
+		rmdir pkg/$program
+	}
+	git commit -a -m "tests/$program: move to new layout" || exit
+done
