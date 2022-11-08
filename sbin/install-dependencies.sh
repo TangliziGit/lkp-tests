@@ -5,6 +5,8 @@ export LKP_SRC=$(dirname $SCRIPT_DIR)
 
 . $LKP_SRC/lib/env.sh
 . $LKP_SRC/distro/common
+. $LKP_SRC/lib/detect-system.sh
+detect_system
 
 # choose install function base on common Package Manager
 linux_dep()
