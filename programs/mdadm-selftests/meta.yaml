@@ -1,0 +1,10 @@
+metadata:
+  name: mdadm-selftests
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  test_prefix:
+results:
