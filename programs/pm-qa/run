@@ -1,6 +1,8 @@
 #!/bin/sh
 # - test
 
+xinitrc=$LKP_SRC/programs/pm-qa/pm-qa.xinitrc
+
 if [ "$test" = "all" ] || [ "$test" = "thermal" ]; then
 	mkdir -p		/tmp/.X11-unix
 	chmod 1777		/tmp/.X11-unix
@@ -10,7 +12,7 @@ if [ "$test" = "all" ] || [ "$test" = "thermal" ]; then
 	[ -e $BENCHMARK_ROOT/pm-qa/thermal/thermal_03.sh ] && sed -i -e '/\$CPU_HEAT_BIN/a sleep 3' $BENCHMARK_ROOT/pm-qa/thermal/thermal_03.sh
 	[ -e $BENCHMARK_ROOT/pm-qa/thermal/thermal_06.sh ] && sed -i -e '/\$CPU_HEAT_BIN/a sleep 3' $BENCHMARK_ROOT/pm-qa/thermal/thermal_06.sh
 
-	xinit $LKP_SRC/tests/pm-qa.xinitrc
+	xinit $xinitrc
 else
-	$LKP_SRC/tests/pm-qa.xinitrc
+	$xinitrc
 fi
