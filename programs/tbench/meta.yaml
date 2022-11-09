@@ -1,0 +1,11 @@
+metadata:
+  name: tbench
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+  nr_threads:
+results:
