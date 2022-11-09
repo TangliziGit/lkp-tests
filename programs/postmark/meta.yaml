@@ -8,6 +8,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  debian@11:
+  - postmark
 params:
   number:
   trans:

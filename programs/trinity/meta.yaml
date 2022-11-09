@@ -33,7 +33,9 @@ metadata:
     order of the syscall table.
   homepage: http://codemonkey.org.uk/projects/trinity/
 type: workload
-depends: {}
+depends:
+  debian@11:
+  - trinity
 params:
   runtime:
   seed:

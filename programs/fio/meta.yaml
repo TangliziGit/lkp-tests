@@ -9,5 +9,7 @@ metadata:
   homepage: https://github.com/axboe/fio
 type: workload
 depends:
+  openeuler@20.03:
+  - fio
 params:
 results:

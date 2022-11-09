@@ -7,6 +7,8 @@ metadata:
   homepage: https://svn.netlabs.org/kbuild
 type: workload
 depends:
+  debian@11:
+  - kbuild
 params:
   nr_task:
   runtime:

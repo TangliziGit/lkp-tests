@@ -9,7 +9,9 @@ metadata:
     simulating mail servers and other setups.
   homepage: https://sourceforge.net/projects/fsmark/
 type: workload
-depends: {}
+depends:
+  debian@11:
+  - fsmark
 params:
   nr_threads:
     doc: number of processes to write concurrently

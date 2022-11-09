@@ -10,6 +10,8 @@ metadata:
   homepage: https://github.com/ColinIanKing/stress-ng
 type: workload
 depends:
+  debian@11:
+  - stress-ng
 params:
   testtime:
   class:

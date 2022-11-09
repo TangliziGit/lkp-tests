@@ -10,6 +10,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  debian@11:
+  - nuttcp
 params:
   runtime:
 results:

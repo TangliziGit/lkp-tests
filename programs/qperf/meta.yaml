@@ -15,7 +15,9 @@ metadata:
     found in the section, TESTS. A variety of options may also be specified.
   homepage: https://www.openfabrics.org/downloads/qperf/
 type: workload
-depends: {}
+depends:
+  openeuler@20.03:
+  - qperf
 params:
   runtime:
 results:
