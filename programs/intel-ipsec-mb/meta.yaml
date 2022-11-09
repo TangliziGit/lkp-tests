@@ -1,0 +1,14 @@
+metadata:
+  name: intel-ipsec-mb
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  algo:
+  arch:
+  job_size:
+  job_iter:
+  thread_count:
+results:
