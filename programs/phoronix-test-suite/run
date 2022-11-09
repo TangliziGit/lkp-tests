@@ -12,12 +12,14 @@
 ## platform available that provides an extensible framework for which new tests
 ## can be easily added.
 
+xinitrc=$LKP_SRC/programs/phoronix-test-suite/phoronix-test-suite.xinitrc
+
 if [ "$need_x" = true ]; then
 	mkdir -p		/tmp/.X11-unix
 	chmod 1777		/tmp/.X11-unix
 	chown root:root		/tmp/.X11-unix
 
-	xinit $LKP_SRC/tests/phoronix-test-suite.xinitrc
+	xinit $xinitrc
 else
-	$LKP_SRC/tests/phoronix-test-suite.xinitrc
+	$xinitrc
 fi
