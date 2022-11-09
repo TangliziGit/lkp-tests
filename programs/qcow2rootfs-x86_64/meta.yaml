@@ -1,0 +1,12 @@
+metadata:
+  name: qcow2rootfs-x86_64
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  rootfs_protocol:
+  rootfs_server:
+  rootfs_path:
+results:
