@@ -1,0 +1,10 @@
+metadata:
+  name: stutter
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  iterations:
+results:
