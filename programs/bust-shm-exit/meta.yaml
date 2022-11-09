@@ -1,0 +1,12 @@
+metadata:
+  name: bust-shm-exit
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+  segments:
+  nr_threads:
+results:
