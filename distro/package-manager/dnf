@@ -30,6 +30,5 @@ support_repo_epel()
 		yum install -y epel-release >/dev/null 2>&1
 	fi
 
-	yum -q makecache timer 2>/dev/null ||
-	yum -q makecache fast
+	yum -q makecache --timer
 }
