@@ -1,0 +1,23 @@
+metadata:
+  name: ycsb
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  nr_processes:
+  ip_addr:
+  n_recordcount:
+  n_operationcount:
+  is_readallfields:
+  n_readproportion:
+  n_updateproportion:
+  n_scanproportion:
+  n_insertproportion:
+  c_requestdistribution:
+  ycsb_cpu_node_bind:
+  ycsb_mem_node_bind:
+  nr_threads:
+  preload:
+results:
