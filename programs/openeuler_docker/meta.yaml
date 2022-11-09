@@ -1,0 +1,10 @@
+metadata:
+  name: openeuler_docker
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  dockerfile_url:
+results:
