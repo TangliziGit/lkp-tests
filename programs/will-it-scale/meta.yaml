@@ -25,6 +25,8 @@ depends:
   - python3-minimal
   - libhwloc-dev
   - linux-perf
+  PKGBUILD:
+  - will-it-scale
 params:
   runtime:
   test:

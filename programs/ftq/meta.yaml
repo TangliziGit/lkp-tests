@@ -37,7 +37,9 @@ metadata:
     where sophisticated analysis is possible depending on the desires of the user.
   homepage: https://github.com/rminnich/ftq
 type: workload
-depends: {}
+depends:
+  PKGBUILD:
+  - ftq
 params:
   nr_task:
   samples:

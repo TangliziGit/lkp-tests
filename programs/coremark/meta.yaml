@@ -6,7 +6,9 @@ metadata:
     (algo: CRC, list processing,\nmatric manipulation, state machine ) per second."
   homepage: https://www.eembc.org/coremark/
 type: workload
-depends: {}
+depends:
+  uos-rpm-e@20:
+  - coremark
 params: {}
 results:
   coremark:iterations_per_sec:

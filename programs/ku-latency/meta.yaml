@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - ku-latency
 params:
   runtime:
 results:

@@ -8,6 +8,8 @@ type: workload
 depends:
   debian@11:
   - libgomp1
+  PKGBUILD:
+  - perf-fuzzer
 params:
   runtime:
     doc: maximum running time of the test (seconds)

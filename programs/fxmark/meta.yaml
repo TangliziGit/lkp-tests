@@ -20,6 +20,8 @@ depends:
   - python3
   - sudo
   - dbench
+  PKGBUILD:
+  - fxmark
 params:
   disk:
   media:

@@ -5,5 +5,7 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - mysql-8-0-20
 params:
 results:

@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - test-tools
 params:
   testsuite:
   case:

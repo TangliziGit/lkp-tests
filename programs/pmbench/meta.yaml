@@ -11,6 +11,8 @@ depends:
   debian@11:
   - uuid-dev
   - libxml2-dev
+  PKGBUILD:
+  - pmbench
 params:
   runtime:
   mapsize:

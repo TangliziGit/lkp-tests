@@ -90,5 +90,7 @@ depends:
   - llvm-dev
   - attr
   - pesign
+  PKGBUILD:
+  - kernel-selftests
 params: {}
 results: {}

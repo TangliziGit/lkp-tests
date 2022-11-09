@@ -31,6 +31,8 @@ type: workload
 depends:
   debian@11:
   - libarchive-tools
+  PKGBUILD:
+  - linpack
 params:
   memory:
 results:

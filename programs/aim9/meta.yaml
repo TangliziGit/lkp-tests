@@ -10,7 +10,9 @@ metadata:
     published under the "non-audited" clause.
   homepage: https://sourceforge.net/projects/aimbench/files/aim-suite9/
 type: workload
-depends: {}
+depends:
+  PKGBUILD:
+  - aim9
 params:
   test:
     doc: micro test name

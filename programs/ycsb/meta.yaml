@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - ycsb
 params:
   nr_processes:
   ip_addr:

@@ -1,35 +1,31 @@
 metadata:
-        name: memtier
-        summary: >
-          memtier_benchmark is a command line utility developed by Redis Labs
-          (formerly Garantia Data Ltd.) for load generation and bechmarking NoSQL
-          key-value databases.
+  name: memtier
+  summary: memtier_benchmark is a command line utility developed by Redis Labs (formerly
+    Garantia Data Ltd.) for load generation and bechmarking NoSQL key-value databases.
+  description: |
+    memtier_benchmark is a command line utility developed by Redis Labs
+    (formerly Garantia Data Ltd.) for load generation and bechmarking NoSQL
+    key-value databases. It offers the following:
 
-        description: |
-          memtier_benchmark is a command line utility developed by Redis Labs
-          (formerly Garantia Data Ltd.) for load generation and bechmarking NoSQL
-          key-value databases. It offers the following:
-
-            * Support for both Redis and Memcache protocols (text and binary)
-            * Multi-threaded multi-client execution
-            * Multiple configuration options, including:
-            * Read:Write ratio
-            * Random and sequential key name pattern policies
-            * Random or ranged key expiration
-            * Redis cluster
-            * ...and much more
-
-        homepage: https://github.com/RedisLabs/memtier_benchmark
-
+      * Support for both Redis and Memcache protocols (text and binary)
+      * Multi-threaded multi-client execution
+      * Multiple configuration options, including:
+      * Read:Write ratio
+      * Random and sequential key name pattern policies
+      * Random or ranged key expiration
+      * Redis cluster
+      * ...and much more
+  homepage: https://github.com/RedisLabs/memtier_benchmark
 type: workload
 depends:
-        debian@11:
-                autoconf
-                libpcre3-dev
-                libevent-dev
-                pkg-config
-                zlib1g-dev
-
+  debian@11:
+  - autoconf
+  - libpcre3-dev
+  - libevent-dev
+  - pkg-config
+  - zlib1g-dev
+  PKGBUILD:
+  - memtier
 params:
   n_ratio:
   data_size:
@@ -38,7 +34,6 @@ params:
   key_max:
   n_client:
   n_pipeline:
-
 results:
   preload_duration:
   total_sets_ops/s:
@@ -76,9 +71,8 @@ results:
   get_latency_95%_ms:
   get_latency_99%_ms:
   get_latency_99.9%_ms:
-
 ignoreStderr: |
-        \[RUN #[0-9]+\] Preparing benchmark client...
-        \[RUN #[0-9]+\] Launching threads now...
-        \[RUN *.*msec latency.*
-        modprobe: FATAL: Module dax_pmem_compat is in use.
+  \[RUN #[0-9]+\] Preparing benchmark client...
+  \[RUN #[0-9]+\] Launching threads now...
+  \[RUN *.*msec latency.*
+  modprobe: FATAL: Module dax_pmem_compat is in use.

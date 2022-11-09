@@ -13,5 +13,7 @@ depends:
   - libboundscheck
   - libpcap
   - gazelle
+  PKGBUILD:
+  - mysql-baseline
 params:
 results:

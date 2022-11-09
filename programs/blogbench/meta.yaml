@@ -40,7 +40,9 @@ metadata:
     amount of time on these filesystems.
   homepage: https://www.pureftpd.org/project/blogbench
 type: workload
-depends: {}
+depends:
+  opensuse-leap@15.2:
+  - blogbench
 params: {}
 results:
   write_score:

@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - bust-shm-exit
 params:
   runtime:
   segments:

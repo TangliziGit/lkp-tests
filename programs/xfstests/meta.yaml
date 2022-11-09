@@ -53,6 +53,8 @@ depends:
   - udftools
   - ocfs2-tools
   - duperemove
+  PKGBUILD:
+  - xfstests
 params:
   test:
 results: {}

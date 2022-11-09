@@ -76,6 +76,8 @@ depends:
   - numactl
   - xfsprogs
   - lsof
+  PKGBUILD:
+  - vm-scalability
 params:
   runtime:
   nr_task:

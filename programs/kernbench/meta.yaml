@@ -42,6 +42,8 @@ depends:
   - libmpfr6
   - libgmp10
   - libsigsegv2
+  PKGBUILD:
+  - kernbench
 params:
   nr_loops:
   nr_threads:

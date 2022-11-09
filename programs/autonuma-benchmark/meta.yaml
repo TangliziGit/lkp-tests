@@ -13,6 +13,8 @@ depends:
   - libc6-dev
   - gnuplot
   - gawk
+  PKGBUILD:
+  - autonuma-benchmark
 params:
   test:
 results:

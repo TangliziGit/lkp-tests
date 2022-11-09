@@ -17,6 +17,8 @@ type: workload
 depends:
   debian@11:
   - libnuma1
+  PKGBUILD:
+  - pft
 params:
   memory:
     doc: total size of test region

@@ -8,6 +8,8 @@ type: workload
 depends:
   debian@11:
   - libgomp1
+  PKGBUILD:
+  - perf-event-tests
 params:
   paranoid:
 results:

@@ -7,6 +7,8 @@ type: workload
 depends:
   debian@11:
   - libsmbclient
+  PKGBUILD:
+  - tbench
 params:
   runtime:
   nr_threads:

@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - libhugetlbfs-test
 params:
   pagesize:
 results:

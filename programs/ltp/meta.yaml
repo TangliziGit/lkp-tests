@@ -82,6 +82,8 @@ depends:
   - bzip2
   - iptables
   - telnetd-ssl
+  PKGBUILD:
+  - ltp
 params:
   test:
     values:

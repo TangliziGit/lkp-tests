@@ -5,5 +5,7 @@ metadata:
   homepage:
 type: workload
 depends:
+  fedora@35:
+  - packetdrill
 params:
 results:

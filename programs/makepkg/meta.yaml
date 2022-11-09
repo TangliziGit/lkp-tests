@@ -7,6 +7,8 @@ metadata:
   homepage: https://archlinux.org/pacman/
 type: workload
 depends:
+  PKGBUILD:
+  - makepkg
 params:
   rootfs:
   benchmark:

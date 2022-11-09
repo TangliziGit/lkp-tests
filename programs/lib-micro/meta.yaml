@@ -21,7 +21,9 @@ metadata:
     (3) https://java.net/projects/libmicro
   homepage: https://github.com/rzezeski/libMicro
 type: workload
-depends: {}
+depends:
+  PKGBUILD:
+  - lib-micro
 params:
   test:
     values:

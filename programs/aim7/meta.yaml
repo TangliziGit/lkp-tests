@@ -11,7 +11,9 @@ metadata:
     operations, pipe I/O, and compute-bound arithmetic loops.
   homepage: https://sourceforge.net/projects/aimbench/files/aim-suite7/
 type: workload
-depends: {}
+depends:
+  PKGBUILD:
+  - aim7
 params:
   test:
     doc: micro test name

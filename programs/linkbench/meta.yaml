@@ -8,6 +8,8 @@ depends:
   openeuler@22.09:
   - java-17-openjdk
   - mysql-server
+  PKGBUILD:
+  - linkbench
 params:
   nr_task:
   duration:

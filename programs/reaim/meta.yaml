@@ -12,6 +12,8 @@ type: workload
 depends:
   debian@11:
   - libaio1
+  PKGBUILD:
+  - reaim
 params:
   test:
     doc: micro test name

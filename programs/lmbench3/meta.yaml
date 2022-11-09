@@ -21,6 +21,8 @@ depends:
   - libtirpc-dev
   - linux-base
   - gnuplot
+  PKGBUILD:
+  - lmbench3
 params:
   nr_threads:
     doc: if you are running on an MP machanie and you want to try running multiple

@@ -4,7 +4,9 @@ metadata:
   description: ''
   homepage: https://git.kernel.org/pub/scm/linux/kernel/git/mason/schbench.git
 type: workload
-depends: {}
+depends:
+  PKGBUILD:
+  - schbench
 params:
   message_threads:
     doc: number of message threads

@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - benchmark-sql-baseline
 params:
   warehouses:
   loadworkers:

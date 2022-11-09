@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  fedora@32:
+  - intel-ipsec-mb
 params:
   algo:
   arch:

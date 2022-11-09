@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD:
+  - mdadm-selftests
 params:
   test_prefix:
 results:

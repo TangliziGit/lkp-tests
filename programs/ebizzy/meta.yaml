@@ -8,7 +8,9 @@ metadata:
     and allocates and deallocates memory frequently.
   homepage: http://ebizzy.sourceforge.net/
 type: workload
-depends: {}
+depends:
+  opensuse-leap@15.2:
+  - ebizzy
 params:
   nr_threads:
   duration:

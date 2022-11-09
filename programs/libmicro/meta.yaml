@@ -5,5 +5,7 @@ metadata:
   homepage:
 type: workload
 depends:
+  opensuse-leap@15.2:
+  - libmicro
 params:
 results:

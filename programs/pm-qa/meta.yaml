@@ -16,6 +16,8 @@ depends:
   - xorg
   - glmark2
   - sudo
+  PKGBUILD:
+  - pm-qa
 params:
   test:
 results:

@@ -7,6 +7,8 @@ type: workload
 depends:
   debian@11:
   - clang
+  PKGBUILD:
+  - adrestia
 params:
   arrival_rate:
     doc: arrival time (microseconds)

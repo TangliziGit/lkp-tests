@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  uos-rpm-e@20:
+  - cassandra
 params:
   nr_threads:
   duration:
