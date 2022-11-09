@@ -7,6 +7,7 @@ cd "$LKP_SRC" || exit
 for program
 do
 	mkdir -p programs/$program/jobs
+	rm distro/depends/$program
 	git mv tests/$program.yaml programs/$program/meta.yaml || {
 		/c/lkp-tests/sbin/create-meta.rb tests/$program &&
 		git add programs/$program/meta.yaml
