@@ -1,0 +1,21 @@
+metadata:
+  name: analyze-suspend
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+  debian@11:
+  - python3
+  - pciutils
+  - usbutils
+  - net-tools
+  - network-manager
+  - wpasupplicant
+  - iw
+  - rfkill
+  - vim
+params:
+  mode:
+  multi:
+results:
