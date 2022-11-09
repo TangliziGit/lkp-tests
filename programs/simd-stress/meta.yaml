@@ -1,0 +1,13 @@
+metadata:
+  name: simd-stress
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  duration:
+  thread_count:
+  nop_per_loop:
+  type:
+results:
