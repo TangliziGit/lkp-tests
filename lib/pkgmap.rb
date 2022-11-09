@@ -173,8 +173,11 @@ class PackageMapper
 
   def load_meta_yaml(file, program)
     meta = YAML.load_file(file)
-    puts "warning: #{file} metadata field is empty" if meta['metadata'].nil?
-    puts "warning: #{file} metadata.name '#{meta['metadata']['name']}' != #{program}" if program != meta['metadata']['name']
+    if meta['metadata'].nil?
+      puts "warning: #{file} metadata field is empty"
+    elsif program != meta['metadata']['name']
+      puts "warning: #{file} metadata.name '#{meta['metadata']['name']}' != #{program}"
+    end
 
     load_meta_depends(meta['depends'], program)
     load_meta_pkgmap(meta['pkgmap'])
