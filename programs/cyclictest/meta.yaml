@@ -1,0 +1,14 @@
+metadata:
+  name: cyclictest
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  priority:
+  clock:
+  interval:
+  histogram:
+  loops:
+results:
