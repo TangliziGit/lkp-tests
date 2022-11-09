@@ -1,0 +1,9 @@
+metadata:
+  name: iso2rootfs
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
