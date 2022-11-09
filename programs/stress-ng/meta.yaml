@@ -1,0 +1,18 @@
+metadata:
+  name: stress-ng
+  summary: tool to load and stress a computer
+  description: stress-ng can stress various subsystems of a computer.  It can stress
+    loadCPU, cache, disk, memory, socket and pipe I/O, scheduling and much more.stress-ng
+    is a re-write of the original stress tool by Amos Waterland buthas many additional
+    features such as specifying the number of bogo operationsto run, execution metrics,
+    a stress verification on memory and computeoperations and considerably more stress
+    mechanisms.
+  homepage: https://github.com/ColinIanKing/stress-ng
+type: workload
+depends:
+params:
+  testtime:
+  class:
+  nr_threads:
+  test:
+results:
