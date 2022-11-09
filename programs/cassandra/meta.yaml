@@ -1,0 +1,12 @@
+metadata:
+  name: cassandra
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  nr_threads:
+  duration:
+  insert:
+results:
