@@ -1,0 +1,14 @@
+metadata:
+  name: rcurefscale
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  nr_threads:
+  scale_type:
+  loops:
+  readdelay:
+  nruns:
+results:
