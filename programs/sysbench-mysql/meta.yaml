@@ -1,0 +1,18 @@
+metadata:
+  name: sysbench-mysql
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  oltp_tables_count:
+  oltp_table_size:
+  nr_threads:
+  rand_type:
+  rand_spec_pct:
+  runtime:
+  report_interval:
+  oltp_read_only:
+  events:
+results:
