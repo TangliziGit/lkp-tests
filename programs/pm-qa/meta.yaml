@@ -1,0 +1,21 @@
+metadata:
+  name: pm-qa
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+  ubuntu@18.04:
+  - make
+  - libx11-dev
+  - libgl1-mesa-dev
+  - libjpeg-dev
+  - libpng-dev
+  - libpng16-16
+  - xinit
+  - xorg
+  - glmark2
+  - sudo
+params:
+  test:
+results:
