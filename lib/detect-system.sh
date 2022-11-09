@@ -231,8 +231,8 @@ detect_system()
 	elif
 		[ -f ${rootfs}/etc/os-release ]
 	then
-		_system_name="$(grep '^ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2)"
-		_system_version="$(grep '^VERSION_ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2)"
+		_system_name="$(grep '^ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2 | tr -d '"')"
+		_system_version="$(grep '^VERSION_ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2 | tr -d '"')"
 	elif
 		has_cmd hostnamectl
 	then
