@@ -30,9 +30,6 @@ support_repo_epel()
 		yum install -y epel-release >/dev/null 2>&1
 	fi
 
-	if [ "${_system_name_lowercase}" = "openeuler" ]; then
-		yum makecache timer >/dev/null
-	else
-		yum makecache fast >/dev/null
-	fi
+	yum -q makecache timer 2>/dev/null ||
+	yum -q makecache fast
 }
