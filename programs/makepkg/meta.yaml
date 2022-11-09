@@ -1,0 +1,16 @@
+metadata:
+  name: makepkg
+  summary: Arch Linux package build utility
+  description: makepkg is a script to automate the building of packages. Therequirements
+    for using the script are a build-capable *nix platformand a custom build script
+    for each package you wish to build (knownas a PKGBUILD).
+  homepage: https://archlinux.org/pacman/
+type: workload
+depends:
+params:
+  rootfs:
+  benchmark:
+  os:
+  os_arch:
+  os_version:
+results:
