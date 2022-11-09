@@ -1,0 +1,14 @@
+metadata:
+  name: hackbench-git
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  nr_threads:
+  mode:
+  ipc:
+  iterations:
+  loops:
+results:
