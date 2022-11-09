@@ -1,0 +1,10 @@
+metadata:
+  name: power-idle
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  idle_time:
+results:
