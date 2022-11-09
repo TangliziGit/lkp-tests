@@ -58,9 +58,6 @@ do
 		--force|-f)
 		FORCE_MODE=true
 		;;
-		--skip-base)
-		SKIP_BASE=true
-		;;
 		*)
 		break
 		;;
@@ -259,9 +256,13 @@ export LKP_LOCAL_RUN=1
 
 validate_parameters "$@" || exit 1
 
-[ -n "$SKIP_BASE" ] || install_base_support
+if [[ -z "$1" ]]; then
+	install_base_support
+	all_scripts='lkp makepkg'
+else
+	all_scripts=
+fi
 
-all_scripts='lkp makepkg'
 for filename in "$@"
 do
 	if [ -x "$filename" ]; then
