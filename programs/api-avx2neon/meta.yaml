@@ -1,0 +1,9 @@
+metadata:
+  name: api-avx2neon
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
