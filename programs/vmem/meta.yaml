@@ -1,0 +1,10 @@
+metadata:
+  name: vmem
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  group:
+results:
