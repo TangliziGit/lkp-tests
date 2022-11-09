@@ -1,0 +1,12 @@
+metadata:
+  name: nepim
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+  nr_threads:
+  protocol:
+results:
