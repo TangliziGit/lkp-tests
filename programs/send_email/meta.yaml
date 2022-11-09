@@ -1,0 +1,10 @@
+metadata:
+  name: send_email
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  subject:
+results:
