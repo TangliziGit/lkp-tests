@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  debian@11:
+  - libsmbclient
 params:
   runtime:
   nr_threads:
