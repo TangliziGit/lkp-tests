@@ -1,0 +1,19 @@
+metadata:
+        name: rpmbuild
+        summary:
+        description:
+        homepage:
+type: workload
+depends:
+        openeuler@20.03:
+          - git
+          - rpm-build
+          - rpmdevtools
+          - dnf-plugins-core
+          - make
+          - automake
+          - gcc
+          - gcc-c++
+          - kernel-devel
+params:
+results:

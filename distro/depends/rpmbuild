@@ -1,4 +1,0 @@
-build-essential
-rpmdevtools
-dnf-plugins-core
-git
