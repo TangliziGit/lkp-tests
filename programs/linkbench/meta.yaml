@@ -1,49 +1,14 @@
 metadata:
   name: linkbench
-  summary: A database benchmark developed to evaluate database performance for workloads
-    similar to those of Facebook's production MySQL deployment.
+  summary:
   description: ''
-  homepage: https://github.com/facebookarchive/linkbench
+  homepage:
 type: workload
 depends:
-  debian@11:
-  - openjdk-17-jdk
+  openeuler@22.09:
+  - java-17-openjdk
   - mysql-server
 params:
   nr_task:
-  requestes:
-    doc: number of requests per thread
+  duration:
 results:
-  inkbench.UPDATE_NODE.count:
-  requests:
-  time:
-  requests/s:
-  ADD_NODE.count:
-  ADD_NODE.max:
-  ADD_NODE.mean:
-  UPDATE_NODE.max:
-  UPDATE_NODE.mean:
-  DELETE_NODE.count:
-  DELETE_NODE.max:
-  DELETE_NODE.mean:
-  GET_NODE.count:
-  GET_NODE.max:
-  GET_NODE.mean:
-  ADD_LINK.count:
-  ADD_LINK.max:
-  ADD_LINK.mean:
-  DELETE_LINK.count:
-  DELETE_LINK.max:
-  DELETE_LINK.mean:
-  UPDATE_LINK.count:
-  UPDATE_LINK.max:
-  UPDATE_LINK.mean:
-  COUNT_LINK.count:
-  COUNT_LINK.max:
-  COUNT_LINK.mean:
-  MULTIGET_LINK.count:
-  MULTIGET_LINK.max:
-  MULTIGET_LINK.mean:
-  GET_LINKS_LIST.count:
-  GET_LINKS_LIST.max:
-  GET_LINKS_LIST.mean:
