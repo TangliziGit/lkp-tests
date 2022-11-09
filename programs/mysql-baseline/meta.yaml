@@ -1,0 +1,17 @@
+metadata:
+  name: mysql-baseline
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+  openeuler@22.03:
+  - git
+  - numactl
+  - dpdk
+  - libconfig
+  - libboundscheck
+  - libpcap
+  - gazelle
+params:
+results:
