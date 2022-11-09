@@ -5,6 +5,7 @@ metadata:
         homepage:
 type: workload
 depends:
+        PKGBUILD: make-git
         openeuler@20.03:
           - git
           - rpm-build

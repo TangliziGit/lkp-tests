@@ -5,6 +5,7 @@ metadata:
   homepage:
 type: workload
 depends:
+  PKGBUILD: make-git
 params:
   pkgbuild_repo:
   upstream_repo:
