@@ -1,0 +1,9 @@
+metadata:
+  name: install-iso-pre
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
