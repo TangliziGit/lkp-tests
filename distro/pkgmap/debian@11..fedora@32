@@ -182,3 +182,4 @@ junit4: junit
 linux-base:
 openssh-client: openssh-clients
 libpython3.9: python3-libs
+procps: procps-ng

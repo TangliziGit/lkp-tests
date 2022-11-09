@@ -31,6 +31,7 @@ metadata:
   homepage: https://github.com/kdlucas/byte-unixbench
 type: workload
 depends:
+  PKGBUILD: unixbench
   debian@11:
   - perl-base
   - perl
