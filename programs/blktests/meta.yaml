@@ -1,0 +1,52 @@
+metadata:
+  name: blktests
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+  debian@11:
+  - gawk
+  - fio
+  - libssl-dev
+  - blktrace
+  - parted
+  - nbd-server
+  - nbd-client
+  - virt-what
+  - xfsprogs
+  - pciutils
+  - git
+  - make
+  - gcc
+  - libc6
+  - libc6-dev
+  - libc-bin
+  - libc-dev-bin
+  - build-essential
+  - linux-libc-dev
+  - init-system-helpers
+  - libgfapi0
+  - libgfrpc0
+  - libglusterfs0
+  - libgfxdr0
+  - libtirpc3
+  - libgnutls30
+  - libidn2-0
+  - libp11-kit0
+  - libtasn1-6
+  - libibverbs1
+  - librdmacm1
+  - libnl-utils
+  - libnl-cli-3-200
+  - libnl-idiag-3-200
+  - libnl-nf-3-200
+  - multipath-tools
+  - kpartx
+  - iproute2
+  - bsdextrautils
+params:
+  test:
+  nvme_trtype:
+  use_siw:
+results:
