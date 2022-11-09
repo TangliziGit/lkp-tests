@@ -1,0 +1,10 @@
+metadata:
+  name: atomic
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  nr_threads:
+results:
