@@ -37,7 +37,7 @@ test_all()
 {
 
 	echo 3 > /proc/sys/vm/drop_caches
-	log_cmd use_benchmark_env numactl --interleave=all ./Run -c $nr_task
+	log_cmd use_benchmark_env ./Run -c $nr_task
 }
 
 cd $unixbench_path || die "no $unixbench_path"
