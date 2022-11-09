@@ -1,51 +1,58 @@
-short_description: >
- mutilate - memcached load generator
-
-description: |
- Mutilate is a memcached load generator designed for
- high request rates, good tail-latency measurements, and realistic
- request stream generation.
-
-homepage: 
- https://github.com/leverich/mutilate
-
-parameters:
- master_threads: number of thread in mutilate master
- agent_threads: number of thread in mutilate agent
- runtime: total runtime the benchmark run
-
+metadata:
+  name: mutilate
+  summary: mutilate - memcached load generator
+  description: |-
+    Mutilate is a memcached load generator designed for
+    high request rates, good tail-latency measurements, and realistic
+    request stream generation.
+  homepage: https://github.com/leverich/mutilate
+type: workload
+depends:
+  debian@11:
+  - libzmq5
+  - libevent-dev
+  - memcached
+  - libhugetlbfs-bin
+  - libhugetlbfs-dev
+params:
+  master_threads:
+    doc: number of thread in mutilate master
+  agent_threads:
+    doc: number of thread in mutilate agent
+  runtime:
+    doc: total runtime the benchmark run
 results:
- mutilate.read.avg:
- mutilate.read.std:
- mutilate.read.min:
- mutilate.read.5th:
- mutilate.read.10th:
- mutilate.read.90th:
- mutilate.read.95th:
- mutilate.read.99th:
- mutilate.update.avg:
- mutilate.update.std:
- mutilate.update.min:
- mutilate.update.5th:
- mutilate.update.10th:
- mutilate.update.90th:
- mutilate.update.95th:
- mutilate.update.99th:
- mutilate.op_q.avg:
- mutilate.op_q.min:
- mutilate.op_q.5th:
- mutilate.op_q.10th:
- mutilate.op_q.90th:
- mutilate.op_q.95th:
- mutilate.op_q.99th:
- mutilate.totalqps:
- mutilate.totalqps.total:
- mutilate.totalqps.time:
- mutilate.skipped.num:
- mutilate.skipped.percent:
- mutilate.misses.num:
- mutilate.misses.percent:
- mutilate.rx.bytes:
- mutilate.rx.speed:
- mutilate.tx.bytes:
- mutilate.tx.speed:
+  read.avg:
+  read.std:
+  read.min:
+  read.5th:
+  read.10th:
+  read.90th:
+  read.95th:
+  read.99th:
+  update.avg:
+  update.std:
+  update.min:
+  update.5th:
+  update.10th:
+  update.90th:
+  update.95th:
+  update.99th:
+  op_q.avg:
+  op_q.min:
+  op_q.5th:
+  op_q.10th:
+  op_q.90th:
+  op_q.95th:
+  op_q.99th:
+  totalqps:
+  totalqps.total:
+  totalqps.time:
+  skipped.num:
+  skipped.percent:
+  misses.num:
+  misses.percent:
+  rx.bytes:
+  rx.speed:
+  tx.bytes:
+  tx.speed:

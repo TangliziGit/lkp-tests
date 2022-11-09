@@ -1,23 +1,30 @@
-short_description: >
-  A benchmark to measure schedule latency.
-
-homepage: https://git.kernel.org/pub/scm/linux/kernel/git/mason/schbench.git
-
-parameters:
-  message_threads:  number of message threads
-  worker_threads:   number of workers per message thread
-  runtime:          seconds to run before exiting
-  sleeptime_us:     message thread latency with unit usec
-  cputime_us:       time think during loop with unit usec
-  iterations:       number of iterations
-
+metadata:
+  name: schbench
+  summary: A benchmark to measure schedule latency.
+  description: ''
+  homepage: https://git.kernel.org/pub/scm/linux/kernel/git/mason/schbench.git
+type: workload
+depends: {}
+params:
+  message_threads:
+    doc: number of message threads
+  worker_threads:
+    doc: number of workers per message thread
+  runtime:
+    doc: seconds to run before exiting
+  sleeptime_us:
+    doc: message thread latency with unit usec
+  cputime_us:
+    doc: time think during loop with unit usec
+  iterations:
+    doc: number of iterations
 results:
-  schbench.latency_50%_us:
-  schbench.latency_75%_us:
-  schbench.latency_90%_us:
-  schbench.latency_95%_us:
-  schbench.latency_99%_us:
-  schbench.latency_99.5%_us:
-  schbench.latency_99.9%_us:
-  schbench.latency_min_us:
-  schbench.latency_max_us:
+  latency_50%_us:
+  latency_75%_us:
+  latency_90%_us:
+  latency_95%_us:
+  latency_99%_us:
+  latency_99.5%_us:
+  latency_99.9%_us:
+  latency_min_us:
+  latency_max_us:

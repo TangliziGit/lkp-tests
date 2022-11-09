@@ -1,23 +1,44 @@
-short_description: >
- FxMark is a filesystem benchmark that test multicore scalability.
-
-description: |
- FxMark is a filesystem benchmark that test multicore scalability.
- It implements 19 microbenchmarks to stress specific components of
- each file system and includes three application benchmarks to measure
- the macroscopic scalability behavior.
-
-homepage: https://github.com/sslab-gatech/fxmark
-
-parameters:
- disk:
- media:
- test:
- fstype: [ext4, ext4_no_jnl, xfs, btrfs, f2fs]
- directio: [bufferedio, directio]
- thread_nr: "*"
- blksize: 100M
- blkcount: 1
-
+metadata:
+  name: fxmark
+  summary: FxMark is a filesystem benchmark that test multicore scalability.
+  description: |-
+    FxMark is a filesystem benchmark that test multicore scalability.
+    It implements 19 microbenchmarks to stress specific components of
+    each file system and includes three application benchmarks to measure
+    the macroscopic scalability behavior.
+  homepage: https://github.com/sslab-gatech/fxmark
+type: workload
+depends:
+  debian@11:
+  - xfsprogs
+  - btrfs-progs
+  - f2fs-tools
+  - jfsutils
+  - reiserfsprogs
+  - nilfs-tools
+  - python2
+  - python3
+  - sudo
+  - dbench
+params:
+  disk:
+  media:
+  test:
+  fstype:
+    values:
+    - ext4
+    - ext4_no_jnl
+    - xfs
+    - btrfs
+    - f2fs
+  directio:
+    values:
+    - bufferedio
+    - directio
+  thread_nr:
+    example: "*"
+  blksize:
+    example: 100M
+  blkcount: 1
 results:
- fxmark.works/sec: number of works per sec.
+  works/sec: number of works per sec.

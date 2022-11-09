@@ -1,22 +1,94 @@
-short_description: >
- The kernel contains a set of "self tests" under the tools/testing/selftests/
- directory. These are intended to be small unit tests to exercise individual
- code paths in the kernel.
+metadata:
+  name: kernel-selftests
+  summary: The kernel contains a set of "self tests" under the tools/testing/selftests/
+    directory. These are intended to be small unit tests to exercise individual code
+    paths in the kernel.
+  description: |-
+    The kernel contains a set of "self tests" under the tools/testing/selftests/
+    directory. These are intended to be small unit tests to exercise individual
+    code paths in the kernel.
 
-description: |
- The kernel contains a set of "self tests" under the tools/testing/selftests/
- directory. These are intended to be small unit tests to exercise individual
- code paths in the kernel.
-
- On some systems, hot-plug tests could hang forever waiting for cpu and memory
- to be ready to be offlined. A special hot-plug target is created to run full
- range of hot-plug tests. In default mode, hot-plug tests run in safe mode with
- a limited scope. In limited mode, cpu-hotplug test is run on a single cpu as
- opposed to all hotplug capable cpus, and memory hotplug test is run on 2% of
- hotplug capable memory instead of 10%.
-
-homepage: https://www.kernel.org/doc/Documentation/kselftest.txt
-
-parameters:
-
-results:
+    On some systems, hot-plug tests could hang forever waiting for cpu and memory
+    to be ready to be offlined. A special hot-plug target is created to run full
+    range of hot-plug tests. In default mode, hot-plug tests run in safe mode with
+    a limited scope. In limited mode, cpu-hotplug test is run on a single cpu as
+    opposed to all hotplug capable cpus, and memory hotplug test is run on 2% of
+    hotplug capable memory instead of 10%.
+  homepage: https://www.kernel.org/doc/Documentation/kselftest.txt
+type: workload
+depends:
+  debian@11:
+  - gcc
+  - g++
+  - gcc-multilib
+  - libbpf-dev
+  - libc6-dev
+  - libc-bin
+  - rsync
+  - make
+  - libcap-ng-dev
+  - libpopt0
+  - libpopt-dev
+  - libcap-dev
+  - sudo
+  - libnuma-dev
+  - libmount-dev
+  - libpci3
+  - libelf-dev
+  - libfuse-dev
+  - gcc-multilib
+  - pkg-config
+  - fuse
+  - binutils-dev
+  - bison
+  - flex
+  - python3
+  - python3-scapy
+  - libreadline-dev
+  - iproute2
+  - ethtool
+  - uuid-runtime
+  - libdrm-dev
+  - linux-libc-dev
+  - linux-libc-dev-amd64-cross
+  - net-tools
+  - netcat-openbsd
+  - zlib1g-dev
+  - libhugetlbfs-dev
+  - libssl-dev
+  - libasound2-dev
+  - libc-dev-bin
+  - nftables
+  - ebtables
+  - sendip
+  - ipvsadm
+  - libmnl-dev
+  - libkeyutils-dev
+  - lib64gcc1:i386
+  - lib64gomp1:i386
+  - lib64itm1:i386
+  - lib64atomic1:i386
+  - lib64asan3:i386
+  - libc6-amd64:i386
+  - libc6-dev-amd64:i386
+  - lib64gcc-dev:i386
+  - python3-docutils
+  - jq
+  - socat
+  - netsniff-ng
+  - traceroute
+  - conntrack
+  - iperf3
+  - tshark
+  - iptables
+  - openvswitch-common
+  - openvswitch-switch
+  - tcpdump
+  - arping
+  - linux-perf
+  - file
+  - llvm-dev
+  - attr
+  - pesign
+params: {}
+results: {}

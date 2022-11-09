@@ -1,15 +1,12 @@
-short_description: >
- This is a test of EEMBC CoreMark processor benchmark.
-
-description: |
- This is a test of EEMBC CoreMark processor benchmark
- to measures the performance of central processing units by 
- measuring the number of iteration (algo: CRC, list processing,
- matric manipulation, state machine ) per second.
-
-homepage: https://www.eembc.org/coremark/
-
-parameters:
- 
+metadata:
+  name: coremark
+  summary: This is a test of EEMBC CoreMark processor benchmark.
+  description: "This is a test of EEMBC CoreMark processor benchmark\nto measures
+    the performance of central processing units by \nmeasuring the number of iteration
+    (algo: CRC, list processing,\nmatric manipulation, state machine ) per second."
+  homepage: https://www.eembc.org/coremark/
+type: workload
+depends: {}
+params: {}
 results:
- coremark:iterations_per_sec:
+  coremark:iterations_per_sec:

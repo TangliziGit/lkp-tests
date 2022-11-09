@@ -1,44 +1,49 @@
-short_description: >
-  A database benchmark developed to evaluate database performance for workloads
-  similar to those of Facebook's production MySQL deployment.
-
-homepage: https://github.com/facebookarchive/linkbench
-
-parameters:
+metadata:
+  name: linkbench
+  summary: A database benchmark developed to evaluate database performance for workloads
+    similar to those of Facebook's production MySQL deployment.
+  description: ''
+  homepage: https://github.com/facebookarchive/linkbench
+type: workload
+depends:
+  debian@11:
+  - openjdk-17-jdk
+  - mysql-server
+params:
   nr_task:
-  requestes: number of requests per thread
-
+  requestes:
+    doc: number of requests per thread
 results:
-  linkbench.requests:
-  linkbench.time:
-  linkbench.requests/s:
-  linkbench.ADD_NODE.count:
-  linkbench.ADD_NODE.max:
-  linkbench.ADD_NODE.mean:
   inkbench.UPDATE_NODE.count:
-  linkbench.UPDATE_NODE.max:
-  linkbench.UPDATE_NODE.mean:
-  linkbench.DELETE_NODE.count:
-  linkbench.DELETE_NODE.max:
-  linkbench.DELETE_NODE.mean:
-  linkbench.GET_NODE.count:
-  linkbench.GET_NODE.max:
-  linkbench.GET_NODE.mean:
-  linkbench.ADD_LINK.count:
-  linkbench.ADD_LINK.max:
-  linkbench.ADD_LINK.mean:
-  linkbench.DELETE_LINK.count:
-  linkbench.DELETE_LINK.max:
-  linkbench.DELETE_LINK.mean:
-  linkbench.UPDATE_LINK.count:
-  linkbench.UPDATE_LINK.max:
-  linkbench.UPDATE_LINK.mean:
-  linkbench.COUNT_LINK.count:
-  linkbench.COUNT_LINK.max:
-  linkbench.COUNT_LINK.mean:
-  linkbench.MULTIGET_LINK.count:
-  linkbench.MULTIGET_LINK.max:
-  linkbench.MULTIGET_LINK.mean:
-  linkbench.GET_LINKS_LIST.count:
-  linkbench.GET_LINKS_LIST.max:
-  linkbench.GET_LINKS_LIST.mean:
+  requests:
+  time:
+  requests/s:
+  ADD_NODE.count:
+  ADD_NODE.max:
+  ADD_NODE.mean:
+  UPDATE_NODE.max:
+  UPDATE_NODE.mean:
+  DELETE_NODE.count:
+  DELETE_NODE.max:
+  DELETE_NODE.mean:
+  GET_NODE.count:
+  GET_NODE.max:
+  GET_NODE.mean:
+  ADD_LINK.count:
+  ADD_LINK.max:
+  ADD_LINK.mean:
+  DELETE_LINK.count:
+  DELETE_LINK.max:
+  DELETE_LINK.mean:
+  UPDATE_LINK.count:
+  UPDATE_LINK.max:
+  UPDATE_LINK.mean:
+  COUNT_LINK.count:
+  COUNT_LINK.max:
+  COUNT_LINK.mean:
+  MULTIGET_LINK.count:
+  MULTIGET_LINK.max:
+  MULTIGET_LINK.mean:
+  GET_LINKS_LIST.count:
+  GET_LINKS_LIST.max:
+  GET_LINKS_LIST.mean:

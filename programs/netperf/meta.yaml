@@ -1,21 +1,24 @@
-short_description: >
- Netperf is a benchmark that can be use to measure various aspect of networking
- performance.
-
-description: |
- Netperf is a benchmark that can be use to measure various aspect of networking
- performance. The primary foci are bulk (aka unidirectional) data transfer and
- request/response performance using either TCP or UDP and the Berkeley Sockets
- interface.
-
-homepage: http://www.netperf.org/netperf/
-
-parameters:
- runtime:
- nr_threads:
- ip:
- test:
- send_size:
-
+metadata:
+  name: netperf
+  summary: Netperf is a benchmark that can be use to measure various aspect of networking
+    performance.
+  description: |-
+    Netperf is a benchmark that can be use to measure various aspect of networking
+    performance. The primary foci are bulk (aka unidirectional) data transfer and
+    request/response performance using either TCP or UDP and the Berkeley Sockets
+    interface.
+  homepage: http://www.netperf.org/netperf/
+type: workload
+depends:
+  debian@11:
+  - libsctp1
+  - lksctp-tools
+  - ethtool
+params:
+  runtime:
+  nr_threads:
+  ip:
+  test:
+  send_size:
 results:
- netperf.Throughput:
+  Throughput:

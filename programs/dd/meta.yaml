@@ -1,20 +1,26 @@
-short_description: >
- Test writeback performance.
-
-description: |
- Copy a file, converting and formatting according to the operands.
-
-homepage:
-
-parameters:
- runtime:      limit run time to runtime seconds
- disk:         specify HDD/SDD disk to be used
- md:           use mdadm to create raid_device
- iosched:      select an IO scheduler
- fs:           specify the file system
- nr_threads:   The number of threads that will run dd
-
+metadata:
+  name: dd
+  summary: Test writeback performance.
+  description: Copy a file, converting and formatting according to the operands.
+  homepage:
+type: workload
+depends:
+  debian@11:
+  - psmisc
+params:
+  runtime:
+    doc: limit run time to runtime seconds
+  disk:
+    doc: specify HDD/SDD disk to be used
+  md:
+    doc: use mdadm to create raid_device
+  iosched:
+    doc: select an IO scheduler
+  fs:
+    doc: specify the file system
+  nr_threads:
+    doc: The number of threads that will run dd
 results:
- dd.startup_time_ms:
- dd.kill_time_ms:
- dd.rm_time_ms:
+  startup_time_ms:
+  kill_time_ms:
+  rm_time_ms:

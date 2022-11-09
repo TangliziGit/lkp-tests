@@ -1,21 +1,90 @@
-short_description: >
- The LTP testsuite contains a collection of tools for testing the Linux
- kernel and related features.
+metadata:
+  name: ltp
+  summary: The LTP testsuite contains a collection of tools for testing the Linux
+    kernel and related features.
+  description: |-
+    linux test project is a joint project started by sgi, osdl and bull developed
+    and maintained by ibm, cisco, fujitsu, suse, red hat, oracle and others. the
+    project goal is to deliver tests to the open source community that validate
+    the reliability, robustness, and stability of linux.
 
-description: |
- linux test project is a joint project started by sgi, osdl and bull developed
- and maintained by ibm, cisco, fujitsu, suse, red hat, oracle and others. the
- project goal is to deliver tests to the open source community that validate
- the reliability, robustness, and stability of linux.
-
- The LTP testsuite contains a collection of tools for testing the Linux kernel
- and related features. Our goal is to improve the Linux kernel and system
- libraries by bringing test automation to the testing effort. Interested open
- source contributors are encouraged to join.
-
-homepage: http://linux-test-project.github.io/
-
-parameters:
- test: [dio, fs_readonly]
-
-results:
+    The LTP testsuite contains a collection of tools for testing the Linux kernel
+    and related features. Our goal is to improve the Linux kernel and system
+    libraries by bringing test automation to the testing effort. Interested open
+    source contributors are encouraged to join.
+  homepage: http://linux-test-project.github.io/
+type: workload
+depends:
+  debian@11:
+  - numactl
+  - sudo
+  - acl
+  - at
+  - iproute2
+  - libaio1
+  - elfutils
+  - binutils
+  - file
+  - gawk
+  - quota
+  - genisoimage
+  - sysstat
+  - expect
+  - ftp
+  - vsftpd
+  - rpcbind
+  - update-inetd
+  - openbsd-inetd
+  - rusersd
+  - rusers
+  - rstatd
+  - bind9
+  - dnsutils
+  - apache2
+  - rsyslog
+  - unzip
+  - rsync
+  - trousers
+  - tpm-tools
+  - libopencryptoki0
+  - opencryptoki
+  - libtirpc-common
+  - cron
+  - psmisc
+  - gdb
+  - xfsprogs
+  - xfslibs-dev
+  - uuid-runtime
+  - gcc
+  - libc6-dev
+  - git
+  - patch
+  - make
+  - automake
+  - udisks2
+  - dosfstools
+  - exfat-fuse
+  - exfat-utils
+  - libntfs-3g883
+  - ntfs-3g
+  - ethtool
+  - lvm2
+  - arping
+  - isc-dhcp-server
+  - dnsmasq
+  - tcpdump
+  - iputils-clockdiff
+  - iputils-tracepath
+  - telnet
+  - traceroute
+  - nftables
+  - net-tools
+  - bzip2
+  - iptables
+  - telnetd-ssl
+params:
+  test:
+    values:
+    - dio
+    - fs_readonly
+results: {}
