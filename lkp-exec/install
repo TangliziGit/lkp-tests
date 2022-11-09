@@ -213,8 +213,10 @@ make_install_packages() {
 install_packages() {
 	local generic_packages="$*"
 
-	echo "Installing packages with: $LKP_SRC/distro/installer $distro $generic_packages"
-	[ -n "$DRY_RUN" ] && return
+	[ -n "$DRY_RUN" ] && {
+		echo "Installing packages with: $LKP_SRC/distro/installer $distro $generic_packages"
+		return
+	}
 
 	if [ "$distro" = "centos" -o "$distro" = "aliyun" ]; then
 		local ocfs2_tools_name=$(echo "$generic_packages" | grep 'ocfs2-tools')
