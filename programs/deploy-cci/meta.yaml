@@ -1,0 +1,9 @@
+metadata:
+  name: deploy-cci
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
