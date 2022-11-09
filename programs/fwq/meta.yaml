@@ -1,0 +1,12 @@
+metadata:
+  name: fwq
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  nr_task:
+  samples:
+  iterations:
+results:
