@@ -1,0 +1,11 @@
+metadata:
+  name: rcuscale
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+  scale_type:
+results:
