@@ -1,0 +1,9 @@
+metadata:
+  name: self-test
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
