@@ -1,0 +1,9 @@
+metadata:
+  name: install-iso-sync-rootfs
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
