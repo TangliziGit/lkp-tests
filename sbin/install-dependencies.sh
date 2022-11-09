@@ -21,7 +21,7 @@ linux_dep()
 		ospkg_update_install $common_packages ruby-dev libssl-dev g++ uuid-runtime
 		;;
 	dnf|yum)
-		ospkg_update_install $common_packages gcc-c++ ruby-devel
+		ospkg_update_install $common_packages gcc-c++ ruby-devel rpm-build
 		;;
 	pacman)
 		ospkg_update_install $common_packages
