@@ -1,0 +1,10 @@
+metadata:
+  name: cci-depends
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  benchmark:
+results:
