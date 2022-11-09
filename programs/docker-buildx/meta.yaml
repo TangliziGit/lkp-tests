@@ -1,0 +1,12 @@
+metadata:
+  name: docker-buildx
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  registry:
+  base_image:
+  target_image:
+results:
