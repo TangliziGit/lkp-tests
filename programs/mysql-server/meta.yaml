@@ -1,0 +1,22 @@
+metadata:
+  name: mysql-server
+  summary: MySQL database server (metapackage depending on the latest version)
+  description: This is an empty package that depends on the current "best" version
+    ofmysql-server (currently mysql-server-8.0), as determined by the MySQLmaintainers.
+    Install this package if in doubt about which MySQLversion you need. That will
+    install the version recommended by thepackage maintainers.
+  homepage: http://dev.mysql.com/
+type: workload
+depends:
+  openeuler@22.03:
+  - mysql-server
+  - mysql-test
+  ubuntu@18.04:
+  - mysql-server
+  - mysql-testsuite
+params:
+  max_test_fail:
+  testcase_timeout:
+  parallel:
+  retry:
+results:
