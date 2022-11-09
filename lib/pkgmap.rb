@@ -231,24 +231,34 @@ class PackageMapper
   end
 
   def map_pkg_direct(pkgname, src_os, dst_os)
-    # puts "map_pkg_direct(#{pkgname}, #{src_os}, #{dst_os})"
     # try 1: find direct mapping
     os2os = "#{src_os}..#{dst_os}"
     return @ospkgmap[os2os][pkgname] if @ospkgmap.include?(os2os) && @ospkgmap[os2os].include?(pkgname)
 
+    puts "map_pkg_direct(#{pkgname}, #{src_os}, #{dst_os})"
     # try 2: find mapping from previous OS versions
     os1 = parse_os_spec(src_os)
     os2 = parse_os_spec(dst_os)
+    findpkg = nil
+    last_os = nil
     @ospkgmap.each do |os2os, pkgmap|
       next unless pkgmap.include? pkgname
-      next unless @ospackage_set.include? pkgmap[pkgname] # this cannot handle multi-packages separated by space
+      next unless @ospackage_set.include?(dst_os) and
+                  @ospackage_set[dst_os].include? pkgmap[pkgname] # this cannot handle multi-packages separated by space
 
       o1, o2 = os2os.split('..')
-      if o1.start_with?(os1['os_name']) && (o1 >= src_os) &&
-         o2.start_with?(os2['os_name']) && (o2 >= dst_os)
-        return pkgmap[pkgname]
+      if o1.start_with?(os1['os_name']) && (o1 <= src_os) &&
+         o2.start_with?(os2['os_name']) && (o2 <= dst_os)
+        if last_os
+          findpkg = pkgmap[pkgname] if o2 > last_os
+        else
+          findpkg = pkgmap[pkgname]
+        end
+        last_os = o2
       end
     end
+
+    return findpkg if findpkg
 
     # try 3: match by name
     if @ospackage_set.include?(dst_os) &&
