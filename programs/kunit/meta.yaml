@@ -1,0 +1,10 @@
+metadata:
+  name: kunit
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  group:
+results:
