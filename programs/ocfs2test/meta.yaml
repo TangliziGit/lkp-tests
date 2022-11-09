@@ -1,0 +1,10 @@
+metadata:
+  name: ocfs2test
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  test:
+results:
