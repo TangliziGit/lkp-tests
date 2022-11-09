@@ -318,7 +318,11 @@ class PackageMapper
     gem_pkgs = depends.delete 'gem'
     # explicit custom build packages
     pkgbuild_pkgs = depends.delete 'PKGBUILD'
-    pkgbuild_pkgs ||= Set.new
+    if pkgbuild_pkgs
+      pkgbuild_pkgs = pkgbuild_pkgs.to_set
+    else
+      pkgbuild_pkgs = Set.new
+    end
     os_pkgs = Set.new
     depends.each do |src_os, pkgs|
       h = map_pkgs(pkgs, src_os, dst_os)
