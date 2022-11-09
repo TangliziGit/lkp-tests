@@ -52,7 +52,7 @@ end
 class PackageMapper
   # EXPAND_DIMS = %w(kconfig commit rootfs ltp_commit nvml_commit blktests_commit qemu_commit perf_test_commit linux_commit).freeze
 
-  # attr_reader :referenced_programs
+  attr_reader :ospackage_set
   # attr_accessor :overrides
 
   def initialize
@@ -407,4 +407,13 @@ class PackageMapper
       end
     end
   end
+
+  def find_os_with_pkg(pkg, prefer_os)
+    ospackage_set.each do |os, pkgs|
+      next unless os.start_with? (prefer_os || '')
+      return os if pkgs.include?(pkg)
+    end
+    return nil
+  end
+
 end
