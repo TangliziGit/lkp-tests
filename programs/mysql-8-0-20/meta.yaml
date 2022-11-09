@@ -1,0 +1,9 @@
+metadata:
+  name: mysql-8-0-20
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
