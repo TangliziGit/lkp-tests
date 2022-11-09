@@ -1,0 +1,11 @@
+metadata:
+  name: speccpu-2006
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  test_item:
+  num_type:
+results:
