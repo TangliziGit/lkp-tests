@@ -1,0 +1,9 @@
+metadata:
+  name: exit-free
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+results:
