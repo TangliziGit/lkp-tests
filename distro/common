@@ -98,7 +98,7 @@ add_i386_package()
 share_debian_package()
 {
 	[[ "$os" = "debian" ]] && return
-	grep -qFx "$benchmark" $LKP_SRC/distro/depends/share-debian || return
+	grep -qFx "$benchmark" $LKP_SRC/distro/share-debian || return
 
 	date=$(date +"%Y%m%d")
 

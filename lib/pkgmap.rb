@@ -235,7 +235,7 @@ class PackageMapper
     os2os = "#{src_os}..#{dst_os}"
     return @ospkgmap[os2os][pkgname] if @ospkgmap.include?(os2os) && @ospkgmap[os2os].include?(pkgname)
 
-    puts "map_pkg_direct(#{pkgname}, #{src_os}, #{dst_os})"
+    # puts "map_pkg_direct(#{pkgname}, #{src_os}, #{dst_os})"
     # try 2: find mapping from previous OS versions
     os1 = parse_os_spec(src_os)
     os2 = parse_os_spec(dst_os)
