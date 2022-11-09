@@ -1,0 +1,10 @@
+metadata:
+  name: test-bpf
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  test:
+results:
