@@ -1,0 +1,12 @@
+metadata:
+  name: iozone
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  block_size:
+  file_size:
+  test:
+results:
