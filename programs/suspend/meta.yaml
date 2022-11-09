@@ -1,0 +1,13 @@
+metadata:
+  name: suspend
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  mode:
+  runtime:
+  iterations:
+  presync:
+results:
