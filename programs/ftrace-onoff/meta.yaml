@@ -1,0 +1,10 @@
+metadata:
+  name: ftrace-onoff
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+results:
