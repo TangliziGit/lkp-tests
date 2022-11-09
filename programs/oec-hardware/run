@@ -6,7 +6,7 @@ TIMEOUT=3600
 ERROR_CODE=100
 TIMEOUT_CODE=101
 
-SERVER_IP=${direct_server_ips}
+SERVER_IP=${direct_server_ips:-"127.0.0.1"}
 CARD_IDS=$test_card_id
 CARD_TYPE=$test_card_type
 CARD_NAME=$test_card_name
@@ -41,7 +41,7 @@ function setup_oech() {
                 expect "*Ready to begin testing? (run|edit|quit)"
                 send "q\r"
             }
-            timeout 
+            timeout
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
                 exit ${TIMEOUT_CODE}
@@ -52,11 +52,14 @@ EOF
 
 function get_exec_number() {
     if [[ ${CARD_TYPE} == "ethernet" || ${CARD_TYPE} == "infiniband" ]]; then
-        local device_name=$(get_netdev_name ${CARD_IDS})
+        local device_name=$(get_netdev_name)
     else
-        local device_name=$(get_card_pci ${CARD_IDS})
+        local device_name=$(get_card_pci)
     fi
-    create_test_config_file ${device_name}
+
+    if [[ ${CARD_TYPE} != "nvme" ]]; then
+        create_test_config_file ${device_name}
+    fi
 
     local test_id=$(grep ${CARD_TYPE} oech_device.log | grep ${device_name} | awk '{print $1}')
     printf $test_id
@@ -96,7 +99,7 @@ function exec_oech_for_normal() {
                 expect "*Ready to begin testing? (run|edit|quit)"
                 send "q\r"
             }
-            timeout 
+            timeout
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
                 exit ${TIMEOUT_CODE}
@@ -129,7 +132,7 @@ function exec_oech_for_nic() {
                 expect "*Ready to begin testing? (run|edit|quit)"
                 send "q\r"
             }
-            timeout 
+            timeout
             {
                 end_user "Connection to execute oech timed out: \$expect_out(buffer)\n ."
                 exit ${TIMEOUT_CODE}
@@ -140,7 +143,8 @@ EOF
 
 # Get raid/fc/gpu/keycard pci id
 function get_card_pci() {
-    local card_ids=$1
+    local card_ids=${CARD_IDS}
+    local card_type=${CARD_TYPE}
     local vendorID=$(echo $card_ids | cut -d '-' -f 1)
     local deviceID=$(echo $card_ids | cut -d '-' -f 2)
     local svID=$(echo $card_ids | cut -d '-' -f 3)
@@ -151,20 +155,24 @@ function get_card_pci() {
     if [[ "0000" =~ $ssID ]]; then
         ssID=""
     fi
-    lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
+    lspci -nvv | grep -A2 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
     if [[ $? -ne 0 ]]; then
         echo "The test card cannot find on this machine."
         printf ${ERROR_CODE}
         return 1
     fi
-    local card_pci=$(lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | head -n 1 | awk '{print $1}')
+
+    local card_pci=$(lspci -nvv | grep -A2 ${vendorID}:${deviceID} | grep -B2 ${svID}:${ssID} | head -n 1 | awk '{print $1}')
+    if [[ ${card_type} == "nvme" ]]; then
+	card_pci=($(ls -l /sys/block | grep ${card_pci} | awk '{print $9}'))
+    fi
     printf $card_pci
     return 0
 }
 
 # Get nic/ib device name
 function get_netdev_name() {
-    local card_ids=$1
+    local card_ids=${CARD_IDS}
     local vendorID=$(echo $card_ids | cut -d '-' -f 1)
     local deviceID=$(echo $card_ids | cut -d '-' -f 2)
     local svID=$(echo $card_ids | cut -d '-' -f 3)
@@ -175,29 +183,20 @@ function get_netdev_name() {
     if [[ "0000" =~ $ssID ]]; then
         ssID=""
     fi
-    lspci -nvv | grep -A1 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
+    lspci -nvv | grep -A2 ${vendorID}:${deviceID} | grep -q ${svID}:${ssID}
     if [[ $? -ne 0 ]]; then
         echo "The test card cannot find on this machine."
         printf ${ERROR_CODE}
         return ${ERROR_CODE}
     fi
-    local card_pcis=$(lspci -nvv | grep -C1 ${vendorID}:${deviceID} | grep -B1 ${svID}:${ssID} | grep -v -i control | awk '{print $1}')
-    local port_names=$(ls /etc/sysconfig/network-scripts/ | cut -d '-' -f 2)
-    for i in $(seq 1 $((${#port_names[@]} - 1))); do
-        local name=${port_names[$i]}
-        ip a show up dev $name | grep -q "state UP"
-        if [ $? -ne 0 ]; then
-            continue
+    local card_pcis=$(lspci -nvv | grep -A2 ${vendorID}:${deviceID} | grep -B2 ${svID}:${ssID} | grep ${vendorID}:${deviceID} | awk '{print $1}')
+    local port_names=$(ip link | grep 'state UP' | awk -F: '{print $2}' | awk '{print $1}')
+    for i in ${port_names[@]}; do
+        local bus_info=$(ethtool -i $i | grep 'bus-info' | awk '{print $2}' | sed 's/.\{5\}//')
+        if [[ "${card_pcis[@]}" =~ "${bus_info}" ]]; then
+	          printf $i
+	          break
         fi
-        for i in $(seq 1 $((${#card_pcis[@]} - 1))); do
-            local pci=${card_pcis[$i]}
-            ethtool -i $name | grep -q $pci
-            if [ $? -eq 0 ]; then
-                local useful_name=$name
-                printf $useful_name
-                break
-            fi
-        done
     done
     return 0
 }
@@ -223,8 +222,8 @@ function create_test_config_file() {
 
     mv ${CONFIG_FILE} ${CONFIG_FILE}".bak"
 
-    # Set raid/fc config 
-    if [[ ${CARD_TYPE} -eq "raid" || ${CARD_TYPE} -eq "fc" ]]; then
+    # Set raid/fc config
+    if [[ ${CARD_TYPE} == "raid" || ${CARD_TYPE} == "fc" ]]; then
         local disk=$(get_useful_disk $device_name)
         if [[ $? -eq 1 ]]; then
             echo "There is no useful disk to test $device_name."
@@ -234,12 +233,12 @@ function create_test_config_file() {
 ${CARD_TYPE}:
   ${CARD_TYPE}1:
     device: '0000:${device_name}'
-    disk: ${disk-all}
+    disk: ${disk:-all}
 EOF
 
-    # Set ethernet config 
-    elif [[ ${CARD_TYPE} -eq "ethernet" ]]; then
-        cat > ${CONFIG_FILE} <<EOF 
+    # Set ethernet config
+    elif [[ ${CARD_TYPE} == "ethernet" ]]; then
+        cat > ${CONFIG_FILE} <<EOF
 ethernet:
   eth1:
     device: ${device_name}
@@ -248,9 +247,9 @@ ethernet:
     server_ip:
 EOF
 
-    # Set infiniband config 
-    elif [[ ${CARD_TYPE} -eq "infiniband" ]]; then
-        cat > ${CONFIG_FILE} <<EOF 
+    # Set infiniband config
+    elif [[ ${CARD_TYPE} == "infiniband" ]]; then
+        cat > ${CONFIG_FILE} <<EOF
 infiniband:
   ib1:
     device: ${device_name}
@@ -283,9 +282,10 @@ function install_driver() {
 
 set -x
 
-echo "Start to setup oec-hardware-server."
-setup_oech_server
-echo "End to setup oec-hardware-server."
+# Setup oech-server
+if [[ ${CARD_TYPE} != "ethernet" ]];then
+    setup_oech_server
+fi
 
 echo "Start to run oec-hardware test."
 # Setup oech information

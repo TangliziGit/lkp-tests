@@ -33,8 +33,4 @@ set -x
 
 echo "Start to setup oec-hardware-server environment."
 setup_oech_server
-get_html_report
-upload_files -t oec-hardware ${REPORT}
-
 echo "End to setup oec-hardware-server environment."
-
