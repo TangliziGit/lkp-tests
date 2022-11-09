@@ -1,0 +1,10 @@
+metadata:
+  name: phpbench
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  iterations:
+results:
