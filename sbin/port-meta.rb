@@ -39,8 +39,8 @@ def load_depends(depends, program)
   end
 end
 
-Dir.glob("#{LKP_SRC}/{monitors,setup,programs}/*/meta.yaml").each do |path|
-# ARGV.each do |path|
+# Dir.glob("#{LKP_SRC}/{monitors,setup,programs}/*/meta.yaml").each do |path|
+ARGV.each do |path|
   program = File.basename(File.dirname(path))
   meta = YAML.load_file(path)
 
@@ -60,6 +60,10 @@ Dir.glob("#{LKP_SRC}/{monitors,setup,programs}/*/meta.yaml").each do |path|
   fixup_params(hash, meta['parameters'] || {})
   fixup_results(hash['results'], program)
   load_depends(hash['depends'], program)
+
+  if hash['depends'].empty?
+     hash['depends'] = nil
+  end
 
   puts path
   yaml = hash.to_yaml.sub(/^---\n/, '')

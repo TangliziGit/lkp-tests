@@ -1,27 +1,29 @@
-short_description: >
- sysbench-mutex is a subtest of SysBench benchmark suite to measure
- performance of mutex implementation.
-
-description: |
- This test mode was written to emulate a situation when all threads
- run concurrently most of the time, acquiring the mutex lock only
- for a short period of time (incrementing a global variable).
-
-homepage: https://github.com/akopytov/sysbench
-
-parameters:
- nr_threads:
- mutex_num:    total size of mutex array
- mutex_locks:  number of mutex locks to do per thread
- mutex_loops:  number of empty loops to do inside mutex lock
-
+metadata:
+  name: sysbench-mutex
+  summary: sysbench-mutex is a subtest of SysBench benchmark suite to measure performance
+    of mutex implementation.
+  description: |-
+    This test mode was written to emulate a situation when all threads
+    run concurrently most of the time, acquiring the mutex lock only
+    for a short period of time (incrementing a global variable).
+  homepage: https://github.com/akopytov/sysbench
+type: workload
+depends:
+params:
+  nr_threads:
+  mutex_num:
+    doc: total size of mutex array
+  mutex_locks:
+    doc: number of mutex locks to do per thread
+  mutex_loops:
+    doc: number of empty loops to do inside mutex lock
 results:
- sysbench-mutex.workload:
- sysbench-mutex.latency_ms.max:
- sysbench-mutex.latency_ms.min:
- sysbench-mutex.latency_ms.avg:
- sysbench-mutex.latency_ms.95th:
- sysbench-mutex.events/thread.avg:
- sysbench-mutex.events/thread.stddev:
- sysbench-mutex.runtime/thread.avg:
- sysbench-mutex.runtime/thread.stddev:
+  workload:
+  latency_ms.max:
+  latency_ms.min:
+  latency_ms.avg:
+  latency_ms.95th:
+  events/thread.avg:
+  events/thread.stddev:
+  runtime/thread.avg:
+  runtime/thread.stddev:

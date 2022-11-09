@@ -1,7 +1,7 @@
 metadata:
-  name: build-pkg
+  name: pkgbuild
   summary:
-  description: ''
+  description:
   homepage:
 type: workload
 depends:
