@@ -22,7 +22,7 @@ def load_summary(meta, program)
       desc += line.strip unless stop_record
     end
   end
-  meta['description'] = desc
+  meta['description'] = desc if !desc.empty?
 end
 
 def load_params(hash, path)
