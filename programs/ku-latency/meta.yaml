@@ -1,0 +1,10 @@
+metadata:
+  name: ku-latency
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+results:
