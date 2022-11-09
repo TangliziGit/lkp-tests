@@ -1,0 +1,15 @@
+metadata:
+  name: pack-deps
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  rootfs:
+  benchmark:
+  pack_arch:
+  os:
+  os_arch:
+  os_version:
+results:
