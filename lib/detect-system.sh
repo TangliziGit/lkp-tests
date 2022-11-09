@@ -211,6 +211,18 @@ detect_system()
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
+			GREP_OPTIONS="" \command \grep "^ID=\"uos\"" ${rootfs}/etc/os-release >/dev/null
+	then
+		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
+		if command grep -q '^PRETTY_NAME=.*Desktop' ${rootfs}/etc/os-release; then
+			_system_name=uos-deb
+		elif command grep -q '^VERSION_CODENAME="kongzi"' ${rootfs}/etc/os-release; then
+			_system_name=uos-rpm-a
+		else
+			_system_name=uos-rpm-e
+		fi
+	elif
+		[ -f ${rootfs}/etc/os-release ] &&
 			GREP_OPTIONS="" \command \grep "ID=\"rocky\"" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="rocky"
