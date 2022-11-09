@@ -1,0 +1,12 @@
+metadata:
+  name: sysbench-threads-git
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  nr_threads:
+  thread_yields:
+  thread_locks:
+results:
