@@ -1,0 +1,10 @@
+metadata:
+  name: tinymembench
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  tinymembench:
+results:
