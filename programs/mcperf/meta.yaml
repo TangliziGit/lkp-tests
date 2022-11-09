@@ -1,0 +1,16 @@
+metadata:
+  name: mcperf
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  linger:
+  timeout:
+  testsize:
+  conn_rate:
+  call_rate:
+  num_calls:
+  num_conns:
+results:
