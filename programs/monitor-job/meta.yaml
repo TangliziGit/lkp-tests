@@ -1,0 +1,12 @@
+metadata:
+  name: monitor-job
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  monitor_repo:
+  job_yaml:
+  job_testbox:
+results:
