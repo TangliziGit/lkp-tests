@@ -1,0 +1,13 @@
+metadata:
+  name: install-rpm
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+  openeuler@20.03:
+  - dnf-plugins-core
+  - binutils
+params:
+  rpm_name:
+results:
