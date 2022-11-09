@@ -1,0 +1,13 @@
+metadata:
+  name: fio
+  summary: flexible I/O tester
+  description: fio is a tool that will spawn a number of threads or processes doing
+    aparticular type of I/O action as specified by the user. fio takes anumber of
+    global parameters, each inherited by the thread unlessotherwise parameters given
+    to them overriding that setting is given.The typical use of fio is to write a
+    job file matching the I/O loadone wants to simulate.
+  homepage: https://github.com/axboe/fio
+type: workload
+depends:
+params:
+results:
