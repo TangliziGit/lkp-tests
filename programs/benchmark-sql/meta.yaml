@@ -1,0 +1,15 @@
+metadata:
+  name: benchmark-sql
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  warehouses:
+  loadworkers:
+  terminals:
+  runmins:
+  limittxnspermin:
+  runtxnsperterminal:
+results:
