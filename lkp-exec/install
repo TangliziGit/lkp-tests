@@ -273,7 +273,7 @@ do
 	fi
 done
 
-mapping=$($LKP_SRC/sbin/pkgmap --to-os="$distro@_system_version:$(arch)" $all_scripts)
+mapping=$($LKP_SRC/sbin/pkgmap --to-os="$distro@_system_version" $all_scripts)
 pip_packages=$(echo "$mapping" | grep "^pip: " | cut -f2 -d:)
 gem_packages=$(echo "$mapping" | grep "^gem: " | cut -f2 -d:)
 os_packages=$(echo "$mapping" | grep "^os: " | cut -f2 -d:)
