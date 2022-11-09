@@ -1,0 +1,17 @@
+metadata:
+        name: oec-hardware
+        summary:
+        description:
+        homepage:
+type: workload
+depends:
+        openeuler@22.03:
+          - oec-hardware
+          - oec-hardware-server
+          - python3
+          - python3-devel
+          - expect
+          - ethtool
+          - wget
+params:
+results:
