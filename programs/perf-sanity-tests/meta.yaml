@@ -1,0 +1,9 @@
+metadata:
+  name: perf-sanity-tests
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+results:
