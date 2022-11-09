@@ -31,7 +31,7 @@ $stdin.each_line do |line|
       cpus.each_with_index do |cpu, i|
         val = values[i + 1].to_i
         sum += val
-        puts "#{cpu}.#{key}: #{values[i + 1]}"
+        # puts "#{cpu}.#{key}: #{values[i + 1]}"
       end
       puts "#{key}: #{sum}"
     end
