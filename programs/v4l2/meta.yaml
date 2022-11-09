@@ -1,0 +1,10 @@
+metadata:
+  name: v4l2
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  test:
+results:
