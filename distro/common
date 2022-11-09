@@ -60,6 +60,7 @@ ospkg_update_install()
 {
 	ospkg_update_ratelimit
 
+	echo "Installing packages $*"
 	ospkg_install "$*" ||
 	ospkg_install "$@"
 }

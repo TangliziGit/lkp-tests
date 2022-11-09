@@ -92,8 +92,5 @@ DEPENDENCIES
   simplecov-rcov
   term-ansicolor
 
-RUBY VERSION
-   ruby 3.0.3p157
-
 BUNDLED WITH
    2.3.25

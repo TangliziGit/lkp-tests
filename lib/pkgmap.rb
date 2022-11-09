@@ -45,7 +45,7 @@ end
 
 def show_hset(h)
   h.each do |k, v|
-    puts "#{k}: #{v.join ' '}"
+    puts "#{k}: #{v.to_a.join ' '}"
   end
 end
 

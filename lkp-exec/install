@@ -192,43 +192,18 @@ verify_install() {
 	esac
 }
 
-makepkg_install_packages() {
-	local script=$1
-	local distro=$2
-
-	local packages dev_packages pkg
-	packages="$(get_dependency_packages ${distro} ${script} pkg)"
-	dev_packages="$(get_dependency_packages ${distro} ${script}-dev pkg)"
-	packages="$(echo $packages $dev_packages | tr '\n' ' ')"
-	[ -n "$packages" ] && [ "$packages" != " " ] || return
-
-	for pkg in $packages; do
-		[ "$pkg" = "$script" ] && continue
+make_install_packages() {
+	for pkg
+	do
 		if ! verify_install $pkg; then
-			install_packages "$pkg" "$distro"
-			makepkg_install_packages "$pkg" "$distro"
 			makepkg_install "$pkg" || echo "Install $pkg failed"
 		fi
 	done
 }
 
-makepkg_install_benchmark() {
-	local pkg=$1
-	if grep -w "^$pkg:" "$LKP_SRC/distro/adaptation-pkg/$distro"; then
-		makepkg_install "$pkg" || echo "Install $pkg failed"
-	fi
-}
-
 install_packages() {
-	local script=$1
-	local distro=$2
+	local generic_packages="$*"
 
-	local packages="$(get_dependency_packages ${distro} ${script})"
-	local dev_packages="$(get_dependency_packages ${distro} ${script}-dev)"
-	local generic_packages="$(echo $packages $dev_packages | tr '\n' ' ')"
-	[ -n "$generic_packages" -a "$generic_packages" != " " ] || return
-
-	[ "$distro" = "debian" ] && remove_packages_repository
 	echo "Installing packages with: $LKP_SRC/distro/installer $distro $generic_packages"
 	[ -n "$DRY_RUN" ] && return
 
@@ -246,54 +221,9 @@ install_packages() {
 	}
 }
 
-build_install_benchmarks() {
-	local script=$1
-	local distro=$2
-	local force_install=$3
-
-	[ -x "$LKP_SRC/pack/$script" ] || return 0
-
-	echo "Making $script benchmark for $distro"
-	[ -n "$DRY_RUN" ] && return
-
-	[ "$script" = 'perf' ] && perf -v 2>/dev/null && {
-		echo "perf tool exists, skip building"
-		return 0
-	}
-
-	local pkg_name
-	pkg_name=$(printf '%s-LKP\n' "$script" | sed 's/_/-/g')
-
-	$LKP_SRC/sbin/pack -d $distro -c $force_install $script
-	if [ $? -eq 0 ]; then
-		echo "Installing $pkg_name"
-
-		case $distro in
-		debian|ubuntu)
-			local deb_pkg=/tmp/$pkg_name.deb
-			[ -f $deb_pkg ] || return 0
-			dpkg -i $deb_pkg 2>/tmp/dpkg_error || {
-				grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/dpkg_error
-				return 1
-			}
-			;;
-		fedora)
-			BUILD_DIR=$(get_build_dir $script)
-			local rpm_pkg=$BUILD_DIR/$pkg_name/RPMS/$pkg_name.$arch.rpm
-			[ -f $rpm_pkg ] || return
-			rpm -ivh --replacepkgs $rpm_pkg ;;
-		*)
-			echo "Just make /lkp/benchmarks/$script-$arch.cgz" ;;
-		esac
-	else
-		echo "Making $pkg_name failed"
-		return 1
-	fi
-}
-
 install_base_support()
 {
-	install_packages "lkp" "$distro"
+	echo "Installing ruby gems..."
 
 	if [ -n "$CHINA" ]; then
 		gem install bundler --clear-sources -s https://gems.ruby-china.com/
@@ -331,32 +261,22 @@ validate_parameters "$@" || exit 1
 
 [ -n "$SKIP_BASE" ] || install_base_support
 
+all_scripts='lkp makepkg'
 for filename in "$@"
 do
-	scripts=
 	if [ -x "$filename" ]; then
-		scripts=$(basename $filename)
+		all_scripts+=" $(basename $filename) "
 	elif [ ${filename##*.} = "yaml" ]; then
 		parse_yaml $filename
+		all_scripts+=" $scripts "
 	fi
-
-	for script in $scripts
-	do
-		[ -L "$LKP_SRC/pack/$script" ] && {
-			real_script=$(readlink "$LKP_SRC/pack/$script")
-			script=$(basename "$real_script")
-		}
-
-		[ -z "$makepkg_once" ] && [ -d "$LKP_SRC/pkg/$script" ] && ! [ -x "$LKP_SRC/pack/$script" ] && {
-			install_packages "makepkg" $distro
-			makepkg_once=1
-		}
-		install_packages "$script" $distro
-		makepkg_install_packages "$script" $distro
-		if [ -n "$FORCE_MODE" ] || ! verify_install "$script"; then
-			makepkg_install_benchmark "$script"
-		fi
-		[ -n "$FORCE_MODE" ] && install_opt="-f"
-		build_install_benchmarks "$script" $distro $install_opt || exit 1
-	done
 done
+
+mapping=$($LKP_SRC/sbin/pkgmap --to-os="$distro@_system_version:$(arch)" $all_scripts)
+pip_packages=$(echo "$mapping" | grep "^pip: ")
+gem_packages=$(echo "$mapping" | grep "^gem: ")
+os_packages=$(echo "$mapping" | grep "^os: ")
+pkgbuild_packages=$(echo "$mapping" | grep "^PKGBUILD: ")
+
+install_packages $os_packages
+make_install_packages $pkgbuild_packages
