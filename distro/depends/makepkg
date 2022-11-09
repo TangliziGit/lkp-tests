@@ -4,3 +4,5 @@ gettext
 ncurses-bin
 binutils
 fakeroot
+libarchive-tools
+file
