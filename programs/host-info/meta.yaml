@@ -1,0 +1,9 @@
+metadata:
+  name: host-info
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
