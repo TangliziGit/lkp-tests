@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-LKP_SRC = ENV['LKP_SRC'] || File.dirname(__dir__)
-
 require 'fileutils'
 require 'yaml'
 require 'json'
