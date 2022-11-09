@@ -1,0 +1,11 @@
+metadata:
+  name: ndctl
+  summary: Utility for managing the nvdimm subsystem
+  description: The nvdimm subsystem defines a kernel device model and control messageinterface
+    for platform NVDIMM resources like those defined by the ACPI 6+ NFIT(NVDIMM Firmware
+    Interface Table).
+  homepage: https://github.com/pmem/ndctl
+type: workload
+depends:
+params:
+results:
