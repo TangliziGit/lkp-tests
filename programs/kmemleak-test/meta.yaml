@@ -1,0 +1,10 @@
+metadata:
+  name: kmemleak-test
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+results:
