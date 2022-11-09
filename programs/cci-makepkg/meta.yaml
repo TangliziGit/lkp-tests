@@ -1,0 +1,10 @@
+metadata:
+  name: cci-makepkg
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  benchmark:
+results:
