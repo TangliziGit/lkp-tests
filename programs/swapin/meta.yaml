@@ -1,0 +1,9 @@
+metadata:
+  name: swapin
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+results:
