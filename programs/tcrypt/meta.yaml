@@ -1,0 +1,11 @@
+metadata:
+  name: tcrypt
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  modes:
+  period:
+results:
