@@ -1,0 +1,9 @@
+metadata:
+  name: cpu-hotplug
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
