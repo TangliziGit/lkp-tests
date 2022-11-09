@@ -1,0 +1,10 @@
+metadata:
+  name: stream
+  summary: 
+  description:
+  homepage:
+type: workload
+depends:
+  PKGBUILD: stream
+params:
+results:

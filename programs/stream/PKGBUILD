@@ -2,6 +2,7 @@ pkgname=stream
 pkgver=1
 pkgrel=1
 arch=('i386' 'x86_64' 'riscv64')
+makedepends=('openssl')
 url="https://gitee.com/thesamename/STREAM"
 license=('GPL')
 source=("https://gitee.com/thesamename/STREAM/raw/master/stream.c")
