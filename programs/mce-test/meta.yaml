@@ -1,0 +1,10 @@
+metadata:
+  name: mce-test
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  mce_case:
+results:
