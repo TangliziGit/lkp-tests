@@ -116,7 +116,8 @@ class PackageMapper
   end
 
   def add_reverse_pkgmap
-    @ospkgmap.each_key do |os2os|
+    keys = @ospkgmap.keys # keep the variable to avoid robocup warning
+    keys.each do |os2os|
       from_os, to_os = os2os.split('..')
       o2o = "#{to_os}..#{from_os}"
       @ospkgmap[o2o] ||= {}
