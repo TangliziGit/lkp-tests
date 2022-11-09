@@ -1,0 +1,14 @@
+metadata:
+  name: lz4
+  summary: Fast LZ compression algorithm library - tool
+  description: LZ4 is a very fast lossless compression algorithm, providing compression
+    speedat 400 MB/s per core, scalable with multi-cores CPU. It also features anextremely
+    fast decoder, with speed in multiple GB/s per core, typicallyreaching RAM speed
+    limits on multi-core systems.
+  homepage: https://github.com/lz4/lz4
+type: workload
+depends:
+params:
+  compression:
+  iterations:
+results:
