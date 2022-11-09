@@ -1,0 +1,15 @@
+metadata:
+  name: iso2rootfs-x86
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  iso_os:
+  iso_arch:
+  iso_version:
+  rootfs_protocol:
+  rootfs_server:
+  rootfs_path:
+results:
