@@ -1,0 +1,9 @@
+metadata:
+  name: xsave-test
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+results:
