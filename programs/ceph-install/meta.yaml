@@ -1,0 +1,18 @@
+metadata:
+  name: ceph-install
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  cephfs_mount_point:
+  ceph_data_pool:
+  ceph_metadata_pool:
+  ceph_block_pool:
+  ceph_pg_num:
+  ceph_pgp_num:
+  ceph_images_size:
+  ceph_images_num:
+  ceph_images_range:
+results:
