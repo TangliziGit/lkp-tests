@@ -1,0 +1,14 @@
+metadata:
+  name: hpcc
+  summary: HPC Challenge benchmark
+  description: The High Performance Computing (HPC) Challenge benchmark runs a suiteof
+    7 tests that measure the performance of CPU, memory and network forHPC clusters.  Amongst
+    others, it includes the High-Performance LINPACK(HPL) benchmark, used by the Top500
+    ranking (http://www.top500.org/).
+  homepage: https://hpcchallenge.org/hpcc/
+type: workload
+depends:
+  ubuntu@18.04:
+  - hpcc
+params:
+results:
