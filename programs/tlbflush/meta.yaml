@@ -1,0 +1,12 @@
+metadata:
+  name: tlbflush
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  nr_threads:
+  entries:
+  iterations:
+results:
