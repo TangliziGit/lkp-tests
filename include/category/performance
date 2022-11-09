@@ -25,7 +25,6 @@ cpufreq-stats:
 % if !job['arch'] or job['arch'] =~ /x86|i*86/
 turbostat:
 % end
-sched_debug:
 perf-stat:
 mpstat:
 
