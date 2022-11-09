@@ -1,0 +1,10 @@
+metadata:
+  name: libhugetlbfs-test
+  summary:
+  description: ''
+  homepage:
+type: workload
+depends:
+params:
+  pagesize:
+results:
