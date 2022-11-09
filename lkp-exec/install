@@ -274,10 +274,10 @@ do
 done
 
 mapping=$($LKP_SRC/sbin/pkgmap --to-os="$distro@_system_version:$(arch)" $all_scripts)
-pip_packages=$(echo "$mapping" | grep "^pip: ")
-gem_packages=$(echo "$mapping" | grep "^gem: ")
-os_packages=$(echo "$mapping" | grep "^os: ")
-pkgbuild_packages=$(echo "$mapping" | grep "^PKGBUILD: ")
+pip_packages=$(echo "$mapping" | grep "^pip: " | cut -f2 -d:)
+gem_packages=$(echo "$mapping" | grep "^gem: " | cut -f2 -d:)
+os_packages=$(echo "$mapping" | grep "^os: " | cut -f2 -d:)
+pkgbuild_packages=$(echo "$mapping" | grep "^PKGBUILD: " | cut -f2 -d:)
 
 install_packages $os_packages
 make_install_packages $pkgbuild_packages
