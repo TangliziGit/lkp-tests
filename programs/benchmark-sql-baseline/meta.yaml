@@ -1,0 +1,15 @@
+metadata:
+  name: benchmark-sql-baseline
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  warehouses:
+  loadworkers:
+  terminals:
+  runmins:
+  runtxnsperterminal:
+  limittxnspermin:
+results:
