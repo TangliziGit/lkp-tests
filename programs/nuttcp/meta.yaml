@@ -1,0 +1,15 @@
+metadata:
+  name: nuttcp
+  summary: network performance measurement tool
+  description: nuttcp is a network performance measurement tool intended for use by
+    networkand system managers. Its most basic usage is to determine the raw TCP (or
+    UDP)network layer throughput by transferring memory buffers from a source systemacross
+    an interconnecting network to a destination system, either transferringdata for
+    a specified time interval, or alternatively transferring a specifiednumber of
+    bytes.
+  homepage:
+type: workload
+depends:
+params:
+  runtime:
+results:
