@@ -1,0 +1,18 @@
+metadata:
+  name: siege
+  summary: HTTP regression testing and benchmarking utility
+  description: Siege is an regression test and benchmark utility. It can stress test
+    a singleURL with a user defined number of simulated users, or it can read many
+    URLsinto memory and stress them simultaneously. The program reports the totalnumber
+    of hits recorded, bytes transferred, response time, concurrency, andreturn status.
+    Siege supports HTTP/1.0 and 1.1 protocols, the GET and POSTdirectives, cookies,
+    transaction logging, and basic authentication. Itsfeatures are configurable on
+    a per user basis.
+  homepage: http://www.joedog.org/JoeDog/Siege
+type: workload
+depends:
+params:
+  runtime:
+  iterations:
+  nr_threads:
+results:
