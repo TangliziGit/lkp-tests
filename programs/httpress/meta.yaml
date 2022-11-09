@@ -1,0 +1,17 @@
+metadata:
+  name: httpress
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+params:
+  nic:
+  nic_ip:
+  request_ip:
+  request_port:
+  request_index:
+  core_nums:
+  protocol:
+  alive_type:
+results:
