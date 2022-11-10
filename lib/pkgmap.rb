@@ -65,10 +65,30 @@ class PackageMapper
     @depends = {}             # [program][os_spec] = pkg array
     @depends_dev = {}
     @pkgbuild_depends = {}    # [program][os_spec] = pkg array
+    @os4bash = {}             # [openeuler_22_03] = openeuler@22.03
     load_package_list
     load_meta
     load_depends
     load_pkgmap
+    init_os4bash
+  end
+
+  def init_one_os4bash(os_spec)
+    return if @os4bash.include? os_spec
+    bash_var = os_spec.gsub(/[^a-zA-Z0-9]/, '_')
+    @os4bash[bash_var] = os_spec
+  end
+
+  def init_os4bash
+    init_one_os4bash('PKGBUILD')
+    @ospackage_set.keys.each do |os_spec|
+      init_one_os4bash(os_spec)
+    end
+    @ospkgmap.keys.each do |o2o|
+      os1, os2 = o2o.split('..')
+      init_one_os4bash(os1)
+      init_one_os4bash(os2)
+    end
   end
 
   def load_package_list
