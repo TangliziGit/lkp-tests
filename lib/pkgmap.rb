@@ -30,11 +30,11 @@ def parse_bashx(script)
   output.each_line do |line|
     case line
     when /^\+ depends=\((.*)\)/, /^\+ makedepends=\((.*)\)/
-      bb['depends'] ||= []
-      bb['depends'].concat($1.split.map { |a| a.sub(/^["']/, '').sub(/['"]$/, '').sub(/[>=<].*$/, '') })
+      bb['archlinux'] ||= []
+      bb['archlinux'].concat($1.split.map { |a| a.sub(/^["']/, '').sub(/['"]$/, '').sub(/[>=<].*$/, '') })
     end
   end
-  bb['depends']
+  bb
 end
 
 def hset_merge_one(h1, h2, k)
@@ -64,7 +64,7 @@ class PackageMapper
     @pkgmap2 = {}             # [pkg] = pkg set
     @depends = {}             # [program][os_spec] = pkg array
     @depends_dev = {}
-    @pkgbuild_depends = {}
+    @pkgbuild_depends = {}    # [program][os_spec] = pkg array
     load_package_list
     load_meta
     load_depends
@@ -317,6 +317,34 @@ class PackageMapper
     mapping
   end
 
+  def hset_merge_depends(hh, h)
+      hset_merge_one(hh, h, 'PKGBUILD')
+      hset_merge_one(hh, h, 'os')
+      hset_merge_one(hh, h, 'pip')
+      hset_merge_one(hh, h, 'gem')
+  end
+
+  def add_depends(in_depends, dst_depends, dst_os)
+    pkgbuilds_queue = []
+    loop do
+      return unless in_depends
+      in_depends = in_depends.deep_dup
+      # PKGBUILD means explicit custom build packages
+      pkgbuilds_queue.concat(in_depends['PKGBUILD'] || [])
+      dst_depends['PKGBUILD'].merge(in_depends.delete('PKGBUILD') || [])
+      dst_depends['pip'].merge(in_depends.delete('pip') || [])
+      dst_depends['gem'].merge(in_depends.delete('gem') || [])
+
+      in_depends.each do |src_os, pkgs|
+        h = map_pkgs(pkgs, src_os, dst_os)
+        pkgbuilds_queue.concat  h['PKGBUILD'] if h['PKGBUILD']
+        hset_merge_depends(dst_depends, h)
+      end
+
+      in_depends = @pkgbuild_depends[pkgbuilds_queue.shift]
+    end
+  end
+
   # meta.yaml config:
   #   depends.debian@11: pkgs for debian@11
   #   depends.PKGBUILD: pkgs to build from source
@@ -326,38 +354,13 @@ class PackageMapper
   #   pip: python pkg array
   #   gem: python pkg array
   def map_program(program, dst_os)
-    depends = @depends[program].deep_dup
-    unless depends
-      # puts "#{program}: depends is empty"
-      # pp @depends
-      return {}
-    end
-
-    pip_pkgs = depends.delete 'pip'
-    gem_pkgs = depends.delete 'gem'
-    # explicit custom build packages
-    pkgbuild_pkgs = depends.delete 'PKGBUILD'
-    if pkgbuild_pkgs
-      pkgbuild_pkgs = pkgbuild_pkgs.to_set
-    else
-      pkgbuild_pkgs = Set.new
-    end
-    os_pkgs = Set.new
-    depends.each do |src_os, pkgs|
-      h = map_pkgs(pkgs, src_os, dst_os)
-      os_pkgs.merge        h['os'] if h['os']
-      pkgbuild_pkgs.merge  h['PKGBUILD'] if h['PKGBUILD']
-    end
-    h = get_pkgbuild_depends(pkgbuild_pkgs, dst_os)
-    os_pkgs.merge        h['os'] if h['os']
-    pkgbuild_pkgs.merge  h['PKGBUILD'] if h['PKGBUILD']
-    # assume no multi-level PKGBUILD depends, let's stop here
-    {
-      'PKGBUILD' => pkgbuild_pkgs,
-      'os' => os_pkgs,
-      'pip' => pip_pkgs,
-      'gem' => gem_pkgs
-    }
+    dst_depends = {}
+    dst_depends['pip'] = Set.new
+    dst_depends['gem'] = Set.new
+    dst_depends['os'] = Set.new
+    dst_depends['PKGBUILD'] = Set.new
+    add_depends(@depends[program], dst_depends, dst_os)
+    dst_depends
   end
 
   def map_programs(programs, dst_os)
@@ -365,10 +368,7 @@ class PackageMapper
     programs.each do |program|
       h = map_program(program, dst_os)
       # puts program, h
-      hset_merge_one(hh, h, 'PKGBUILD')
-      hset_merge_one(hh, h, 'os')
-      hset_merge_one(hh, h, 'pip')
-      hset_merge_one(hh, h, 'gem')
+      hset_merge_depends(hh, h)
     end
     hh
   end
