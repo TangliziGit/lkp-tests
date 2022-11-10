@@ -16,6 +16,15 @@ depends:
   - fakeroot
   - libarchive-tools
   - file
+  - openssl
+  - gawk
+  - coreutils
+  - findutils
+  - grep
+  - sed
+  - gzip
+  - bzip2
+  - xz-utils
 params:
   rootfs:
   benchmark:
