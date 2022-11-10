@@ -18,7 +18,13 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
+[ -n "$LKP_SRC" ] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 . $LKP_SRC/lib/env.sh
+
+safe_grep()
+{
+	GREP_OPTIONS="" command grep "$@"
+}
 
 parse_executable_arch()
 {
@@ -44,7 +50,7 @@ detect_arch_by_readelf()
 {
 	has_cmd readelf || return
 
-	parse_executable_arch "$(readelf -h $1 | grep -m1 '  Machine:')"
+	parse_executable_arch "$(readelf -h $1 | safe_grep -m1 '  Machine:')"
 }
 
 detect_arch_by_file()
@@ -114,13 +120,13 @@ detect_system()
 
 	if
 		[ -f ${rootfs}/etc/lsb-release ] &&
-			GREP_OPTIONS="" \command \grep "DISTRIB_ID=Ubuntu"    ${rootfs}/etc/lsb-release >/dev/null
+			safe_grep "DISTRIB_ID=Ubuntu"    ${rootfs}/etc/lsb-release >/dev/null
 	then
 		_system_name="Ubuntu"
 		_system_version="$(awk -F'=' '$1=="DISTRIB_RELEASE"{print $2}' ${rootfs}/etc/lsb-release | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/lsb-release ] &&
-			GREP_OPTIONS="" \command \grep "DISTRIB_ID=LinuxMint" ${rootfs}/etc/lsb-release >/dev/null
+			safe_grep "DISTRIB_ID=LinuxMint" ${rootfs}/etc/lsb-release >/dev/null
 	then
 		_system_name="Mint"
 		_system_version="$(awk -F'=' '$1=="DISTRIB_RELEASE"{print $2}' ${rootfs}/etc/lsb-release | head -n 1)"
@@ -131,19 +137,19 @@ detect_system()
 		detect_libc_version $rootfs
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep 'ID="opensuse-leap"' ${rootfs}/etc/os-release >/dev/null
+			safe_grep 'ID="opensuse-leap"' ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="OpenSuSE-LEAP"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"");print $2}' ${rootfs}/etc/os-release | head -n 1)" #'
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=opensuse" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=opensuse" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="OpenSuSE"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"");print $2}' ${rootfs}/etc/os-release | head -n 1)" #'
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep 'ID="sles"' ${rootfs}/etc/os-release >/dev/null
+			safe_grep 'ID="sles"' ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="SLES"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"");print $2}' ${rootfs}/etc/os-release | head -n 1)" #'
@@ -161,7 +167,7 @@ detect_system()
 		_system_version="$(\command \cat ${rootfs}/etc/debian_version | \command \awk -F. '{print $1}' | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=debian" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=debian" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="Debian"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"");print $2}' ${rootfs}/etc/os-release | \command \awk -F. '{print $1}' | head -n 1)" #'
@@ -177,7 +183,7 @@ detect_system()
 		detect_libc_version $rootfs
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=Exaleap-riscv-linux" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=Exaleap-riscv-linux" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{print $2}'  ${rootfs}/etc/os-release | head -n 1)"
 		_system_name="Exaleap-riscv-linux"
@@ -185,45 +191,45 @@ detect_system()
 		[ -f ${rootfs}/etc/fedora-release ]
 	then
 		_system_name="Fedora"
-		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9]+' ${rootfs}/etc/fedora-release | head -n 1)"
+		_system_version="$(safe_grep -Eo '[0-9]+' ${rootfs}/etc/fedora-release | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/oracle-release ]
 	then
 		_system_name="Oracle"
-		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/oracle-release  | \command \awk -F. '{print $1}' | head -n 1)"
+		_system_version="$(safe_grep -Eo '[0-9\.]+' ${rootfs}/etc/oracle-release  | \command \awk -F. '{print $1}' | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=\"eywa\"" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=\"eywa\"" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="Eywa"
-		_system_version="$(grep 'VERSION_ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2)"
+		_system_version="$(safe_grep 'VERSION_ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=\"openEuler\"" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=\"openEuler\"" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="openEuler"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=\"anolis\"" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=\"anolis\"" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="anolis"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "^ID=\"uos\"" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "^ID=\"uos\"" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
-		if command grep -q '^PRETTY_NAME=.*Desktop' ${rootfs}/etc/os-release; then
+		if safe_grep -q '^PRETTY_NAME=.*Desktop' ${rootfs}/etc/os-release; then
 			_system_name=uos-deb
-		elif command grep -q '^VERSION_CODENAME="kongzi"' ${rootfs}/etc/os-release; then
+		elif safe_grep -q '^VERSION_CODENAME="kongzi"' ${rootfs}/etc/os-release; then
 			_system_name=uos-rpm-a
 		else
 			_system_name=uos-rpm-e
 		fi
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			GREP_OPTIONS="" \command \grep "ID=\"rocky\"" ${rootfs}/etc/os-release >/dev/null
+			safe_grep "ID=\"rocky\"" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_name="rocky"
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
@@ -231,24 +237,24 @@ detect_system()
 		[ -f ${rootfs}/etc/redhat-release ] && [ ! -f ${rootfs}/etc/oracle-release ]
 	then
 		_system_name="$(
-		GREP_OPTIONS="" \command \grep -Eo 'CentOS|ClearOS|Mageia|PCLinuxOS|Scientific|ROSA Desktop|OpenMandriva' ${rootfs}/etc/redhat-release 2>/dev/null | \command \head -n 1 | \command \sed "s/ //"
+		safe_grep -Eo 'CentOS|ClearOS|Mageia|PCLinuxOS|Scientific|ROSA Desktop|OpenMandriva' ${rootfs}/etc/redhat-release 2>/dev/null | \command \head -n 1 | \command \sed "s/ //"
 		)"
 		_system_name="${_system_name:-RedHat}"
-		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/redhat-release  | \command \awk -F. 'NR==1{print $1}' | head -n 1)"
+		_system_version="$(safe_grep -Eo '[0-9\.]+' ${rootfs}/etc/redhat-release  | \command \awk -F. 'NR==1{print $1}' | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/centos-release ]
 	then
 		_system_name="CentOS"
-		_system_version="$(GREP_OPTIONS="" \command \grep -Eo '[0-9\.]+' ${rootfs}/etc/centos-release  | \command \awk -F. '{print $1}' | head -n 1)"
+		_system_version="$(safe_grep -Eo '[0-9\.]+' ${rootfs}/etc/centos-release  | \command \awk -F. '{print $1}' | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/os-release ]
 	then
-		_system_name="$(grep '^ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2 | tr -d '"')"
-		_system_version="$(grep '^VERSION_ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2 | tr -d '"')"
+		_system_name="$(safe_grep '^ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2 | tr -d '"')"
+		_system_version="$(safe_grep '^VERSION_ID=' ${rootfs}/etc/os-release | cut -d '=' -f 2 | tr -d '"')"
 	elif
 		has_cmd hostnamectl
 	then
-		_system_name=$(hostnamectl status | grep 'Operating System' | awk '{print $3}')
+		_system_name=$(hostnamectl status | safe_grep 'Operating System' | awk '{print $3}')
 		[ "$_system_name" = "Clear" ] && _system_version=$(swupd info | head -1 | awk '{print $3}')
 	else
 		detect_libc_version $rootfs
