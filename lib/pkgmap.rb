@@ -6,6 +6,7 @@ require 'json'
 require 'set'
 require 'pp'
 require 'open3'
+require 'active_support/core_ext/object/deep_dup'
 
 def parse_os_spec(os_spec)
   tmp, arch = os_spec.split(':')
@@ -325,7 +326,7 @@ class PackageMapper
   #   pip: python pkg array
   #   gem: python pkg array
   def map_program(program, dst_os)
-    depends = @depends[program]
+    depends = @depends[program].deep_dup
     unless depends
       # puts "#{program}: depends is empty"
       # pp @depends
