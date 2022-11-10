@@ -266,15 +266,22 @@ fi
 
 for filename in "$@"
 do
-	if [ -x "$filename" ]; then
-		all_scripts+=" $(basename $filename) "
-	elif [ ${filename##*.} = "yaml" ]; then
+	if [ ${filename##*.} = "yaml" ]; then
 		check_yaml_file $filename
 		parse_yaml $filename
 		all_scripts+=" $scripts "
-        else
-            echo "$0: skip unknown parameter $filename" >&2
-            exit 1
+	elif [ -e "$LKP_SRC/depends/$filename" 	]; then all_scripts+=" $filename "
+	elif [ -d "$LKP_SRC/setup/$filename" 	]; then all_scripts+=" $filename "
+	elif [ -d "$LKP_SRC/programs/$filename" ]; then all_scripts+=" $filename "
+	elif [ -d "$LKP_SRC/monitors/$filename" ]; then all_scripts+=" $filename "
+	else
+		glob=($LKP_SRC/*/run-$filename)
+		if test -f "$glob"; then
+			all_scripts+=" $filename "
+		else
+			echo "$0: skip unknown parameter $filename" >&2
+			exit 1
+		fi
 	fi
 done
 
