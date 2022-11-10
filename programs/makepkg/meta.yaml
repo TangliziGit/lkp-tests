@@ -7,8 +7,15 @@ metadata:
   homepage: https://archlinux.org/pacman/
 type: workload
 depends:
-  PKGBUILD:
-  - makepkg
+  debian@11:
+  - curl
+  - gnupg2
+  - gettext
+  - ncurses-bin
+  - binutils
+  - fakeroot
+  - libarchive-tools
+  - file
 params:
   rootfs:
   benchmark:
