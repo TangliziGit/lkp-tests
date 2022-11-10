@@ -20,7 +20,7 @@ def parse_os_spec(os_spec)
 end
 
 def parse_bashx(script)
-  hash = {}
+  bb = {}
   output = %x(PATH= /bin/bash -x #{script} 2>&1)
   # this won't work
   # Open3.popen2e(['/usr/bin/env', 'PATH=', '/bin/bash', '-x', script]) { |i, o|
@@ -29,11 +29,11 @@ def parse_bashx(script)
   output.each_line do |line|
     case line
     when /^\+ depends=\((.*)\)/, /^\+ makedepends=\((.*)\)/
-      hash['depends'] ||= []
-      hash['depends'].concat($1.split.map { |a| a.sub(/^["']/, '').sub(/['"]$/, '').sub(/[>=<].*$/, '') })
+      bb['depends'] ||= []
+      bb['depends'].concat($1.split.map { |a| a.sub(/^["']/, '').sub(/['"]$/, '').sub(/[>=<].*$/, '') })
     end
   end
-  hash['depends']
+  bb['depends']
 end
 
 def hset_merge_one(h1, h2, k)
@@ -216,8 +216,8 @@ class PackageMapper
   end
 
   def check_depends
-    @depends.each do |program, hash|
-      hash.each do |os, pkgs|
+    @depends.each do |program, o2p|
+      o2p.each do |os, pkgs|
         next unless @ospackage_set.include? os
 
         pkgs.each do |pkg|
@@ -360,16 +360,16 @@ class PackageMapper
   end
 
   def map_programs(programs, dst_os)
-    hash = {}
+    hh = {}
     programs.each do |program|
       h = map_program(program, dst_os)
       # puts program, h
-      hset_merge_one(hash, h, 'PKGBUILD')
-      hset_merge_one(hash, h, 'os')
-      hset_merge_one(hash, h, 'pip')
-      hset_merge_one(hash, h, 'gem')
+      hset_merge_one(hh, h, 'PKGBUILD')
+      hset_merge_one(hh, h, 'os')
+      hset_merge_one(hh, h, 'pip')
+      hset_merge_one(hh, h, 'gem')
     end
-    hash
+    hh
   end
 
   def get_pkgbuild_depends(pkgs, dst_os)
