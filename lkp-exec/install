@@ -1,5 +1,8 @@
 #!/bin/bash
 
+[ -n "$LKP_SRC" ] ||
+export LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
+
 . $LKP_SRC/lib/result.sh
 . $LKP_SRC/lib/lkp_cmd.sh
 . $LKP_SRC/lib/env.sh
