@@ -20,6 +20,14 @@ def parse_os_spec(os_spec)
   }
 end
 
+def parse_bash_array(str)
+  str.split.map do |a|
+    a.sub(/^["']/, '').
+      sub(/['"]$/, '').
+      sub(/[>=<].*$/, '')
+  end
+end
+
 def parse_bashx(script)
   bb = {}
   output = %x(PATH= /bin/bash -x #{script} 2>&1)
@@ -31,7 +39,16 @@ def parse_bashx(script)
     case line
     when /^\+ depends=\((.*)\)/, /^\+ makedepends=\((.*)\)/
       bb['archlinux'] ||= []
-      bb['archlinux'].concat($1.split.map { |a| a.sub(/^["']/, '').sub(/['"]$/, '').sub(/[>=<].*$/, '') })
+      bb['archlinux'].concat(parse_bash_array($1))
+    when /^\+ depends_(.*)=\((.*)\)/, /^\+ makedepends_(.*)=\((.*)\)/
+      os = @os4bash[$1]
+      if os
+        bb[os] ||= []
+        bb[os].concat(parse_bash_array($2))
+      else
+        puts @os4bash
+        puts "warning: #{script}: unknown depends for #{$1}"
+      end
     end
   end
   bb
@@ -70,7 +87,11 @@ class PackageMapper
     load_meta
     load_depends
     load_pkgmap
-    init_os4bash
+    add_pkgbuild_pkgs
+    check_pkgmap
+    add_reverse_pkgmap
+    add_global_pkgmap
+    add_global_pkgmap2
   end
 
   def init_one_os4bash(os_spec)
@@ -96,7 +117,6 @@ class PackageMapper
       os_spec = File.basename(path)
       @ospackage_set[os_spec] = File.read(path).split.to_set
     end
-    add_pkgbuild_pkgs
   end
 
   def load_pkgmap
@@ -105,10 +125,6 @@ class PackageMapper
       @ospkgmap[os2os] ||= {}
       @ospkgmap[os2os].merge! YAML.load_file(path)
     end
-    check_pkgmap
-    add_reverse_pkgmap
-    add_global_pkgmap
-    add_global_pkgmap2
   end
 
   def add_global_pkgmap
@@ -402,6 +418,7 @@ class PackageMapper
   end
 
   def add_pkgbuild_pkgs
+    init_os4bash
     # legacy layout
     Dir.glob("#{LKP_SRC}/pkg/*/PKGBUILD").each do |path|
       pkg = File.basename(File.dirname(path))
