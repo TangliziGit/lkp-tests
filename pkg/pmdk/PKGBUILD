@@ -6,6 +6,7 @@ arch=('x86_64')
 url="https://github.com/pmem/pmdk"
 license=('Intel')
 depends=('')
+makedepends_debian_11=(autoconf pkg-config ndctl)
 source=("https://github.com/pmem/pmdk/archive/$pkgver.tar.gz")
 md5sums=('SKIP')
 

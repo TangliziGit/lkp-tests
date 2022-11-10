@@ -4,6 +4,7 @@ pkgrel=1
 url="https://github.com/filebench/filebench"
 arch=('x86_64' 'i386')
 license=('GPL')
+makedepends_debian_11=(automake libtool bison flex)
 source=("https://github.com/filebench/filebench.git")
 md5sums=('SKIP')
 

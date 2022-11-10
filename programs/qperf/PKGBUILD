@@ -17,6 +17,7 @@ backup=()
 options=()
 install=
 changelog=
+makedepends_debian_11=(libibverbs-dev librdmacm-dev)
 source=(http://www.openfabrics.org/downloads/qperf/$pkgname-$pkgver.tar.gz)
 noextract=()
 md5sums=(a9eea1953ee5379e57ae5fd7b09fecf2) #generate with 'makepkg -g'

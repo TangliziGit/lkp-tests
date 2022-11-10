@@ -4,6 +4,7 @@ pkgrel=1
 arch=('aarch64' 'x86_64')
 url="http://www.mysql.com"
 license=('GPLv2')
+makedepends_debian_11=(cmake doxygen bison ncurses-devel openssl-devel libtool tar rpcgen libtirpc-dev bison bc git gcc-c++ libaio libaio-devel)
 source=("https://cdn.mysql.com/archives/mysql-8.0/mysql-boost-$pkgver.tar.gz"
 	"https://ghproxy.com/https://github.com/kunpengcompute/mysql-server/releases/download/tp_v1.0.0/0001-SHARDED-LOCK-SYS.patch"
 	"https://ghproxy.com/https://github.com/kunpengcompute/mysql-server/releases/download/tp_v1.0.0/0002-LOCK-FREE-TRX-SYS.patch"

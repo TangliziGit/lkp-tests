@@ -4,6 +4,7 @@ pkgrel=1
 url='https://github.com/antonblanchard/will-it-scale.git'
 arch=('i386' 'x86_64')
 license=('GPL')
+makedepends_debian_11=(libhwloc-dev zlib1g-dev)
 source=('https://github.com/antonblanchard/will-it-scale.git'
 	https://www.python.org/ftp/python/3.8.3/Python-3.8.3.tar.xz)
 md5sums=('SKIP' 'SKIP')

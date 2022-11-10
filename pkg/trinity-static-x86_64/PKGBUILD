@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://github.com/kernelslacker/trinity"
 license=('GPL')
+makedepends_debian_11=(autopoint debhelper dh-autoreconf dh-strip-nondeterminism gettext gettext-base groff-base intltool-debian libarchive-zip-perl libcroco3 libfile-stripnondeterminism-perl libicu67 libpipeline1 libtimedate-perl libxml2 man-db po-debconf gcc-multilib)
 source=("https://github.com/kernelslacker/trinity.git")
 md5sums=('SKIP')
 

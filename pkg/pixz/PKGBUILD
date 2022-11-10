@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://github.com/vasi/pixz.git"
 license=('GPL')
+makedepends_debian_11=(asciidoc libarchive-dev liblzma-dev pkg-config)
 source=("https://github.com/vasi/pixz.git")
 md5sums=('SKIP')
 

@@ -4,6 +4,7 @@ pkgrel=1
 url='https://sourceforge.net/projects/re-aim-7'
 arch=('i386' 'x86_64')
 license=('GPL')
+makedepends_debian_11=(libaio-dev)
 source=('https://sourceforge.net/projects/re-aim-7/files/re-aim/7.0.1.13/osdl-aim-7.0.1.13.tar.gz')
 md5sums=('925eb6675ce86cb011699f38468a1fd1')
 

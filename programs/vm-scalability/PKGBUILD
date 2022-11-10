@@ -5,6 +5,7 @@ arch=('i386' 'x86_64' 'riscv64')
 url=""
 license=('GPL2')
 depends=()
+makedepends_debian_11=(libnuma-dev)
 source=("https://git.kernel.org/pub/scm/linux/kernel/git/wfg/${pkgname}.git")
 sha256sums=('SKIP')
 

@@ -5,6 +5,7 @@ pkgdesc="tool to load and stress a computer"
 arch=('i386' 'x86_64' 'riscv64')
 url="http://kernel.ubuntu.com/~cking/stress-ng/"
 license=('GPL')
+makedepends_debian_11=(libaio-dev libapparmor-dev libattr1-dev libbsd-dev libcap-dev libgcrypt20-dev libipsec-mb-dev libjudy-dev libkeyutils-dev libsctp-dev zlib1g-dev linux-libc-dev libbsd-dev)
 source=("https://github.com/ColinIanKing/stress-ng.git")
 md5sums=('SKIP')
 

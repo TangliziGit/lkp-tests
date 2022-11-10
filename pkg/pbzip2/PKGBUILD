@@ -4,6 +4,7 @@ pkgrel=9
 arch=('i386' 'x86_64')
 url="https://launchpad.net/pbzip2"
 license=('GPL')
+makedepends_debian_11=(libbz2-dev)
 source=("https://launchpad.net/$pkgname/$pkgver/$pkgver.$pkgrel/+download/${pkgname}-$pkgver.$pkgrel.tar.gz")
 md5sums=('39dd4c61d71727681c31879a6c8b60ca')
 

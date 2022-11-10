@@ -6,6 +6,7 @@ arch=(x86_64)
 url="https://github.com/iovisor/bcc"
 license=(Apache License)
 depends=('')
+makedepends_debian_11=(bison build-essential cmake flex git libedit-dev llvm-dev libclang-dev zlib1g-dev libelf-dev)
 source=('https://github.com/iovisor/bcc.git')
 md5sums=('SKIP')
 

@@ -6,6 +6,7 @@ url="https://www.mongodb.com/"
 pkgdesc="A high-performance, open source, schema-free document-oriented database"
 license=('AGPL3')
 depends=()
+makedepends_debian_11=(libcurl4-openssl-dev scons python3-pip python3-dev libssl-dev)
 source=("https://github.com/mongodb/mongo.git")
 sha256sums=('SKIP')
 

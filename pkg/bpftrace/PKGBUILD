@@ -6,6 +6,7 @@ arch=(x86_64)
 url="https://github.com/iovisor/bpftrace"
 license=(Apache License V2)
 depends=('')
+makedepends_debian_11=(bison cmake flex g++ git libelf-dev zlib1g-dev libfl-dev systemtap-sdt-dev binutils-dev llvm-dev llvm-runtime clang libclang-dev libbpfcc-dev libcereal-dev libgtest-dev libgmock-dev asciidoctor)
 source=('https://github.com/iovisor/bpftrace.git')
 md5sums=('SKIP')
 

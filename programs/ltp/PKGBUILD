@@ -5,6 +5,7 @@ url='https://github.com/linux-test-project/ltp'
 arch=('i386' 'x86_64')
 license=('GPL')
 options=('!strip')
+makedepends_debian_11=(libnuma-dev libcap2 libcap-dev libaio-dev libgmp-dev cmake libtirpc-dev libacl1-dev pkg-config xfslibs-dev libtool)
 source=('https://git.centos.org/r/rpms/rusers.git' 'https://github.com/PeterHuewe/tpm-emulator.git' 'https://github.com/numactl/numactl.git' 'https://github.com/linux-test-project/ltp.git')
 md5sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
 

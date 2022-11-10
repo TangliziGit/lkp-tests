@@ -4,6 +4,7 @@ pkgrel=3
 arch=('aarch64' 'x86_64')
 url="http://www.mysql.com"
 license=('GPLv2')
+makedepends_debian_11=(gcc cmake libssl-dev libncurses5-dev libtirpc-dev)
 source=("https://cdn.mysql.com/archives/mysql-8.0/mysql-boost-$pkgver.tar.gz"
 	"0000-mysql-add-fstack-protector-strong.patch"
 	"https://mirrors.huaweicloud.com/kunpeng/archive/openEuler/patch/database/mysql/getcpu.tgz"

@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://github.com/avocado-framework"
 license=('GPL')
+makedepends_debian_11=(libffi-dev libssl-dev libvirt-dev libyaml-dev python3 python3-dev python3-libvirt python3-pip)
 source=("https://github.com/avocado-framework/avocado.git")
 md5sums=('SKIP')
 

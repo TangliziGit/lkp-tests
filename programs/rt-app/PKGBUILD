@@ -4,6 +4,7 @@ pkgrel=1
 url='https://github.com/scheduler-tools/rt-app'
 arch=('i386' 'x86_64')
 license=('GPL')
+makedepends_debian_11=(libjson-c-dev)
 source=('https://github.com/scheduler-tools/rt-app.git')
 md5sums=('SKIP')
 

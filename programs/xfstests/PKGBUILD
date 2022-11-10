@@ -4,6 +4,7 @@ pkgrel=1
 url='https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git'
 arch=('i386' 'x86_64')
 license=('GPL')
+makedepends_debian_11=(uuid-dev libuuid1 attr libattr1-dev acl libacl1-dev libtool-bin libaio-dev gettext libblkid-dev libgdbm-dev pkg-config libicu-dev xfslibs-dev)
 source=('https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git' 'https://git.kernel.org/pub/scm/fs/xfs/xfstests-dev.git' 'https://git.kernel.org/pub/scm/linux/kernel/git/djwong/e2fsprogs.git')
 md5sums=('SKIP' 'SKIP' 'SKIP')
 

@@ -5,6 +5,7 @@ pkgrel=1
 arch=('aarch64' 'x86_64')
 url="http://www.mysql.com"
 license=('GPLv2')
+makedepends_debian_11=(libnuma1 xfsprogs ethtool gcc cmake libssl-dev libncurses5-dev libtirpc-dev rpcsvc-proto-devel rpcgen gmp gmp-devel libmpc libmpc-devel mpfr mpfr-devel openjdk-17-jdk)
 source=("git://$GIT_SERVER/upstream/m/my-sql_with_boostkit_patch/my-sql_with_boostkit_patch.git"
         "git://$GIT_SERVER/upstream/g/gcc/gcc.git"
         "https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/database/patch/benchmarksql5.0-for-mysql.zip"

@@ -6,6 +6,7 @@ arch=(i386 x86_64)
 url=https://bitbucket.org/jisooy/pmbench
 license=(GPL)
 depends=()
+makedepends_debian_11=(uuid-dev libxml2-dev)
 source=('https://bitbucket.org/hying-caritas/pmbench.git')
 md5sums=('SKIP')
 

@@ -4,6 +4,7 @@ pkgrel=1
 url="https://github.com/aegl/mce-test"
 arch=('x86_64' 'i386')
 license=('GPL')
+makedepends_debian_11=(bison flex)
 source=("https://github.com/aegl/mce-test.git" "https://github.com/linux-test-project/ltp.git" "https://git.kernel.org/pub/scm/utils/cpu/mce/mce-inject.git")
 md5sums=('SKIP' 'SKIP' 'SKIP')
 

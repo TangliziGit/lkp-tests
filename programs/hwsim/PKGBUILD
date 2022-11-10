@@ -5,6 +5,7 @@ url='https://github.com/bcopeland/wmediumd.git'
 arch=('i386' 'x86_64')
 license=('GPL')
 makedepends_debian_11=('libdbus-1-dev')
+makedepends_debian_11=(libdbus-1-dev binutils-dev libnl-3-dev libiberty-dev libnl-genl-3-dev libsqlite3-dev libpcap0.8-dev libnl-route-3-dev zlib1g-dev libevent-dev libconfig-dev)
 source=('https://github.com/bcopeland/wmediumd.git' 'git://w1.fi/srv/git/hostap.git')
 md5sums=('SKIP' 'SKIP')
 

@@ -4,6 +4,7 @@ pkgrel=1
 url='https://github.com/pmem/nvml.git'
 arch=('i386' 'x86_64')
 license=('Intel' 'GPL' 'BSD')
+makedepends_debian_11=(cmake clang pkg-config udev libkmod-dev libudev-dev uuid-dev libjson-c-dev bash-completion libkeyutils-dev libiniparser-dev)
 source=('https://github.com/pmem/valgrind.git'
 	'https://github.com/llvm-mirror/llvm.git'
 	'https://github.com/llvm-mirror/libcxxabi.git'

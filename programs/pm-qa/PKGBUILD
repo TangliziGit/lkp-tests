@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://git.linaro.org/power/pm-qa.git"
 license=('GPL')
+makedepends_debian_11=(libx11-dev libgl1-mesa-dev libjpeg-dev libpng-dev libpng16-16 pkg-config sudo)
 source=('https://git.linaro.org/power/pm-qa.git' https://github.com/glmark2/glmark2.git)
 sha256sums=('SKIP' 'SKIP')
 

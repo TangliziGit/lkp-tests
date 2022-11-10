@@ -4,6 +4,7 @@ pkgrel=1
 url='https://github.com/linux-rdma/rdma-core'
 arch=('i386' 'x86_64')
 license=('GPLv2')
+makedepends_debian_11=(build-essential cmake gcc libudev-dev libnl-3-dev libnl-route-3-dev ninja-build pkg-config valgrind cython3 python3-docutils pandoc)
 source=('https://github.com/linux-rdma/rdma-core.git')
 md5sums=('SKIP')
 

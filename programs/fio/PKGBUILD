@@ -6,6 +6,7 @@ arch=(i386 x86_64 riscv64)
 url="https://github.com/axboe/fio"
 license=('GPL')
 depends=('')
+makedepends_debian_11=(build-essential libaio-dev libpmem-dev libnuma-dev)
 source=("https://gitee.com/tan-long/fio.git") # or https://github.com/axboe/fio.git
 md5sums=('SKIP')
 

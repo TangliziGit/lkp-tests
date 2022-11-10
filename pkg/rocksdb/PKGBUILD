@@ -6,6 +6,7 @@ arch=(i386 x86_64)
 url='http://rocksdb.org'
 license=(Apache leveldb)
 depends=()
+makedepends_debian_11=(libsnappy-dev libbz2-dev liblz4-dev zlib1g-dev libgflags-dev)
 source=(https://github.com/facebook/rocksdb.git)
 md5sums=('SKIP')
 

@@ -6,6 +6,7 @@ arch=(i386 x86_64)
 url="https://github.com/leverich/mutilate"
 license=(BSD 3-clause "New" or "Revised" License)
 depends=(scons libevent-dev gengetopt libzmq-dev memcached)
+makedepends_debian_11=(scons libevent-dev gengetopt libzmq3-dev)
 source=('https://github.com/leverich/mutilate.git')
 md5sums=('SKIP')
 

@@ -5,6 +5,7 @@ pkgdesc="A collection of tools for profile collection and performance analysis o
 arch=('i386' 'x86_64')
 url="https://github.com/andikleen/pmu-tools.git"
 license=('GPL2' 'BSD')
+makedepends_debian_11=(binutils-dev bison flex libaudit-dev libdw-dev libiberty-dev liblzma-dev libnuma-dev libunwind-dev zlib1g-dev python3 systemtap-sdt-dev libslang2-dev libgtk2.0-dev libperl-dev python3-dev libzstd-dev libcap-dev libbabeltrace-dev)
 source=("https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git" "https://github.com/andikleen/pmu-tools.git")
 md5sums=('SKIP' 'SKIP')
 

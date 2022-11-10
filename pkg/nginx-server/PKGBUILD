@@ -5,6 +5,7 @@ arch=('i386' 'x86_64')
 url="https://nginx.org"
 license=('BSD')
 nginx_name=("nginx-${pkgver}.${pkgrel}")
+makedepends_debian_11=(pcre-devel libpcre3-dev)
 source=("https://nginx.org/download/${nginx_name}.tar.gz" "blacklist.conf")
 md5sums=('SKIP' 'SKIP')
 

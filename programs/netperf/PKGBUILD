@@ -4,6 +4,7 @@ pkgrel=0
 arch=('i386' 'x86_64')
 url="https://github.com/HewlettPackard/netperf"
 license=('GPL')
+makedepends_debian_11=(libsctp-dev)
 source=("https://github.com/HewlettPackard/netperf/archive/netperf-$pkgver.$pkgrel.tar.gz")
 md5sums=('e0d45b5bca1eee2aef0155de82366202')
 

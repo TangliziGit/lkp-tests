@@ -5,6 +5,7 @@ arch=(i386 x86_64)
 url="https://github.com/facebookarchive/linkbench"
 license=(Apache License)
 depends=('')
+makedepends_debian_11=(maven)
 source=('https://github.com/facebookarchive/linkbench.git')
 md5sums=('SKIP')
 

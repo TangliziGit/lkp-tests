@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://raw.githubusercontent.com/torvalds/linux/master/scripts/leaking_addresses.pl"
 license=('GPL')
+makedepends_debian_11=(jq)
 source=("https://raw.githubusercontent.com/torvalds/linux/master/scripts/leaking_addresses.pl")
 md5sums=('SKIP')
 

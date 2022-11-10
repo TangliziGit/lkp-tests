@@ -5,6 +5,7 @@ pkgdesc="Benchmark tool for evaluating OS parameters that are important for a sy
 url="https://github.com/akopytov/sysbench.git"
 arch=('x86_64' 'i386' 'aarch64')
 license=('GPL')
+makedepends_debian_11=(libtool pkg-config libmariadb-dev)
 source=("https://github.com/akopytov/sysbench/archive/$pkgver.$pkgrel.tar.gz")
 md5sums=('2912bfe7238cac7351459019a84e2557')
 

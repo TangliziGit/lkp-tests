@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://git.linuxtv.org//v4l-utils.git/"
 license=('GPL')
+makedepends_debian_11=(autoconf-archive autotools-dev debhelper dh-autoreconf doxygen gcc git graphviz libasound2-dev libjpeg-dev libqt5opengl5-dev libtool libudev-dev libx11-dev make pkg-config qt5-default qtbase5-dev udev)
 source=("git://linuxtv.org/v4l-utils.git" "https://github.com/umlaeute/v4l2loopback.git")
 md5sums=('SKIP' 'SKIP')
 

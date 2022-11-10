@@ -4,6 +4,7 @@ pkgrel=1
 url='https://github.com/pmem/vmem'
 arch=('i386' 'x86_64')
 license=('Intel' 'Apache 2.0' 'BSD' 'GPL 2.1' )
+makedepends_debian_11=(cmake clang pkg-config udev libkmod-dev libudev-dev uuid-dev libjson-c-dev bash-completion libkeyutils-dev)
 source=(
 	'https://github.com/pmem/vmem.git'
 	'https://github.com/pmem/valgrind.git'

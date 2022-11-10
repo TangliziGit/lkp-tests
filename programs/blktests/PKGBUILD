@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://github.com/osandov/blktests"
 license=('GPL')
+makedepends_debian_11=(linux-libc-dev autopoint pkg-config gettext libncursesw5-dev uuid-runtime)
 source=("https://github.com/osandov/blktests.git" "https://github.com/karelzak/util-linux.git" "https://github.com/linux-nvme/nvme-cli.git")
 md5sums=('SKIP' 'SKIP' 'SKIP')
 

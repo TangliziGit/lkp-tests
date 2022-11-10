@@ -9,6 +9,7 @@ arch=(i386 x86_64)
 url=http://www.nongnu.org/nepim/
 license=(GPL)
 depends=(liboop)
+makedepends_debian_11=(liboop-dev)
 source=("http://download.savannah.gnu.org/releases/nepim/nepim-${pkgver}.tar.gz")
 md5sums=('6f7a09e8cb7e605ebe35815ed9239536')
 

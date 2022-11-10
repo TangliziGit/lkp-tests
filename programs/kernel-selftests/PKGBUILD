@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i686' 'x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
 license=('GPL')
+makedepends_debian_11=(libpopt-dev libpci-dev gettext systemd libelf-dev libudev1 libudev-dev pkg-config libssl-dev libmnl-dev bc libnl-3-dev libnl-genl-3-dev binutils-dev libreadline-dev libpcap-dev autoconf automake libtool m4 libbpf-dev)
 source=('https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git')
 md5sums=('SKIP')
 

@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64')
 url="https://github.com/intel/pm-graph.git"
 license=('GPL')
+makedepends_debian_11=(libcap-dev)
 source=("https://github.com/intel/pm-graph.git"
 	"https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
 	"https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git")
