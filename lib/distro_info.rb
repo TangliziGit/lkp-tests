@@ -24,6 +24,7 @@ module LKP
       path_to_script = "#{LKP_SRC}/lib/detect-system.sh"
 
       @systemname, @systemnamel, @systemversion, @systemarch = %x[
+        export LKP_SRC=#{LKP_SRC}
         . #{path_to_script}
         detect_system #{rootfs}
         echo $_system_name

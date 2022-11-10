@@ -3,6 +3,7 @@
 LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
 
 require "#{LKP_SRC}/lib/pkgmap"
+require "#{LKP_SRC}/lib/distro_info"
 require 'optparse'
 require 'ostruct'
 
@@ -41,6 +42,11 @@ options.parse!(ARGV)
 if ARGV.size.zero?
   puts options
   exit
+end
+
+if opt_to_os.nil?
+  distroinfo = LKP::DistroInfo.instance
+  opt_to_os = "#{distroinfo.systemnamel}@#{distroinfo.systemversion}"
 end
 
 package_mapper = PackageMapper.new
