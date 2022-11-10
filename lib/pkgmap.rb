@@ -366,14 +366,14 @@ class PackageMapper
       return unless in_depends
       in_depends = in_depends.deep_dup
       # PKGBUILD means explicit custom build packages
-      pkgbuilds_queue.concat(in_depends['PKGBUILD'] || [])
+      pkgbuilds_queue.concat(in_depends['PKGBUILD'].to_a)
       dst_depends['PKGBUILD'].merge(in_depends.delete('PKGBUILD') || [])
       dst_depends['pip'].merge(in_depends.delete('pip') || [])
       dst_depends['gem'].merge(in_depends.delete('gem') || [])
 
       in_depends.each do |src_os, pkgs|
         h = map_pkgs(pkgs, src_os, dst_os)
-        pkgbuilds_queue.concat  h['PKGBUILD'] if h['PKGBUILD']
+        pkgbuilds_queue.concat  h['PKGBUILD'].to_a if h['PKGBUILD']
         hset_merge_depends(dst_depends, h)
       end
 
