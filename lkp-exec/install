@@ -161,8 +161,8 @@ makepkg_install() {
 
 	[ -f "$path" ] || path=$LKP_SRC/programs/$pkg/PKGBUILD
 	[ -f "$path" ] || path=$LKP_SRC/monitors/$pkg/PKGBUILD
-	[ -f "$path" ] || path=$LKP_SRC/programs/*/PKGBUILD-$pkg
-	[ -f "$path" ] || path=$LKP_SRC/monitors/*/PKGBUILD-$pkg
+	[ -f "$path" ] || path=($LKP_SRC/programs/*/PKGBUILD-$pkg)
+	[ -f "$path" ] || path=($LKP_SRC/monitors/*/PKGBUILD-$pkg)
 	[ -f "$path" ] || {
 		echo "Failed to find PKGBUILD path for $pkg"
 		return 1
