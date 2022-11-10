@@ -230,6 +230,15 @@ class PackageMapper
     end
   end
 
+  def match_name_variants(pkgset, pkgname)
+    return pkgname if pkgset.include?(pkgname)
+    name = pkgname.sub(/-dev$/, '-devel')
+    return name if pkgset.include?(name)
+    name = pkgname.sub(/-devel$/, '-dev')
+    return name if pkgset.include?(name)
+    return nil
+  end
+
   def map_pkg_direct(pkgname, src_os, dst_os)
     # try 1: find direct mapping
     os2os = "#{src_os}..#{dst_os}"
@@ -262,8 +271,8 @@ class PackageMapper
 
     # try 3: match by name
     if @ospackage_set.include?(dst_os) &&
-       @ospackage_set[dst_os].include?(pkgname)
-      return pkgname
+        similar_name = match_name_variants(@ospackage_set[dst_os], pkgname)
+      return similar_name
     end
 
     # try 4: global mapping
@@ -287,7 +296,6 @@ class PackageMapper
   #   PKGBUILD: build pkg set (pkg not found in to_os)
   #   os:     install pkg set (pkg is found in to_os)
   def map_pkg(pkgname, from_os, to_os)
-    # try 1: direct mapping
     dp = map_pkg_direct(pkgname, from_os, to_os)
     return { 'os' => dp.split } if dp
 
