@@ -1,6 +1,0 @@
-linux-libc-dev
-autopoint
-pkg-config
-gettext
-libncursesw5-dev
-uuid-runtime
