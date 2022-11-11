@@ -294,6 +294,9 @@ gem_packages=$(echo "$mapping" | grep "^gem: " | cut -f2 -d:)
 os_packages=$(echo "$mapping" | grep "^os: " | cut -f2 -d:)
 pkgbuild_packages=$(echo "$mapping" | grep "^PKGBUILD: " | cut -f2 -d:)
 
+pip_packages=${pip_packages# }
+gem_packages=${gem_packages# }
+
 [ -n "$pip_packages" ] && os_packages+=" python3-pip "
 install_packages $os_packages
 [ -n "$pip_packages" ] && pip3 install $pip_packages
