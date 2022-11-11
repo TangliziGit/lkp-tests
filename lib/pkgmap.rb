@@ -84,6 +84,7 @@ class PackageMapper
     @pkgbuild_depends = {}    # [program][os_spec] = pkg array
     @os4bash = {}             # [openeuler_22_03] = openeuler@22.03
     load_package_list
+    link_package_list
     load_meta
     load_depends
     load_pkgmap
@@ -117,6 +118,21 @@ class PackageMapper
       os_spec = File.basename(path)
       @ospackage_set[os_spec] = File.read(path).split.to_set
     end
+  end
+
+  # e.g. openeuler@22.03 -> openeuler@22.03:aarch64
+  def link_package_list
+    @ospackage_set.keys.each do |os_spec|
+      noarch = os_spec.sub(/:.*$/, '')
+      @ospackage_set[noarch] ||= @ospackage_set[os_spec]
+    end
+  end
+
+  def link_os_spec(os)
+    return if @ospackage_set.include?(os)
+    os.sub!(/:.*$/, '')
+    return if @ospackage_set.include?(os)
+    puts "warning: cannot find #{LKP_SRC}/distro/package-list/#{os}"
   end
 
   def load_pkgmap
@@ -400,6 +416,7 @@ class PackageMapper
   end
 
   def map_programs(programs, dst_os)
+    link_os_spec(dst_os)
     hh = {}
     programs.each do |program|
       h = map_program(program, dst_os)

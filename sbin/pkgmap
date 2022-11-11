@@ -46,12 +46,13 @@ end
 
 if opt_to_os.nil?
   distroinfo = LKP::DistroInfo.instance
-  opt_to_os = "#{distroinfo.systemnamel}@#{distroinfo.systemversion}"
+  opt_to_os = "#{distroinfo.systemnamel}@#{distroinfo.systemversion}:#{%x(arch)}"
 end
 
 package_mapper = PackageMapper.new
 
 if opt_from_os
+  link_os_spec(opt_to_os)
   show_hset package_mapper.map_pkgs(ARGV, opt_from_os, opt_to_os)
   exit
 end
