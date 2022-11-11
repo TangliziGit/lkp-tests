@@ -164,7 +164,7 @@ detect_system()
 		[ -f ${rootfs}/etc/debian_version ]
 	then
 		_system_name="Debian"
-		_system_version="$(\command \cat ${rootfs}/etc/debian_version | \command \awk -F. '{print $1}' | head -n 1)"
+		_system_version="$(\command \cat ${rootfs}/etc/debian_version | \command \awk -F. '{print $1}' | cut -f2 -d/ | head -n 1)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
 			safe_grep "ID=debian" ${rootfs}/etc/os-release >/dev/null
