@@ -5,7 +5,6 @@ pkgdesc="os performance tests by Uniontech"
 arch=(i386 x86_64 aarch64 riscv64)
 url="https://gitee.com/openeuler/OSPerformance"
 license=('GPL')
-depends=('')
 makedepends_debian_11=(python3)
 source=("https://gitee.com/openeuler/OSPerformance.git")
 md5sums=('SKIP')
