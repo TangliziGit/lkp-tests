@@ -2381,13 +2381,8 @@ create_package() {
 	create_signature "$pkg_file"
 
 	if (( ! ret )) && [[ ! "$PKGDEST" -ef "${startdir}" ]]; then
-		rm -f "${pkg_file/$PKGDEST/$startdir}"
-		ln -s "${pkg_file}" "${pkg_file/$PKGDEST/$startdir}"
+		echo package created in "${pkg_file}"
 		ret=$?
-		if [[ -f $pkg_file.sig ]]; then
-			rm -f "${pkg_file/$PKGDEST/$startdir}.sig"
-			ln -s "$pkg_file.sig" "${pkg_file/$PKGDEST/$startdir}.sig"
-		fi
 	fi
 
 	if (( ret )); then
