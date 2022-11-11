@@ -112,10 +112,10 @@ distro_pkg_format() {
 
 upgrade() {
 	local SRC_DIR
-	SRC_DIR=$(pwd)
+	SRC_DIR=$HOME/.cache/lkp-tests/pacman-LKP/$(basename $PWD)
 	local pkg_name=${SRC_DIR##*/}
 	local INSTALL_DIR="$SRC_DIR/$pkg_name-lkp"
-	[ -d "$INSTALL_DIR" ] || mkdir "$INSTALL_DIR"
+	[ -d "$INSTALL_DIR" ] || mkdir -p "$INSTALL_DIR"
 	[ -d "$SRC_DIR/.install" ] || mkdir "$SRC_DIR/.install"
 	tar -axf "$@" -C "$INSTALL_DIR"
 	mv $INSTALL_DIR/.[^.]* "$SRC_DIR/.install"
