@@ -21,7 +21,7 @@ log_cmd export OMP_NUM_THREADS=$nr_threads
 log_cmd gcc -O stream.c -o stream -D"STREAM_ARRAY_SIZE=$array_size" -DNTIMES=$loop $omp_options ||
 die "failed to compile stream"
 
-for i in $(seq $iterations)
+for i in $(seq ${iterations:-1})
 do
 	echo Iteration: $i
 	log_cmd ./stream || die "failed to run stream"
