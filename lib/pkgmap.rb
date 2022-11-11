@@ -352,6 +352,9 @@ class PackageMapper
     dp = map_pkg_direct(pkgname, from_os, to_os)
     return { 'os' => dp.split } if dp
 
+    return { 'pip' => [$1] } if pkgname =~ /^python3-(.*)$/
+    return { 'gem' => [$1] } if pkgname =~ /^ruby-(.*)$/
+
     dp = map_pkg_direct(pkgname, from_os, 'archlinux')
     return { 'PKGBUILD' => dp.split } if @pkgbuild_set.include? dp
 
@@ -363,8 +366,7 @@ class PackageMapper
     mapping = {}
     pkgs.each do |pkg|
       h = map_pkg(pkg, from_os, to_os)
-      hset_merge_one(mapping, h, 'os')
-      hset_merge_one(mapping, h, 'PKGBUILD')
+      hset_merge_depends(mapping, h)
     end
     mapping
   end
