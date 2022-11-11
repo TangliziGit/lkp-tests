@@ -8,6 +8,7 @@ pkgdesc="A protocol independent performance tool that visually represents the ne
 url="https://fossies.org/linux/privat/NetPIPE-5.1.4.tar.gz"
 depends=()
 optdepends=('tcsh: for nplaunch script')
+makedepends_debian_11=(lam4-dev libopenmpi-dev libmpich-dev pvm-dev)
 source=(https://fossies.org/linux/privat/NetPIPE-$pkgver.tar.gz)
 arch=('i386' 'x86_64')
 license=('GPL')

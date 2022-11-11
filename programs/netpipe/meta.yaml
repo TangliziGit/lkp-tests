@@ -35,9 +35,6 @@ depends:
   - netpipe-openmpi
   - netpipe-pvm
   - netpipe-tcp
-  - mpi-default-dev
-  PKGBUILD:
-  - netpipe
 params:
   test:
 results:

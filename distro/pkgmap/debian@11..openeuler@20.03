@@ -1,1 +1,2 @@
 libarchive-tools: libarchive
+libmpich-dev: mpich-devel

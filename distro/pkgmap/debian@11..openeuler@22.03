@@ -258,3 +258,5 @@ openssh-server: openssh
 openssh-client: openssh openssh-clients
 debianutils: which
 libjson11-1: json-lib
+mpi-default-dev: openmpi-devel
+libopenmpi-dev: openmpi-devel
