@@ -201,6 +201,14 @@ Job YAML中引用的programs，需要您预先写好，lkp会在如下路径搜�
 	yum install $package1
 	makepkg PKGBUILD-$package2 # 从源码下载编译
 
+如您希望强制从源码编译下载，无论所在OS是否包含RPM/DEB包，那么可以通过指定PKGBUILD依赖
+
+	depends:
+		PKGBUILD:
+		- $package1
+
+那么lkp install会无条件编译$package1
+
 注意，PKGBUILD语义上对应一个$package，而不是对应$program。
 这两者语义上不同，虽然很多时候两者内容是一样的。当内容一样时，比如
 
