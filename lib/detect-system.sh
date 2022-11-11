@@ -206,7 +206,7 @@ detect_system()
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
 	elif
 		[ -f ${rootfs}/etc/os-release ] &&
-			safe_grep "^ID=\"uos\"" ${rootfs}/etc/os-release >/dev/null
+			safe_grep -E "^ID=\"uos\"|^ID=uos" ${rootfs}/etc/os-release >/dev/null
 	then
 		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
 		if safe_grep -q '^PRETTY_NAME=.*Desktop' ${rootfs}/etc/os-release; then
