@@ -31,12 +31,7 @@ metadata:
   homepage: https://github.com/kdlucas/byte-unixbench
 type: workload
 depends:
-  PKGBUILD: unixbench
-  debian@11:
-  - perl-base
-  - perl
-  - libperl-dev
-  - make
+  openeuler@22.03: unixbench
 params:
   runtime:
   test:

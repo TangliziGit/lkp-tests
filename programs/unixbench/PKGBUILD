@@ -4,6 +4,8 @@ pkgrel=1
 url='http://codingpy-1252715393.cosgz.myqcloud.com/archive/UnixBench5.1.3.tgz'
 arch=('i386' 'x86_64' 'riscv64')
 license=('GPL')
+depends_debian_11=(perl)
+makedepends_debian_11=(libperl-dev)
 source=('http://codingpy-1252715393.cosgz.myqcloud.com/archive/UnixBench5.1.3.tgz')
 md5sums=('SKIP')
 
