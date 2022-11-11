@@ -3643,7 +3643,7 @@ fi
 
 PKGDEST=${_PKGDEST:-$PKGDEST}
 PKGDEST=${PKGDEST:-$startdir} #default to $startdir if undefined
-if (( ! (NOBUILD || GENINTEG) )) && [[ ! -w $PKGDEST ]]; then
+if (( ! (NOBUILD || GENINTEG) )) && [[ ! -w $PKGDEST ]] && ! mkdir -p "$PKGDEST"; then
 	error "$(gettext "You do not have write permission to store packages in %s.")" "$PKGDEST"
 	plain "$(gettext "Aborting...")"
 	exit 1
@@ -3651,7 +3651,7 @@ fi
 
 SRCDEST=${_SRCDEST:-$SRCDEST}
 SRCDEST=${SRCDEST:-$startdir} #default to $startdir if undefined
-if [[ ! -w $SRCDEST ]] ; then
+if [[ ! -w $SRCDEST ]] && ! mkdir -p "$SRCDEST" ; then
 	error "$(gettext "You do not have write permission to store downloads in %s.")" "$SRCDEST"
 	plain "$(gettext "Aborting...")"
 	exit 1
@@ -3660,7 +3660,7 @@ fi
 SRCPKGDEST=${_SRCPKGDEST:-$SRCPKGDEST}
 SRCPKGDEST=${SRCPKGDEST:-$startdir} #default to $startdir if undefined
 if (( SOURCEONLY )); then
-	if [[ ! -w $SRCPKGDEST ]]; then
+	if [[ ! -w $SRCPKGDEST ]] && ! mkdir -p "$SRCPKGDEST"; then
 		error "$(gettext "You do not have write permission to store source tarballs in %s.")" "$SRCPKGDEST"
 		plain "$(gettext "Aborting...")"
 		exit 1
@@ -3673,7 +3673,7 @@ fi
 
 LOGDEST=${_LOGDEST:-$LOGDEST}
 LOGDEST=${LOGDEST:-$startdir} #default to $startdir if undefined
-if (( LOGGING )) && [[ ! -w $LOGDEST ]]; then
+if (( LOGGING )) && [[ ! -w $LOGDEST ]] && ! mkdir -p "$LOGDEST"; then
 	error "$(gettext "You do not have write permission to store logs in %s.")" "$LOGDEST"
 	plain "$(gettext "Aborting...")"
 	exit 1
