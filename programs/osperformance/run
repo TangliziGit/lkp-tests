@@ -1,0 +1,16 @@
+#!/bin/sh
+# - test
+
+. $LKP_SRC/lib/common.sh
+
+[ -n "$test" ] || {
+	echo "test is empty!" >&2
+	exit 1
+}
+
+. $LKP_SRC/lib/reproduce-log.sh
+
+cd /lkp/benchmarks/OSPerformance || exit
+echo 3 > /proc/sys/vm/drop_caches
+
+log_cmd python3 $test.py

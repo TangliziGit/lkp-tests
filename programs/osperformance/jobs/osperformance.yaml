@@ -1,0 +1,10 @@
+suite: osperformance
+category: benchmark
+
+osperformance:
+  test:
+    - fio
+    - stream
+    - lmbench
+    - netperf
+    - unixbench

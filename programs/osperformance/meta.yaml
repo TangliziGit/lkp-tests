@@ -1,0 +1,14 @@
+metadata:
+  name: osperformance
+  summary: performance tests by Uniontech
+  description: 
+  homepage: https://gitee.com/openeuler/OSPerformance
+type: workload
+depends:
+  PKGBUILD:
+  - osperformance
+  debian@11:
+  - python3-openpyxl
+  - python3-xlsxwriter
+params:
+results:
