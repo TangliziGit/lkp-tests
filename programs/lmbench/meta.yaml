@@ -1,5 +1,5 @@
 metadata:
-  name: lmbench3
+  name: lmbench
   summary: ''
   description: lmbench is a suite of simple, portable, ANSI/C microbenchmarks for
     UNIX/POSIX. In general, it measures two key features (latency and bandwidth).
@@ -22,7 +22,7 @@ depends:
   - linux-base
   - gnuplot
   PKGBUILD:
-  - lmbench3
+  - lmbench
 params:
   nr_threads:
     doc: if you are running on an MP machanie and you want to try running multiple

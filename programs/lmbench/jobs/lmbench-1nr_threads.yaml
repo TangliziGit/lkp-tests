@@ -1,4 +1,4 @@
-suite: lmbench3
+suite: lmbench
 category: benchmark
 
 timeout: 2h
@@ -6,7 +6,7 @@ test_memory_size: 4294967297
 
 # Test mdoe all,hardware,os were commented temporally,since it will take very long time
 # more than 2 hours on test machine lkp-bdw-ep4.
-# lmbench3:
+# lmbench:
 #   - mode: all
 #   - mode: hardware
 #   - mode: os
@@ -15,5 +15,5 @@ test_memory_size: 4294967297
 nr_threads:
 - 1
 is_performance_dashboard: true
-lmbench3:
+lmbench:
   mode: all

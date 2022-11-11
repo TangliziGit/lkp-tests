@@ -1,10 +1,10 @@
-suite: lmbench3
-testcase: lmbench3
+suite: lmbench
+testcase: lmbench
 category: benchmark
 
 standalone: 1
 
-lmbench3:
+lmbench:
     test:
         - bw_mem
     nr_parallelism:

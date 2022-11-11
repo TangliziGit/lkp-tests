@@ -1,10 +1,10 @@
-suite: lmbench3
+suite: lmbench
 category: benchmark
 
 test_memory_size: 4096
 
 # Test mode all, hardware, os were commented temporally, since it will take very long time
-# lmbench3:
+# lmbench:
 #       - mode: all
 #       - mode: hardware
 #       - mode: os
@@ -12,5 +12,5 @@ test_memory_size: 4096
 nr_threads:
         - 1
 
-lmbench3:
+lmbench:
         mode: all

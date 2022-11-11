@@ -1,11 +1,11 @@
-suite: lmbench3
+suite: lmbench
 category: benchmark
 
 test_memory_size: 50%
 
 # Test mdoe all,hardware,os were commented temporally,since it will take very long time
 # more than 2 hours on test machine lkp-bdw-ep4.
-# lmbench3:
+# lmbench:
 #   - mode: all
 #   - mode: hardware
 #   - mode: os
@@ -15,7 +15,7 @@ nr_threads:
   - 1
   - 50%
   - 100%
-lmbench3:
+lmbench:
   mode: development
   test:
     - SELECT
@@ -30,7 +30,7 @@ lmbench3:
 ---
 nr_threads:
   - 1
-lmbench3:
+lmbench:
   mode: development
   test:
     # Case SYSCALL,FILE,CTX,BCOPY will take very long time when nr_threads set as 50% or 100%
