@@ -161,17 +161,6 @@ detect_system()
 		\command \awk -F'=' '{gsub(/ /,"")} $1~/VERSION/ {version=$2} $1~/PATCHLEVEL/ {patch=$2} END {print version"."patch}' < ${rootfs}/etc/SuSE-release
 		)"
 	elif
-		[ -f ${rootfs}/etc/debian_version ]
-	then
-		_system_name="Debian"
-		_system_version="$(\command \cat ${rootfs}/etc/debian_version | \command \awk -F. '{print $1}' | cut -f2 -d/ | head -n 1)"
-	elif
-		[ -f ${rootfs}/etc/os-release ] &&
-			safe_grep "ID=debian" ${rootfs}/etc/os-release >/dev/null
-	then
-		_system_name="Debian"
-		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"");print $2}' ${rootfs}/etc/os-release | \command \awk -F. '{print $1}' | head -n 1)" #'
-	elif
 		[ -f ${rootfs}/etc/gentoo-release ]
 	then
 		_system_name="Gentoo"
@@ -246,6 +235,17 @@ detect_system()
 	then
 		_system_name="CentOS"
 		_system_version="$(safe_grep -Eo '[0-9\.]+' ${rootfs}/etc/centos-release  | \command \awk -F. '{print $1}' | head -n 1)"
+	elif
+		[ -f ${rootfs}/etc/debian_version ]
+	then
+		_system_name="Debian"
+		_system_version="$(\command \cat ${rootfs}/etc/debian_version | \command \awk -F. '{print $1}' | cut -f2 -d/ | head -n 1)"
+	elif
+		[ -f ${rootfs}/etc/os-release ] &&
+			safe_grep "ID=debian" ${rootfs}/etc/os-release >/dev/null
+	then
+		_system_name="Debian"
+		_system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"");print $2}' ${rootfs}/etc/os-release | \command \awk -F. '{print $1}' | head -n 1)" #'
 	elif
 		[ -f ${rootfs}/etc/os-release ]
 	then
