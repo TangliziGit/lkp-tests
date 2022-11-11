@@ -215,7 +215,7 @@ plot "${LMBENCH_RESULT}" using 1:2 with linespoints ls 1 smooth unique title "${
 EOF
 }
 
-if [ ${standalone} != "1" ]; then
+if [ "${standalone}" != "1" ]; then
 	test_memory_size=$((test_memory_size/1024/1024))
 
 	# The bigger test memory range, the more accurate the results, but larger sizes
@@ -235,7 +235,7 @@ cd $BENCHMARK_ROOT/lmbench3 || {
 make 2>&1 || die "failed to build lmbench3"
 system_type=$os_arch
 
-if [ ${standalone} != "1" ]; then
+if [ "${standalone}" != "1" ]; then
 
 	case "$mode" in
 		'all') run_lmbench3_all ;;
