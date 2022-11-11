@@ -28,8 +28,10 @@
 ## 新增特定OS版本的包列表到 distro/package-list/ 目录
 
 在目标OS环境下，执行如下语句
+
 	$ cd lkp-tests
 	$ sbin/add-distro-packages.sh
+
 然后按提示git提交包列表文件。注意确认下其中的包数量是否正常。
 
 ## 验证
@@ -39,10 +41,12 @@
 以下是在debian:11容器下的输出样例:
 
 in host: 
+
 	$ git clone https://gitee.com/compass-ci/lkp-tests
 	$ docker run -it -v $PWD/lkp-tests:/c/lkp-tests debian:11 bash
 
 in container:
+
 	root@1d1e0607d22c:/# cd c/lkp-tests/
 	root@1d1e0607d22c:/c/lkp-tests# sbin/install-dependencies.sh
 	root@1d1e0607d22c:/c/lkp-tests# . lib/detect-system.sh
