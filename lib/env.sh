@@ -126,14 +126,13 @@ write_shell_profile()
 {
 	[ $# -gt 0 ] || return
 
-	local env_file=sbin/lkp-env
+	local env_file=$HOME/.lkp-env
 	[ -f $env_file ] && return
 
 	local shell_profile_file=$(shell_profile)
 
-	echo $env_file >> .git/info/exclude
 	echo "$@" > $env_file
-	echo "source $PWD/$env_file" >> $shell_profile_file
+	echo "source $env_file" >> $shell_profile_file
 
 	source $env_file
 }
