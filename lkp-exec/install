@@ -84,12 +84,13 @@ check_yaml_file()
 }
 
 make_wakeup() {
+	[ -d "$LKP_SRC/bin/event" ] || return 0	# 'lkp docker build' uses a temp LKP_SRC, we should make in the final LKP_SRC
+	[ -x "$LKP_SRC/bin/event/wakeup" ] && return 0
+
 	echo "make -C $LKP_SRC/bin/event"
 	[ -n "$DRY_RUN" ] && return
 
-	[ -x "$LKP_SRC/bin/event/wakeup" ] || {
-		make -C "$LKP_SRC/bin/event" wakeup || exit
-	}
+	make -C "$LKP_SRC/bin/event" wakeup || exit
 }
 
 # todo: make paths configurable and less intrusive to developer's system
@@ -241,7 +242,6 @@ install_base_support()
 		)
 	fi
 
-	make_wakeup
 	create_lkp_user
 	create_lkp_dirs
 	create_host_config
@@ -266,6 +266,7 @@ if [[ -z "$1" ]]; then
 	install_base_support
 	all_scripts='lkp makepkg'
 else
+	make_wakeup
 	all_scripts=
 fi
 

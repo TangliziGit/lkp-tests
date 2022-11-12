@@ -68,8 +68,6 @@ run()
 
 	install_gem_pkg
 
-	make -C bin/event wakeup || exit
-
 	$SUDO $LKP_SRC/bin/lkp install || exit
 }
 
