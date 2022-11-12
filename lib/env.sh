@@ -139,7 +139,7 @@ write_shell_profile()
 
 write_host()
 {
-	[ -f hosts/$(hostname) ] && return
+	[ -f $LKP_SRC/hosts/$(hostname) ] && return
 
 	if is_system "Linux"; then
 		local nr_cpu=$(nproc)
@@ -151,14 +151,15 @@ write_host()
 	local memory_new=$(awk 'BEGIN{printf "%0.2f", '$memory_total'/1024/1024}')
 	local memory=$(echo $memory_new | awk '{print int($0)+1}')G
 
-	cat > hosts/$(hostname) <<-EOF
+	cat > $LKP_SRC/hosts/$(hostname) <<-EOF
 	nr_cpu: $nr_cpu
 	memory: $memory
 	hdd_partitions:
 	ssd_partitions:
 	EOF
 
-	echo hosts/$(hostname) >> .git/info/exclude
+	[ -d $LKP_SRC/.git/info ] &&
+	echo hosts/$(hostname) >> $LKP_SRC/.git/info/exclude
 }
 
 get_emulate_login_env()
