@@ -1,7 +1,39 @@
 #!/bin/bash
 
+ospkg_source_china()
+{
+	# https://mirrors.ustc.edu.cn/help/fedora.html
+	test -f /etc/yum.repos.d/fedora.repo &&
+	$SUDO sed -e 's|^metalink=|#metalink=|g' \
+         -e 's|^#baseurl=http://download.example/pub/fedora/linux|baseurl=https://mirrors.ustc.edu.cn/fedora|g' \
+         -i.bak \
+         /etc/yum.repos.d/fedora.repo \
+         /etc/yum.repos.d/fedora-modular.repo \
+         /etc/yum.repos.d/fedora-updates.repo \
+         /etc/yum.repos.d/fedora-updates-modular.repo
+
+	# https://mirrors.ustc.edu.cn/help/centos.html
+	# CentOS 8
+	test -f /etc/yum.repos.d/CentOS-Stream-BaseOS.repo &&
+	$SUDO sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+         -e 's|^#baseurl=http://mirror.centos.org/$contentdir|baseurl=https://mirrors.ustc.edu.cn/centos|g' \
+         -i.bak \
+         /etc/yum.repos.d/CentOS-Stream-AppStream.repo \
+         /etc/yum.repos.d/CentOS-Stream-BaseOS.repo \
+         /etc/yum.repos.d/CentOS-Stream-Extras.repo \
+         /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
+
+	# CentOS 7
+	test -f /etc/yum.repos.d/CentOS-Base.repo &&
+	$SUDO sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+         -e 's|^#baseurl=http://mirror.centos.org/centos|baseurl=https://mirrors.ustc.edu.cn/centos|g' \
+         -i.bak \
+         /etc/yum.repos.d/CentOS-Base.repo
+}
+
 ospkg_update()
 {
+	ospkg_source_china
 	support_repo_epel
 }
 
@@ -26,8 +58,16 @@ ospkg_list()
 
 support_repo_epel()
 {
-	if [ "${_system_name_lowercase}" = "centos" ] && ! rpm -q epel-release >/dev/null; then
+	if [ "${_system_name_lowercase}" = "centos" -o "${_system_name_lowercase}" = "fedora" ] &&
+		! rpm -q epel-release >/dev/null; then
 		yum install -y epel-release >/dev/null 2>&1
+
+		# https://mirrors.ustc.edu.cn/help/epel.html
+		$SUDO sed -e 's|^metalink=|#metalink=|g' \
+			 -e 's|^#baseurl=https\?://download.fedoraproject.org/pub/epel/|baseurl=https://mirrors.ustc.edu.cn/epel/|g' \
+			 -e 's|^#baseurl=https\?://download.example/pub/epel/|baseurl=https://mirrors.ustc.edu.cn/epel/|g' \
+			 -i.bak \
+			 /etc/yum.repos.d/epel.repo
 	fi
 
 	yum -q makecache --timer
