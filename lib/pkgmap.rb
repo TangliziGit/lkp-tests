@@ -455,6 +455,7 @@ class PackageMapper
       @pkgbuild_set.add pkg
       @pkgbuild_depends[pkg] = parse_bashx(path)
     end
+    @ospackage_set['archlinux'] ||= Set.new
     @ospackage_set['archlinux'].merge @pkgbuild_set
   end
 

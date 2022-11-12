@@ -1,0 +1,16 @@
+#!/bin/bash
+
+[[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
+
+mkdir -p $HOME/.cache/lkp/atom_jobs || exit
+cd       $HOME/.cache/lkp/atom_jobs
+
+installed=
+for atom_job in $($LKP_SRC/bin/lkp split "$1")
+do
+	[ -n "$installed" ] ||
+	$LKP_SRC/bin/lkp install $atom_job
+	installed=1
+
+	$LKP_SRC/bin/lkp run $atom_job
+done

@@ -1,0 +1,136 @@
+#!/bin/bash
+
+. $LKP_SRC/lib/lkp_path.sh
+
+[ -n "$SUDO_USER" ] && HOME=$(eval "echo ~$SUDO_USER")
+
+usage()
+{
+	cat <<EOF
+Usage: lkp docker [options] build DOCKER_IMAGE
+       lkp docker [options] run DOCKER_IMAGE JOB_YAML
+
+Options:
+	-m	bind mount $HOME/.cache/lkp/result into /root/.cache/lkp/result
+	-M	bind mount $HOME/.cache/lkp        into /root/.cache/lkp
+
+Note:
+This script runs JOB_YAML in DOCKER_IMAGE, mounting LKP_SRC to /c/lkp-tests
+Results are stored under /root/.cache/lkp/results in container.
+EOF
+	exit 1
+}
+
+while getopts "m:M" opt
+do
+	case $opt in
+		m ) opt_mount_result="-v $HOME/.cache/lkp/result:/root/.cache/lkp/result" ;;
+		M ) opt_mount_lkp="-v $HOME/.cache/lkp:/root/.cache/lkp" ;;
+		? ) usage ;;
+	esac
+done
+
+shift $((OPTIND-1))
+
+opt_action=$1
+opt_image=$2
+opt_job=$3
+
+[ -n "$opt_image" ] || usage
+IMAGE_TAG=lkp-$opt_image
+
+find_job()
+{
+	[ -n "$opt_job" ] || usage
+
+	if [ -f $opt_job ]; then
+		job_file=$opt_job
+		return
+	fi
+
+	shopt -s nullglob
+
+	job_file=($LKP_SRC/programs/*/jobs/$opt_job)
+	[ -n "$job_file" ] && return
+
+	job_file=($LKP_SRC/jobs/$opt_job)
+	[ -n "$job_file" ] && return
+
+	job_file=($LKP_SRC/jobs/*/$opt_job)
+	[ -n "$job_file" ] && return
+
+	echo "Failed to find job $opt_job"
+	exit 1
+}
+
+prepare_workdir()
+{
+	mkdir -p lkp-src/{lib,bin,sbin,lkp-exec,programs,hosts}
+	cp -au $LKP_SRC/sbin/install-dependencies.sh 	lkp-src/sbin/
+	cp -au $LKP_SRC/sbin/pkgmap			lkp-src/sbin
+	cp -au $LKP_SRC/bin/lkp				lkp-src/bin/
+	cp -au $LKP_SRC/lkp-exec/install		lkp-src/lkp-exec/
+	cp -au $LKP_SRC/lib/detect-system.sh 		lkp-src/lib
+	cp -au $LKP_SRC/lib/env.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/debug.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/result.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/install.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/lkp_cmd.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/lkp_path.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/constant.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/run-env.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/pkgmap.rb			lkp-src/lib
+	cp -au $LKP_SRC/lib/distro_info.rb		lkp-src/lib
+	cp -au $LKP_SRC/Gemfile*			lkp-src/
+	cp -au $LKP_SRC/distro				lkp-src/
+	cp -au $LKP_SRC/programs/lkp-tests		lkp-src/programs
+	cp -au $LKP_SRC/programs/makepkg		lkp-src/programs
+}
+
+create_dockerfile()
+{
+	cat > Dockerfile.$opt_image <<-EOF
+	FROM $opt_image
+	COPY lkp-src /c/lkp-tests
+	RUN /c/lkp-tests/sbin/install-dependencies.sh
+	EOF
+}
+
+should_skip_rebuild()
+{
+	[ "$opt_action" = 'build' ] && return 1
+
+	docker image inspect $IMAGE_TAG >/dev/null 2>&1
+}
+
+build_container()
+{
+	should_skip_rebuild && return
+	docker build --no-cache=true -t $IMAGE_TAG -f Dockerfile.$opt_image .
+}
+
+run_container()
+{
+	[ "$opt_action" = 'run' ] || return 0
+
+	find_job
+
+	local cmd=(
+		docker run 
+		-v $LKP_SRC:/c/lkp-tests
+		$opt_mount_lkp
+		$opt_mount_result
+		$IMAGE_TAG
+		/c/lkp-tests/bin/install-run-job ${job_file#$LKP_SRC/}
+	)
+	"${cmd[@]}"
+}
+
+WORK_DIR=$HOME/.cache/lkp/container
+mkdir -p $WORK_DIR
+cd $WORK_DIR
+
+prepare_workdir
+create_dockerfile
+build_container
+run_container
