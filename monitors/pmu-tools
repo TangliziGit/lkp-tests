@@ -26,9 +26,9 @@ ocperf=$BENCHMARK_ROOT/pmu-tools/ocperf.py
 
 [ -n "$HOME" ] || export HOME=/root
 
-[ -d "$HOME/.cache/pmu-events" ] || {
-	mkdir -p "$HOME/.cache"
-	cp -af "$BENCHMARK_ROOT/pmu-tools/pmu-events" "$HOME/.cache"
+[ -d "$HOME/.cache/lkp/pmu-events" ] || {
+	mkdir -p "$HOME/.cache/lkp"
+	cp -af "$BENCHMARK_ROOT/pmu-tools/pmu-events" "$HOME/.cache/lkp"
 }
 
 if [ -n "$list_pmu_events" ]; then

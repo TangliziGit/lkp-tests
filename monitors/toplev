@@ -35,9 +35,9 @@ toplev=$BENCHMARK_ROOT/pmu-tools/toplev.py
 
 [ -n "$HOME" ] || export HOME=/root
 
-[ -d "$HOME/.cache/pmu-events" ] || {
-    mkdir -p "$HOME/.cache"
-    cp -af "$BENCHMARK_ROOT/pmu-tools/pmu-events" "$HOME/.cache"
+[ -d "$HOME/.cache/lkp/pmu-events" ] || {
+    mkdir -p "$HOME/.cache/lkp"
+    cp -af "$BENCHMARK_ROOT/pmu-tools/pmu-events" "$HOME/.cache/lkp"
 }
 
 # perf may consume lots of fd

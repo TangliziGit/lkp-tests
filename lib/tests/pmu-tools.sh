@@ -8,7 +8,7 @@ cpu_info()
 
 create_links()
 {
-    pmu_dir="$HOME/.cache/pmu-events"
+    pmu_dir="$HOME/.cache/lkp/pmu-events"
     cpu_family=$(cpu_info "cpu family")
     model=$(cpu_info "model")
     if [ -z "$cpu_family" ] || [ -z "$model" ]; then
