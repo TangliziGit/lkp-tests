@@ -1,7 +1,22 @@
 #!/bin/bash
 
+ospkg_source_china()
+{
+	# https://mirrors.ustc.edu.cn/help/debian.html
+	# https://mirrors.ustc.edu.cn/help/ubuntu.html
+	local mirror_site=mirrors.163.com
+	local mirror_site=mirrors.ustc.edu.cn
+	$SUDO sed -i -e "s/deb.debian.org/$mirror_site/g" \
+		     -e "s/archive.ubuntu.com/$mirror_site/g" \
+		     -e "s/security.ubuntu.com/$mirror_site/g" \
+		     -e "s|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g" \
+		     /etc/apt/sources.list
+}
+
 ospkg_update()
 {
+	ospkg_source_china
+
 	$SUDO apt-get -q update
 }
 
