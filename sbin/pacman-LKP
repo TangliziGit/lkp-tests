@@ -12,7 +12,7 @@ REMOVE=0
 . $LKP_SRC/lib/lkp_path.sh
 
 : "${PACMAN:=$0}"
-: "${BUILDDIR:=$HOME/.cache/lkp-tests/pkg-builddir}"
+: "${BUILDDIR:=$HOME/.cache/lkp/pkg-builddir}"
 : "${PKGEXT:=tar.gz}"
 : "${DBFILE:=$BUILDDIR/installed}"
 export PACMAN BUILDDIR PKGEXT DBFILE
@@ -112,7 +112,7 @@ distro_pkg_format() {
 
 upgrade() {
 	local SRC_DIR
-	SRC_DIR=$HOME/.cache/lkp-tests/pacman-LKP/$(basename $PWD)
+	SRC_DIR=$HOME/.cache/lkp/pacman-LKP/$(basename $PWD)
 	local pkg_name=${SRC_DIR##*/}
 	local INSTALL_DIR="$SRC_DIR/$pkg_name-lkp"
 	[ -d "$INSTALL_DIR" ] || mkdir -p "$INSTALL_DIR"

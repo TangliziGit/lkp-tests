@@ -172,7 +172,7 @@ makepkg_install() {
 		(
 			cd "$(dirname $path)" || exit
 			echo "Building package with: $path"
-			PACMAN="$LKP_SRC/sbin/pacman-LKP" CARCH=$arch BUILDDIR="$HOME/.cache/lkp-tests/pkg-builddir" \
+			PACMAN="$LKP_SRC/sbin/pacman-LKP" CARCH=$arch BUILDDIR="$HOME/.cache/lkp/pkg-builddir" \
 			"$LKP_SRC/sbin/makepkg" --config "$(lkp_src)/etc/makepkg.conf" -s -i --skippgpcheck "$force_opt" \
 			-p $(basename $path)
 		)
