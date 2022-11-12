@@ -5,7 +5,7 @@ shopt -s nullglob
 
 . $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
-. $LKP_SRC/distro/package-manager/packman
+. $LKP_SRC/distro/package-manager/pacman
 . $LKP_SRC/lib/debug.sh
 
 update()
