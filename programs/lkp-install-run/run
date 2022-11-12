@@ -27,7 +27,7 @@ check_install_job()
 	atomic_job=${atomic_job##* ./}
 
 	# don't run too long time
-	sed -i 's/^runtime: [0-9].*/runtime: 10/' $atomic_job
+	sed -i 's/^runtime: [0-9].*/runtime: 3/' $atomic_job
 
 	lkp install $atomic_job
 	lkp run $atomic_job
