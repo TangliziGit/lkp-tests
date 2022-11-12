@@ -32,6 +32,11 @@ fi
 
 cd $LKP_SRC
 
+if [ -s "$file" -a "$1" != '--force' ]; then
+	echo "$0: found existing $file"
+	exit 0
+fi
+
 ospkg_update
 ospkg_list > $file
 echo git add $file

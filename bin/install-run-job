@@ -5,6 +5,8 @@
 mkdir -p $HOME/.cache/lkp/atom_jobs || exit
 cd       $HOME/.cache/lkp/atom_jobs
 
+$LKP_SRC/sbin/add-distro-packages.sh
+
 installed=
 for atom_job in $($LKP_SRC/bin/lkp split "$1")
 do
