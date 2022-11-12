@@ -44,7 +44,7 @@ get_job_env()
 
 create_lkp_home()
 {
-	[[ -e $HOME/.lkp ]] && return
+	[[ -e $HOME/.cache/lkp ]] && return
 
 	cat <<-EOF
 	The approx. disk space requirements are
@@ -55,21 +55,21 @@ create_lkp_home()
 	100G or more    IO tests
 
 	Please enter a dir with enough disk space, or simply press Enter to accept the default.
-	You may still symlink $HOME/.lkp to a more suitable place in future.
+	You may still symlink $HOME/.cache/lkp to a more suitable place in future.
 	EOF
 
 	local dir
-	read -p "$HOME/.lkp => " dir
+	read -p "$HOME/.cache/lkp => " dir
 
 	[[ $dir ]] && {
 	dir=$(realpath $dir)
 	mkdir -p $dir || exit
-	ln -sT $dir $HOME/.lkp || exit
+	ln -sT $dir $HOME/.cache/lkp || exit
 	}
 
-	mkdir -p $HOME/.lkp/cache
-	mkdir -p $HOME/.lkp/result
-	mkdir -p $HOME/.lkp/qemu-img
+	mkdir -p $HOME/.cache/lkp/initrd
+	mkdir -p $HOME/.cache/lkp/result
+	mkdir -p $HOME/.cache/lkp/qemu-img
 }
 
 replace_script_partition_val()
@@ -212,7 +212,7 @@ sed -i 's/LKP_SERVER=.*$/LKP_LOCAL_RUN=1/g' $job_script
 
 create_lkp_user
 create_lkp_home
-export CACHE_DIR=$HOME/.lkp/cache
+export CACHE_DIR=$HOME/.cache/lkp/initrd
 mkdir -p $CACHE_DIR
 
 . $job_script export_top_env
@@ -276,7 +276,7 @@ fi
 # create vm result path
 if [ -z $opt_result_root ]; then
 	# create real result_root layout similar to the one in /result
-	_result_root=$HOME/.lkp/$(dirname $result_root)
+	_result_root=$HOME/.cache/lkp/$(dirname $result_root)
 	for i in {0..1000}
 	do
 		vm_result_path=$_result_root/$i
