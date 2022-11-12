@@ -53,7 +53,7 @@ mac_dep()
 install_gem_pkg()
 {
 	gem sources -r https://rubygems.org/ -a https://gems.ruby-china.com/
-	$SUDO gem install -f git activesupport:6.1.4.4 rest-client faye-websocket md5sum base64
+	$SUDO gem install -f git activesupport:6.1.4.4 rest-client faye-websocket md5sum base64 || exit
 }
 
 run()
@@ -68,9 +68,9 @@ run()
 
 	install_gem_pkg
 
-	make -C bin/event wakeup
+	make -C bin/event wakeup || exit
 
-	$SUDO $LKP_SRC/bin/lkp install
+	$SUDO $LKP_SRC/bin/lkp install || exit
 }
 
 set_env()

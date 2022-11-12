@@ -88,7 +88,7 @@ make_wakeup() {
 	[ -n "$DRY_RUN" ] && return
 
 	[ -x "$LKP_SRC/bin/event/wakeup" ] || {
-		make -C "$LKP_SRC/bin/event" wakeup
+		make -C "$LKP_SRC/bin/event" wakeup || exit
 	}
 }
 
@@ -196,9 +196,11 @@ verify_install() {
 make_install_packages() {
 	for pkg
 	do
-		if ! verify_install $pkg; then
-			makepkg_install "$pkg" || echo "Install $pkg failed"
-		fi
+		verify_install $pkg && continue
+		makepkg_install "$pkg" && continue
+
+		echo "Failed to install package '$pkg'"
+		exit 1
 	done
 }
 
@@ -230,12 +232,12 @@ install_base_support()
 
 	if [ -n "$CHINA" ]; then
 		gem install bundler --clear-sources -s https://gems.ruby-china.com/
-		bundle_install_china
+		bundle_install_china || exit
 	else
 		(
 			cd $LKP_SRC || exit
 			gem install bundler
-			bundle_install
+			bundle_install || exit
 		)
 	fi
 
@@ -299,6 +301,6 @@ gem_packages=${gem_packages# }
 
 [ -n "$pip_packages" ] && os_packages+=" python3-pip "
 install_packages $os_packages
-[ -n "$pip_packages" ] && pip3 install $pip_packages
-[ -n "$gem_packages" ] && gem install $gem_packages
+[ -n "$pip_packages" ] && pip3 install $pip_packages || exit
+[ -n "$gem_packages" ] && gem install $gem_packages || exit
 make_install_packages $pkgbuild_packages

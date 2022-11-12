@@ -62,7 +62,8 @@ ospkg_update_install()
 
 	echo "Installing packages $*"
 	ospkg_install "$*" ||
-	ospkg_install "$@"
+	ospkg_install "$*" ||
+	ospkg_install "$@" || exit
 }
 
 update()
