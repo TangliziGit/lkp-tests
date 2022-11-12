@@ -29,7 +29,7 @@ class PackChange
     @repo_dir = repo_dir
     @do_pack = do_pack
     @repo_name = File.basename(@repo_dir)
-    @base_home = "#{ENV['HOME']}/.cache/compass-ci"
+    @base_home = "#{ENV['HOME']}/.cache/lkp"
     @dest_home = "#{@base_home}/lkp"
     @dest_test_home = if @repo_name == 'lkp-tests'
                         "#{@base_home}/LKP_SRC"
