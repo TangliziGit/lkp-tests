@@ -244,7 +244,6 @@ install_base_support()
 
 	create_lkp_user
 	create_lkp_dirs
-	create_host_config
 }
 
 . $LKP_SRC/lib/install.sh
@@ -267,6 +266,7 @@ if [[ -z "$1" ]]; then
 	all_scripts='lkp makepkg'
 else
 	make_wakeup
+	create_host_config
 	all_scripts=
 fi
 
