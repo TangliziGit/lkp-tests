@@ -15,7 +15,9 @@ export LKP_SRC=$(dirname $SCRIPT_DIR)
 
 . $LKP_SRC/lib/detect-system.sh
 detect_system
-arch=$(arch)
+get_system_arch
+
+[ -n "$_system_arch" ] || exit
 
 test -e $LKP_SRC/distro/$_system_name_lowercase || {
 	echo "Your OS is not registered yet, please create $LKP_SRC/distro/$_system_name_lowercase first"
@@ -24,10 +26,10 @@ test -e $LKP_SRC/distro/$_system_name_lowercase || {
 
 . $LKP_SRC/distro/$_system_name_lowercase || exit
 
-if [ $arch = x86_64 ]; then
+if [ "$_system_arch" = x86_64 ]; then
 	file=distro/package-list/$_system_name_lowercase@$_system_version
 else
-	file=distro/package-list/$_system_name_lowercase@$_system_version:$arch
+	file=distro/package-list/$_system_name_lowercase@$_system_version:$_system_arch
 fi
 
 cd $LKP_SRC

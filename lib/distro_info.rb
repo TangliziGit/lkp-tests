@@ -27,6 +27,7 @@ module LKP
         export LKP_SRC=#{LKP_SRC}
         . #{path_to_script}
         detect_system #{rootfs}
+        get_system_arch #{rootfs}
         echo $_system_name
         echo $_system_name_lowercase
         echo $_system_version

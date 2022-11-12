@@ -268,11 +268,11 @@ detect_system()
 
 get_system_arch()
 {
-	if [[ -n "$1" ]]; then
+	if [ -n "$1" -a "$1" != '/' ]; then
 		# this may fail if file/readelf is not installed
-		detect_system_arch $1
+		detect_system_arch "$1"
 	else
-		_system_arch=$(command arch)
+		_system_arch=$(command arch 2>/dev/null || command uname -m)
 	fi
 	echo $_system_arch
 }
