@@ -15,6 +15,7 @@ require "#{LKP_SRC}/lib/distro_info"
 TMP = "/tmp/lkp-#{LKP_USER}".freeze
 ENV['TMP'] = TMP
 ENV['RESULT_ROOT_DIR_PREFIX'] = "#{ENV['HOME']}/.cache"
+ENV['LKP_LOCAL_RUN'] = '1'
 
 require "#{LKP_SRC}/lib/run_env"
 set_local_run

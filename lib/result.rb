@@ -29,7 +29,8 @@ class ResultPath < Hash
   AXIS_KEYS = (MAXIS_KEYS + ['run']).freeze
 
   PATH_SCHEME = {
-    'default' => %w[path_params tbox_group rootfs kconfig compiler commit run],
+    'LOCAL_RUN' =>   %w[path_params run],
+    'default' =>     %w[path_params tbox_group rootfs kconfig compiler commit run],
     'kvm:default' => %w[path_params tbox_group rootfs kconfig compiler commit run],
     'health-stats' => %w[path_params run],
     'lkp-bug' => %w[path_params run],
@@ -48,6 +49,8 @@ class ResultPath < Hash
   }.freeze
 
   def path_scheme
+    return PATH_SCHEME['LOCAL_RUN'] if ENV['LKP_LOCAL_RUN']
+
     if self['suite'] =~ /^kvm:/
       PATH_SCHEME[self['suite']] || PATH_SCHEME['kvm:default']
     else
