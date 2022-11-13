@@ -70,5 +70,9 @@ support_repo_epel()
 			 /etc/yum.repos.d/epel.repo
 	fi
 
-	yum -q makecache --timer
+	if has_cmd dnf; then
+		dnf -q makecache --timer
+	else
+		yum -q makecache
+	fi
 }
