@@ -18,16 +18,16 @@ linux_dep()
 
 	case "$installer" in
 	apt)
-		ospkg_update_install $common_packages ruby-dev libssl-dev g++ uuid-runtime
+		ospkg_update_install $common_packages ruby-dev ruby-bundler libssl-dev g++ uuid-runtime
 		;;
 	dnf|yum)
-		ospkg_update_install $common_packages gcc-c++ ruby-devel rpm-build
+		ospkg_update_install $common_packages gcc-c++ ruby-devel rubygem-bundler rpm-build
 		;;
 	pacman)
-		ospkg_update_install $common_packages
+		ospkg_update_install $common_packages rubygems ruby-bundler
 		;;
 	zypper)
-		ospkg_update_install $common_packages gcc-c++ ruby-devel
+		ospkg_update_install $common_packages gcc-c++ ruby-devel ruby2.5-rubygem-bundler
 		;;
 	*)
 		echo "Unknown Package Manager! please install dependencies manually." && exit 1
