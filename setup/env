@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $LKP_SRC/lib/result.sh
+. $LKP_SRC/lib/tbox.sh
 set_tbox_group $HOSTNAME
 
 [ -d $TMP ] || mkdir -p $TMP

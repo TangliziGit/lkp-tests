@@ -72,6 +72,7 @@ prepare_workdir()
 	cp -au $LKP_SRC/lkp-exec/install		lkp-src/lkp-exec/
 	cp -au $LKP_SRC/lib/detect-system.sh 		lkp-src/lib
 	cp -au $LKP_SRC/lib/env.sh			lkp-src/lib
+	cp -au $LKP_SRC/lib/tbox.sh			lkp-src/lib
 	cp -au $LKP_SRC/lib/debug.sh			lkp-src/lib
 	cp -au $LKP_SRC/lib/result.sh			lkp-src/lib
 	cp -au $LKP_SRC/lib/install.sh			lkp-src/lib

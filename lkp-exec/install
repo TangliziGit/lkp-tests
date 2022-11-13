@@ -6,6 +6,7 @@ export LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 . $LKP_SRC/lib/result.sh
 . $LKP_SRC/lib/lkp_cmd.sh
 . $LKP_SRC/lib/env.sh
+. $LKP_SRC/lib/tbox.sh
 . $LKP_SRC/lib/constant.sh
 . $LKP_SRC/lib/lkp_path.sh
 
@@ -101,36 +102,6 @@ create_lkp_dirs() {
 	mkdir -p $TMP
 	mkdir -p $KTEST_PATHS_DIR
 	mkdir -p '/lkp/benchmarks'
-}
-
-create_host_config() {
-	[ -n "$DRY_RUN" ] && return
-
-	local host_config="$LKP_SRC/hosts/${HOSTNAME}"
-	[ -e $host_config ] || {
-		echo "Creating testbox configuration file: $host_config."
-
-		local mem_kb="$(grep MemTotal /proc/meminfo | awk '{print $2}')"
-		local mem_gb="$(((mem_kb)/1024/1024))"
-		local nr_cpu=$(nproc)
-
-		cat <<EOT >> $host_config
-nr_cpu: $nr_cpu
-memory: ${mem_gb}G
-hdd_partitions: ${hdd_partitions[*]}
-ssd_partitions: ${ssd_partitions[*]}
-local_run: 1
-EOT
-	}
-
-	local tbox_group
-	set_tbox_group $HOSTNAME
-
-	local host_group_config="$LKP_SRC/hosts/${tbox_group}"
-	[ -e $host_group_config ] || {
-		echo "Creating testbox group configuration file: $host_group_config."
-		cp $host_config $host_group_config
-	}
 }
 
 bundle_install() {
@@ -256,13 +227,13 @@ export DISTRO
 load_distro_funcs $distro
 
 export LKP_LOCAL_RUN=1
+create_host_config
 
 if [[ -z "$1" ]]; then
 	install_base_support
 	all_scripts='lkp-tests makepkg'
 else
 	make_wakeup
-	create_host_config
 	all_scripts=
 fi
 

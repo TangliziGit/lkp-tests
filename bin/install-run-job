@@ -7,8 +7,11 @@ cd       $HOME/.cache/lkp/atom_jobs
 
 $LKP_SRC/sbin/add-distro-packages.sh
 
+source $LKP_SRC/lib/tbox.sh
+create_host_config
+
 installed=
-for atom_job in $($LKP_SRC/bin/lkp split "$1")
+for atom_job in $($LKP_SRC/bin/lkp split "$LKP_SRC/$1")
 do
 	[ -n "$installed" ] ||
 	$LKP_SRC/bin/lkp install $atom_job
