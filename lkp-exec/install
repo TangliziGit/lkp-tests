@@ -201,13 +201,12 @@ install_base_support()
 	echo "Installing ruby gems..."
 
 	if [ -n "$CHINA" ]; then
-		bundle_install_china || exit
-	else
-		(
-			cd $LKP_SRC || exit
-			bundle_install || exit
-		)
+		setup_gem_china
 	fi
+	(
+		cd "$LKP_SRC"  || exit
+		bundle_install || exit
+	)
 
 	create_lkp_user
 	create_lkp_dirs

@@ -4,6 +4,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 export LKP_SRC=$(dirname $SCRIPT_DIR)
 
 . $LKP_SRC/lib/env.sh
+. $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
 . $LKP_SRC/lib/detect-system.sh
 detect_system
@@ -52,7 +53,7 @@ mac_dep()
 
 install_gem_pkg()
 {
-	gem sources -r https://rubygems.org/ -a https://gems.ruby-china.com/
+	setup_gem_china
 	$SUDO gem install -f git activesupport:6.1.4.4 rest-client faye-websocket md5sum base64 || exit
 }
 

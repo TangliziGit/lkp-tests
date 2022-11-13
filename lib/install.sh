@@ -2,6 +2,14 @@
 
 . $LKP_SRC/lib/detect-system.sh
 
+setup_gem_china()
+{
+	# https://mirrors.ustc.edu.cn/help/rubygems.html
+	gem sources --remove https://rubygems.org/		#移除默认源
+	gem sources -a https://mirrors.ustc.edu.cn/rubygems/	#添加科大源
+	bundle config mirror.https://rubygems.org https://mirrors.ustc.edu.cn/rubygems/
+}
+
 sync_distro_sources()
 {
 	detect_system
