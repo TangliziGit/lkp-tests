@@ -259,7 +259,7 @@ export LKP_LOCAL_RUN=1
 
 if [[ -z "$1" ]]; then
 	install_base_support
-	all_scripts='lkp makepkg'
+	all_scripts='lkp-tests makepkg'
 else
 	make_wakeup
 	create_host_config

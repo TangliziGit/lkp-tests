@@ -1,0 +1,29 @@
+metadata:
+  name: lkp-tests
+  summary:
+  description:
+  homepage:
+type: workload
+depends:
+  debian@11:
+    - bc
+    - gawk
+    - time
+    - kmod
+    - gzip
+    - debianutils
+    - rsync
+    - ntpdate
+    - hostname
+    - util-linux
+    - lvm2
+    - numactl
+    - net-tools
+    - cpio
+    - curl
+    - wget
+    - binutils
+params:
+  script:
+  job:
+results:

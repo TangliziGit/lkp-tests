@@ -1,9 +1,9 @@
-pkgname=lkp-src
+pkgname=lkp-tests
 pkgver=0
 pkgrel=1
 arch=('i386' 'x86_64')
-url="https://github.com/intel/lkp-tests.git"
-source=("https://github.com/intel/lkp-tests.git")
+url="https://gitee.com/compass-ci/lkp-tests.git"
+source=("https://gitee.com/compass-ci/lkp-tests.git")
 license=('GPL2.0')
 
 LKP_SRC=${LKP_SRC:-/lkp/$USER/src}
