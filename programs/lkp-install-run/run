@@ -34,9 +34,7 @@ check_install_job()
 }
 
 if [[ $script ]]; then
-	check_install_script monitors/$script
-	check_install_script setup/$script
-	check_install_script tests/$script
+	check_install_script $script
 elif [[ $job ]]; then
 	check_install_job jobs/$job
 fi
