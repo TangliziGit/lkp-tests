@@ -40,6 +40,7 @@ opt_job_kv="$*"
 
 [ -n "$opt_image" ] || usage
 IMAGE_TAG=lkp-$opt_image
+DOCKERFILE=${opt_image//\//_}
 
 prepare_workdir()
 {
@@ -68,7 +69,7 @@ prepare_workdir()
 
 create_dockerfile()
 {
-	cat > Dockerfile.$opt_image <<-EOF
+	cat > $DOCKERFILE <<-EOF
 	FROM $opt_image
 	COPY lkp-src /c/lkp-tests
 	RUN /c/lkp-tests/sbin/install-dependencies.sh
@@ -85,7 +86,7 @@ should_skip_rebuild()
 build_container()
 {
 	should_skip_rebuild && return
-	docker build --no-cache=true -t $IMAGE_TAG -f Dockerfile.$opt_image .
+	docker build --no-cache=true -t $IMAGE_TAG -f $DOCKERFILE .
 }
 
 run_container()
