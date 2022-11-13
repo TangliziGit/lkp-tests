@@ -68,7 +68,7 @@ run()
 
 	install_gem_pkg
 
-	$SUDO $LKP_SRC/bin/lkp install || exit
+	$SUDO $LKP_SRC/bin/lkp install --china || exit
 }
 
 set_env()

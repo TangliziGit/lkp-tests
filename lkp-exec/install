@@ -298,6 +298,7 @@ gem_packages=${gem_packages# }
 
 [ -n "$pip_packages" ] && os_packages+=" python3-pip "
 install_packages $os_packages
-[ -n "$pip_packages" ] && pip3 install $pip_packages || exit
-[ -n "$gem_packages" ] && gem install $gem_packages || exit
+[ -n "$pip_packages" ] && { pip3 install $pip_packages || exit; }
+[ -n "$gem_packages" ] && { gem install $gem_packages || exit; }
 make_install_packages $pkgbuild_packages
+exit 0
