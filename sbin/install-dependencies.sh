@@ -16,19 +16,20 @@ linux_dep()
 	source $LKP_SRC/distro/package-manager/$installer
 
 	local common_packages="ruby rubygems make gcc diffutils util-linux lftp hostname sudo gzip git"
+	local gems="ruby-json ruby-git"
 
 	case "$installer" in
 	apt)
-		ospkg_update_install $common_packages ruby-dev ruby-bundler libssl-dev g++ uuid-runtime
+		ospkg_update_install $common_packages $gems ruby-dev ruby-bundler libssl-dev g++ uuid-runtime
 		;;
 	dnf|yum)
-		ospkg_update_install $common_packages gcc-c++ ruby-devel rubygem-bundler rpm-build
+		ospkg_update_install $common_packages ${gems//ruby-/rubygem-} gcc-c++ ruby-devel rubygem-bundler rpm-build
 		;;
 	pacman)
-		ospkg_update_install $common_packages rubygems ruby-bundler
+		ospkg_update_install $common_packages $gems rubygems ruby-bundler
 		;;
 	zypper)
-		ospkg_update_install $common_packages gcc-c++ ruby-devel ruby2.5-rubygem-bundler
+		ospkg_update_install $common_packages ${gems//ruby-/ruby2.5-rubygem-} gcc-c++ ruby-devel ruby2.5-rubygem-bundler
 		;;
 	*)
 		echo "Unknown Package Manager! please install dependencies manually." && exit 1
