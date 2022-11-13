@@ -11,11 +11,14 @@ source $LKP_SRC/lib/tbox.sh
 create_host_config
 
 installed=
-for atom_job in $($LKP_SRC/bin/lkp split "$LKP_SRC/$1")
+for atom_job in $($LKP_SRC/bin/lkp split -o $PWD "$LKP_SRC/$1" | grep -o " $PWD/.*$")
 do
-	[ -n "$installed" ] ||
-	$LKP_SRC/bin/lkp install $atom_job
-	installed=1
+	[ -z "$installed" ] && {
+		echo Installing $atom_job
+		$LKP_SRC/bin/lkp install $atom_job || exit
+		installed=1
+	}
 
+	echo Running $atom_job
 	$LKP_SRC/bin/lkp run $atom_job
 done
