@@ -52,7 +52,7 @@ ospkg_install()
 
 ospkg_list()
 {
-	dnf list --all -q | cut -f1 -d. |
+	yum list --all -q | cut -f1 -d. |
 		grep -v -E '\-(doc|help|debuginfo|debugsource)$' | sort -u
 }
 
