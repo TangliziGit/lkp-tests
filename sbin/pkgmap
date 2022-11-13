@@ -52,7 +52,7 @@ end
 package_mapper = PackageMapper.new
 
 if opt_from_os
-  link_os_spec(opt_to_os)
+  opt_to_os = link_os_spec(opt_to_os)
   show_hset package_mapper.map_pkgs(ARGV, opt_from_os, opt_to_os)
   exit
 end

@@ -129,9 +129,17 @@ class PackageMapper
   end
 
   def link_os_spec(os)
-    return if @ospackage_set.include?(os)
+    return os if @ospackage_set.include?(os)
     os.sub!(/:.*$/, '')
-    return if @ospackage_set.include?(os)
+    return os if @ospackage_set.include?(os)
+
+    os_prefix = os.sub(/@.*$/, '@')
+    last_os = @ospackage_set.keys.select {|o| !o.include?(':') and o.start_with?(os_prefix) and o < os }.sort.last
+    if last_os
+      puts "info: reuse last OS version #{LKP_SRC}/distro/package-list/#{last_os}"
+      return last_os
+    end
+
     puts "warning: cannot find #{LKP_SRC}/distro/package-list/#{os}"
   end
 
@@ -418,7 +426,7 @@ class PackageMapper
   end
 
   def map_programs(programs, dst_os)
-    link_os_spec(dst_os)
+    dst_os = link_os_spec(dst_os)
     hh = {}
     programs.each do |program|
       h = map_program(program, dst_os)
