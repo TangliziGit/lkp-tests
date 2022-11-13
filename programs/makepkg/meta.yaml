@@ -25,6 +25,11 @@ depends:
   - gzip
   - bzip2
   - xz-utils
+  - gcc
+  - g++
+  - autoconf
+  - automake
+  - make
 params:
   rootfs:
   benchmark:
