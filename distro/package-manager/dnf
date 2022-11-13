@@ -61,10 +61,9 @@ ospkg_list()
 
 support_repo_epel()
 {
-	if [ "${_system_name_lowercase}" = "centos" -o "${_system_name_lowercase}" = "fedora" ] &&
+	if [ "${_system_name_lowercase}" = "centos" ] &&
 		! rpm -q epel-release >/dev/null; then
-		yum install -y epel-release >/dev/null 2>&1
-
+		yum install -y epel-release >/dev/null 2>&1 &&
 		# https://mirrors.ustc.edu.cn/help/epel.html
 		$SUDO sed -e 's|^metalink=|#metalink=|g' \
 			 -e 's|^#baseurl=https\?://download.fedoraproject.org/pub/epel/|baseurl=https://mirrors.ustc.edu.cn/epel/|g' \
