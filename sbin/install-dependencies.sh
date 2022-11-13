@@ -16,7 +16,7 @@ linux_dep()
 	source $LKP_SRC/distro/package-manager/$installer
 
 	local common_packages="ruby rubygems make gcc diffutils util-linux lftp hostname sudo gzip git"
-	local gems="ruby-json ruby-git"
+	local gems="ruby-json"
 
 	case "$installer" in
 	apt)

@@ -6,8 +6,12 @@ setup_gem_china()
 {
 	# https://mirrors.ustc.edu.cn/help/rubygems.html
 	gem sources --remove https://rubygems.org/		#移除默认源
+	# Note: centos7 does not work with tuna/ruby-china
+	gem sources -a https://mirrors.tuna.tsinghua.edu.cn/rubygems/
 	gem sources -a https://mirrors.ustc.edu.cn/rubygems/	#添加科大源
-	bundle config mirror.https://rubygems.org https://mirrors.ustc.edu.cn/rubygems/
+	gem sources -a https://gems.ruby-china.com/
+	# Note: ustc looks not reliable
+	#  bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 }
 
 sync_distro_sources()

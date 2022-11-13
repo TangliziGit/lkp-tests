@@ -206,7 +206,7 @@ install_base_support()
 	(
 		cd "$LKP_SRC"  || exit
 		bundle_install || exit
-	)
+	) || exit
 
 	create_lkp_user
 	create_lkp_dirs
