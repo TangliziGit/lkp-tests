@@ -46,7 +46,7 @@ end
 
 if opt_to_os.nil?
   distroinfo = LKP::DistroInfo.instance
-  opt_to_os = "#{distroinfo.systemnamel}@#{distroinfo.systemversion}:#{%x(arch)}"
+  opt_to_os = "#{distroinfo.systemnamel}@#{distroinfo.systemversion}:#{distroinfo.systemarch}"
 end
 
 package_mapper = PackageMapper.new
