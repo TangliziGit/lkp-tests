@@ -23,6 +23,7 @@ depends:
     - curl
     - wget
     - binutils
+    - procps
 params:
   script:
   job:
