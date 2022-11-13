@@ -2,6 +2,10 @@
 
 [[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 
+arg_job="$1"
+shift
+arg_job_kv="$*"
+
 mkdir -p $HOME/.cache/lkp/atom_jobs || exit
 cd       $HOME/.cache/lkp/atom_jobs
 
@@ -11,7 +15,7 @@ source $LKP_SRC/lib/tbox.sh
 create_host_config
 
 installed=
-for atom_job in $($LKP_SRC/bin/lkp split -o $PWD "$LKP_SRC/$1" | grep -o " $PWD/.*$")
+for atom_job in $($LKP_SRC/bin/lkp split -o $PWD "$LKP_SRC/$arg_job" $arg_job_kv | grep -o " $PWD/.*$")
 do
 	[ -z "$installed" ] && {
 		echo Installing $atom_job
