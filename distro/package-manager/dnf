@@ -52,7 +52,10 @@ ospkg_install()
 
 ospkg_list()
 {
-	yum list --all -q | cut -f1 -d. |
+	opt_all=
+	has_cmd dnf && opt_all=--all
+
+	yum list $opt_all -q | cut -f1 -d. |
 		grep -v -E '\-(doc|help|debuginfo|debugsource)$' | sort -u
 }
 

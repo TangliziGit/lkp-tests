@@ -141,6 +141,7 @@ class PackageMapper
     end
 
     puts "warning: cannot find #{LKP_SRC}/distro/package-list/#{os}"
+    return os
   end
 
   def load_pkgmap
