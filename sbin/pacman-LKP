@@ -120,6 +120,7 @@ upgrade() {
 	tar -axf "$@" -C "$INSTALL_DIR" || return
 	mv $INSTALL_DIR/.[^.]* "$SRC_DIR/.install" || return
 	(
+		cd "$SRC_DIR"
 		[ -f "$SRC_DIR/.install/.INSTALL" ] && source "$SRC_DIR/.install/.INSTALL"
 		case $(distro_pkg_format) in
 			deb)
