@@ -11,6 +11,8 @@
 
 [[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 
+. $LKP_SRC/lib/lkp_path.sh
+
 cd $LKP_SRC || exit
 sbin/install-dependencies.sh
 
@@ -22,8 +24,8 @@ check_install_script()
 
 check_install_job()
 {
-	test -f $1 || return
-	local atomic_job=$(lkp split --any $1)
+	find_job "$1" || return
+	local atomic_job=$(lkp split --any $job_file)
 	atomic_job=${atomic_job##* ./}
 
 	# don't run too long time
@@ -36,5 +38,5 @@ check_install_job()
 if [[ $script ]]; then
 	check_install_script $script
 elif [[ $job ]]; then
-	check_install_job jobs/$job
+	check_install_job $job
 fi

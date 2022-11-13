@@ -41,30 +41,6 @@ opt_job_kv="$*"
 [ -n "$opt_image" ] || usage
 IMAGE_TAG=lkp-$opt_image
 
-find_job()
-{
-	[ -n "$opt_job" ] || usage
-
-	if [ -f $opt_job ]; then
-		job_file=$opt_job
-		return
-	fi
-
-	shopt -s nullglob
-
-	job_file=($LKP_SRC/programs/*/jobs/$opt_job)
-	[ -n "$job_file" ] && return
-
-	job_file=($LKP_SRC/jobs/$opt_job)
-	[ -n "$job_file" ] && return
-
-	job_file=($LKP_SRC/jobs/*/$opt_job)
-	[ -n "$job_file" ] && return
-
-	echo "Failed to find job $opt_job"
-	exit 1
-}
-
 prepare_workdir()
 {
 	mkdir -p lkp-src/{lib,bin,sbin,lkp-exec,programs,hosts}
@@ -116,7 +92,8 @@ run_container()
 {
 	[ "$opt_action" = 'run' ] || return 0
 
-	find_job
+	[ -n "$opt_job" ] || usage
+	find_job "$opt_job" || exit
 
 	local cmd=(
 		docker run 
