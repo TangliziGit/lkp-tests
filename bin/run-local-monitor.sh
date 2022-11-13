@@ -72,6 +72,7 @@ set_local_variables
 	[[ $opt_test_name ]] || opt_test_name="default"
 }
 
+RESULT_ROOT_DIR_PREFIX=$HOME/.cache
 if [[ $opt_result_root ]]; then
 	mkdir -p -m 02775 $opt_result_root
 	export RESULT_ROOT=$(readlink -e -v $opt_result_root)
@@ -80,7 +81,7 @@ elif [[ $RESULT_ROOT ]]; then
 elif [[ $result_root_template ]]; then
 	for i in {0..99}
 	do
-		export RESULT_ROOT=$(eval "echo $result_root_template")/$i
+		export RESULT_ROOT=$RESULT_ROOT_DIR_PREFIX$(eval "echo $result_root_template")/$i
 		[[ -d $RESULT_ROOT ]] && continue
 		mkdir -p -m 02775 $RESULT_ROOT &&
 		echo "result_root: $RESULT_ROOT" &&

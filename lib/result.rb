@@ -56,7 +56,7 @@ class ResultPath < Hash
   end
 
   def parse_result_root(rt, is_local_run: false)
-    dirs = rt.sub(/#{RESULT_ROOT_DIR}/, '').split('/')
+    dirs = rt.sub(/^.*#{RESULT_ROOT_DIR}/, '').split('/')
     dirs.shift if dirs[0] == ''
 
     self['suite'] = dirs.shift
@@ -87,7 +87,7 @@ class ResultPath < Hash
 
   def assemble_result_root(skip_keys = nil)
     dirs = [
-      RESULT_ROOT_DIR,
+      "#{ENV['RESULT_ROOT_DIR_PREFIX']}#{RESULT_ROOT_DIR}",
       self['suite']
     ]
 
@@ -138,7 +138,7 @@ class ResultPath < Hash
 
   def params_file
     [
-      RESULT_ROOT_DIR,
+      "#{ENV['RESULT_ROOT_DIR_PREFIX']}#{RESULT_ROOT_DIR}",
       self['suite'],
       'params.yaml'
     ].join '/'
@@ -167,7 +167,7 @@ class ResultPath < Hash
     # FIXME rli9 refactor MResultRootCollection to embrace different maxis keys
     #
     def grep(test_case, options = {})
-      pattern = [RESULT_ROOT_DIR, test_case, PATH_SCHEME[test_case].map { |key| options[key] || '.*' }].flatten.join('/')
+      pattern = ["#{ENV['RESULT_ROOT_DIR_PREFIX']}#{RESULT_ROOT_DIR}", test_case, PATH_SCHEME[test_case].map { |key| options[key] || '.*' }].flatten.join('/')
 
       cmdline = "grep -he '#{pattern}' #{KTEST_PATHS_DIR}/*/????-??-??-* | sed -e 's#[0-9]\\+/$##' | sort | uniq"
       `#{cmdline}`
