@@ -26,7 +26,7 @@ create_host_config() {
 
 	local host_config="$LKP_SRC/hosts/${HOSTNAME}"
 	[ -e $host_config ] || {
-		echo "Creating testbox configuration file: $host_config."
+		echo "Creating testbox configuration file: $host_config"
 
 		local mem_kb="$(grep MemTotal /proc/meminfo | awk '{print $2}')"
 		local mem_gb="$(((mem_kb)/1024/1024))"
@@ -46,7 +46,7 @@ EOT
 
 	local host_group_config="$LKP_SRC/hosts/${tbox_group}"
 	[ -e $host_group_config ] || {
-		echo "Creating testbox group configuration file: $host_group_config."
+		echo "Creating testbox group configuration file: $host_group_config"
 		cp $host_config $host_group_config
 	}
 }
