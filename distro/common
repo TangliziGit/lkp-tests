@@ -3,6 +3,31 @@
 # Normal users need sudo to install packages
 [ $(id -u) != 0 ] && SUDO=sudo
 
+source $LKP_SRC/lib/env.sh
+
+load_distro_funcs()
+{
+	local os="$1"
+
+	test -e $LKP_SRC/distro/$os && {
+		source $LKP_SRC/distro/$os
+		return
+	}
+
+	test -e /etc/apt/sources.list && {
+		source $LKP_SRC/distro/debian
+		return
+	}
+
+	test -d /etc/yum.repos.d && {
+		source $LKP_SRC/distro/centos
+		return
+	}
+
+	echo "Your OS is not registered yet, please create $LKP_SRC/distro/$os first"
+	exit 1
+}
+
 # for packages with same dependencies, force the update instead of generating link
 # due to schedule stage will auto detect symbolic link, so no need generate new link
 check_shared_package()

@@ -9,7 +9,8 @@
 . $LKP_SRC/lib/rpm.sh
 
 export DISTRO=${os}
-. $LKP_SRC/distro/${DISTRO}
+. $LKP_SRC/distro/common
+load_distro_funcs $DISTRO
 
 update_srpm_list()
 {

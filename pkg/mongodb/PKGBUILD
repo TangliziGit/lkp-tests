@@ -27,7 +27,7 @@ build() {
 	done
 
 	[ "$DISTRO" = "centos" -o "$DISTRO" = "aliyun" ] && {
-		source $LKP_SRC/distro/$DISTRO
+		source $LKP_SRC/distro/centos
 		install_gcc7
 		build_opts="CC=/opt/rh/devtoolset-7/root/usr/bin/gcc CXX=/opt/rh/devtoolset-7/root/usr/bin/g++"
 	}

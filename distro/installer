@@ -5,5 +5,6 @@ shift
 
 [[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 
-source $LKP_SRC/distro/$os
+source $LKP_SRC/distro/common
+load_distro_funcs $os
 ospkg_update_install "$@"

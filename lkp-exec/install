@@ -148,8 +148,7 @@ bundle_install() {
 bundle_install_china() {
 	local tmpdir=$(mktemp -d /tmp/lkp-install-china-XXXXXX)
 	trap "rm -rf $tmpdir" EXIT
-	cp $LKP_SRC/Gemfile $tmpdir/Gemfile
-	cp $LKP_SRC/Gemfile.lock $tmpdir/Gemfile.lock
+	cp $LKP_SRC/Gemfile* $tmpdir/
 	(cd $tmpdir || exit; bundle config --local mirror.https://rubygems.org https://gems.ruby-china.com; bundle_install)
 }
 
@@ -216,7 +215,6 @@ install_packages() {
 	if [ "$distro" = "centos" -o "$distro" = "aliyun" ]; then
 		local ocfs2_tools_name=$(echo "$generic_packages" | grep 'ocfs2-tools')
 		if [ -n "$ocfs2_tools_name" ]; then
-			. $LKP_SRC/distro/$distro
 			install_ocfs2_tools "$ocfs2_tools_name"
 		fi
 	fi
@@ -247,6 +245,7 @@ install_base_support()
 }
 
 . $LKP_SRC/lib/install.sh
+. $LKP_SRC/distro/common
 
 detect_system
 distro=$_system_name_lowercase
@@ -254,10 +253,7 @@ distro=$_system_name_lowercase
 DISTRO=$distro
 export DISTRO
 
-[ -x $LKP_SRC/distro/$distro ] || {
-	echo "Not a supported system, cannot install packages."
-	exit 1
-}
+load_distro_funcs $distro
 
 export LKP_LOCAL_RUN=1
 

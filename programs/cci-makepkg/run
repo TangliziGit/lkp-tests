@@ -34,8 +34,9 @@ export DISTRO=${os}
 [[ "$os_mount" = "cifs" ]] && os_mount="nfs"
 pack_to=${os_mount}/${os}/${os_arch}/${os_version}/${benchmark}
 
-. $LKP_SRC/distro/${DISTRO}
 . $LKP_SRC/lib/install.sh
+. $LKP_SRC/distro/common
+load_distro_funcs $DISTRO
 
 cd $LKP_SRC/pkg/$benchmark || die "pkg is empty"
 

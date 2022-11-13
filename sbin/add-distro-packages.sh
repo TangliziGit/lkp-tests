@@ -19,12 +19,8 @@ get_system_arch
 
 [ -n "$_system_arch" ] || exit
 
-test -e $LKP_SRC/distro/$_system_name_lowercase || {
-	echo "Your OS is not registered yet, please create $LKP_SRC/distro/$_system_name_lowercase first"
-	exit 1
-}
-
-. $LKP_SRC/distro/$_system_name_lowercase || exit
+. $LKP_SRC/distro/common
+load_distro_funcs $_system_name_lowercase
 
 if [ "$_system_arch" = x86_64 ]; then
 	file=distro/package-list/$_system_name_lowercase@$_system_version

@@ -30,7 +30,8 @@ else
 
 fi	
 
-. $LKP_SRC/distro/${DISTRO}
+. $LKP_SRC/distro/common
+load_distro_funcs $DISTRO
 
 mount $LKP_SERVER:$DEPS_MNT $DEPS_MNT || die "Failed to run mount"
 
