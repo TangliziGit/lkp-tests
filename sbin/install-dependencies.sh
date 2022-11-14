@@ -1,5 +1,11 @@
 #!/bin/bash
 
+INSTALL_SUCCESS_FILE=/tmp/.lkp-install-dependencies-success
+test -e $INSTALL_SUCCESS_FILE && {
+	echo "$0: quit due to already installed: $INSTALL_SUCCESS_FILE"
+	exit 0
+}
+
 SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
 export LKP_SRC=$(dirname $SCRIPT_DIR)
 
@@ -97,3 +103,4 @@ symlink_lkp()
 run
 set_env
 symlink_lkp
+touch $INSTALL_SUCCESS_FILE
