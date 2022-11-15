@@ -23,6 +23,10 @@ options = OptionParser.new do |opts|
   opts.separator '    eg.2: cci select -f \* -w "suite=\'xxx\' and job_stage=\'xxx\'" jobs'
   opts.separator 'options:'
 
+  opts.on('-l', '--lab <LAB>', 'connect to lab') do |l|
+    ENV['CCI_LAB'] = l.strip
+  end
+
   opts.on('-f', '--field <field>', 'show field') do |f|
     field = f.strip
   end
