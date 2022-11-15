@@ -708,8 +708,9 @@ class Job
     files << os
 
     files.each do |file|
-      return dir+file if File.exists?(dir + file)
+      return dir + file if File.exists?(dir + file)
     end
+    return
   end
 
   def use_manual_install_cmdline()
