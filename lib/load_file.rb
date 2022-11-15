@@ -21,6 +21,6 @@ def load_my_config
   end
 
   lab = ENV['CCI_LAB'] || config['lab']
-  lab_yaml = File.join(self_config_path, 'include/lab', "#{lab}.yaml")
-  config.merge! load_one_yaml(lab_yaml)
+  config.merge! load_one_yaml File.join('/etc/compass-ci/include/lab', "#{lab}.yaml")
+  config.merge! load_one_yaml File.join(self_config_path, 'include/lab', "#{lab}.yaml")
 end
