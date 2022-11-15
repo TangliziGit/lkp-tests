@@ -84,7 +84,7 @@ def read_cci_credentials
   data_hash['DATA_API_HOST'] ||= hash['DATA_API_HOST'] || hash['SCHED_HOST']
   data_hash['DATA_API_PORT'] ||= hash['DATA_API_PORT'] || '20003'
 
-  raise 'Please configure DATA_API_PORT' if data_hash['DATA_API_HOST'].nil?
+  raise 'Please configure DATA_API_HOST' if data_hash['DATA_API_HOST'].nil?
 
   return data_hash
 end
