@@ -107,6 +107,26 @@ def get_cards_info
   return cards
 end
 
+def get_disk_id_map
+  map = {}
+  Dir.glob('/dev/disk/by-id/*').each do |id|
+    name = File.basename(File.readlink(id))
+    next if id.include? '/wwn-' and map.include? name
+    next if id.include? '-eui.' and map.include? name
+    map[name] = File.basename id
+  end
+  map
+end
+
+def get_disk_path_map
+  map = {}
+  Dir.glob('/dev/disk/by-path/*').each do |path|
+    name = File.basename(File.readlink(path))
+    map[name] = File.basename path
+  end
+  map
+end
+
 def get_system_disk_info
   facter_string = %x(facter -j)
   facter_info = JSON.parse(facter_string)
@@ -117,9 +137,15 @@ def get_system_disk_info
 
   server_info['bios'] = facter_info['dmi']['bios']
   info_to_num(server_info['bios'])
-  server_info['disks'] = facter_info['disks']
-  server_info['disks'].each do |k, v|
-    info_to_num(v)
+
+  disk_name2id = get_disk_id_map
+  disk_name2path = get_disk_path_map
+  server_info['disks'] = []
+  facter_info['disks'].each do |name, disk|
+    info_to_num(disk)
+    disk['device_id'] = disk_name2id[name]
+    disk['device_path'] = disk_name2path[name]
+    server_info['disks'].append disk
   end
 
   return server_info
