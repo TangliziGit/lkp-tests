@@ -170,10 +170,5 @@ stats['stats_source'] = "#{result_root}/stats.json"
 unite_to(stats, _result_root)
 system("#{LKP_SRC}/sbin/unite-params", result_root)
 
-if RUBY_VERSION.to_i == 2
-  MResultRootTableSet.create_tables_layout
-  convert_mrt(_result_root)
-end
-
 FileUtils.rm_f($opt_result_root)
 FileUtils.ln_s(result_root, $opt_result_root)
