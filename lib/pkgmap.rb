@@ -252,7 +252,7 @@ class PackageMapper
       load_meta_yaml path, File.basename(File.dirname(path))
     end
     Dir.glob("#{LKP_SRC}/{monitors,setup,programs}/*/meta-*.yaml").each do |path|
-      load_meta_yaml path, path.sub(/.*meta-/, '').delete_suffix('.yaml')
+      load_meta_yaml path, path.sub(/.*meta-/, '').sub(/.yaml$/, '')
     end
   end
 

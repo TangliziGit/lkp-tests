@@ -144,7 +144,7 @@ class Monitor
     return unless @action['mirror_result']
 
     @result_roots.each do |res|
-      res.to_s.delete_prefix!('/srv')
+      res.to_s.sub!(/^\/srv/, '')
       srv_http_result_host = @job['SRV_HTTP_RESULT_HOST'] || 'api.compass-ci.openeuler.org'
       srv_http_result_port = @job['SRV_HTTP_RESULT_PORT'] || '20007'
       srv_http_protocol = @job['SRV_HTTP_PROTOCOL'] || 'https'

@@ -78,7 +78,7 @@ end
 
 def search_file_in_paths(file, relative_to = nil, search_paths = nil)
   file.gsub!(/\$.*?\//) do |s|
-    ENV[s.delete_prefix("$").delete_suffix("/")] + "/"
+    ENV[s.sub(/^\$/, '').sub(/\/$/, '')] + "/"
   end
 
   if file[0] == '/'
