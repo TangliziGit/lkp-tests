@@ -1,7 +1,7 @@
 submit:
   - libmicro.yaml
   - stream.yaml
-  - lmbench3-1nr_threads.yaml
+  - lmbench-1nr_threads.yaml
   - unixbench.yaml runtime=30s
   - fio-basic-benchmark.yaml
   - netperf-runtime.yaml

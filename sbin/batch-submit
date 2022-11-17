@@ -8,8 +8,8 @@
 #   batch-submit batch.yaml os_arch=x86_64,aarch64
 # eg batch.yaml:
 # submit:
-#   - lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=lSELECT
-#   - lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=UNIX
+#   - lmbench.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=lSELECT
+#   - lmbench.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=UNIX
 #   - unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000
 # default_param:
 #   runtime: 30
@@ -19,18 +19,18 @@
 #     - centos
 #     - openeuler
 # output:
-#   submit runtime=30 lmbench3.yaml memory=16G os=centos lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=lSELECT os_arch=x86_64
-#   submit runtime=30 lmbench3.yaml memory=16G os=openeuler lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=lSELECT os_arch=x86_64
-#   submit runtime=30 lmbench3.yaml memory=16G os=centos lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=lSELECT os_arch=aarch64
-#   submit runtime=30 lmbench3.yaml memory=16G os=openeuler lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=lSELECT os_arch=,aarch64
-#   submit runtime=30 lmbench3.yaml memory=16G os=centoes lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test==UNIX os_arch=x86_64
-#   submit runtime=30 lmbench3.yaml memory=16G os=openeuler lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test==UNIX os_arch=x86_64
-#   submit runtime=30 lmbench3.yaml memory=16G os=centos lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test==UNIX os_arch=aarch64
-#   submit runtime=30 lmbench3.yaml memory=16G os=openeuler lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test==UNIX os_arch=,aarch64
-#   submit runtime=30 lmbench3.yaml memory=16G os=centos unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=x86_64
-#   submit runtime=30 lmbench3.yaml memory=16G os=openeuler unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=x86_64
-#   submit runtime=30 lmbench3.yaml memory=16G os=centos unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=aarch64
-#   submit runtime=30 lmbench3.yaml memory=16G os=openeuler unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=,aarch64
+#   submit runtime=30 lmbench.yaml memory=16G os=centos testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=lSELECT os_arch=x86_64
+#   submit runtime=30 lmbench.yaml memory=16G os=openeuler testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=lSELECT os_arch=x86_64
+#   submit runtime=30 lmbench.yaml memory=16G os=centos testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=lSELECT os_arch=aarch64
+#   submit runtime=30 lmbench.yaml memory=16G os=openeuler testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=lSELECT os_arch=,aarch64
+#   submit runtime=30 lmbench.yaml memory=16G os=centoes testbox=taishan200-2280-2s48p-256g--a11 lmbench.test==UNIX os_arch=x86_64
+#   submit runtime=30 lmbench.yaml memory=16G os=openeuler testbox=taishan200-2280-2s48p-256g--a11 lmbench.test==UNIX os_arch=x86_64
+#   submit runtime=30 lmbench.yaml memory=16G os=centos testbox=taishan200-2280-2s48p-256g--a11 lmbench.test==UNIX os_arch=aarch64
+#   submit runtime=30 lmbench.yaml memory=16G os=openeuler testbox=taishan200-2280-2s48p-256g--a11 lmbench.test==UNIX os_arch=,aarch64
+#   submit runtime=30 lmbench.yaml memory=16G os=centos unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=x86_64
+#   submit runtime=30 lmbench.yaml memory=16G os=openeuler unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=x86_64
+#   submit runtime=30 lmbench.yaml memory=16G os=centos unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=aarch64
+#   submit runtime=30 lmbench.yaml memory=16G os=openeuler unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000 os_arch=,aarch64
 
 require 'optparse'
 require 'open3'

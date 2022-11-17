@@ -7,8 +7,8 @@ require_relative './yaml.rb'
 # input eg:
 # {
 #   "submit": [
-#     "lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=lSELECT",
-#     "lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench3.test=UNIX",
+#     "lmbench.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=lSELECT",
+#     "lmbench.yaml testbox=taishan200-2280-2s48p-256g--a11 lmbench.test=UNIX",
 #     "unixbench.yaml testbox=taishan200-2280-2s48p-256g--a12 runtime=6000"
 #     ...
 #   ],
@@ -23,8 +23,8 @@ require_relative './yaml.rb'
 # }
 # return eg:
 #   [
-#     "runtime=3000 lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 os=centos ",
-#     "runtime=3000 lmbench3.yaml testbox=taishan200-2280-2s48p-256g--a11 os=openeuler ",
+#     "runtime=3000 lmbench.yaml testbox=taishan200-2280-2s48p-256g--a11 os=centos ",
+#     "runtime=3000 lmbench.yaml testbox=taishan200-2280-2s48p-256g--a11 os=openeuler ",
 #     ...
 #   ]
 def gerenate_submit_cmd(args)

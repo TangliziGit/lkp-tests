@@ -50,7 +50,7 @@ class LinuxTestcasesTableSet
        chromeswap fio-basic apachebench perf-event-tests swapin
        tpcc mytest exit-free pgbench boot-trace sysbench-cpu
        sysbench-memory sysbench-threads sysbench-mutex stream
-       perf-bench-futex mutilate lmbench3 lib-micro schbench
+       perf-bench-futex mutilate lmbench lib-micro schbench
        pmbench linkbench rocksdb cassandra redis power-idle
        mongodb ycsb memtier mcperf fio-jbod cyclictest filebench igt
        autonuma-benchmark adrestia kernbench rt-app migratepages intel-ipsec-mb
