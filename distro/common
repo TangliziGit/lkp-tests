@@ -83,6 +83,11 @@ ospkg_update_ratelimit()
 
 ospkg_update_install()
 {
+	if [ -z "$1" ]; then
+		echo "warning: empty package list in ospkg_update_install"
+		return 0
+	fi
+
 	ospkg_update_ratelimit
 
 	echo "Installing packages $*"
