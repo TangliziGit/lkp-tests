@@ -3,7 +3,7 @@ suite: lkp-install-run
 # top level variable is convenient to override in commandline
 script:
 - unixbench
-- lmbench3
+- lmbench
 - stream
 - fio
 - lib-micro
