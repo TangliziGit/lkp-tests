@@ -22,20 +22,20 @@ linux_dep()
 	source $LKP_SRC/distro/package-manager/$installer
 
 	local common_packages="ruby rubygems make gcc diffutils util-linux lftp hostname sudo gzip git"
-	local gems="ruby-json"
+	local gems="ruby-json ruby-bundler"
 
 	case "$installer" in
 	apt)
-		ospkg_update_install $common_packages $gems ruby-dev ruby-bundler libssl-dev g++ uuid-runtime
+		ospkg_update_install $common_packages $gems rake ruby-dev libssl-dev g++ uuid-runtime
 		;;
 	dnf|yum)
-		ospkg_update_install $common_packages ${gems//ruby-/rubygem-} gcc-c++ ruby-devel rubygem-bundler rpm-build
+		ospkg_update_install $common_packages ${gems//ruby-/rubygem-} gcc-c++ ruby-devel rubygem-rake rpm-build
 		;;
 	pacman)
-		ospkg_update_install $common_packages $gems rubygems ruby-bundler
+		ospkg_update_install $common_packages $gems rubygems ruby-rake
 		;;
 	zypper)
-		ospkg_update_install $common_packages ${gems//ruby-/ruby2.5-rubygem-} gcc-c++ ruby-devel ruby2.5-rubygem-bundler
+		ospkg_update_install $common_packages ${gems//ruby-/ruby2.5-rubygem-} gcc-c++ ruby-devel ruby2.5-rubygem-rake-12_0
 		;;
 	*)
 		echo "Unknown Package Manager! please install dependencies manually." && exit 1
@@ -58,12 +58,6 @@ mac_dep()
 	write_shell_profile "export PATH=/usr/local/opt/ruby/bin:$PATH"
 }
 
-install_gem_pkg()
-{
-	setup_gem_china
-	$SUDO gem install -f git activesupport:6.1.4.4 rest-client faye-websocket md5sum base64 || exit
-}
-
 run()
 {
 	if is_system "Linux"; then
@@ -73,8 +67,6 @@ run()
 	else
 		echo "$DISTRO not supported!" && exit 1
 	fi
-
-	install_gem_pkg
 
 	$SUDO $LKP_SRC/bin/lkp install --china || exit
 }

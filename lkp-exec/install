@@ -108,6 +108,11 @@ bundle_install() {
 	local ruby_version=$(ruby --version)
 	if [[ "$ruby_version" != "${ruby_version#ruby 3}" ]]; then
 		bundle install
+	elif [[ "$ruby_version" != "${ruby_version#ruby 2.0}" ]]; then
+		# centos 7
+		cmd='gem install concurrent-ruby:1.1.9 i18n:1.4.0 minitest:5.11.3 activesupport:4.2.11.3 '
+		echo $cmd
+		$cmd
 	elif [[ "$ruby_version" != "${ruby_version#ruby 2}" ]]; then
 		BUNDLE_GEMFILE=Gemfile.2 bundle install
 	else
