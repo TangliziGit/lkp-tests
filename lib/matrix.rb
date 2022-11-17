@@ -356,19 +356,16 @@ def read_matrix_from_csv_file(file_name)
   return {} unless file_name
   return {} unless File.exist? file_name
 
-  convert = lambda do |input|
-    %i[Integer Float].each do |m|
-      return send(m, input)
-    rescue StandardError
-      next
-    end
-    input
-  end
-
   File.readlines(file_name).each do |line|
     values = line.split
     key = values.shift
-    matrix[key] = values.map { |v| convert[v] }
+    matrix[key] = values.map { |v|
+      if v.include? '.'
+        v.to_f
+      else
+        v.to_i
+      end
+    }
   end
   matrix
 end
