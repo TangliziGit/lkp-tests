@@ -11,6 +11,10 @@ ospkg_source_china()
 		     -e "s/security.ubuntu.com/$mirror_site/g" \
 		     -e "s|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g" \
 		     /etc/apt/sources.list
+
+	# extra debian repos
+	$SUDO sed -i -e 's/ main$/ main contrib non-free/' \
+			/etc/apt/sources.list
 }
 
 ospkg_update()
