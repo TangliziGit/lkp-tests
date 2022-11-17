@@ -5,7 +5,6 @@ LKP_SRC ||= ENV['LKP_SRC'] || File.dirname(__dir__)
 require "#{LKP_SRC}/lib/job"
 require "#{LKP_SRC}/lib/lkp_path"
 require 'shellwords'
-require 'base64'
 
 TMP ||= ENV['TMP'] || '/tmp'
 
@@ -357,7 +356,7 @@ class Job2sh < Job
     out_line
     out_line "\texport define_files='#{define_files.keys.join ' '}'"
     define_files.each do |file, val|
-      val = Base64.encode64(val)
+      val = [val].pack("m")
       out_line "\tmkdir -p $LKP_SRC/$(dirname #{file})"
       out_line "\techo \"#{val}\" | base64 -d > $LKP_SRC/#{file}"
       if File::executable?("#{ENV['LKP_SRC']}/#{file}")

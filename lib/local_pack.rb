@@ -3,7 +3,6 @@
 require 'yaml'
 require 'fileutils'
 require 'digest'
-require 'base64'
 
 # used to do package for user side
 # pack_source
@@ -132,7 +131,7 @@ class PackChange
     end
 
     md5 = Digest::MD5.hexdigest File.read(dest_cgz)
-    content = Base64.encode64(File.read(dest_cgz)).chomp
+    content = [File.read(dest_cgz)].pack('m').chomp
 
     [tag, md5, content]
   end

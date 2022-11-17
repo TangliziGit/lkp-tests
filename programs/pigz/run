@@ -8,8 +8,6 @@
 ## functional replacement for gzip that exploits multiple processors
 ## and multiple cores to the hilt when compressing data.
 
-require 'base64'
-
 runtime = (ENV['runtime'] || 300).to_i
 nr_threads = ENV['nr_threads'] || ENV['nr_cpu']
 blocksize = (ENV['blocksize'] || 128).to_i
@@ -49,7 +47,7 @@ F_SETPIPE_SZ = F_LINUX_SPECIFIC_BASE + 7
 REPEAT = 5
 MB = (1 << 20)
 
-data = Base64.encode64 Random.new(1234).bytes(MB)
+data = [Random.new(1234).bytes(MB)].pack('m')
 iterations = 0
 
 start_time = Time.now
