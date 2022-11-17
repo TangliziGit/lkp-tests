@@ -6,13 +6,12 @@ require 'set'
 require 'time'
 require 'git'
 require "#{LKP_SRC}/lib/yaml"
-require "#{LKP_SRC}/lib/cache"
 require "#{LKP_SRC}/lib/assert"
 require "#{LKP_SRC}/lib/git_ext/base"
 require "#{LKP_SRC}/lib/git_ext/object"
 require "#{LKP_SRC}/lib/git_ext/lib"
 require "#{LKP_SRC}/lib/git_ext/author"
-require "#{LKP_SRC}/lib/git_ext/cache"
+require "#{LKP_SRC}/lib/git_ext/cache" if RUBY_VERSION >= '2.5.0'
 require "#{LKP_SRC}/lib/constant"
 require "#{LKP_SRC}/lib/run_env"
 

@@ -12,7 +12,6 @@ require "#{LKP_SRC}/lib/run_env"
 require 'set'
 require 'time'
 require "#{LKP_SRC}/lib/yaml"
-require "#{LKP_SRC}/lib/cache"
 require "#{LKP_SRC}/lib/assert"
 require "#{LKP_SRC}/lib/git_ext"
 require "#{LKP_SRC}/lib/constant"
