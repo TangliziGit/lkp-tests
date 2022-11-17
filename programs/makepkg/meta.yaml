@@ -7,6 +7,8 @@ metadata:
   homepage: https://archlinux.org/pacman/
 type: workload
 depends:
+  centos@7:
+  - bsdtar
   debian@11:
   - curl
   - gnupg2
