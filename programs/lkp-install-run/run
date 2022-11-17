@@ -16,12 +16,6 @@
 cd $LKP_SRC || exit
 sbin/install-dependencies.sh
 
-check_install_script()
-{
-	test -x $1 || return
-	lkp install $1
-}
-
 check_install_job()
 {
 	find_job "$1" || return
@@ -39,7 +33,7 @@ check_install_job()
 }
 
 if [[ $script ]]; then
-	check_install_script $script
+	lkp install $script
 elif [[ $job ]]; then
 	check_install_job $job
 fi

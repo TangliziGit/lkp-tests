@@ -2,7 +2,7 @@
 
 INSTALL_SUCCESS_FILE=/tmp/.lkp-install-dependencies-success
 test -e $INSTALL_SUCCESS_FILE && {
-	echo "$0: quit due to already installed: $INSTALL_SUCCESS_FILE"
+	echo "$0: already installed: $INSTALL_SUCCESS_FILE"
 	exit 0
 }
 
