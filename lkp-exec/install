@@ -110,7 +110,7 @@ bundle_install() {
 		bundle install
 	elif [[ "$ruby_version" != "${ruby_version#ruby 2.0}" ]]; then
 		# centos 7
-		cmd='gem install concurrent-ruby:1.1.9 i18n:1.4.0 minitest:5.11.3 activesupport:4.2.11.3 '
+		cmd='gem install git:1.7.0 concurrent-ruby:1.1.9 i18n:1.4.0 minitest:5.11.3 activesupport:4.2.11.3 '
 		echo $cmd
 		$cmd
 	elif [[ "$ruby_version" != "${ruby_version#ruby 2}" ]]; then
