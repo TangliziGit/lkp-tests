@@ -1,7 +1,7 @@
 suite: lkp-install-run
 
 # top level variable is convenient to override in commandline
-script:
+program:
 - unixbench
 - lmbench
 - stream

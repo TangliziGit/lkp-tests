@@ -6,6 +6,6 @@ metadata:
 type: workload
 depends:
 params:
-  script:
+  program:
   job:
 results:

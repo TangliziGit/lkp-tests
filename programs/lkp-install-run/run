@@ -1,5 +1,5 @@
 #!/bin/bash
-# - script
+# - program
 # - job
 
 # Direct usage:
@@ -7,7 +7,7 @@
 # job=stream.yaml tests/lkp-install-run
 #
 # cd tests
-# script=stream ./lkp-install-run
+# program=stream ./lkp-install-run
 
 [[ -n "$LKP_SRC" ]] || LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))
 
@@ -32,8 +32,8 @@ check_install_job()
 	lkp run $atomic_job
 }
 
-if [[ $script ]]; then
-	lkp install $script
-elif [[ $job ]]; then
-	check_install_job $job
+if [[ -n "$program" ]]; then
+	lkp install "$program"
+elif [[ -n "$job" ]]; then
+	check_install_job "$job"
 fi
