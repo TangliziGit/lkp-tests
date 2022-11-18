@@ -7,8 +7,23 @@
 usage()
 {
 	cat <<EOF
-Usage: lkp docker [options] build DOCKER_IMAGE
-       lkp docker [options] run DOCKER_IMAGE JOB_YAML [key=val ...]
+Usage:
+	lkp docker [options] build DOCKER_IMAGE
+	lkp docker [options] run DOCKER_IMAGE JOB_YAML [key=val ...]
+
+Example:
+	# This creates 'lkp-debian:11' docker image locally with generated
+	# ~/.cache/lkp/container/Dockerfile.debian:11
+	#	FROM debian:11
+	#	COPY lkp-src /c/lkp-tests
+	#	RUN /c/lkp-tests/sbin/install-dependencies.sh
+	lkp docker -m build debian:11
+	# You may now run this to enable/debug tests:
+	# 	docker run -it -v $LKP_SRC:/c/lkp-tests debian:11 bash
+
+	# This runs lkp-run.yaml with parameter 'job=stream.yaml'
+	# which install-and-runs stream.yaml in 'lkp-debian:11'.
+	lkp docker -m run debian:11 lkp-run.yaml job=stream.yaml
 
 Options:
 	-m	bind mount $HOME/.cache/lkp/result into /root/.cache/lkp/result
