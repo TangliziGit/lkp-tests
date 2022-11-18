@@ -4,17 +4,193 @@ shopt -s nullglob
 
 . $LKP_SRC/lib/install.sh
 . $LKP_SRC/distro/common
-. $LKP_SRC/distro/package-manager/dnf
+. $LKP_SRC/distro/package-manager/apt
 . $LKP_SRC/lib/debug.sh
+
+update()
+{
+	apt-get -q update
+}
+
+add_i386_package()
+{
+	dpkg --add-architecture i386
+}
+
+download()
+{
+	echo apt-get -q download $*
+	apt-get -q download $* || apt-get -q download $*
+}
+
+hardlink_to_symlink()
+{
+	while read line
+	do
+		local hard_links=($line)
+		for i in {1..9}
+		do
+			[[ ${hard_links[$i]} ]] || break
+			echo \
+			ln -sf ${hard_links[0]#.} ${hard_links[$i]}
+			ln -sf ${hard_links[0]#.} ${hard_links[$i]}
+		done
+	done < <(for i in $(find . -type f -links +1); do find . -samefile $i | awk '{printf "%s ", $1}'; printf "\n"; done | sort | uniq)
+}
+
+install()
+{
+	local deb_pkgname
+	local deb_filename
+	local deb_files
+
+	# sequence-deb content looks like:
+	#   libreadline7
+	#   libssl1.1
+	#   gawk
+	[ -s "opt/deb/sequence-deb.$BM_NAME" ] && {
+		deb_files=$(find ./ -name "*.deb" -type f)
+		while read -r deb_pkgname
+		do
+			# deb package naming specification, the file name must contain '_'
+			deb_filename=$(echo "$deb_files" | grep "^\./${deb_pkgname}_")
+			if [ -n "${deb_filename}" ]; then
+				mv "$deb_filename"  opt/deb
+
+				# keep-deb content looks like:
+				#   libreadline7_7.0-1_amd64.deb
+				#   libssl1.1_1.1.0d-2_amd64.deb
+				#   gawk_1%3a4.1.3+dfsg-0.1+b1_amd64.deb
+				basename $deb_filename >> opt/deb/keep-deb.$BM_NAME
+			else
+				echo "error: $deb_pkgname is not exist." >&2
+				return 1
+			fi
+		done < opt/deb/sequence-deb.$BM_NAME
+	}
+
+	local deb
+	for deb in *.deb; do
+		dpkg-deb -x "$deb" . || return
+		rm "$deb"
+	done
+
+	hardlink_to_symlink
+}
+
+fixup_vim()
+{
+	ln -sf vim.basic usr/bin/vim
+}
+
+fixup_lkp-eywa()
+{
+	ln -sf /usr/bin/gnuplot-qt usr/bin/gnuplot
+	ln -sf /usr/bin/heirloom-mailx usr/bin/mailx
+}
+
+fixup_perf()
+{
+	local real_perf=(usr/bin/perf_*)
+	[[ $real_perf ]] || return
+
+	# replace the perf wrapper script
+	ln -sf /$real_perf usr/bin/perf
+}
+
+fixup_kernel-selftests()
+{
+	# 'apt install traceroute' will create .db binary in PATH
+	# manually create softlink to them
+	ln -sf /usr/bin/traceroute.db ./usr/bin/traceroute
+	ln -sf /usr/bin/traceroute6.db ./usr/bin/traceroute6
+	ln -sf /usr/bin/lft.db ./usr/bin/lft
+	ln -sf /usr/bin/traceproto.db ./usr/bin/traceproto
+	ln -sf /usr/sbin/tcptraceroute.db ./usr/sbin/tcptraceroute
+}
+
+fixup_ltp()
+{
+	ln -sf /usr/sbin/in.telnetd ./usr/sbin/in.telnetd
+}
+
+pack()
+{
+	local date=$(date +"%Y%m%d")
+
+	[[ $(type -t fixup_$BM_NAME) = 'function' ]] && fixup_$BM_NAME
+
+	[ ${suite} == "cci-depends" ] && distro_install_depends cci-depends
+	{
+		find . -xdev |
+		sed 's,^\./,,' |
+		grep -v -f $LKP_SRC/rootfs/rootfs-strip-list
+
+		[[ -f $LKP_SRC/distro/$DISTRO/$BM_NAME-allowlist ]] &&
+		cat   $LKP_SRC/distro/$DISTRO/$BM_NAME-allowlist
+	} |
+	cpio --quiet -o -H newc --owner=root.root |
+	gzip -n -9 >	$pack_to/${BM_NAME}_$date.cgz	|| return
+
+	ln -sf			 ${BM_NAME}_$date.cgz \
+			$pack_to/${BM_NAME}.cgz		|| return
+
+	chown .lkp	$pack_to/${BM_NAME}_$date.cgz \
+			$pack_to/${BM_NAME}.cgz		|| return
+
+	echo package uploaded to $pack_to/${benchmark}.cgz
+}
+
+resolve_depends()
+{
+	local deps=$*
+	local command
+
+	command="apt-get --simulate --no-install-recommends install -qq $deps"
+	# using "bash -c" to support wildcard in apt-get.
+	# if use wildcard in the package version variable,
+	# apt-get will treat the wildcard as a normal character.
+	bash -c "$command" || die "Failed to apt-get install $deps"
+
+	# apt-get will have below output
+	#   Inst python-minimal [2.7.11-2] (2.7.13-2 Debian:testing, Debian:unstable [amd64])
+	#   Inst mime-support (3.60 Debian:testing, Debian:unstable [all])
+	#   Inst libsqlite3-0 (3.16.2-3 Debian:testing, Debian:unstable [amd64])
+	# PACKAGE_LIST='python-minimal mime-support libsqlite3-0'
+	PACKAGE_LIST=$(bash -c "$command" | awk '/^Inst / { print $2 }')
+
+	# PACKAGE_VERSION_LIST='python-minimal=2.7.13-2 mime-support=3.60 libsqlite3-0=3.16.2-3'
+	PACKAGE_VERSION_LIST=$(bash -c "$command" |
+		awk '/^Inst / { if (substr($3, 1, 1) != "[") { print $2$3 } else { print $2$4 } }' | tr '(' '=')
+}
+
+save_package_deps_info()
+{
+	local benchmark=$1
+
+	mkdir -p opt/deb
+	# sequence-deb content looks like:
+	#   libreadline7
+	#   libssl1.1
+	#   gawk
+	[ -n "$PACKAGE_LIST" ] && \
+		echo "$PACKAGE_LIST" | grep -F -f "$LKP_SRC/distro/keep-deb" > "opt/deb/sequence-deb.$benchmark"
+	[ -n "$PACKAGE_VERSION_LIST" ] && \
+		echo "$PACKAGE_VERSION_LIST" > "opt/deb/${benchmark}-deps.packages"
+}
 
 distro_install_depends()
 {
 	local script
 	local bm="$1"
 	local scripts=$(find $LKP_SRC/distro/depends/ -name "$bm" -o -name "${bm}.[0-9]")
+	local arch=$(get_system_arch)
 
-	support_repo_epel
+	export DEBIAN_FRONTEND=noninteractive
+	[ "$arch" = "x86_64" ] && add_i386_package
+	update
 
+	fixup_preinstall
 	for script in $scripts
 	do
 		script=$(basename $script)
@@ -24,17 +200,16 @@ distro_install_depends()
 
 		echo install packages for $script: $packages
 
-		local ocfs2_tools_name=$(echo "$packages" | grep 'ocfs2-tools')
-		[ -n "$ocfs2_tools_name" ] && install_ocfs2_tools "$ocfs2_tools_name"
-
 		ospkg_install $packages
+
+		# some apt mirrors may have issue and fail in the first time of apt install
+		# so try for a second time if the first time fails
+		[[ $? -ne 0 ]] && ospkg_install $packages
 	done
 }
 
 pack_benchmark()
 {
-	setup_proxy
-
 	distro_install_depends lkp-dev
 
 	# Process each benchmark
@@ -43,124 +218,78 @@ pack_benchmark()
 		distro_install_depends $BM_NAME-dev || continue
 		echo $LKP_SRC/sbin/pack -d $DISTRO -f -c -s $PKG_MNT/$pack_to $BM_NAME
 		(
+			setup_proxy
 			$LKP_SRC/sbin/pack -d $DISTRO -f -c -s $PKG_MNT/$pack_to $BM_NAME
 		)
 	done
 }
 
-yum_download()
+fixup_distro_mirror()
 {
-	support_repo_epel
+	# fix the problem:
+	# debconf: unable to initialize frontend: Dialog
+	# debconf: (TERM is not set, so the dialog frontend is not usable.)
+	export DEBIAN_FRONTEND=noninteractive
 
-	echo "yum install -y --downloadonly --skip-broken $@ | grep -e \"No\ package .*\ available\""
-	yum install -y --downloadonly --skip-broken "$@" | grep -e "No\ package .*\ available" && exit 1
-	return 0
+	# add extra apt source into sources.list
+	# use (cat ...; echo) to append new line at last
+	(cat $LKP_SRC/distro/apt-sources-list; echo) >> /etc/apt/sources.list
+
+	# remove testing and unstable source
+	sed -i -e '/testing/d' -e '/unstable/d' /etc/apt/sources.list
 }
 
-yum_pack()
+fixup_preinstall()
 {
-	local target_dir=opt/rpms
-	local date=$(date +"%Y%m%d")
-
-	local downloaded_rpms=$(find /var/ -type f -name "*.rpm")
-
-	[ "$downloaded_rpms" ] || return
-
-	mkdir -p $target_dir
-
-	mv $downloaded_rpms $target_dir
-
-	[ ${suite} == "cci-depends" ] && distro_install_depends cci-depends
-	find $target_dir | cpio --quiet -o -H newc --owner=root.root | gzip -n -9 >$pack_to/${BM_NAME}_$date.cgz
-
-	ln -sf ${BM_NAME}_$date.cgz $pack_to/${BM_NAME}.cgz || return
-	chown .lkp $pack_to/${BM_NAME}_$date.cgz $pack_to/${BM_NAME}.cgz || return
-	echo package uploaded to $pack_to/${benchmark}.cgz
-
-	ls $target_dir/*.rpm > $pack_to/.${BM_NAME}.packages
-
-	rm -rf $target_dir
+	apt-get install -qf
 }
 
-cleanup_downloaded_rpms()
+fixup_arch_install()
 {
-	find /var/ -type f -name "*.rpm" -exec rm -f -- '{}' \;
-}
+	local pack_arch=$1
+	[ "$pack_arch" = "i386" ] || return
 
-cleanup_installed_depends_rpms()
-{
-	for package in $@
-	do
-		yum remove -y "$package" >/dev/null 2>&1
-	done
+	dpkg --add-architecture i386
+	update
+	apt --allow-remove-essential --fix-broken install -q -o=APT::Architecture="i386"
 }
 
 pack_benchmark_deps()
 {
-	setup_proxy
-
 	for BM_NAME in $benchmark
 	do
-
-		cleanup_downloaded_rpms
-
 		check_shared_package $BM_NAME
 
 		packages=$(get_dependency_packages $DISTRO $BM_NAME)
 
-		cleanup_installed_depends_rpms $packages
-		local ocfs2_tools_name=$(echo "$packages" | grep 'ocfs2-tools')
-		[ -n "$ocfs2_tools_name" ] && download_ocfs2_tools "$ocfs2_tools_name"
+		resolve_depends $packages
 
-		if yum_download $packages; then
-			yum_pack
+		echo "original package list for $BM_NAME:" $packages
+
+		[[ $PACKAGE_LIST ]] || {
+			echo "empty PACKAGE_LIST for $BM_NAME"
+			continue
+		}
+
+		work_dir=$(mktemp -d /tmp/pack-deps-$BM_NAME-XXXXXXXX)
+		cd $work_dir || exit
+
+		save_package_deps_info $BM_NAME
+
+		# Fix the warning 'W: Download is performed unsandboxed as root as file...' in newest APT versions
+		if id "_apt" >/dev/null 2>&1; then
+			chown _apt .
+		fi
+
+		if download "$PACKAGE_VERSION_LIST"; then
+			install || exit 1
+			pack
+			echo "$PACKAGE_LIST" > $pack_to/.${BM_NAME}.packages
 		else
 			echo "failed to pack-deps $BM_NAME" >&2
 			exit 1
 		fi
+
+		rm -fr "$work_dir"
 	done
-}
-
-install_gcc7()
-{
-	if [ $DISTRO = "aliyun" ]; then
-		wget -O /tmp/centos-release-scl-rh-2-3.el7.centos.noarch.rpm https://rpmfind.net/linux/centos/7/extras/x86_64/Packages/centos-release-scl-rh-2-3.el7.centos.noarch.rpm
-		rpm -ivh --ignoresize /tmp/centos-release-scl-rh-2-3.el7.centos.noarch.rpm
-	else
-		yum install -y -q centos-release-scl-rh
-	fi
-	yum install -y -q "devtoolset-7-gcc*"
-	source /opt/rh/devtoolset-7/enable
-}
-
-download_ocfs2_tools()
-{
-	local pkgs=$1
-
-	mkdir -p /opt/rpms
-	yum install -y -q wget
-
-	wget -nc -P /opt/rpms https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/ocfs2-tools-1.8.6-11.el7.x86_64.rpm
-
-	local download_pkgs="/opt/rpms/ocfs2-tools-1.8.6-11.el7.x86_64.rpm"
-
-	if echo "$pkgs" | grep -q 'ocfs2-tools-devel'; then
-		wget -nc -P /opt/rpms https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/ocfs2-tools-devel-1.8.6-11.el7.x86_64.rpm
-		download_pkgs="$download_pkgs /opt/rpms/ocfs2-tools-devel-1.8.6-11.el7.x86_64.rpm"
-	fi
-
-	# Try to download the dependences of ocfs2-tools/ocfs2-tools-devel
-	yum install -y -q --downloadonly "$download_pkgs"
-}
-
-install_ocfs2_tools()
-{
-	local pkgs=$1
-
-	download_ocfs2_tools "$pkgs"
-
-	yum install -y -q /opt/rpms/ocfs2-tools-1.8.6-11.el7.x86_64.rpm
-
-	echo "$pkgs" | grep -q 'ocfs2-tools-devel' && \
-		yum install -y -q /opt/rpms/ocfs2-tools-devel-1.8.6-11.el7.x86_64.rpm
 }

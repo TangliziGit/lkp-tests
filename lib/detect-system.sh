@@ -236,6 +236,16 @@ detect_system()
 		_system_name="CentOS"
 		_system_version="$(safe_grep -Eo '[0-9\.]+' ${rootfs}/etc/centos-release  | \command \awk -F. '{print $1}' | head -n 1)"
 	elif
+                [ -f ${rootfs}/etc/os-release ] &&
+                        safe_grep -E "ID=kylin" ${rootfs}/etc/os-release >/dev/null
+	then
+                _system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
+                if safe_grep -q '^VERSION_US=.*Desktop' ${rootfs}/etc/os-release; then
+                        _system_name=kylin
+                else
+                        _system_name=kylin-rpm
+                fi
+	elif
 		[ -f ${rootfs}/etc/debian_version ]
 	then
 		_system_name="Debian"
