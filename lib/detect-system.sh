@@ -240,7 +240,8 @@ detect_system()
                         safe_grep -E "ID=kylin" ${rootfs}/etc/os-release >/dev/null
 	then
                 _system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
-                if safe_grep -q '^VERSION_US=.*Desktop' ${rootfs}/etc/os-release; then
+                if safe_grep -E 'VERSION_US=.*Desktop' ${rootfs}/etc/os-release >/dev/null
+				then
                         _system_name=kylin
                 else
                         _system_name=kylin-rpm
@@ -273,7 +274,7 @@ detect_system()
 
 	# shellcheck disable=SC1012 # \t is just literal 't' here. For tab, use "$(printf '\t')" instead
 	_system_name_lowercase="$(echo ${_system_name} | \command \tr '[A-Z]' '[a-z]')"
-	_system_version=$(printf '%s\n' "$_system_version" | sed 's/[ \/]/_/g')  #${_system_version//[ \/]/_}"
+	_system_version=$(printf '%s\n' "$_system_version" | sed 's/[ \/]/_/g')  #${_system_version//[ \/]/_}"	
 }
 
 get_system_arch()
