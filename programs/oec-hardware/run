@@ -262,8 +262,8 @@ EOF
 }
 
 function get_html_report() {
-    local machine_name=$(ls ${SERVER_LOGS} | grep -v README)
-    local log_name=$(ls ${SERVER_LOGS}/${machine_name}/test | head -n 1)
+    local machine_name=$(grep "Hardware Info" oech_device.log | cut -d : -f 2 | awk '$1=$1' | sed 's/ /-/g')
+    local log_name=$(ls ${LOGDIR} | head -n 1 | sed 's/.tar//g')
     curl http://${SERVER_IP}/results/${machine_name}/test/${log_name} &>${REPORT}
     sed -i "1,4d" ${CARD_NAME}.html
 }
