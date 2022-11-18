@@ -55,17 +55,17 @@ in container:
 	11
 	root@1d1e0607d22c:/c/lkp-tests# echo $_system_name
 	Debian
-	root@1d1e0607d22c:/c/lkp-tests# sbin/pkgmap lkp
+	root@1d1e0607d22c:/c/lkp-tests# lkp pkgmap lkp-tests
 	PKGBUILD:
-	os: bc gawk time kmod gzip debianutils rsync ntpdate hostname util-linux lvm2 numactl net-tools cpio curl wget binutils
+	os: bc gawk time kmod gzip debianutils rsync ntpdate hostname util-linux lvm2 numactl net-tools cpio curl wget binutils procps
 	pip:
 	gem:
-	root@1d1e0607d22c:/c/lkp-tests# sbin/pkgmap makepkg
+	root@1d1e0607d22c:/c/lkp-tests# lkp pkgmap makepkg
 	PKGBUILD:
-	os: curl gnupg2 gettext ncurses-bin binutils fakeroot libarchive-tools file openssl gawk coreutils findutils grep sed gzip bzip2 xz-utils
+	os: libarchive-tools curl gnupg2 gettext ncurses-bin binutils fakeroot file openssl gawk coreutils findutils grep sed gzip bzip2 xz-utils gcc g++ autoconf automake make
 	pip:
 	gem:
-	root@1d1e0607d22c:/c/lkp-tests# sbin/pkgmap stream
+	root@1d1e0607d22c:/c/lkp-tests# lkp pkgmap stream
 	PKGBUILD: stream
 	os: gcc libc6-dev libssl-dev
 	pip:
