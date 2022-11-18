@@ -1,5 +1,9 @@
 # 支持一个新OS版本
 
+主要有两步，结果作为两个patch提交：
+1) 改进 lib/detect-system.sh 以识别您的OS。一般做一次即可
+2) 运行 sbin/add-distro-packages.sh 新增特定OS版本的包列表到 distro/package-list/ 目录。第一次是必需的，以后每次有新的OS版本，都建议跑一下，以便pkgmap运行结果更准确。
+
 以下假设您的OS名字为$os (取值举例：debian, openeuler等)
 
 ## 新增 distro/$os 脚本
