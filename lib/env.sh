@@ -188,3 +188,11 @@ use_benchmark_env()
 
         env -i $tmp_env "$@"
 }
+
+# Export vars to ENV of following scripts.
+# Usage:
+# 	lkp_export v1=k1 v2=k2
+lkp_export()
+{
+	echo "$@" | sed -e 's/ /\n/' | sed -e 's/=/: /' >> $TMP/env.yaml
+}
