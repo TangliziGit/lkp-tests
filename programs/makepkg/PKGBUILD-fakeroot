@@ -4,6 +4,7 @@ pkgrel=1
 arch=('i386' 'x86_64' 'riscv64')
 url="https://github.com/mackyle/fakeroot"
 license=('GPL')
+makedepends_openeuler_20_03=(libtool)
 source=("https://github.com/mackyle/fakeroot.git")
 md5sums=('SKIP')
 

@@ -7,8 +7,6 @@ type: workload
 depends:
   opensuse-leap@15.2:
   - iozone
-  openeuler@20.03:
-  - libtool  
 params:
   block_size:
   file_size:
