@@ -9,6 +9,12 @@ lkp docker命令可以帮您便利的使能新OS和新测试用例。
 	https://gitee.com/compass-ci/lkp-tests/blob/master/doc/add-os.zh.md
 	https://gitee.com/compass-ci/lkp-tests/blob/master/doc/add-testcase.zh.md
 
+基本方法流程与自动化脚本：
+
+	https://gitee.com/compass-ci/lkp-tests/blob/master/doc/debug-tips.zh.md
+	https://gitee.com/compass-ci/lkp-tests/blob/master/doc/matrix-enable-steps.zh.md
+	https://gitee.com/compass-ci/lkp-tests/blob/master/sbin/validate-matrix-in-docker.sh
+
 lkp docker基本用法:
 
 	$ lkp docker
