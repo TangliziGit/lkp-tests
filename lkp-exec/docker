@@ -21,6 +21,9 @@ Example:
 	# You may now run this to enable/debug tests:
 	# 	docker run -it -v $LKP_SRC:/c/lkp-tests debian:11 bash
 
+	# This runs /bin/bash in the above created 'lkp-debian:11'.
+	lkp docker run debian:11
+
 	# This runs lkp-run.yaml with parameter 'job=stream.yaml'
 	# which install-and-runs stream.yaml in 'lkp-debian:11'.
 	lkp docker -m run debian:11 lkp-run.yaml job=stream.yaml
@@ -101,24 +104,34 @@ should_skip_rebuild()
 build_container()
 {
 	should_skip_rebuild && return
-	docker build --no-cache=true -t $IMAGE_TAG -f $DOCKERFILE .
+	local cmd="docker build --no-cache=true -t $IMAGE_TAG -f $DOCKERFILE ."
+	echo $cmd
+	$cmd
 }
 
 run_container()
 {
 	[ "$opt_action" = 'run' ] || return 0
 
-	[ -n "$opt_job" ] || usage
-	find_job "$opt_job" || exit
+	if [ -n "$opt_job" ]; then
+		find_job "$opt_job" || exit
+		local CMD="/c/lkp-tests/bin/install-run-job ${job_file#$LKP_SRC/} $opt_job_kv"
+		local IT=
+	else
+		local IT=-it
+		local CMD=bash
+	fi
 
 	local cmd=(
 		docker run 
+		$IT
 		-v $LKP_SRC:/c/lkp-tests
 		$opt_mount_lkp
 		$opt_mount_result
 		$IMAGE_TAG
-		/c/lkp-tests/bin/install-run-job ${job_file#$LKP_SRC/} $opt_job_kv
+		$CMD
 	)
+	echo "${cmd[@]}"
 	"${cmd[@]}"
 }
 
