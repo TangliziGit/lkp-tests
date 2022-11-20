@@ -90,6 +90,10 @@ symlink_lkp()
 
 	mkdir -p $target_dir_bin
 	ln -sf $LKP_SRC/bin/lkp $target_dir_bin/lkp
+
+	echo "'lkp' command installed to $target_dir_bin/lkp"
+	has_cmd lkp ||
+	echo "It'll be added to PATH after re-login or in new ${SHELL##*/} shell."
 }
 
 run
