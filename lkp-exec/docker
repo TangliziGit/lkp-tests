@@ -39,7 +39,7 @@ EOF
 	exit 1
 }
 
-while getopts "m:M" opt
+while getopts "mM" opt
 do
 	case $opt in
 		m ) opt_mount_result="-v $HOME/.cache/lkp/result:/root/.cache/lkp/result" ;;
