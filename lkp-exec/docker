@@ -4,6 +4,14 @@
 
 [ -n "$SUDO_USER" ] && HOME=$(eval "echo ~$SUDO_USER")
 
+if [ "${0%isula}" != "$0" ]; then
+	DOCKER=isula
+elif [ "${0%podman}" != "$0" ]; then
+	DOCKER=podman
+else
+	DOCKER=docker
+fi
+
 usage()
 {
 	cat <<EOF
@@ -98,13 +106,13 @@ should_skip_rebuild()
 {
 	[ "$opt_action" = 'build' ] && return 1
 
-	docker image inspect $IMAGE_TAG >/dev/null 2>&1
+	$DOCKER image inspect $IMAGE_TAG >/dev/null 2>&1
 }
 
 build_container()
 {
 	should_skip_rebuild && return
-	local cmd="docker build --no-cache=true -t $IMAGE_TAG -f $DOCKERFILE ."
+	local cmd="$DOCKER build --no-cache=true -t $IMAGE_TAG -f $DOCKERFILE ."
 	echo $cmd
 	$cmd
 }
@@ -123,7 +131,7 @@ run_container()
 	fi
 
 	local cmd=(
-		docker run 
+		$DOCKER run
 		$IT
 		-v $LKP_SRC:/c/lkp-tests
 		$opt_mount_lkp
