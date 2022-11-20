@@ -1,5 +1,4 @@
 suite: install-iso-sync-rootfs
-category: benchmark
 install-iso-sync-rootfs:
   #################
   # nfs target path: ${NFS_SERVER_HOST}:${NFS_ROOT_DIR}/${iso_os}/${iso_arch}/${iso_version}

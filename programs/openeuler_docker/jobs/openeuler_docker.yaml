@@ -1,5 +1,4 @@
 suite: openeuler_docker
-category: benchmark
 
 openeuler_docker:
   dockerfile_url:

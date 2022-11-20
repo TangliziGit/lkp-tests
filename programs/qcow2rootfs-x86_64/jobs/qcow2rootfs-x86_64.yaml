@@ -1,5 +1,4 @@
 suite: qcow2rootfs-x86_64
-category: benchmark
 qcow2rootfs-x86_64:
 
         # The related fields about qcow2 image to be used to generate rootfs
