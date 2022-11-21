@@ -44,6 +44,9 @@ depends:
   - php-cli
   - php-xml
   - unzip
+  openeuler@20.03:
+  - php-json
+  PKGBUILD: phoronix-test-suite
 params:
   test:
   need_x:
