@@ -6,6 +6,7 @@
 
 一般来说，新增一个符号链接到与您OS同源的debian/centos等已有的OS脚本即可。
 如果您的OS足够不同，才需要新增一个脚本。例如:
+
 	$ cd lkp-tests
 	$ ln -s distro/debian distro/$os
 
@@ -53,8 +54,8 @@
 	root@1d1e0607d22c:/c/lkp-tests# echo $_system_name
 	Debian
 	root@1d1e0607d22c:/c/lkp-tests# sbin/add-distro-packages.sh
-        git add distro/package-list/debian@11
-        git commit distro/package-list/debian@11 -m 'distro/packages: add debian@11'
+	git add distro/package-list/debian@11
+	git commit distro/package-list/debian@11 -m 'distro/packages: add debian@11'
 	root@1d1e0607d22c:/c/lkp-tests# bin/lkp pkgmap lkp-tests
 	PKGBUILD:
 	os: bc gawk time kmod gzip debianutils rsync ntpdate hostname util-linux lvm2 numactl net-tools cpio curl wget binutils procps
