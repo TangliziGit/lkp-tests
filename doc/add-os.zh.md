@@ -19,7 +19,7 @@
 验证方法：
 
 	$ cd lkp-tests
-	$ LKP_SRC=$(pwd)
+	$ export LKP_SRC=$PWD
 	$ . lib/detect-system.sh
 	$ detect_system
 	$ echo $_system_name_lowercase
@@ -46,11 +46,15 @@
 
 察看pkgmap的输出，是否没有任何报错。
 
+进入debian:11 OS容器
+
+	$ lkp docker run debian:11
+
 以下是在debian:11 OS下的输出样例:
 
 	root@1d1e0607d22c:/# cd c/lkp-tests/
 	root@1d1e0607d22c:/c/lkp-tests# sbin/install-dependencies.sh
-	root@1d1e0607d22c:/c/lkp-tests# LKP_SRC=$(pwd)
+	root@1d1e0607d22c:/c/lkp-tests# export LKP_SRC=$PWD
 	root@1d1e0607d22c:/c/lkp-tests# . lib/detect-system.sh
 	root@1d1e0607d22c:/c/lkp-tests# detect_system
 	root@1d1e0607d22c:/c/lkp-tests# echo $_system_version
