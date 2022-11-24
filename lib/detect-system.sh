@@ -242,7 +242,7 @@ detect_system()
                 _system_version="$(awk -F'=' '$1=="VERSION_ID"{gsub(/"/,"",$2);print $2}' ${rootfs}/etc/os-release)"
                 if safe_grep -E 'VERSION_US=.*Desktop' ${rootfs}/etc/os-release >/dev/null
 				then
-                        _system_name=kylin
+                        _system_name=kylin-deb
                 else
                         _system_name=kylin-rpm
                 fi
