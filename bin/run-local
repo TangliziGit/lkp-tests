@@ -151,7 +151,7 @@ File.open(job_script, 'w', 0o775) do |file|
   file.puts jobx.to_shell
 end
 
-user = ENV['USER']
+user = ENV['USER'] || `whoami`.chomp
 save_paths(result_root, user)
 
 system 'killall', '-q', "#{LKP_SRC}/bin/event/wakeup"

@@ -47,6 +47,8 @@ shift $((OPTIND-1))
 
 opt_queue="$opt_queue*"
 
+test -d $KTEST_PATHS_DIR || KTEST_PATHS_DIR=$HOME/.cache/${KTEST_PATHS_DIR}
+
 if [[ $opt_date ]]; then
 	files=()
 	for d in 0 $(seq $opt_date)

@@ -285,14 +285,15 @@ end
 # serves as locate db
 def save_paths(result_root, user)
   date_glob = Time.now.strftime('%F')
-  FileUtils.mkdir_p File.join(KTEST_PATHS_DIR, date_glob)
-  paths_file = "#{KTEST_PATHS_DIR}/#{date_glob}/#{date_glob}-#{user}"
+  dir = File.join(ENV['RESULT_ROOT_DIR_PREFIX'], KTEST_PATHS_DIR, date_glob)
+  FileUtils.mkdir_p dir
+  paths_file = "#{dir}/#{date_glob}-#{user}"
 
   # to avoid confusing between .../1 and .../11, etc. when search/remove, etc.
   result_root += '/' unless result_root.end_with?('/')
 
   File.open(paths_file, 'a') do |f|
-    f.puts(result_root)
+    f.puts(result_root.sub(/^#{ENV['HOME']}/, '~'))
   end
 end
 

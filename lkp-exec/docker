@@ -50,7 +50,10 @@ EOF
 while getopts "mM" opt
 do
 	case $opt in
-		m ) opt_mount_result="-v $HOME/.cache/lkp/result:/root/.cache/lkp/result" ;;
+		m )
+			opt_mount_result="-v $HOME/.cache/lkp/result:/root/.cache/lkp/result"
+			opt_mount_result+=" -v $HOME/.cache/lkp/paths:/root/.cache/lkp/paths"
+			;;
 		M ) opt_mount_lkp="-v $HOME/.cache/lkp:/root/.cache/lkp" ;;
 		? ) usage ;;
 	esac
