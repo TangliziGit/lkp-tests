@@ -16,9 +16,10 @@ script_name=$(basename $0)
 #   lkp rt -d 3d -f . piglit  /0/
 usage()
 {
-	cat <<-EOF
+	cat <<EOF
 Usage:
 	lkp $script_name [-d N[dwm]] [-f filename] [ -p project ] [patterns...]
+
 Example:
 	lkp $script_name -d 3d  lkp-ws02  xfstests /0/
 EOF
@@ -26,15 +27,14 @@ EOF
 	exit 1
 }
 
-[[ $# = 0 ]] && usage
-
-while getopts "f:d:p:q:" opt
+while getopts "hf:d:p:q:" opt
 do
 	case $opt in
 		f ) opt_file="$OPTARG"; ;;
 		d ) opt_date="$OPTARG"; ;;
 		p ) opt_project="$OPTARG"; ;;
 		q ) opt_queue="$OPTARG"; ;;
+		h ) usage ;;
 		? ) usage >&2; ;;
 	esac
 done
