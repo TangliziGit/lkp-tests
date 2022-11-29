@@ -76,6 +76,7 @@ end
 _result_roots = `#{LKP_SRC}/lkp-exec/_rt #{$opt_pattern}`.split
 groups = {}
 _result_roots.each do |_rt|
+  _rt = _rt.sub(/^~/, ENV['HOME'])
   __rt = File.dirname _rt
 
   matrix_path = "#{_rt}/matrix.json"
