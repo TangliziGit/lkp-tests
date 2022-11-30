@@ -130,6 +130,8 @@ $opt_set_key_value.each do |k, v|
   job[k] = v
 end
 
+job.add_pp
+
 _result_root = job._result_root
 result_root = create_result_root(_result_root)
 exit unless result_root
