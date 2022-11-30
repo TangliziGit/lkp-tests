@@ -49,23 +49,23 @@ end
 
 opt_parser.parse!(ARGV)
 
-$kpis = {} # kpi_name => kpi_weight
+$kpi_weights = {} # kpi_name => kpi_weight
 
 def load_meta_file(program, file)
   return unless File.exist? file
-  $kpis[program] ||= {}
+  $kpi_weights[program] ||= {}
   meta = YAML.load_file(file)
   if Hash === meta['results']
     meta['results'].each do |stat, attr|
       if attr['kpi']
-        $kpis[program][stat] = attr['kpi']
+        $kpi_weights[program][stat] = attr['kpi']
       end
     end
   end
 end
 
 def load_meta(program)
-  return if $kpis.include? program
+  return if $kpi_weights.include? program
   load_meta_file(program, "#{LKP_SRC}/programs/#{program}/meta.yaml") or
   load_meta_file(program, "#{LKP_SRC}/setup/#{program}/meta.yaml")
 end
@@ -101,7 +101,7 @@ _result_roots.each do |_rt|
   if Hash === job['pp']
     job['pp'].each do |program, params|
       load_meta(program)
-      $kpis[program].each do |kpi_name, kpi_weight|
+      $kpi_weights[program].each do |kpi_name, kpi_weight|
         groups[group][kpi_name] ||= []
         if $opt_group == 'suite'
           groups[group][kpi_name].append matrix[program + '.' + kpi_name].average
@@ -132,7 +132,7 @@ groups.each do |k, v|
 
       if $opt_group == 'suite'
         avg = kpi_vals.geometry_mean
-        kpi_weight = $kpis[k][kpi_name]
+        kpi_weight = $kpi_weights[k][kpi_name]
         kpi_nr += kpi_weight
         kpi_logsum += kpi_weight * Math.log(avg)
       else
