@@ -44,4 +44,10 @@ module Enumerable
     inv_sum = inject(0) { |res, i| res + 1 / i }
     length / inv_sum
   end
+
+  def geometry_mean
+    log_sum = inject(0) { |res, i| res + Math.log(i) }
+    Math.exp(log_sum / length)
+  end
+
 end

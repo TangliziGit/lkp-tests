@@ -9,7 +9,7 @@ require "#{LKP_SRC}/lib/stats"
 require "#{LKP_SRC}/lib/result"
 require "#{LKP_SRC}/lib/log"
 
-$opt_group = 'test' # common choices: suite, _rt
+$opt_group = 'suite' # common choices: test, _rt
 $opt_pattern = ''
 
 opt_parser = OptionParser.new do |opts|
@@ -103,7 +103,11 @@ _result_roots.each do |_rt|
       load_meta(program)
       $kpis[program].each do |kpi_name, kpi_weight|
         groups[group][kpi_name] ||= []
-        groups[group][kpi_name].concat matrix[program + '.' + kpi_name]
+        if $opt_group == 'suite'
+          groups[group][kpi_name].append matrix[program + '.' + kpi_name].average
+        else
+          groups[group][kpi_name].concat matrix[program + '.' + kpi_name]
+        end
       end
     end
   end
@@ -120,7 +124,11 @@ groups.each do |k, v|
     else
       next if kpi_vals.empty?
 
-      avg = kpi_vals.average
+      if $opt_group == 'suite'
+        avg = kpi_vals.geometry_mean
+      else
+        avg = kpi_vals.average
+      end
       stddev = kpi_vals.standard_deviation
       stddev_percent = 100 * stddev / avg
       printf "%8d %16.2f %6d%%  %20s %s\n", kpi_vals.size, avg, stddev_percent, kpi_name, k
