@@ -8,3 +8,11 @@ depends:
   PKGBUILD: stream
 params:
 results:
+  copy_bandwidth_MBps:
+    kpi: 1
+  scale_bandwidth_MBps:
+    kpi: 1
+  add_bandwidth_MBps:
+    kpi: 1
+  triad_bandwidth_MBps:
+    kpi: 1
