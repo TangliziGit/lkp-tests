@@ -63,5 +63,5 @@ else
   index_list.each do |index|
     puts index.to_s
   end
-  puts "System_Benchmarks_Index_Score: #{score}"
+  puts "score: #{score}"
 end
