@@ -22,4 +22,7 @@ params:
   test:
   send_size:
 results:
-  Throughput:
+  Throughput_Mbps:
+    kpi: 1
+  Throughput_tps:
+    kpi: 1

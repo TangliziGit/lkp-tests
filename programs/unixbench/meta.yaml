@@ -38,3 +38,4 @@ params:
   nr_task:
 results:
   score:
+    kpi: 1

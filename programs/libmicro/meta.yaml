@@ -9,3 +9,519 @@ depends:
   - libmicro
 params:
 results:
+  bind:
+    kpi: 1
+  c_cond_1:
+    kpi: 1
+  c_cond_10:
+    kpi: 1
+  c_cond_200:
+    kpi: 1
+  c_fcntl_1:
+    kpi: 1
+  c_fcntl_10:
+    kpi: 1
+  c_fcntl_200:
+    kpi: 1
+  c_flock:
+    kpi: 1
+  c_flock_10:
+    kpi: 1
+  c_flock_200:
+    kpi: 1
+  chdir_tmp:
+    kpi: 1
+  chdir_usr:
+    kpi: 1
+  chgetwd_tmp:
+    kpi: 1
+  chgetwd_usr:
+    kpi: 1
+  c_lockf_1:
+    kpi: 1
+  c_lockf_10:
+    kpi: 1
+  c_lockf_200:
+    kpi: 1
+  close_bad:
+    kpi: 1
+  close_tcp:
+    kpi: 1
+  close_tmp:
+    kpi: 1
+  close_usr:
+    kpi: 1
+  close_zero:
+    kpi: 1
+  c_mutex_1:
+    kpi: 1
+  c_mutex_10:
+    kpi: 1
+  c_mutex_200:
+    kpi: 1
+  conn_accept:
+    kpi: 1
+  conn_connect:
+    kpi: 1
+  connection:
+    kpi: 1
+  dup:
+    kpi: 1
+  exec:
+    kpi: 1
+  exit_10:
+    kpi: 1
+  exit_100:
+    kpi: 1
+  exit_1000:
+    kpi: 1
+  exit_10_nolibc:
+    kpi: 1
+  exp:
+    kpi: 1
+  fcntl_ndelay:
+    kpi: 1
+  fcntl_tmp:
+    kpi: 1
+  fcntl_usr:
+    kpi: 1
+  file_lock:
+    kpi: 1
+  fork_10:
+    kpi: 1
+  fork_100:
+    kpi: 1
+  fork_1000:
+    kpi: 1
+  getcontext:
+    kpi: 1
+  getenv:
+    kpi: 1
+  getenvT2:
+    kpi: 1
+  getpeername:
+    kpi: 1
+  getpid:
+    kpi: 1
+  getrusage:
+    kpi: 1
+  getsockname:
+    kpi: 1
+  gettimeofday:
+    kpi: 1
+  isatty_no:
+    kpi: 1
+  isatty_yes:
+    kpi: 1
+  listen:
+    kpi: 1
+  localtime_r:
+    kpi: 1
+  log:
+    kpi: 1
+  longjmp:
+    kpi: 1
+  lrand48:
+    kpi: 1
+  lseek_t8k:
+    kpi: 1
+  lseek_u8k:
+    kpi: 1
+  malloc_10:
+    kpi: 1
+  malloc_100:
+    kpi: 1
+  malloc_100k:
+    kpi: 1
+  malloc_10k:
+    kpi: 1
+  malloc_1k:
+    kpi: 1
+  mallocT2_10:
+    kpi: 1
+  mallocT2_100:
+    kpi: 1
+  mallocT2_100k:
+    kpi: 1
+  mallocT2_10k:
+    kpi: 1
+  mallocT2_1k:
+    kpi: 1
+  memcpy_10:
+    kpi: 1
+  memcpy_10k:
+    kpi: 1
+  memcpy_10m:
+    kpi: 1
+  memcpy_1k:
+    kpi: 1
+  memcpy_1m:
+    kpi: 1
+  memrand:
+    kpi: 1
+  memset_10:
+    kpi: 1
+  memset_10k:
+    kpi: 1
+  memset_10m:
+    kpi: 1
+  memset_1k:
+    kpi: 1
+  memset_1m:
+    kpi: 1
+  memset_256:
+    kpi: 1
+  memset_256_u:
+    kpi: 1
+  memset_4k:
+    kpi: 1
+  memset_4k_uc:
+    kpi: 1
+  memsetP2_10m:
+    kpi: 1
+  mktime:
+    kpi: 1
+  mktimeT2:
+    kpi: 1
+  mmap_a128k:
+    kpi: 1
+  mmap_a8k:
+    kpi: 1
+  mmap_ra128k:
+    kpi: 1
+  mmap_ra8k:
+    kpi: 1
+  mmap_rt128k:
+    kpi: 1
+  mmap_rt8k:
+    kpi: 1
+  mmap_ru128k:
+    kpi: 1
+  mmap_ru8k:
+    kpi: 1
+  mmap_rz128k:
+    kpi: 1
+  mmap_rz8k:
+    kpi: 1
+  mmap_t128k:
+    kpi: 1
+  mmap_t8k:
+    kpi: 1
+  mmap_u128k:
+    kpi: 1
+  mmap_u8k:
+    kpi: 1
+  mmap_wa128k:
+    kpi: 1
+  mmap_wa8k:
+    kpi: 1
+  mmap_wt128k:
+    kpi: 1
+  mmap_wt8k:
+    kpi: 1
+  mmap_wu128k:
+    kpi: 1
+  mmap_wu8k:
+    kpi: 1
+  mmap_wz128k:
+    kpi: 1
+  mmap_wz8k:
+    kpi: 1
+  mmap_z128k:
+    kpi: 1
+  mmap_z8k:
+    kpi: 1
+  mprot_tw128k:
+    kpi: 1
+  mprot_tw4m:
+    kpi: 1
+  mprot_twz8k:
+    kpi: 1
+  mprot_wz128k:
+    kpi: 1
+  mprot_wz8k:
+    kpi: 1
+  mprot_z128k:
+    kpi: 1
+  mprot_z8k:
+    kpi: 1
+  mutex_mt:
+    kpi: 1
+  mutex_st:
+    kpi: 1
+  mutex_T2:
+    kpi: 1
+  open_tmp:
+    kpi: 1
+  open_usr:
+    kpi: 1
+  open_zero:
+    kpi: 1
+  pipe_pmp1:
+    kpi: 1
+  pipe_pmp4k:
+    kpi: 1
+  pipe_pmt1:
+    kpi: 1
+  pipe_pmt4k:
+    kpi: 1
+  pipe_pst1:
+    kpi: 1
+  pipe_pst4k:
+    kpi: 1
+  pipe_smp1:
+    kpi: 1
+  pipe_smp4k:
+    kpi: 1
+  pipe_smt1:
+    kpi: 1
+  pipe_smt4k:
+    kpi: 1
+  pipe_sst1:
+    kpi: 1
+  pipe_sst4k:
+    kpi: 1
+  pipe_tmp1:
+    kpi: 1
+  pipe_tmp4k:
+    kpi: 1
+  pipe_tmt1:
+    kpi: 1
+  pipe_tmt4k:
+    kpi: 1
+  pipe_tst1:
+    kpi: 1
+  pipe_tst4k:
+    kpi: 1
+  poll_10:
+    kpi: 1
+  poll_100:
+    kpi: 1
+  poll_1000:
+    kpi: 1
+  poll_w10:
+    kpi: 1
+  poll_w100:
+    kpi: 1
+  poll_w1000:
+    kpi: 1
+  pread_t100k:
+    kpi: 1
+  pread_t10k:
+    kpi: 1
+  pread_t1k:
+    kpi: 1
+  pread_u100k:
+    kpi: 1
+  pread_u10k:
+    kpi: 1
+  pread_u1k:
+    kpi: 1
+  pread_z100k:
+    kpi: 1
+  pread_z10k:
+    kpi: 1
+  pread_z1k:
+    kpi: 1
+  pread_zw100k:
+    kpi: 1
+  pthread_128:
+    kpi: 1
+  pthread_16:
+    kpi: 1
+  pthread_32:
+    kpi: 1
+  pthread_512:
+    kpi: 1
+  pwrite_n100k:
+    kpi: 1
+  pwrite_n10k:
+    kpi: 1
+  pwrite_n1k:
+    kpi: 1
+  pwrite_t100k:
+    kpi: 1
+  pwrite_t10k:
+    kpi: 1
+  pwrite_t1k:
+    kpi: 1
+  pwrite_u100k:
+    kpi: 1
+  pwrite_u10k:
+    kpi: 1
+  pwrite_u1k:
+    kpi: 1
+  read_t100k:
+    kpi: 1
+  read_t10k:
+    kpi: 1
+  read_t1k:
+    kpi: 1
+  read_u100k:
+    kpi: 1
+  read_u10k:
+    kpi: 1
+  read_u1k:
+    kpi: 1
+  read_z100k:
+    kpi: 1
+  read_z10k:
+    kpi: 1
+  read_z1k:
+    kpi: 1
+  read_zw100k:
+    kpi: 1
+  realpath_tmp:
+    kpi: 1
+  realpath_usr:
+    kpi: 1
+  recurse:
+    kpi: 1
+  scasecmp_10:
+    kpi: 1
+  scasecmp_1k:
+    kpi: 1
+  select_10:
+    kpi: 1
+  select_100:
+    kpi: 1
+  select_1000:
+    kpi: 1
+  select_w10:
+    kpi: 1
+  select_w100:
+    kpi: 1
+  select_w1000:
+    kpi: 1
+  semop:
+    kpi: 1
+  setcontext:
+    kpi: 1
+  setsockopt:
+    kpi: 1
+  sigaction:
+    kpi: 1
+  siglongjmp:
+    kpi: 1
+  signal:
+    kpi: 1
+  sigprocmask:
+    kpi: 1
+  socket_i:
+    kpi: 1
+  socketpair:
+    kpi: 1
+  socket_u:
+    kpi: 1
+  stat_tmp:
+    kpi: 1
+  stat_usr:
+    kpi: 1
+  strchr_10:
+    kpi: 1
+  strchr_1k:
+    kpi: 1
+  strcmp_10:
+    kpi: 1
+  strcmp_1k:
+    kpi: 1
+  strcpy_10:
+    kpi: 1
+  strcpy_1k:
+    kpi: 1
+  strftime:
+    kpi: 1
+  strlen_10:
+    kpi: 1
+  strlen_1k:
+    kpi: 1
+  strtol:
+    kpi: 1
+  system:
+    kpi: 1
+  times:
+    kpi: 1
+  unmap_a128k:
+    kpi: 1
+  unmap_a8k:
+    kpi: 1
+  unmap_ra128k:
+    kpi: 1
+  unmap_ra8k:
+    kpi: 1
+  unmap_rt128k:
+    kpi: 1
+  unmap_rt8k:
+    kpi: 1
+  unmap_ru128k:
+    kpi: 1
+  unmap_ru8k:
+    kpi: 1
+  unmap_rz128k:
+    kpi: 1
+  unmap_rz8k:
+    kpi: 1
+  unmap_t128k:
+    kpi: 1
+  unmap_t8k:
+    kpi: 1
+  unmap_u128k:
+    kpi: 1
+  unmap_u8k:
+    kpi: 1
+  unmap_wa128k:
+    kpi: 1
+  unmap_wa8k:
+    kpi: 1
+  unmap_wt128k:
+    kpi: 1
+  unmap_wt8k:
+    kpi: 1
+  unmap_wu128k:
+    kpi: 1
+  unmap_wu8k:
+    kpi: 1
+  unmap_wz128k:
+    kpi: 1
+  unmap_wz8k:
+    kpi: 1
+  unmap_z128k:
+    kpi: 1
+  unmap_z8k:
+    kpi: 1
+  write_n100k:
+    kpi: 1
+  write_n10k:
+    kpi: 1
+  write_n1k:
+    kpi: 1
+  write_t100k:
+    kpi: 1
+  write_t10k:
+    kpi: 1
+  write_t1k:
+    kpi: 1
+  write_u100k:
+    kpi: 1
+  write_u10k:
+    kpi: 1
+  write_u1k:
+    kpi: 1
+  writev_n100k:
+    kpi: 1
+  writev_n10k:
+    kpi: 1
+  writev_n1k:
+    kpi: 1
+  writev_t100k:
+    kpi: 1
+  writev_t10k:
+    kpi: 1
+  writev_t1k:
+    kpi: 1
+  writev_u100k:
+    kpi: 1
+  writev_u10k:
+    kpi: 1
+  writev_u1k:
+    kpi: 1

@@ -65,4 +65,26 @@ params:
     doc: stride size
   op:
     doc: 'operation: rd wr rdwr cp fwr frd fcp bzero bcopy'
-results: {}
+results:
+  AF_UNIX.sock.stream.bandwidth.MB/sec:
+    kpi: 1
+  BCOPY.libc.bandwidth.MB/sec:
+    kpi: 1
+  BCOPY.memory_read.bandwidth.MB/sec:
+    kpi: 1
+  BCOPY.memory_write.bandwidth.MB/sec:
+    kpi: 1
+  BCOPY.unrolled.bandwidth.MB/sec:
+    kpi: 1
+  FILE.read.bandwidth.MB/sec:
+    kpi: 1
+  MMAP.read.bandwidth.MB/sec:
+    kpi: 1
+  MMAP.read_open2close.bandwidth.MB/sec:
+    kpi: 1
+  PIPE.bandwidth.MB/sec:
+    kpi: 1
+  TCP.socket.bandwidth.10MB.MB/sec:
+    kpi: 1
+  TCP.socket.bandwidth.64B.MB/sec:
+    kpi: 1
