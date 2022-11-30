@@ -50,15 +50,18 @@ end
 opt_parser.parse!(ARGV)
 
 $kpi_weights = {} # kpi_name => kpi_weight
+$kpi_baselines = {} # kpi_name => kpi_baseline
 
 def load_meta_file(program, file)
   return unless File.exist? file
   $kpi_weights[program] ||= {}
+  $kpi_baselines[program] ||= {}
   meta = YAML.load_file(file)
   if Hash === meta['results']
     meta['results'].each do |stat, attr|
       if attr['kpi']
         $kpi_weights[program][stat] = attr['kpi']
+        $kpi_baselines[program][stat] = attr['baseline']
       end
     end
   end
@@ -102,6 +105,7 @@ _result_roots.each do |_rt|
     job['pp'].each do |program, params|
       load_meta(program)
       $kpi_weights[program].each do |kpi_name, kpi_weight|
+        next unless matrix[program + '.' + kpi_name]
         groups[group][kpi_name] ||= []
         if $opt_group == 'suite'
           groups[group][kpi_name].append matrix[program + '.' + kpi_name].average
@@ -119,7 +123,7 @@ unless $opt_raw
     'AVERAGE', 'STDDEV', 'KPI', $opt_group
 end
 
-scenes = {}
+scenes = {}  # suite => geometry_mean (relative to baseline and scaled x100)
 
 groups.each do |k, v|
   kpi_logsum = 0
@@ -134,7 +138,13 @@ groups.each do |k, v|
         avg = kpi_vals.geometry_mean
         kpi_weight = $kpi_weights[k][kpi_name]
         kpi_nr += kpi_weight
-        kpi_logsum += kpi_weight * Math.log(avg)
+        if $kpi_baselines[k][kpi_name]
+          kpi_baseline = $kpi_baselines[k][kpi_name]
+        else
+          puts "Warning: missing KPI baseline #{k}.#{kpi_name}, SCORE will be inaccurate"
+          kpi_baseline = avg
+        end
+        kpi_logsum += kpi_weight * Math.log(avg / kpi_baseline)
       else
         avg = kpi_vals.average
       end
@@ -144,7 +154,7 @@ groups.each do |k, v|
     end
   end
   if kpi_nr > 0
-    scenes[k] = Math.exp(kpi_logsum / kpi_nr)
+    scenes[k] = 100 * Math.exp(kpi_logsum / kpi_nr)
   end
 end
 
