@@ -114,10 +114,16 @@ _result_roots.each do |_rt|
 end
 
 unless $opt_raw
-  printf "%8s %16s %6s%%  %20s %s\n", 'runs', 'average', 'stddev', 'kpi', $opt_group
+  printf "%8s %16s %6s%%  %20s %s\n",
+    $opt_group == 'suite' ? 'TESTS' : 'RUNS',
+    'AVERAGE', 'STDDEV', 'KPI', $opt_group
 end
 
+scenes = {}
+
 groups.each do |k, v|
+  kpi_logsum = 0
+  kpi_nr = 0
   v.each do |kpi_name, kpi_vals|
     if $opt_raw
       puts "#{k}.#{kpi_name}: #{kpi_vals.join ' '}"
@@ -126,6 +132,9 @@ groups.each do |k, v|
 
       if $opt_group == 'suite'
         avg = kpi_vals.geometry_mean
+        kpi_weight = $kpis[k][kpi_name]
+        kpi_nr += kpi_weight
+        kpi_logsum += kpi_weight * Math.log(avg)
       else
         avg = kpi_vals.average
       end
@@ -134,4 +143,15 @@ groups.each do |k, v|
       printf "%8d %16.2f %6d%%  %20s %s\n", kpi_vals.size, avg, stddev_percent, kpi_name, k
     end
   end
+  if kpi_nr > 0
+    scenes[k] = Math.exp(kpi_logsum / kpi_nr)
+  end
 end
+
+exit if scenes.empty?
+
+printf "\n%16s %6s\n", 'SCENE', 'SCORE'
+scenes.each do |scene, score|
+  printf "%16s %6d\n", scene, score
+end
+printf "%16s %6d\n", 'ALL', scenes.values.average
