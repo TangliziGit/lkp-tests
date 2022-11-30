@@ -1,6 +1,6 @@
 metadata:
   name: stream
-  summary: 
+  summary:
   description:
   homepage:
 type: workload
@@ -8,11 +8,15 @@ depends:
   PKGBUILD: stream
 params:
 results:
-  copy_bandwidth_MBps:
-    kpi: 1
-  scale_bandwidth_MBps:
-    kpi: 1
   add_bandwidth_MBps:
     kpi: 1
+    baseline: 18165
+  copy_bandwidth_MBps:
+    kpi: 1
+    baseline: 14882
+  scale_bandwidth_MBps:
+    kpi: 1
+    baseline: 14783
   triad_bandwidth_MBps:
     kpi: 1
+    baseline: 18262
