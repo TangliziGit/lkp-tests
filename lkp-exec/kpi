@@ -1,0 +1,129 @@
+#!/usr/bin/env ruby
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require 'optparse'
+require 'ostruct'
+require "#{LKP_SRC}/lib/yaml"
+require "#{LKP_SRC}/lib/stats"
+require "#{LKP_SRC}/lib/result"
+require "#{LKP_SRC}/lib/log"
+
+$opt_group = 'test' # common choices: suite, _rt
+$opt_pattern = ''
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: lkp kpi [options]'
+
+  opts.separator ''
+  opts.separator 'options:'
+
+  opts.on('-g FIELD', '--group-by FIELD', 'group by FIELD') do |field|
+    $opt_group = field.gsub '/', " + '/' + "
+  end
+
+  opts.on('-p PATTERN', '--pattern PATTERN', 'grep RESULT_ROOT with PATTERN') do |pattern|
+    $opt_pattern << " #{pattern}"
+  end
+
+  opts.on('-d DATE', '--date DATE', "search latest DATE days's RESULT_ROOT") do |date|
+    case date
+    when /[0-9]+m$/, /[0-9]+w$/, /[0-9]+d$/, /[0-9]+$/
+      $opt_pattern = "  -d #{date}" + $opt_pattern
+    else
+      log_warn "-d #{date}: parameter is unsuitable."
+      puts opts
+      exit
+    end
+  end
+
+  opts.on('-r', '--raw-samples', 'show raw samples') do
+    $opt_raw = true
+  end
+
+  opts.on_tail('-h', '--help', 'show this message') do
+    puts opts
+    exit
+  end
+end
+
+opt_parser.parse!(ARGV)
+
+$kpis = {} # kpi_name => kpi_weight
+
+def load_meta_file(program, file)
+  return unless File.exist? file
+  $kpis[program] ||= {}
+  meta = YAML.load_file(file)
+  if Hash === meta['results']
+    meta['results'].each do |stat, attr|
+      if attr['kpi']
+        $kpis[program][stat] = attr['kpi']
+      end
+    end
+  end
+end
+
+def load_meta(program)
+  return if $kpis.include? program
+  load_meta_file(program, "#{LKP_SRC}/programs/#{program}/meta.yaml") or
+  load_meta_file(program, "#{LKP_SRC}/setup/#{program}/meta.yaml")
+end
+
+_result_roots = `#{LKP_SRC}/lkp-exec/_rt #{$opt_pattern}`.split
+groups = {}
+_result_roots.each do |_rt|
+  _rt = _rt.sub(/^~/, ENV['HOME'])
+  __rt = File.dirname _rt
+
+  matrix_path = "#{_rt}/matrix.json"
+  next unless File.size? matrix_path
+
+  matrix = load_json matrix_path
+  next unless matrix
+
+  next if (matrix['last_state.is_incomplete_run'] &&
+           matrix['last_state.is_incomplete_run'].sum == matrix_cols(matrix))
+
+  result_path = ResultPath.new
+  result_path.parse_result_root(_rt)
+  result_path['_rt'] = _rt
+  result_path['__rt'] = __rt
+
+  jobfile = Dir.glob("#{_rt}/?/job.yaml").last
+  job = YAML.load_file(jobfile)
+  job['_rt'] = _rt
+  job['test'] = result_path.test_desc(/commit/, true) # e.g. "stream/100000000-100%"
+  
+  group = job[$opt_group]
+  groups[group] ||= {}
+
+  if Hash === job['pp']
+    job['pp'].each do |program, params|
+      load_meta(program)
+      $kpis[program].each do |kpi_name, kpi_weight|
+        groups[group][kpi_name] ||= []
+        groups[group][kpi_name].concat matrix[program + '.' + kpi_name]
+      end
+    end
+  end
+end
+
+unless $opt_raw
+  printf "%8s %16s %6s%%  %20s %s\n", 'runs', 'average', 'stddev', 'kpi', $opt_group
+end
+
+groups.each do |k, v|
+  v.each do |kpi_name, kpi_vals|
+    if $opt_raw
+      puts "#{k}.#{kpi_name}: #{kpi_vals.join ' '}"
+    else
+      next if kpi_vals.empty?
+
+      avg = kpi_vals.average
+      stddev = kpi_vals.standard_deviation
+      stddev_percent = 100 * stddev / avg
+      printf "%8d %16.2f %6d%%  %20s %s\n", kpi_vals.size, avg, stddev_percent, kpi_name, k
+    end
+  end
+end
