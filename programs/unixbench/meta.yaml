@@ -39,3 +39,40 @@ params:
 results:
   score:
     kpi: 1
+    baseline: 10729
+  Dhrystone_2_using_register_variables:
+    kpi: 1
+    baseline: 104210
+  Double-Precision_Whetstone:
+    kpi: 1
+    baseline: 45043
+  Execl_Throughput:
+    kpi: 1
+    baseline: 10645
+  File_Copy_1024_bufsize_2000_maxblocks:
+    kpi: 1
+    baseline: 1895
+  File_Copy_256_bufsize_500_maxblocks:
+    kpi: 1
+    baseline: 1248
+  File_Copy_4096_bufsize_8000_maxblocks:
+    kpi: 1
+    baseline: 3653
+  Pipe_Throughput:
+    kpi: 1
+    baseline: 19258
+  Pipe-based_Context_Switching:
+    kpi: 1
+    baseline: 14736
+  Process_Creation:
+    kpi: 1
+    baseline: 8788
+  Shell_Scripts_(1_concurrent):
+    kpi: 1
+    baseline: 30139
+  Shell_Scripts_(8_concurrent):
+    kpi: 1
+    baseline: 29397
+  System_Call_Overhead:
+    kpi: 1
+    baseline: 2438
