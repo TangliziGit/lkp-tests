@@ -68,10 +68,8 @@ def show_hset(h)
 end
 
 class PackageMapper
-  # EXPAND_DIMS = %w(kconfig commit rootfs ltp_commit nvml_commit blktests_commit qemu_commit perf_test_commit linux_commit).freeze
 
   attr_reader :ospackage_set
-  # attr_accessor :overrides
 
   def initialize
     @ospackage_set = {}       # [os_spec] = pkg set
