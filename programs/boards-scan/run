@@ -8,6 +8,49 @@
 require 'json'
 require 'yaml'
 
+def get_dmidecode_info
+  info = {}
+  info['id'] = ENV['HOSTNAME'] || `hostname`.chomp
+  # this list comes from 'man dmidecode'
+  %w[
+      bios-vendor
+      bios-version
+      bios-release-date
+      system-manufacturer
+      system-version
+      system-serial-number
+      system-product-name
+      system-family
+      system-uuid
+      baseboard-manufacturer
+      baseboard-product-name
+      baseboard-version
+      baseboard-serial-number
+      baseboard-asset-tag
+      chassis-manufacturer
+      chassis-type
+      chassis-version
+      chassis-serial-number
+      chassis-asset-tag
+      processor-family
+      processor-manufacturer
+      processor-version
+      processor-frequency
+  ].each do |dmiid|
+    a = dmiid.split('-')
+    b = a.shift
+    c = a.join '_'
+    info[b] ||= {}
+    info[b][c] = %x(dmidecode -q -s #{dmiid}).chomp
+    if info[b][c].include? '\n'
+      info[b][c] = info[b][c].split '\n'
+    end
+  end
+  info_to_num(info['bios'])
+  info['cpu'] = info.delete 'processor'
+  info
+end
+
 def get_description(line, board_info)
   line = line.gsub(/^[0-9a-z]{2}:[0-9a-z]{2}.[0-9]/, '').gsub(/\[[0-9]{4}\]/, '').gsub(/\[.{9}\]/, ':')
   descriptions = line.gsub('Ltd.', 'Ltd.:').split(':')
@@ -64,7 +107,7 @@ def get_cpu_info
 end
 
 def get_memory_info
-  lshw_string = %x(lshw -numeric -json).gsub(/\s{2,}/, '')
+  lshw_string = %x(lshw -quiet -numeric -json).gsub(/\s{2,}/, '')
   memory_list = []
   lshw_info = JSON.parse(lshw_string)['children'][0]['children']
   lshw_info.each do |element|
@@ -128,16 +171,11 @@ def get_disk_path_map
   map
 end
 
-def get_system_disk_info
+def get_facter_info(server_info)
+  system('gem install facter') unless File.executable? '/usr/bin/facter'
+
   facter_string = %x(facter -j)
   facter_info = JSON.parse(facter_string)
-  server_info = {}
-  server_info['id'] = ENV['HOSTNAME'] || `hostname`.chomp
-  server_info['manufacturer'] = facter_info['dmi']['manufacturer']
-  server_info['product'] = facter_info['dmi']['product']
-
-  server_info['bios'] = facter_info['dmi']['bios']
-  info_to_num(server_info['bios'])
 
   disk_name2id = get_disk_id_map
   disk_name2path = get_disk_path_map
@@ -148,8 +186,6 @@ def get_system_disk_info
     disk['device_path'] = disk_name2path[name]
     server_info['disks'].append disk
   end
-
-  return server_info
 end
 
 def info_to_num(obj)
@@ -166,9 +202,10 @@ def info_to_num(obj)
   end
 end
 
-server_info = get_system_disk_info
-server_info['cpu'] = get_cpu_info
+server_info = get_dmidecode_info
+server_info['cpu'].update get_cpu_info
 server_info['memory'] = get_memory_info
 server_info['cards'] = get_cards_info
+get_facter_info(server_info)
 
 puts JSON.pretty_generate(server_info)

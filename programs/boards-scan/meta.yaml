@@ -5,5 +5,11 @@ metadata:
   homepage:
 type: workload
 depends:
+  debian@11:
+    - dmidecode
+    - lshw
+    - util-linux # lscpu
+    - pciutils   # lspci
+    - facter
 params:
 results:
