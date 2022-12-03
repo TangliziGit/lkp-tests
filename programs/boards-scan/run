@@ -46,6 +46,7 @@ def get_cpu_info
     k = i['field']
     v = i['data']
     next if k =~ /^On-line/
+    next if k =~ /^scaling MHz/ # this number is unstable: "CPU(s) scaling MHz:  62%"
     if k =~ /^Vulnerability/
       next if v == 'Not affected'
       k.sub!(' ', '.')
