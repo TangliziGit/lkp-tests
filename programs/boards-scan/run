@@ -131,7 +131,7 @@ def get_system_disk_info
   facter_string = %x(facter -j)
   facter_info = JSON.parse(facter_string)
   server_info = {}
-  server_info['id'] = ENV['HOSTNAME']
+  server_info['id'] = ENV['HOSTNAME'] || `hostname`.chomp
   server_info['manufacturer'] = facter_info['dmi']['manufacturer']
   server_info['product'] = facter_info['dmi']['product']
 
