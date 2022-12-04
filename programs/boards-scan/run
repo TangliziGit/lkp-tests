@@ -42,8 +42,8 @@ def get_dmidecode_info
     c = a.join '_'
     info[b] ||= {}
     info[b][c] = %x(dmidecode -q -s #{dmiid}).chomp
-    if info[b][c].include? '\n'
-      info[b][c] = info[b][c].split '\n'
+    if info[b][c].include? "\n"
+      info[b][c] = info[b][c].split "\n"
     end
   end
   info_to_num(info['bios'])
