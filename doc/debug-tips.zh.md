@@ -32,12 +32,12 @@
 
 然后重新执行，即可看到此代码段的详细执行过程，变量/命令内容。
 
-LKP框架对您写的run/setup等shell测试脚本，会用`$LKP_DEBUG_PREFIX`调用。
+LKP框架对您写的run/setup等shell测试脚本，会用`$LKP_DEBUG`调用。
 所以您可以在需要时设置这一参数。以下是若干方式：
 
-	$ lkp run some-job.yaml LKP_DEBUG_PREFIX='bash -x'
-	$ LKP_DEBUG_PREFIX='bash -x' lkp run some-job.yaml
+	$ lkp run some-job.yaml LKP_DEBUG=1
+	$ LKP_DEBUG=1 lkp run some-job.yaml
 
 有时候，可以直接在job YAML里加上这一行
 
-	LKP_DEBUG_PREFIX: bash -x
+	LKP_DEBUG: 1

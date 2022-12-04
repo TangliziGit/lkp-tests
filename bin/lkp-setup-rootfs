@@ -347,7 +347,8 @@ while true; do
 
 	set_tbox_wtmp 'running'
 
-	test -n "$LKP_DEBUG_PREFIX" && set -x
+	[ "$LKP_DEBUG" -ge 2 ] && set -x
+	[ "$LKP_DEBUG" -ge 1 ] && export LKP_DEBUG_PREFIX='bash -x'
 
 	define_files_auto_pack $define_files
 	if [ "$os_mount" != "initramfs" ]; then
