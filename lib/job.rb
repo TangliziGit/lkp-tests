@@ -735,9 +735,9 @@ class Job
   end
 
   def get_depend_packages(os, os_version, script)
-    depend_pakeages_path = search_depend_packages_file(os, os_version, script)
-    if depend_pakeages_path && File.exist?(depend_pakeages_path)
-      return File.read(depend_pakeages_path).split
+    path = search_depend_packages_file(os, os_version, script)
+    if path && File.exist?(path)
+      return File.read(path).split
     end
     get_packages_from_debian(os, script)
   end
