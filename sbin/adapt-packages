@@ -15,7 +15,7 @@ while (line = STDIN.gets)
   next if line.start_with?('#')
 
   line.chomp.split.each do |pkg|
-    pkg = pkg.sub /\/unstable/, ''/
+    pkg = pkg.sub /\/unstable$/, ''
     next if pkg.start_with?('(')
 
     if adapt.include? pkg
