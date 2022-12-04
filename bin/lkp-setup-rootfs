@@ -347,6 +347,8 @@ while true; do
 
 	set_tbox_wtmp 'running'
 
+	test -n "$LKP_DEBUG_PREFIX" && set -x
+
 	define_files_auto_pack $define_files
 	if [ "$os_mount" != "initramfs" ]; then
 		download_install_cgz $initrd_deps
