@@ -685,18 +685,29 @@ class Job
   def add_install_depend_packages()
     os, os_version = get_os_info
     all_packages = []
+    pip_packages = []
+    gem_packages = []
+    pkgbuild_packages = []
 
-    @job['install_depend_packages'] = {}
+    require "#{LKP_SRC}/lib/pkgmap"
+    package_mapper = PackageMapper.new
+
+    @job['install_os_packages'] = {}
     scripts = @job['pp'].keys
-    scripts << 'lkp'
+    scripts << 'lkp-tests'
     scripts.each do |script|
-      packages = get_depend_packages(os, os_version, script)
-      next unless packages
+      hh = package_mapper.map_programs([script], "#{os}@#{os_version}")
 
-      @job['install_depend_packages'][script] = packages.join(' ')
-      all_packages += packages
+      @job['install_os_packages'][script] = hh['os'].to_a.join(' ')
+      all_packages.concat hh['os'].to_a
+      pip_packages.concat hh['pip'].to_a
+      gem_packages.concat hh['gem'].to_a
+      pkgbuild_packages.concat hh['PKGBUILD'].to_a
     end
-    @job['install_depend_packages_all'] = all_packages.uniq.join(' ')
+    @job['install_os_packages_all'] = all_packages.uniq.join(' ')
+    @job['install_pip_packages_all'] = pip_packages.uniq.join(' ')
+    @job['install_gem_packages_all'] = gem_packages.uniq.join(' ')
+    @job['install_pkgbuild_packages_all'] = pkgbuild_packages.uniq.join(' ')
   end
 
   def find_cmdline_file(os, os_version, os_arch)
@@ -732,25 +743,6 @@ class Job
     end
 
     return lkp_path_list
-  end
-
-  def get_depend_packages(os, os_version, script)
-    path = search_depend_packages_file(os, os_version, script)
-    if path && File.exist?(path)
-      return File.read(path).split
-    end
-    get_packages_from_debian(os, script)
-  end
-
-  def get_packages_from_debian(os, script)
-    Job.get_lkp_path_list.reverse.each do |lkp_path|
-      packages_path = "#{lkp_path}/distro/depends/#{script}"
-      next unless File.exist?(packages_path)
-
-      return `cat #{packages_path} | #{ENV['LKP_SRC']}/sbin/adapt-packages #{os}`.split
-    end
-
-    return
   end
 
   # depend packages priority:

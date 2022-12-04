@@ -356,7 +356,9 @@ while true; do
 	fi
 
 	# install lkp & test suite depends
-	install_depends "${install_depend_packages_all}"
+	install_depends "${install_os_packages_all}"
+	test -n "$install_pip_packages_all" && pip install $install_pip_packages_all
+	test -n "$install_gem_packages_all" && gem install $install_gem_packages_all
 
 	echo_to_tty $LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp
 	$LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp $job
