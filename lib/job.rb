@@ -1204,6 +1204,16 @@ class Job
     result_path._result_root
   end
 
+  def Job.find_jobfile(jobfile)
+    return jobfile if File.exist?(jobfile)
+
+    search_paths = ["#{Dir.pwd}/#{jobfile}",
+                    "#{LKP_SRC}/jobs/**/#{jobfile}",
+                    "#{LKP_SRC}/programs/*/jobs/#{jobfile}"]
+    Dir.glob(search_paths).each do |path| return path end
+    raise "Cannot find job #{jobfile} in directories: #{search_paths}"
+  end
+
   def [](k)
     @job[k]
   end

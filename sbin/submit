@@ -129,22 +129,10 @@ def prioritize_include_yaml(include_yamls, jobfile)
   return default_yamls, override_yamls
 end
 
-def find_jobfile(jobfile)
-  return jobfile if File.exist?(jobfile)
-
-  search_paths = [Dir.pwd, File.join(LKP_SRC, 'jobs')]
-  search_paths.each do |search_path|
-    search_jobfile = File.join(search_path, jobfile)
-    return search_jobfile if File.exist?(search_jobfile)
-  end
-  puts("Cannot find job #{jobfile} in directories:"); puts search_paths
-  exit 1
-end
-
 def find_jobfiles(jobfile_list)
   search_jobfile_list = []
   jobfile_list.each do |jobfile|
-    search_jobfile_list << find_jobfile(jobfile)
+    search_jobfile_list << Job.find_jobfile(jobfile)
   end
   return search_jobfile_list
 end
@@ -154,7 +142,7 @@ puts "submit_id=#{submit_id}"
 
 ARGV.each do |jobfile|
   default_yamls, override_yamls = prioritize_include_yaml(opt_include_yamls, jobfile)
-  jobfile = find_jobfile(jobfile)
+  jobfile = Job.find_jobfile(jobfile)
   jobs = Job2sh.new
   jobs.cmdline_defaults = opt_cmdline_defaults
   jobs.overrides = opt_set_key_value
