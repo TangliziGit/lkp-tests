@@ -32,6 +32,7 @@ depends:
   - autoconf
   - automake
   - make
+  - patch
 params:
   rootfs:
   benchmark:
