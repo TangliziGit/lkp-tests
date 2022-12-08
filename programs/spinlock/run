@@ -12,7 +12,7 @@ run_spinlock()
         do
                 sleep 1
                 output=$(dmesg | grep "spinlock:")
-                [ -n "output" ] && break
+                [ -n "$output" ] && break
         done
         echo "$output"
         rmmod bench.ko

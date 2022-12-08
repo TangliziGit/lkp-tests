@@ -12,7 +12,7 @@ run_atomic()
 	do
 		sleep 1
 		output=$(dmesg | grep "atomic:")
-		[ -n "output" ] && break
+		[ -n "$output" ] && break
 	done
 
 	echo "$output"
