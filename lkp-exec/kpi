@@ -104,6 +104,10 @@ _result_roots.each do |_rt|
   if Hash === job['pp']
     job['pp'].each do |program, params|
       load_meta(program)
+      unless $kpi_weights.include? program
+        puts "Skip #{program} due to no meta.yaml"
+        next
+      end
       $kpi_weights[program].each do |kpi_name, kpi_weight|
         next unless matrix[program + '.' + kpi_name]
         groups[group][kpi_name] ||= []
