@@ -284,7 +284,7 @@ while (line = $stdin.gets)
     result_map = designated_file_size
     puts "Mmap_Latency: #{result_map['Mmap_Latency']}"
 
-  when /bw_mem/
+  when /bw_mem -P/
     puts "Mem.Bandwidth.MB/sec: #{read_mb_sec}"
   end
 end
