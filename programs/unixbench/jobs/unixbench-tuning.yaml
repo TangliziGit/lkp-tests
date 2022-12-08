@@ -5,6 +5,6 @@ runtime: 300s
 
 nr_task:
   - 1
-  - 96
+  - 100%
 
 unixbench-tuning:
