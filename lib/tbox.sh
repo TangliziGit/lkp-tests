@@ -32,6 +32,7 @@ create_host_config() {
 		local mem_gb="$(((mem_kb)/1024/1024))"
 		local nr_cpu=$(nproc)
 
+		mkdir -p $LKP_SRC/hosts
 		cat <<EOT >> $host_config
 nr_cpu: $nr_cpu
 memory: ${mem_gb}G
