@@ -2,10 +2,11 @@ suite: lkp-install-run
 
 # top level variable is convenient to override in commandline
 job:
-- unixbench.yaml
-- lmbench.yaml
-- stream.yaml
-- fio-basic-openeuler.yaml
-- lib-micro.yaml
-- netperf-small-threads.yaml
+- fio-basic-benchmark.yaml
+- iozone-bs.yaml
+- libmicro.yaml
+- lmbench-performance.yaml
+- netperf-send_size.yaml
+- stream-onejob.yaml
+- unixbench-tuning.yaml
 lkp-install-run:
