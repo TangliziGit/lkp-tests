@@ -12,7 +12,7 @@ cd /home
 wget http://$LKP_SERVER:8000/os/install/iso/cpu2006-1.2.iso
 wget http://$LKP_SERVER:8800/initrd/deps/testsuite-deps/speccpu/speccpu-2006.tar.gz
 
-[ -n speccpu-2006.tar.gz ] && tar xvf speccpu-2006.tar.gz
+[ -f speccpu-2006.tar.gz ] && tar xvf speccpu-2006.tar.gz
 [ -d /home/speccpu2006 ] && {
 	cd /home/speccpu2006
 	./speccpu2006-install.sh
