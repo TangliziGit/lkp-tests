@@ -31,7 +31,7 @@ src_rpm_dest="${dest_dir}/source/Packages"
 declare -a reverse_depends
 die()
 {
-	[ -n $upstream_commit ] && [ -n $secrets_my_token ] && build_comment "rpmbuild_failed"
+	[ -n "$upstream_commit" ] && [ -n "$secrets_my_token" ] && build_comment "rpmbuild_failed"
 	[ -n "$pr_num" ] && [ -n "$secrets_my_token" ] && build_comment "rpmbuild_failed"
 	rpmbuild_email "rpmbuild_failed"
 	echo "$@"
