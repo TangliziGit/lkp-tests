@@ -20,6 +20,10 @@ get_sysfs_path()
 }
 
 syspath=$(get_sysfs_path) || exit
+test -r $syspath || {
+	echo "$0: quit gracefully due to no read permission to $syspath"
+	exit 0
+}
 
 if [ -z "$interval" ]; then
 	case $file in
