@@ -890,7 +890,7 @@ end
 class CapabilitiesStater < Stater
   def stat(line, stats)
     case line
-    when /\[RUN\].*(Tests with uid .*) +++/
+    when /\[RUN\].*(Tests with uid .*) \+\+\+/
       # [RUN] +++ Tests with uid == 0 +++
       # # [RUN] +++ Tests with uid != 0 +++
       @test_case = $1

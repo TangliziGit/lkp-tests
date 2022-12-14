@@ -71,7 +71,7 @@ docker_run()
 		return 1
 	}
 
-	[ $1 == "openeuler"] && echo "${image}_$index.run.success: 1"
+	[ $1 == "openeuler" ] && echo "${image}_$index.run.success: 1"
 }
 
 handle_build_result()
