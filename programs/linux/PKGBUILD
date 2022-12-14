@@ -10,7 +10,7 @@ arch=(arm64)
 license=(GPL2)
 makedepends=(
   bc kmod libelf pahole
-  xmlto python-sphinx python-sphinx_rtd_theme graphviz imagemagick
+  #  xmlto python-sphinx python-sphinx_rtd_theme graphviz imagemagick
   git
 )
 options=('!strip')
@@ -80,7 +80,7 @@ build() {
   else
     make all -j8
   fi
-  make htmldocs -j8 || true
+  #  make htmldocs -j8 || true
 }
 
 _package-modules() {
@@ -222,7 +222,11 @@ _package-docs() {
   #  _package-docs
 #  }
 
-pkgname=("$pkgbase-modules" "$pkgbase-headers" "$pkgbase-docs")
+pkgname=(
+  "$pkgbase-modules"
+  "$pkgbase-headers"
+  #  "$pkgbase-docs"
+)
 for _p in "${pkgname[@]}"; do
 eval "package_$_p() {
   $(declare -f "_package${_p#$pkgbase}")
