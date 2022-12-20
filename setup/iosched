@@ -7,6 +7,9 @@
 # - front_merges
 # - iosched_dev
 
+. $LKP_SRC/lib/env.sh
+is_docker && exit
+
 iosched_dev=${iosched_dev:-*}
 
 for i in /sys/block/$iosched_dev/queue/scheduler
