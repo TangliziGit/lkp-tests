@@ -11,6 +11,8 @@ type: workload
 depends:
   debian@11:
   - rt-tests
+  PKGBUILD:
+  - hackbench
 params:
   runtime:
   nr_threads:
