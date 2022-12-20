@@ -27,6 +27,7 @@ check_install_job()
 	sed -i 's/^\s*nr_task: [0-9].*/nr_task: 1/' $atomic_job
 	sed -i 's/^\s*nr_threads: [0-9].*/nr_threads: 1/' $atomic_job
 	sed -i 's/^\s*iterations: [0-9].*/iterations: 1/' $atomic_job
+	sed -i 's/^\s*test_size: [0-9].*/test_size: 10M/' $atomic_job
 
 	lkp install $atomic_job
 	lkp run $atomic_job

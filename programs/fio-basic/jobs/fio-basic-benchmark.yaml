@@ -8,12 +8,11 @@ disk:
 fs1:
   fs_type:
   - ext4
-mount_to: /test/
 raw_disk: no
 nr_task: 10
 
 fio-setup-basic:
-  test_filename: /test/fio
+  test_filename: fio_testfile
   ioengine: libaio
   iodepth: 10
   test_size: 1000G
