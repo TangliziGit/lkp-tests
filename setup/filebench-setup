@@ -20,4 +20,4 @@ mntpoint=${mount_points%% *}
 sed -i "s#set \$dir=.*#set \$dir=$mntpoint#g" "$workloads_dir/$test"
 echo -n "log_cmd filebench -f "$workloads_dir/$test"" > $TMP_RESULT_ROOT/filebench.task
 log_cmd sync
-log_eval "echo 3 > /proc/sys/vm/drop_caches"
+. $LKP_SRC/setup/drop_caches

@@ -35,8 +35,7 @@ test_partial()
 
 test_all()
 {
-
-	echo 3 > /proc/sys/vm/drop_caches
+	. $LKP_SRC/setup/drop_caches
 	log_cmd use_benchmark_env ./Run -c $nr_task
 }
 

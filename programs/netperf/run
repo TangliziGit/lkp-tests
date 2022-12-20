@@ -46,7 +46,7 @@ opt_ip=
 
 run_netperf_performance()
 {
-	echo 3 > /proc/sys/vm/drop_caches
+	. $LKP_SRC/setup/drop_caches
 	if [[ "$test" =~ .*_*RR ]];then
 		log_eval "use_benchmark_env /lkp/benchmarks/netperf/bin/netperf $opt_ip -H $server -t $test &"
 	elif [ "$test" = "TCP_STREAM" ] || [ "$test" = "TCP_STREAM" ];then

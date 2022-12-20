@@ -9,9 +9,8 @@
 }
 
 . $LKP_SRC/lib/reproduce-log.sh
+. $LKP_SRC/setup/drop_caches
 
 cd /lkp/benchmarks/OSPerformance || exit
-echo 3 > /proc/sys/vm/drop_caches
-
 log_cmd python3 $test.py
 log_cmd cp -r report/$test $TMP_RESULT_ROOT

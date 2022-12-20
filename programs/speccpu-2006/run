@@ -40,13 +40,13 @@ speed)
 esac
 
 cat >> /home/speccpu2006/cpu2006-test.sh <<-EOF
-sysctl -w vm.drop_caches=3
 sleep 300
 
 # clean some trash after build and run
 rm -rf ./benchspec/CPU2006/*/run/*
 EOF
 
+. $LKP_SRC/setup/drop_caches
 ./cpu2006-test.sh
 
 if [ $? == 0 ];then
