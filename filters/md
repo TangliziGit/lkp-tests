@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# lkp docker run
+[ -n "$LKP_LOCAL_RUN" ] && {
+	. $LKP_SRC/lib/env.sh
+	is_docker && exit
+}
+
 # check disk numbers for RAID
 
 check_raid_disks()

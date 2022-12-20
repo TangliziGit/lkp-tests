@@ -12,6 +12,9 @@
 
 [ -n "$wait_disks_timeout" ] || wait_disks_timeout=30
 
+. $LKP_SRC/lib/env.sh
+is_docker && exit
+
 . $LKP_SRC/lib/unit.sh
 . $LKP_SRC/lib/debug.sh
 

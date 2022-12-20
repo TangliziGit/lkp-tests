@@ -1,0 +1,15 @@
+#!/bin/sh
+
+dirs="$*"
+[ -n "$dirs" ] || dirs=$HOME/.cache/lkp/testdir
+
+for testdir in $dirs
+do
+	log_cmd mkdir -p "$testdir"
+done
+
+cat >> $TMP/env.yaml <<EOF
+
+# setup/testdir
+mount_points: $dirs
+EOF

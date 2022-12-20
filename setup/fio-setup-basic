@@ -171,7 +171,7 @@ donorname=$donorname
 "
 fi
 
-[ -n "$rwmixread" ] && [ "$rw" == "randrw" ] && rwmixread_setup="rwmixread=$rwmixread"
+[ -n "$rwmixread" ] && [ "$rw" = "randrw" ] && rwmixread_setup="rwmixread=$rwmixread"
 
 parse_numa_mem_policy()
 {
@@ -237,7 +237,7 @@ for storage in $storages; do
 	if [ "$raw_disk" = 1 ]; then
 		storage_setup="filename=$storage"
 	elif [ -n "$test_filename" ]; then
-		storage_setup="filename=$test_filename"
+		storage_setup="filename=$storage/$test_filename"
 	elif is_null_blk /dev/$(basename $storage); then
 		storage_setup="filename=/dev/nullb0"
 	elif is_mount_on_root /dev/$(basename $storage); then

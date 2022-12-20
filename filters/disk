@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# lkp docker run
+[ -n "$LKP_LOCAL_RUN" ] && {
+	. $LKP_SRC/lib/env.sh
+	is_docker && exit
+}
+
 # check if testbox has enough disks to run the job
 
 [[ $nr_hdd_partitions ]] || nr_hdd_partitions=$(echo $hdd_partitions | wc -w)
