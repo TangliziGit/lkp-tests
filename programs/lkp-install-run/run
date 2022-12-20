@@ -23,11 +23,11 @@ check_install_job()
 	atomic_job=/tmp/${atomic_job##* /tmp/}
 
 	# don't run too long time
-	sed -i 's/^\s*runtime: [0-9].*/runtime: 3/' $atomic_job
-	sed -i 's/^\s*nr_task: [0-9].*/nr_task: 1/' $atomic_job
-	sed -i 's/^\s*nr_threads: [0-9].*/nr_threads: 1/' $atomic_job
-	sed -i 's/^\s*iterations: [0-9].*/iterations: 1/' $atomic_job
-	sed -i 's/^\s*test_size: [0-9].*/test_size: 10M/' $atomic_job
+	sed -i 's/^\(\s*\)runtime: [0-9].*/\1runtime: 3/' $atomic_job
+	sed -i 's/^\(\s*\)nr_task: [0-9].*/\1nr_task: 1/' $atomic_job
+	sed -i 's/^\(\s*\)nr_threads: [0-9].*/\1nr_threads: 1/' $atomic_job
+	sed -i 's/^\(\s*\)iterations: [0-9].*/\1iterations: 1/' $atomic_job
+	sed -i 's/^\(\s*\)test_size: [0-9].*/\1test_size: 10M/' $atomic_job
 
 	lkp install $atomic_job
 	lkp run $atomic_job
