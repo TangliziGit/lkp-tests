@@ -207,6 +207,8 @@
 # - sc_sched_features
 
 . $LKP_SRC/lib/reproduce-log.sh
+. $LKP_SRC/lib/env.sh
+is_docker && exit
 
 [ -n "$sc_vsyscall32" ] && log_eval "echo '$sc_vsyscall32' > '/proc/sys/abi/vsyscall32'"
 [ -n "$sc_exception_trace" ] && log_eval "echo '$sc_exception_trace' > '/proc/sys/debug/exception-trace'"
