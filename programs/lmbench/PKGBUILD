@@ -5,6 +5,7 @@ pkgdesc="A suite of simple, portable, ANSI/C microbenchmarks for UNIX/POSIX, mea
 arch=('i386' 'x86_64' 'riscv64')
 url="http://www.bitmover.com/lmbench/"
 license=('GPL')
+makedepends_debian_11=(libtirpc-dev)
 source=("https://github.com/intel/lmbench.git"
         "lmbench.patch"
 	"CONFIG.lmbench3")
