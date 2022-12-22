@@ -12,6 +12,7 @@
 . $LKP_SRC/lib/upload.sh
 
 unixbench_path=$BENCHMARK_ROOT/unixbench
+[ -d "$unixbench_path" ] || unixbench_path=/opt/unixbench	# install path in openeuler
 [ -n "$mount_to" ] && {
 	cp -ra $BENCHMARK_ROOT /$mount_to/
 	unixbench_path=/$mount_to/benchmarks/unixbench
