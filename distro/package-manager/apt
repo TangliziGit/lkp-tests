@@ -36,14 +36,16 @@ ospkg_install()
 	fi
 
 	local err=
+	local tmp_output=/tmp/apt-get.output.lkp.$USER
 
 	for package
 	do
 		$SUDO $chronic apt-get -o Dpkg::Options::=--force-confdef \
 				 -o Dpkg::Options::=--force-confold \
-				 install -q -y --no-upgrade --no-install-recommends $package >/tmp/apt-get_info 2>&1 || err=$?
-		grep -v "dpkg: warning: files list file for package '.*' missing;" /tmp/apt-get_info
+				 install -q -y --no-upgrade --no-install-recommends $package > $tmp_output 2>&1 || err=$?
+		grep -v "dpkg: warning: files list file for package '.*' missing;"  $tmp_output
 	done
+	rm  $tmp_output
 
 	return $err
 }
