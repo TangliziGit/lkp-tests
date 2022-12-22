@@ -49,12 +49,16 @@
 : ${fs:=$fs_type}
 [ -n "$fs" ] || exit 0
 
-. $LKP_SRC/lib/env.sh
-is_docker && {
+setup_testdir()
+{
 	[ -n "$mount_to" ] || mount_to=$HOME/.cache/lkp/testdir
 	. $LKP_SRC/setup/testdir $mount_to
 	exit
 }
+
+[ -n "$LKP_LOCAL_RUN" ] && setup_testdir
+. $LKP_SRC/lib/env.sh
+is_docker && setup_testdir
 
 . $LKP_SRC/lib/reproduce-log.sh
 . $LKP_SRC/lib/fs_ext.sh

@@ -6,6 +6,7 @@
 : "${raid_chunk:=256}"
 : "${mdadm_mode:=create}"
 
+[ -n "$LKP_LOCAL_RUN" ] && exit
 . $LKP_SRC/lib/env.sh
 is_docker && exit
 
