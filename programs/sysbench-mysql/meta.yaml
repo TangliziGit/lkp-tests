@@ -5,8 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
-  PKGBUILD:
-  - sysbench-mysql
+  debian@11:
+  - sysbench
 params:
   oltp_tables_count:
   oltp_table_size:

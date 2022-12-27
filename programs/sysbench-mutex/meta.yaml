@@ -9,6 +9,8 @@ metadata:
   homepage: https://github.com/akopytov/sysbench
 type: workload
 depends:
+  debian@11:
+  - sysbench
 params:
   nr_threads:
   mutex_num:
