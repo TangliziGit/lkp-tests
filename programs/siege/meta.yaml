@@ -11,6 +11,9 @@ metadata:
   homepage: http://www.joedog.org/JoeDog/Siege
 type: workload
 depends:
+  debian@11:
+  - siege
+  - apache2
 params:
   runtime:
   iterations:
