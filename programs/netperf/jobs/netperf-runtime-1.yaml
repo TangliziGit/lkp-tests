@@ -15,7 +15,7 @@ ip:
 nr_threads:
     - 1
 
-cluster: cs-s1-a1006-c1
+cluster: cs-localhost
 
 if role server:
   netserver:
