@@ -5,5 +5,7 @@ metadata:
   homepage:
 type: workload
 depends:
+  debian@11:
+  - linux-perf
 params:
 results:

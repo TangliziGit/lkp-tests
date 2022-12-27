@@ -5,6 +5,8 @@ metadata:
   homepage:
 type: workload
 depends:
+  debian@11:
+  - linux-perf
 params:
   nr_threads:
   mem_proc:
