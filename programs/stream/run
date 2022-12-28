@@ -10,7 +10,8 @@
 
 log_cmd cd $BENCHMARK_ROOT/stream || die "can not enter $BENCHMARK_ROOT/stream"
 
-log_cmd export OMP_NUM_THREADS=$nr_threads
+log_cmd export OMP_NUM_THREADS=$nr_cpu
+log_cmd export GOMP_CPU_AFFINITY=0-$(($nr_cpu-1))
 
 [ -n "$array_size" ] || die "can not get array size"
 [ -n "$omp" ] || die "can not get omp"
@@ -18,7 +19,7 @@ log_cmd export OMP_NUM_THREADS=$nr_threads
 
 [ "$omp" = "true" ] && omp_options="-fopenmp"
 
-log_cmd gcc -O stream.c -o stream -D"STREAM_ARRAY_SIZE=$array_size" -DNTIMES=$loop $omp_options ||
+log_cmd gcc -O -DSTREAM_ARRAY_SIZE=$array_size stream.c -o stream ||
 die "failed to compile stream"
 
 for i in $(seq ${iterations:-1})

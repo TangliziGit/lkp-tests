@@ -1,5 +1,4 @@
 suite: stream
-category: benchmark
 
 nr_threads:
 - 100%
