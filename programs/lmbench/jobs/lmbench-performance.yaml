@@ -1,6 +1,6 @@
 suite: lmbench
-category: benchmark
-
+runtime: 172800
+is_performance_dashboard: true
 test_memory_size: 4096
 
 # Test mode all, hardware, os were commented temporally, since it will take very long time
