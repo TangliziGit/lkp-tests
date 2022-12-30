@@ -15,7 +15,7 @@ fio-setup-basic:
   test_filename: fio_testfile
   ioengine: libaio
   iodepth: 10
-  test_size: 1000G
+  test_size: 100G
   rwmixread: 70
   direct: 1
   nr_files: none
