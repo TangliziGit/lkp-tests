@@ -106,6 +106,27 @@ def get_cpu_info
   return cpu_info
 end
 
+def memory_type
+  memory_type = []
+  lines = {}
+  memory_info = %x(dmidecode -t memory).lines
+  memory_info.each do |line|
+    if line.include?('Memory Device')
+      memory_type.append lines if lines.length == 4
+      lines = {}
+    elsif line =~ /\s*Type:\s*(\S+)/
+      lines['type'] = $1 if $1 != 'Unknown'
+    elsif line =~ /\s*Speed:\s*(\S+)\s*(\S+)/
+      lines['speed'] = $1 + $2 if $1 != 'Unknown'
+    elsif line =~ /\s*Rank:\s*(\S+)/
+      lines['rank'] = $1 if $1 != 'Unknown'
+    elsif line =~ /\s*Serial Number:\s*(\S+)/
+      lines['serial'] = $1 if $1 != 'NO DIMM'
+    end
+  end
+  return memory_type
+end
+
 def get_memory_info
   lshw_string = %x(lshw -quiet -numeric -json).gsub(/\s{2,}/, '')
   memory_list = []
@@ -114,17 +135,29 @@ def get_memory_info
     memory_list = element['children'] if element['id'] == 'memory'
   end
 
+  all_memory = {}
+  testbox = get_dmidecode_info['id']
+  size = testbox.split('p-')[1].split('--')[0]
+  all_memory['total_size'] = size
   memory_info = []
   memory_list.each do |mem|
-    next if mem['description'].include?('empty')
-
-    mem.delete('class')
-    mem.delete('claimed')
-    mem.delete('handle')
-    info_to_num(mem)
-    memory_info << mem
+    memory_type.each do |types|
+      next if mem['description'].include?('empty')
+      
+      if types['serial'] == mem['serial']
+        mem['type'] = types['type']
+        mem['speed'] = types['speed']
+        mem['rank'] = types['rank']
+      end
+      mem.delete('class')
+      mem.delete('claimed')
+      mem.delete('handle')
+      info_to_num(mem)
+      memory_info << mem
+    end
   end
-  return memory_info
+  all_memory['bank'] =  memory_info
+  return all_memory
 end
 
 def new_card?(cards, card)
@@ -184,8 +217,44 @@ def get_facter_info(server_info)
     info_to_num(disk)
     disk['device_id'] = disk_name2id[name]
     disk['device_path'] = disk_name2path[name]
+    path = "/dev/disk/by-path/#{disk_name2path[name]}"
+    part = %x(readlink -f #{path}).chomp
+    port_type = %x(smartctl -a #{part} |grep "Transport protocol").split(':')[1]
+    if port_type.nil?
+      disk['transport_protocol'] = ""
+    else
+      disk['transport_protocol'] = port_type.lstrip.chomp
+    end
     server_info['disks'].append disk
   end
+  return server_info
+end
+
+def get_network
+  interfaces = []
+  interface = %x(nmcli dev status).lines
+  interface.each do |i|
+    types = {}
+    next if i.include?('DEVICE')
+
+    if i.include?('ethernet')
+      interface_name = i.split(' ')[0]
+      types['interface'] = interface_name.chomp
+      speed = %x(ethtool #{interface_name} |grep 'Speed').split('Speed: ')[1]
+      types['speed'] = speed.chomp unless speed.include?('Unknown')
+      interface_type = %x(ethtool #{interface_name} |grep 'Port').split('Port:')[1]
+      types['interface_type'] = interface_type.lstrip.chomp unless interface_type.nil?
+      pci = %x(ethtool -i #{interface_name} |grep 'bus-info').split('bus-info: ')[1]
+      types['pci'] = pci.chomp
+    end
+    if i.include?('disconnected')
+      types['state'] = 'down'
+    else
+      types['state'] = 'up'
+    end
+    interfaces.append types if types.length == 5
+  end
+  return interfaces
 end
 
 def info_to_num(obj)
@@ -206,6 +275,7 @@ server_info = get_dmidecode_info
 server_info['cpu'].update get_cpu_info
 server_info['memory'] = get_memory_info
 server_info['cards'] = get_cards_info
+server_info['network'] = get_network
 get_facter_info(server_info)
 
 puts JSON.pretty_generate(server_info)
