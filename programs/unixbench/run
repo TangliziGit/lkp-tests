@@ -42,7 +42,7 @@ test_all()
 
 cd $unixbench_path || die "no $unixbench_path"
 
-if [ -n "$mount_to" ]; then
+if [ -n "$mount_to" ] || [ $test_mode = "all" ]; then
 	test_all
 else
 	test_partial
