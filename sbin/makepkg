@@ -197,7 +197,7 @@ clean_up() {
 
 
 enter_fakeroot() {
-	msg "$(gettext "Entering %s environment...")" "fakeroot"
+	msg "$(gettext "Entering %s environment...")" "fakeroot(${0} -F ${ARGLIST[@]})"
 	fakeroot -- $0 -F "${ARGLIST[@]}" || exit $?
 }
 
@@ -3718,14 +3718,18 @@ fi
 pkgbase=${pkgbase:-${pkgname[0]}}
 basever=$(get_full_version)
 
+# env | xargs -I{} echo "{}"
 if [[ $BUILDDIR = "$startdir" ]]; then
 	srcdir="$BUILDDIR/src"
 	pkgdirbase="$BUILDDIR/pkg"
 else
-	srcdir="$BUILDDIR/$pkgbase/src"
-	pkgdirbase="$BUILDDIR/$pkgbase/pkg"
-
+	srcdir="$BUILDDIR/src"
+	pkgdirbase="$BUILDDIR/pkg"
+	# srcdir="$BUILDDIR/$pkgbase/src"
+	# pkgdirbase="$BUILDDIR/$pkgbase/pkg"
 fi
+mkdir -p "$srcdir"
+mkdir -p "$pkgdirbase"
 
 # set pkgdir to something "sensible" for (not recommended) use during build()
 pkgdir="$pkgdirbase/$pkgbase"
@@ -3805,6 +3809,8 @@ if (( INFAKEROOT )); then
 		exit 0 # $E_OK
 	fi
 
+
+	msg "$(gettext "chmod %s")" "$pkgdirbase"
 	chmod 755 "$pkgdirbase"
 	if (( ! SPLITPKG )); then
 		pkgdir="$pkgdirbase/$pkgname"

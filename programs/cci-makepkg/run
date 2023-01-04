@@ -95,10 +95,8 @@ centos_update_gcc()
 {
 	grep -sqF "CentOS Linux release 7" /etc/centos-release || return
 
-	[ -f /.dockerenv -o "$os_mount" = "initramfs" ] && {
-		yum install -y centos-release-scl-rh
-		yum install -y "devtoolset-8-gcc*"
-	}
+	yum install -y centos-release-scl-rh
+	yum install -y "devtoolset-8-gcc*"
 	source /opt/rh/devtoolset-8/enable
 }
 
@@ -146,6 +144,7 @@ build_source_pkg()
 	local makepkg="$LKP_SRC/sbin/makepkg ${pkg_args} --config $LKP_SRC/etc/makepkg.conf"
 	echo "${makepkg}"
 
+	echo "PACMAN=${mark} BUILDDIR=$TMP CARCH=$arch PKGEXT=.cgz CGZDEST=$sync_dest/$cgz_name PACKAGER=${PACKAGER:-Compass-CI} $makepkg" >&2
 	PACMAN="${mark}" BUILDDIR=$TMP CARCH=$arch PKGEXT=.cgz CGZDEST="$sync_dest/$cgz_name" PACKAGER="${PACKAGER:-Compass-CI}" $makepkg
 
 	[ "$?" == 0 ] || exit 1

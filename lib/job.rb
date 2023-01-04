@@ -137,7 +137,8 @@ end
 def multi_create_programs_hash(glob, lkp_src)
   programs = {}
   lkp_list = [ lkp_src ] + Job.get_lkp_path_list
-  lkp_list.uniq!.each do |lkp|
+  # lkp_list.uniq!.each do |lkp|
+  lkp_list.each do |lkp|
     programs.merge!(__create_programs_hash(glob, lkp))
   end
   programs

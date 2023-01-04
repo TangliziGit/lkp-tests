@@ -70,7 +70,7 @@ upload_one_curl()
 {
 	local src=$1
 	local dest=$2
-	local http_url="http://$LKP_SERVER:${RESULT_WEBDAV_PORT:-3080}$dest"
+	local http_url="http://$LKP_SERVER:${RESULT_WEBDAV_PORT:-3080}/$id$dest"
 
 	if [ -d "$src" ]; then
 		(

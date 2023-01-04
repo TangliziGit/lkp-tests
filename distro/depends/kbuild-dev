@@ -1,0 +1,9 @@
+fakeroot
+make
+flex
+bison
+automake
+autoconf
+libtool
+bzip2
+elfutils-libelf-devel

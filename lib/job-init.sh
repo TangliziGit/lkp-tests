@@ -85,6 +85,7 @@ mount_result_root()
 			# To avoid the access problem, make it be same with TMP_RESLT_ROOT.
 			export RESULT_ROOT=$TMP_RESULT_ROOT
 			export result_fs=raw_upload # so that post-run can read it
+			mkdir -p $RESULT_ROOT
 			return
 			;;
 		*:*)
