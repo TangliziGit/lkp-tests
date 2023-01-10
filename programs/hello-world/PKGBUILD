@@ -1,0 +1,10 @@
+pkgname=kbuild
+pkgver=1
+pkgrel=1
+arch=('x86_64')
+url="https://github.com/leachim6/hello-world"
+license=('MIT')
+
+package() {
+    git clone https://github.com/leachim6/hello-world /usr/local/hello-world
+}

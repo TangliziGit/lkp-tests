@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+base_dir="/usr/local/hello-world"
+cd $base_dir || {
+    echo "no such directory: $base_dir" >&2
+    exit 1
+}
+
+command -v gcc >/dev/null 2>&1 || {
+    echo "gcc is not installed" >&2
+    exit 1
+}
+
+gcc --version
+gcc c/C.c -o main
+[[ -f "./main" ]] || {
+    echo "no such file: ./main" >&2
+    exit 1
+}
+
+output="$(./main)"
+echo "output: $output"

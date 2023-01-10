@@ -1,0 +1,15 @@
+#!/usr/bin/awk -f
+
+/gcc \(GCC\)/ {
+    print "gcc_version:", $3
+}
+
+/output: / {
+    print $0
+    $success = 1
+}
+
+END {
+    if ($success != 1)
+        print "no expected output" > "/dev/stderr"
+}
