@@ -1,14 +1,7 @@
 #!/bin/bash
-# - pkgbuild_repo
-# - upstream_repo
-# - upstream_commit
-# - git_tag
-# - pkg_ver
-# - config
-# - fetch_install
-# upstream_url
-# upstream_dir
-# pkgbuild_source
+# Parameters:
+# - repository
+# - PKGBUILD
 
 # We'll use the below global env vars, but not treat them as parameters to avoid
 # duplicates in result path like /openeuler-20.03-aarch64/openeuler-aarch64-cifs-2003/
@@ -32,43 +25,13 @@ check_vars()
 	[ -n "$os" ]			|| die "os is empty"
 	[ -n "$os_arch" ]		|| die "os_arch is empty"
 	[ -n "$os_version" ]		|| die "os_version is empty"
-	[ -n "$pkgbuild_repo" ]		|| die "pkgbuild_repo is empty"
-	[ -n "$upstream_commit" ]	|| die "upstream_commit is empty"
 	[ -n "$os_mount" ]		|| die "os_mount is empty"
+
+	[ -n "$repository" ]		|| die "repository is empty"
+	[ -n "$PKGBUILD" ]		|| die "PKGBUILD is empty"
 }
 
-fetch_install()
-{
-	local cci_http_host=${INITRD_HTTP_HOST}
-	local cci_http_port=${INITRD_HTTP_PORT:-8800}
-
-	wget -q "http://$cci_http_host:$cci_http_port/initrd/build-pkg/$os_mount/$os/$os_arch/$os_version/$pkgname/$upstream_commit.cgz" -O "/$upstream_commit.cgz" || return
-	cd / && gzip -dc $upstream_commit.cgz | cpio -id --quiet
-	exit 0
-}
-
-get_config()
-{
-	[ -n "$config" ] || return
-
-	local cci_http_host=${INITRD_HTTP_HOST}
-	local cci_http_port=${INITRD_HTTP_PORT:-8800}
-	export cci_dir=/cci/build-config
-	local remote_dir="http://${cci_http_host}:${cci_http_port}${cci_dir}/${pkgbase}"
-	export linux_CGZDEST="/kernel/${os_arch}/${config}/${upstream_commit}"
-
-	mkdir -p "${cci_dir}"
-	mkdir -p "${linux_CGZDEST}"
-	http_get_file "${remote_dir}/${config}" "${cci_dir}/${pkgbase}/${config}"
-}
-
-upload_config()
-{
-	local upload_dir="${cci_dir}/${pkgbase}"
-	[ -d "${upload_dir}" ] || return
-
-	upload_to_target_dir "${upload_dir}"
-}
+# TODO: how to install: gzip -dc $upstream_commit.cgz | cpio -id --quiet
 
 mount_dest()
 {
@@ -77,149 +40,51 @@ mount_dest()
 	[[ "$os_mount" = "cifs" ]] && os_mount="nfs"
 	pack_to=${os_mount}/${os}/${os_arch}/${os_version}
 
-	PKG_MNT=/initrd/build-pkg
+	PKG_MNT=/initrd/pkg
 	mkdir -p "$PKG_MNT"
-}
-
-get_pkgfile()
-{
-	curl -sS -H 'Content-Type: Application/json' -XPOST "$REMOTE_GIT_HOST:$REMOTE_GIT_PORT"'/git_command' \
-		-d '{"git_repo": "'$1'", "git_command": ["git-show", "HEAD:'$2'"]}' -o "${2##*/}"
 }
 
 download_pkg()
 {
-	if [ ${pkgbuild_repo%%/*} == "pkgbuild" ]; then
-		request_pkg
-	else
-		clone_pkg_repo
-	fi
-}
-
-request_pkg()
-{
-	local pkgrepo="${pkgbuild_repo%%//*}"
-	pkgrepo="${pkgrepo}/${pkgrepo##*/}.git"
-
-	local pkgpath=""
-	[[ "$pkgrepo" =~ ^pkgbuild/(packages|community) ]] && pkgpath="${pkgpath}${pkgbuild_repo#*//}/"
-
-	filelist=$(curl -sS -H 'Content-Type: Application/json' -XPOST "$REMOTE_GIT_HOST:$REMOTE_GIT_PORT"'/git_command' \
-		-d '{"git_repo": "'${pkgrepo}'", "git_command": ["git-ls-tree", "--name-only", "-r", "HEAD:'${pkgpath}'"]}')
-
-	for pkgfile in ${filelist[*]}
-	do
-		get_pkgfile "${pkgrepo}" "${pkgpath}${pkgfile}"
-	done
-}
-
-clone_pkg_repo()
-{
-	local url="git://${GIT_SERVER}/pkgbuild/${pkgbuild_repo}"
-
-	proj_name=${pkgbuild_repo##*/}
-	git clone -q "$url" || die "clone git repo ${proj_name} failed: $url"
-	cd ${proj_name%.git}
-}
-
-create_cgz_name()
-{
-	[ -n "${pkgbase}" ] && pkgname="${pkgbase}"
-
-	cgz_path="$PKG_MNT/${pack_to}/${upstream_repo##*/}"
-	cgz_name="${cgz_path}/${upstream_commit}.cgz"
-
-	pkg_args="-A --check --skippgpcheck --rewritegitserver"
-	[ "${os}" == "archlinux" ] && pkg_args="${pkg_args} -s --needed --noconfirm"
-
-        [ -n "$git_tag" ] && {
-		cgz_name="${cgz_path}/${git_tag}-${pkgrel}.cgz"
-	}
-
-	[ -n "$pkg_ver" ] && {
-		cgz_name="${cgz_path}/${pkg_ver}-${pkgrel}.cgz"
-		pkg_args="${pkg_args} --skipchecksums --skipinteg"
-	}
-}
-
-create_softlink()
-{
-	[ -e "$cgz_name" ] || return 0
-
-	local bm_name=$(basename $(realpath ${cgz_name}))
-
-	echo "create soft link: latest.cgz -> ${bm_name}"
-	ln -sf "${bm_name}" "${cgz_path}/latest.cgz"
-}
-
-replace_source()
-{
-	echo "source=(" > $1
-	for url in "${source[@]}"
-	do
-		# delete upstream_url protocol head http://xxxx => xxxx
-		echo "$url" | grep -E 'git(\+|:)|\.git$' | grep -q "${upstream_url##*//}" && [ -n "$repo_dir" ] && {
-			url="${repo_dir}git://${SCHED_HOST}/${upstream_dir}/${upstream_repo}#commit=${upstream_commit}"
-			[ -n "$git_tag" ] && url="${repo_dir}git://${SCHED_HOST}/${upstream_dir}/${upstream_repo}#tag=${git_tag}"
-		}
-
-		echo \'$url\' >> $1
-	done
-	echo ")" >> $1
+    cd "$TMP" || die "no such directory: $TMP"
+    PKGBUILD="$(echo "$PKGBUILD" | sed 's/githubusercontent.com/githubusercontents.com/g')"
+    wget "$PKGBUILD" -o PKGBUILD
 }
 
 build_source_pkg()
 {
-	[ -n "$pkg_ver" ] && sed -i "s|^pkgver=.*|pkgver=${pkg_ver}|g" PKGBUILD
-
-	repo_dir=""
 	source PKGBUILD
-	[ -n "$upstream_repo" ] && [ -n "$upstream_url" ] && {
-		[ -n "${pkgbuild_source}" ] && upstream_url="${pkgbuild_source}"
-
-		if [[ "$source" = *::* ]]; then
-			repo_dir="${source%%::*}::"
-		else
-			repo_dir="$(basename ${upstream_url})"
-			repo_dir="${repo_dir%.git*}::"
-		fi
-	}
-	replace_source PKGBUILD.src
-	create_cgz_name
-	get_config
+	cgz_dir="$PKG_MNT/${pack_to}/${repository##*/}"
 
 	local mark="true"
-	[ "${os}" == "archlinux" ] && local mark="pacman"
+	pkg_args="-A --check --skippgpcheck --rewritegitserver"
+	[ "${os}" == "archlinux" ] && {
+    local mark="pacman"
+    pkg_args="${pkg_args} -s --needed --noconfirm"
+  }
 
+ download_pkg
 	export V=1
-
-	PACMAN="${mark}" BUILDDIR=$TMP CARCH=$os_arch PKGEXT=.cgz CGZDEST="$cgz_name" PACKAGER="${PACKAGER:-Compass-CI}" \
+	PACMAN="${mark}" BUILDDIR=$TMP CARCH=$os_arch PKGEXT=.cgz CGZ_DIR="$cgz_dir" PACKAGER="programs/pkgbuild" \
 		$LKP_SRC/sbin/makepkg ${pkg_args} --config $LKP_SRC/etc/makepkg.conf
 
 	local build_state="$?"
 
-	upload_config
-
 	[ "${build_state}" == "0" ] || exit 1
 
-	if [[ -n "$config" ]]; then
-		for cgz in $(find ${linux_CGZDEST} -type f)
-		do
-			[ "${cgz##*/}" == "vmlinuz" ] && {
-				$LKP_SRC/sbin/unzip-vmlinuz $cgz
-			}
-			upload_one_curl ${cgz} ${linux_CGZDEST}
-		done
-	else
-		create_softlink
-		upload_to_target_dir ${cgz_path}
-	fi
+  # TODO: vmlinuz
+	# if [[ -n "$config" ]]; then
+	# 	for cgz in $(find ${linux_CGZDEST} -type f)
+	# 	do
+	# 		[ "${cgz##*/}" == "vmlinuz" ] && {
+	# 			$LKP_SRC/sbin/unzip-vmlinuz $cgz
+	# 		}
+	# 		upload_one_curl ${cgz} ${linux_CGZDEST}
+	# 	done
+	# else
+  upload_to_target_dir ${cgz_dir}
 }
 
 check_vars
 mount_dest
-download_pkg
-[ $upstream_commit != HEAD ] && [[ -n $fetch_install ]] && fetch_install
 build_source_pkg
-[[ -n $fetch_install ]] || exit 0
-fetch_install
