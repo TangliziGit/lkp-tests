@@ -47,14 +47,13 @@ mount_dest()
 download_pkg()
 {
     cd "$TMP" || die "no such directory: $TMP"
-    PKGBUILD="$(echo "$PKGBUILD" | sed 's/githubusercontent.com/githubusercontents.com/g')"
-    wget "$PKGBUILD" -o PKGBUILD
+    wget -q "$PKGBUILD" -O PKGBUILD
 }
 
 build_source_pkg()
 {
-	source PKGBUILD
 	cgz_dir="$PKG_MNT/${pack_to}/${repository##*/}"
+  mkdir -p "$cgz_dir"
 
 	local mark="true"
 	pkg_args="-A --check --skippgpcheck --rewritegitserver"
@@ -83,6 +82,9 @@ build_source_pkg()
 	# 	done
 	# else
   upload_to_target_dir ${cgz_dir}
+  for cgz in "$cgz_dir"/*; do
+    plan_append_packages "$id${cgz}"
+  done
 }
 
 check_vars

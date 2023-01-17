@@ -33,6 +33,7 @@ read_kernel_cmdline_vars()
 
 	for i in $(cat /proc/cmdline)
 	do
+		[ "${i#packages=}" != "$i" ] && export $i
 		[ "${i#user=}" != "$i" ] && export $i
 		[ "${i#job=}" != "$i" ] && export $i
 		[ "${i#ip=}" != "$i" ] && export $i

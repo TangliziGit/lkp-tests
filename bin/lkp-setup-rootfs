@@ -115,39 +115,42 @@ install_cgz_packages()
 download_install_cgz()
 {
 	setup_gzip
+	mkdir -p /tmp/cpio
 
-	local url
-	for url
-	do
-		echo "download $url"
-		http_get_file $url /tmp/tmp.cgz
+	for url in ${1//,/ }; do
+		echo "download $url" >&2
+		http_get_file $url /tmp/cpio/tmp.cgz
 		(
-			cd /
-			${gzip} -dc /tmp/tmp.cgz | cpio -id
+			${gzip} -dc /tmp/cpio/tmp.cgz | cpio -id
+			cd /tmp/cpio
+			for i in ./*; do
+				cp -rf "$i" "/$i"
+			done
 		)
 
-		[ $? = "1" ] && {
-			if cpio --help | grep -q 'extract-over-symlinks'; then
-				(
-					cd /
-					${gzip} -dc /tmp/tmp.cgz | cpio -id --extract-over-symlinks
-				)
-			else
-				(
-					mkdir -p /tmp/cpio
-					cd /tmp/cpio && ${gzip} -dc /tmp/tmp.cgz | cpio -id
+		# [ $? = "1" ] && {
+		# 	if cpio --help | grep -q 'extract-over-symlinks'; then
+		# 		(
+		# 			cd /
+		# 			${gzip} -dc /tmp/tmp.cgz | cpio -id --extract-over-symlinks
+		# 		)
+		# 	else
+		# 		(
+		# 			mkdir -p /tmp/cpio
+		# 			cd /tmp/cpio && ${gzip} -dc /tmp/tmp.cgz | cpio -id
 
-					for i in $(ls)
-					do
-						cp -rf ${i}/* /${i}
-					done
-				)
-			fi
-		}
-		install_cgz_packages
-		cleanup_cgz_packages
+		# 			for i in $(ls)
+		# 			do
+		# 				cp -rf ${i}/* /${i}
+		# 			done
+		# 		)
+		# 	fi
+		# }
+		# install_cgz_packages
+		# cleanup_cgz_packages
 	done
-	rm -f /tmp/tmp.cgz
+	rm -f /tmp.cgz
+	rm -f /tmp/cpio/tmp.cgz
 }
 
 install_proxy_yum()
@@ -359,10 +362,11 @@ while true; do
 	[[ "$LKP_DEBUG" -ge 1 ]] && export LKP_DEBUG_PREFIX='bash -x'
 
 	define_files_auto_pack $define_files
-	if [ "$os_mount" != "initramfs" ]; then
-		download_install_cgz $initrd_deps
-		download_install_cgz $initrd_pkgs
-	fi
+	download_install_cgz "$packages"
+	# if [ "$os_mount" != "initramfs" ]; then
+	# 	download_install_cgz $initrd_deps
+	# 	download_install_cgz $initrd_pkgs
+	# fi
 
 	# install lkp & test suite depends
 	test -n "${install_os_packages_all}" && install_depends "${install_os_packages_all}"

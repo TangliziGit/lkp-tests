@@ -74,3 +74,7 @@ def build_pkg(log_lines)
 
   return message
 end
+
+def pkgbuild(log_lines)
+  return build_pkg(log_lines)
+end

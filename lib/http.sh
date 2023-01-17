@@ -61,6 +61,13 @@ jobfile_append_var()
 	http_get_cgi "cgi-bin/lkp-jobfile-append-var?$query_str"
 }
 
+plan_append_packages()
+{
+	# input example: "/xxx/yyy/zzz.cgz"
+	query_str="$(escape_cgi_param "plan_id=$plan")&$(escape_cgi_param "path=$1")"
+	http_get_cgi "cgi-bin/lkp-plan-append-packages?$query_str"
+}
+
 exit_with_job_state()
 {
 	local exit_code=$?
