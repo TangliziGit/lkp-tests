@@ -1,9 +1,5 @@
 #!/usr/bin/awk -f
 
-/gcc \(GCC\)/ {
-    print "gcc_version:", $3
-}
-
 /output: / {
     print $0
     $success = 1

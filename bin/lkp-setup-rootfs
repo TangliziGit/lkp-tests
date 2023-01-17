@@ -310,17 +310,25 @@ define_files_auto_pack()
 	[ "$suite" = "cci-makepkg" ] && return
 	[ "$suite" = "cci-depends" ] && return
 
-	for path
-	do
-		[ -f "$LKP_SRC/$path" ] || continue
+# check `$LKP_SRC/programs` instead of the path writed in yaml
+pkgbuild="$LKP_SRC/programs/$suite/PKGBUILD"
+[[ -f "$pkgbuild" ]] && {
+			[[ -f "$LKP_SRC/pkg/$suite" ]] || {
+				ln -s "$LKP_SRC/programs/$suite" "$LKP_SRC/pkg/$suite"
+			}
+			define_files_pkg_pack "pkg/$suite/PKGBUILD"
+}
+	# for path
+	# do
+	# 	[ -f "$LKP_SRC/$path" ] || continue
 
-		[ ${path##*/} = PKGBUILD ] && {
-			define_files_pkg_pack $path
-		}
-		[ ${path#distro/depends/} != $path ] && {
-			define_files_deps_pack $path
-		}
-	done
+	# 	[ ${path##*/} = PKGBUILD ] && {
+	# 		define_files_pkg_pack $path
+	# 	}
+	# 	[ ${path#distro/depends/} != $path ] && {
+	# 		define_files_deps_pack $path
+	# 	}
+	# done
 }
 
 chmod_root_ssh()
@@ -347,8 +355,8 @@ while true; do
 
 	set_tbox_wtmp 'running'
 
-	[ "$LKP_DEBUG" -ge 2 ] && set -x
-	[ "$LKP_DEBUG" -ge 1 ] && export LKP_DEBUG_PREFIX='bash -x'
+	[[ "$LKP_DEBUG" -ge 2 ]] && set -x
+	[[ "$LKP_DEBUG" -ge 1 ]] && export LKP_DEBUG_PREFIX='bash -x'
 
 	define_files_auto_pack $define_files
 	if [ "$os_mount" != "initramfs" ]; then
@@ -357,10 +365,11 @@ while true; do
 	fi
 
 	# install lkp & test suite depends
-	install_depends "${install_os_packages_all}"
+	test -n "${install_os_packages_all}" && install_depends "${install_os_packages_all}"
 	test -n "$install_pip_packages_all" && pip install $install_pip_packages_all
 	test -n "$install_gem_packages_all" && gem install $install_gem_packages_all
 
+	mkdir -p "$RESULT_ROOT"
 	echo_to_tty $LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp
 	$LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp $job
 

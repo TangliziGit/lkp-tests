@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+# SPDX-License-Identifier: GPL-2.0-only
+# frozen_string_literal: true
+
+LKP_SRC = ENV['LKP_SRC'] || File.dirname(File.dirname(File.realpath($PROGRAM_NAME)))
+
+require 'optparse'
+require "#{LKP_SRC}/lib/mci/matrix2.rb"
+require "#{LKP_SRC}/lib/mci/stats.rb"
+
+File.umask 0o002
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: result2stats result_root'
+  opts.separator 'eg: result2stats /srv/result/iperf/vm-1p1g/2020-09-30/crystal.91198'
+  opts.separator ''
+  opts.separator 'options:'
+
+  opts.on_tail('-h', '--help', 'show this message') do
+    puts opts
+    exit
+  end
+end
+
+argv = if ARGV == []
+         ['-h']
+       else
+         ARGV
+       end
+
+opt_parser.parse!(argv)
+RESULT_ROOT = argv[0] || ENV['RESULT_ROOT']
+ENV['RESULT_ROOT'] = RESULT_ROOT
+
+stats = Stats.new(RESULT_ROOT)
+stats.extract_stats
+create_stats RESULT_ROOT

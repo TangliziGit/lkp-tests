@@ -102,9 +102,9 @@ centos_update_gcc()
 
 download_pkgfile
 
-distro_install_depends lkp-dev
-
-centos_update_gcc
+# FIXME: just for faster test
+# distro_install_depends lkp-dev
+# centos_update_gcc
 
 distro_install_depends ${benchmark}-dev
 

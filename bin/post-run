@@ -163,6 +163,8 @@ copy_results()
 	[ -n "$LKP_DEBUG_PREFIX" -o "$run_job_exit_code" != 0 ] && {
 		# bin/lkp-setup-rootfs 'set -x' is not complete in dmesg,
 		# when something goes wrong, copy the complete output messages for debugging
+		cp /lkp/scheduled/job.yaml $TMP_RESULT_ROOT/job.yaml
+		cp /lkp/scheduled/job.sh $TMP_RESULT_ROOT/job.sh
 		cp /tmp/stdout $TMP_RESULT_ROOT/lkp-stdout
 		cp /tmp/stderr $TMP_RESULT_ROOT/lkp-stderr
 	}
