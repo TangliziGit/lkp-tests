@@ -348,6 +348,19 @@ noreboot_too_many_cycles()
 	[ $(cat /tmp/noreboot-job-count | wc -l) -lt 100 ] && return 1
 }
 
+launch_monitor()
+{
+    for interface in $(ls /sys/class/net/)
+    do
+        ip -o route | grep default | grep $interface > /dev/null
+        [ $? -eq 0 ] || continue
+        _net=$interface
+        break
+    done
+    MAC=$(cat /sys/class/net/$_net/address)
+    MAC="$MAC" id="$id" $LKP_SRC/sbin/mci/monitor.rb &
+}
+
 install_proxy || exit_with_job_state 'error:proxy'
 chmod_root_ssh
 
@@ -356,6 +369,7 @@ while true; do
 	export_top_env
 	define_files
 
+	launch_monitor
 	set_tbox_wtmp 'running'
 
 	[[ "$LKP_DEBUG" -ge 2 ]] && set -x
