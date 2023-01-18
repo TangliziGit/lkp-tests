@@ -61,6 +61,13 @@ jobfile_append_var()
 	http_get_cgi "cgi-bin/lkp-jobfile-append-var?$query_str"
 }
 
+plan_set_kernel()
+{
+	# input example: "/xxx/yyy/bzImage-xxx"
+	query_str="$(escape_cgi_param "plan_id=$plan")&$(escape_cgi_param "path=$1")"
+	http_get_cgi "cgi-bin/lkp-plan-kernel?$query_str"
+}
+
 plan_append_packages()
 {
 	# input example: "/xxx/yyy/zzz.cgz"

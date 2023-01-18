@@ -81,10 +81,19 @@ build_source_pkg()
 	# 		upload_one_curl ${cgz} ${linux_CGZDEST}
 	# 	done
 	# else
-  upload_to_target_dir ${cgz_dir}
-  for cgz in "$cgz_dir"/*; do
-    plan_append_packages "$id${cgz}"
-  done
+  if [[ "${repository##*/}" == "linux" ]]; then
+    image_path="$(find "$TMP" -type f -name "bzImage-*")"
+    cp "$image_path" "$cgz_dir"
+    upload_to_target_dir ${cgz_dir}
+
+    image_path="$(find "$cgz_dir" -type f -name "bzImage-*")"
+    plan_append_packages "$id$image_path"
+  else
+    upload_to_target_dir ${cgz_dir}
+    for cgz in "$cgz_dir"/*; do
+      plan_append_packages "$id${cgz}"
+    done
+  fi
 }
 
 check_vars
