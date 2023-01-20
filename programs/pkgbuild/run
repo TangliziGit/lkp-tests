@@ -63,33 +63,27 @@ build_source_pkg()
   }
 
  download_pkg
+ builddir="/pkgbuild"
+ mkdir $builddir
 	export V=1
-	PACMAN="${mark}" BUILDDIR=$TMP CARCH=$os_arch PKGEXT=.cgz CGZ_DIR="$cgz_dir" PACKAGER="programs/pkgbuild" \
+	PACMAN="${mark}" BUILDDIR="$builddir" CARCH=$os_arch PKGEXT=.cgz CGZ_DIR="$cgz_dir" PACKAGER="programs/pkgbuild" \
 		$LKP_SRC/sbin/makepkg ${pkg_args} --config $LKP_SRC/etc/makepkg.conf
 
 	local build_state="$?"
 
 	[ "${build_state}" == "0" ] || exit 1
 
-  # TODO: vmlinuz
-	# if [[ -n "$config" ]]; then
-	# 	for cgz in $(find ${linux_CGZDEST} -type f)
-	# 	do
-	# 		[ "${cgz##*/}" == "vmlinuz" ] && {
-	# 			$LKP_SRC/sbin/unzip-vmlinuz $cgz
-	# 		}
-	# 		upload_one_curl ${cgz} ${linux_CGZDEST}
-	# 	done
-	# else
   if [[ "${repository##*/}" == "linux" ]]; then
-    image_path="$(find "$TMP" -type f -name "bzImage-*")"
-    cp "$image_path" "$cgz_dir"
-    upload_to_target_dir ${cgz_dir}
+    cgz_path="$(find "$cgz_dir" -type f -name "linux-*")"
 
-    image_path="$(find "$cgz_dir" -type f -name "bzImage-*")"
-    plan_append_packages "$id$image_path"
+    cd "$(dirname $cgz_path)"
+    gzip -dc "$cgz_path" | cpio -id
+
+    image_path="$(find "$cgz_dir" -type f -name "vmlinuz-*")"
+    plan_set_kernel "$id$image_path"
+    upload_to_target_dir "$cgz_dir"
   else
-    upload_to_target_dir ${cgz_dir}
+    upload_to_target_dir "$cgz_dir"
     for cgz in "$cgz_dir"/*; do
       plan_append_packages "$id${cgz}"
     done

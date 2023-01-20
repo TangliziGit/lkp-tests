@@ -348,6 +348,15 @@ noreboot_too_many_cycles()
 	[ $(cat /tmp/noreboot-job-count | wc -l) -lt 100 ] && return 1
 }
 
+setup_tools()
+{
+    # TODO: put it into distro/xxx
+    [[ "$os" == "centos" ]] && [[ "$os_version" == "7" ]] && {
+        source /opt/rh/rh-ruby27/enable
+        source /opt/rh/devtoolset-8/enable
+    }
+}
+
 launch_monitor()
 {
     for interface in $(ls /sys/class/net/)
@@ -369,6 +378,7 @@ while true; do
 	export_top_env
 	define_files
 
+	setup_tools
 	launch_monitor
 	set_tbox_wtmp 'running'
 

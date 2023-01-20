@@ -149,10 +149,15 @@ upload_to_target_dir()
 	local dir="$1"
 	[ -d "${dir}" ] || return 0
 
-	local file="$(ls -F ${dir} | grep -v "@")"
+	# local file="$(ls  -F ${dir} | grep -v "@")"
+	local file="$(ls  -F ${dir} | grep -v "@")"
 	[ -z "${file}" ] && return 0
 
-	upload_one_curl "${dir}/${file}"  "${dir}" >/dev/null
+  upload_one_curl "$dir" "$dir" >/dev/null
+  # for file in $dir/*; do
+  #   echo "upload "$file" "${dir}"" >&2
+  #   upload_one_curl "$file" "${dir}" >/dev/null
+  # done
 }
 
 rename_cgz_file()

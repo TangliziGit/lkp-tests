@@ -66,31 +66,30 @@ upload_files_lftp()
 	return $ret
 }
 
+upload_recursively() {
+    URL="http://$LKP_SERVER:${RESULT_WEBDAV_PORT:-3080}/$id"
+    for FILE in "$1"/*; do
+        [ -e "${FILE}" ] || continue
+        if [ -d "${FILE}" ] ; then
+            upload_recursively "${FILE}"
+        else
+            curl -sSf -T "${FILE}" "${URL}/${FILE}"
+        fi
+    done
+}
+
 upload_one_curl()
 {
 	local src=$1
 	local dest=$2
-	local http_url="http://$LKP_SERVER:${RESULT_WEBDAV_PORT:-3080}/$id$dest"
 
 	if [ -d "$src" ]; then
-		(
-			cd $(dirname "$1") || exit
-			dir=$(basename "$1")
-			if [ -n "$id" ]; then
-				find "$dir" -type d -exec curl -sSf -X MKCOL "$http_url/{}/" --cookie "JOBID=$id" \;
-				find "$dir" -type f -size +0 -exec curl -sSf -T '{}' "$http_url/{}" --cookie "JOBID=$id" \;
-			else
-				find "$dir" -type d -exec curl -sSf -X MKCOL "$http_url/{}/" \;
-				find "$dir" -type f -size +0 -exec curl -sSf -T '{}' "$http_url/{}" \;
-			fi
-		)
+    upload_recursively "$1" "$http_url"
 	else
 		[ -s "$src" ] || return
-		if [ -n "$id" ]; then
-			curl -sSf -T "$src" $http_url/ --cookie "JOBID=$id"
-		else
-			curl -sSf -T "$src" $http_url/
-		fi
+
+		http_url="http://$LKP_SERVER:${RESULT_WEBDAV_PORT:-3080}/$id$dest"
+		curl -sSf -T "$src" $http_url/
 	fi
 }
 
