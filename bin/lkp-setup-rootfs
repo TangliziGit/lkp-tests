@@ -353,7 +353,7 @@ setup_tools()
     # TODO: put it into distro/xxx
     [[ "$os" == "centos" ]] && [[ "$os_version" == "7" ]] && {
         source /opt/rh/rh-ruby27/enable
-        source /opt/rh/devtoolset-8/enable
+        source /opt/rh/devtoolset-11/enable
     }
 }
 

@@ -1,5 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 . $LKP_SRC/lib/env.sh
 
-/etc/init.d/ssh stop
+if [[ -f "/etc/init.d/ssh" ]]; then
+    /etc/init.d/ssh stop
+else
+    systemctl stop sshd
+fi
