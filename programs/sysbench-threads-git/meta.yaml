@@ -4,9 +4,6 @@ metadata:
   description:
   homepage:
 type: workload
-depends:
-  PKGBUILD:
-  - sysbench-threads-git
 params:
   nr_threads:
   thread_yields:
