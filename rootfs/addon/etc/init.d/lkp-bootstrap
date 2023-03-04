@@ -15,10 +15,11 @@
 # We can install lkp-bootstrap several places, so that at least one of them can
 # take effect in a particular rootfs, and the follow up ones can check reboot
 # the machine if the former one failed to do so.
-exec 19>/lkp/lkp/shell.log
-BASH_XTRACEFD=19
 
-set -x
+# exec 19>/lkp/lkp/shell.log
+# BASH_XTRACEFD=19
+# set -x
+
 mkdir -p /var/lock
 mkdir /var/lock/lkp-bootstrap.lock || sleep 333.3
 
