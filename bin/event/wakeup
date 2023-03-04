@@ -1,0 +1,5 @@
+#!/bin/bash
+
+arch="$(uname -m)"
+[[ "$arch" == "aarch64" ]] && ./wakeup-aarch64 "$@"
+[[ "$arch" == "x86_64" ]] && ./wakeup-x86_64 "$@"
