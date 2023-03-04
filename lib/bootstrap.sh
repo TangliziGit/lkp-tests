@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . $LKP_SRC/lib/mount.sh
 . $LKP_SRC/lib/http.sh

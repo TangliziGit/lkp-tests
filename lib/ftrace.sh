@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . $LKP_SRC/lib/common.sh
 . $LKP_SRC/lib/upload.sh
@@ -175,7 +175,7 @@ ftrace_run()
 
 	$WAIT_POST_TEST_CMD
 	cat >> "$TMP_RESULT_ROOT/post-run.ftrace" <<EOF
-#!/bin/sh
+#!/bin/bash
 
 if [ -n "$ftrace_cpulist" ]; then
 	for cpu in $ftrace_cpulist; do

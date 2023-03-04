@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - interval
 
 path=/sys/class/thermal/

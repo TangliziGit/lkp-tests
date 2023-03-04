@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 # monitoring system resources
 # depend on $LKP_SRC/setup/simplify-ci
 

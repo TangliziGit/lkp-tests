@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nic
 # - nic_ip
 # - request_ip

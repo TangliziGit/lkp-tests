@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 file=$(basename $0)
 file=${file#numa-}

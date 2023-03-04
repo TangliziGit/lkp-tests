@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SCRIPT_DIR=$(dirname $(realpath $0))
 # PROJECT_DIR=$(dirname $SCRIPT_DIR)

@@ -199,7 +199,7 @@ package_gcc()
 
   # POSIX conformance launcher scripts for c89 and c99
   cat > $pkgdir/usr/bin/c89 <<"EOF"
-#!/bin/sh
+#!/bin/bash
 fl="-std=c89"
 for opt; do
   case "$opt" in
@@ -212,7 +212,7 @@ exec gcc $fl ${1+"$@"}
 EOF
 
   cat > $pkgdir/usr/bin/c99 <<"EOF"
-#!/bin/sh
+#!/bin/bash
 fl="-std=c99"
 for opt; do
   case "$opt" in

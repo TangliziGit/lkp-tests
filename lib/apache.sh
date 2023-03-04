@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 apache_debian_style()
 {

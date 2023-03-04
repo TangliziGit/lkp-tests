@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - mongodb_cpu_node_bind
 # - mongodb_mem_node_bind
 # - nr_processes

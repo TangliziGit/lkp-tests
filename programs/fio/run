@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## fio  is  a  tool that will spawn a number of threads or processes
 ## doing a particular type of I/O action as specified by the user.

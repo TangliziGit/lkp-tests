@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 __local_run()
 {

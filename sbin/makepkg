@@ -555,6 +555,13 @@ update_git_source_dir()
 	[ -n "$git_source_dir" ] || export git_source_dir=$1
 }
 
+git_clone_with_retry() {
+	for i in $(seq 1 5); do
+		git clone -q --mirror "$1" "$2" && return 0
+	done
+	return 1
+}
+
 download_git() {
 	local netfile=$1
 
@@ -571,7 +578,7 @@ download_git() {
 
 	if [[ ! -d "$dir" ]] || dir_is_empty "$dir" ; then
 		msg2 "$(gettext "Cloning %s %s repo...")" "${repo}" "git"
-		if ! git clone -q --mirror "$url" "$dir"; then
+		if ! git_clone_with_retry "$url" "$dir"; then
 			error "$(gettext "Failure while downloading %s %s repo")" "${repo}" "git"
 			plain "$(gettext "Aborting...")"
 			exit 1

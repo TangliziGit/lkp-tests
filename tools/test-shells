@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 for shell in bash dash mksh zsh sh "busybox sh" /usr/lib/klibc/bin/sh.shared
 do

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 tbox_cant_kexec()
 {

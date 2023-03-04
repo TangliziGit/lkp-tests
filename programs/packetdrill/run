@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## The packetdrill scripting tool enables quick, precise tests for
 ## entire TCP/UDP/IPv4/IPv6 network stacks, from the system call

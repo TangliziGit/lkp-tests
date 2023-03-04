@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 dirs="$*"
 [ -n "$dirs" ] || dirs=$HOME/.cache/lkp/testdir

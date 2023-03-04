@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . $LKP_SRC/lib/debug.sh
 . $LKP_SRC/lib/tests/phoronix-test-suite.sh

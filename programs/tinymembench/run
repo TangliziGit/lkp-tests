@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - tinymembench
 
 . $LKP_SRC/lib/reproduce-log.sh

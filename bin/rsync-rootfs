@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This script is used to sync a remote-rootfs directory to local
 # disk partition, in order to sync multiple rootfs, we use the
 # btrfs as the local disk partition filesystem, for its subvolume

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - from_nodes
 # - to_nodes
 # - proc

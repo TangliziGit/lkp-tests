@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - paranoid
 
 ## perf_event_tests is designed to test trinity for perf

@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # - feature
 
 [ -n "$feature" ] || exit 0

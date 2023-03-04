@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ROOTFS=$1
 [ -d "$ROOTFS" ] || {

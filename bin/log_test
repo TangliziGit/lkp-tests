@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 date=$(date +'%F %T')
 echo "$date $exec_prefix $*"

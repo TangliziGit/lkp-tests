@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - runtime
 
 ## nuttcp is a network performance measurement tool intended for use

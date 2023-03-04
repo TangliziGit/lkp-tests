@@ -99,7 +99,7 @@ The script is to automate the steps we manually run the netperf
 test. So, here it is:
 
 ```bash
-#!/bin/sh
+#!/bin/bash
 # - runtime
 # - nr_threads
 # - ip
@@ -192,7 +192,7 @@ For example, the main netperf output is Throughput. Hence the job of
 out:
 
 ```ruby
-#!/bin/sh
+#!/bin/bash
 
 throughput=$(tail -n 1 | awk '{print $5}')
 echo "Throughput_Mbps: $throughput"

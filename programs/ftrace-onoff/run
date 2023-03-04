@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - runtime
 
 ## Ftrace is an internal tracer designed to help out developers and

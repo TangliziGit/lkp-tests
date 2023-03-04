@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 sysctl_path="/proc/sys/fs/pipe-user-pages-soft"
 

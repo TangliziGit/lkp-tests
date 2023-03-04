@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - sc_vsyscall32
 # - sc_exception_trace
 # - sc_kprobes_optimization

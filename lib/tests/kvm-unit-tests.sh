@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #if we pass 'hyperv_synic' to this function, line 7 - 12 will be deleted
 #

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - sched_policy
 # - sched_priority
 

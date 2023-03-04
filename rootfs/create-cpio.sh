@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 distro=${1:-debian-x86_64}
 arch=${distro#*-}

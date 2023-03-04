@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cd $BENCHMARK_ROOT/nuttcp || exit
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - iosched
 # - read_expire
 # - write_expire

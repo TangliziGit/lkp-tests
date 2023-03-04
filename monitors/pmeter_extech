@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 serial_server=$1
 

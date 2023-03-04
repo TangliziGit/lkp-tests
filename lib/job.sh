@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 read_secret_vars()
 {

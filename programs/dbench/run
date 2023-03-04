@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nr_threads
 
 ## DBENCH is a tool to generate I/O workloads to either a filesystem

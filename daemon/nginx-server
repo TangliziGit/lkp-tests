@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nics
 # - nics_ips
 # - core_nums

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 [ "$need_physical_tbox" = "true" ] && echo "$tbox_group" | grep -q "^vm-" && {
         echo "Please run this job on physical machine"

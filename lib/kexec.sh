@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . $LKP_SRC/lib/job-init.sh
 
 # clear the initrds exported by last job

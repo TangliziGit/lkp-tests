@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # retain kernel modules/firmware for use by the new rootfs (NFSROOT or local disk)
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nr_instance
 
 . "$LKP_SRC"/lib/debug.sh

@@ -47,7 +47,10 @@ mount_dest()
 download_pkg()
 {
     cd "$TMP" || die "no such directory: $TMP"
-    wget -q "$PKGBUILD" -O PKGBUILD
+    # retry to get PKGBUILD
+    for i in $(seq 1 5); do
+        wget -q "$PKGBUILD" -O PKGBUILD && break
+    done
 }
 
 build_source_pkg()

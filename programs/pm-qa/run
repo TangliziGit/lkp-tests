@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - test
 
 xinitrc=$LKP_SRC/programs/pm-qa/pm-qa.xinitrc

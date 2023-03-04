@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - test
 
 ## Automated hostapd/wpa_supplicant testing with mac80211_hwsim.

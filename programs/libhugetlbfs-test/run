@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - pagesize
 
 . $LKP_SRC/lib/env.sh

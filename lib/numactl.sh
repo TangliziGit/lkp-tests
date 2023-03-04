@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # numactl.sh
 
 . "$LKP_SRC/lib/common.sh"

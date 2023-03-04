@@ -256,7 +256,7 @@ fixup_fio()
 	modprobe loop || return
 	mount -t auto -o loop $test_disk $test_dir ||return
 
-	sed -i 's,#!/bin/sh,#!/bin/dash,' "$target"
+	sed -i 's,#!/bin/bash,#!/bin/dash,' "$target"
 	sed -i "s#filename=\$DIRECTORY_TO_TEST#filename=$test_dir/fiofile#" "$target"
 
 	# Choose
@@ -276,7 +276,7 @@ fixup_gpu_residency()
 	[ -n "$environment_directory" ] || return
 	local test=$1
 	local target=${environment_directory}/pts/${test}/gpu-residency
-	sed -i 's,#!/bin/sh,#!/bin/bash,' "$target"
+	sed -i 's,#!/bin/bash,#!/bin/bash,' "$target"
 }
 
 # change to use dash to bullet
@@ -285,7 +285,7 @@ fixup_bullet()
 	[ -n "$environment_directory" ] || return
 	local test=$1
 	local target=${environment_directory}/pts/${test}/bullet
-	sed -i 's,#!/bin/sh,#!/bin/dash,' "$target"
+	sed -i 's,#!/bin/bash,#!/bin/dash,' "$target"
 }
 
 # add bookpath option
@@ -839,7 +839,7 @@ run_test()
 
 	root_access="/usr/share/phoronix-test-suite/pts-core/static/root-access.sh"
 	[ -f "$root_access" ] || die "$root_access not exist"
-	sed -i 's,#!/bin/sh,#!/bin/dash,' $root_access
+	sed -i 's,#!/bin/bash,#!/bin/dash,' $root_access
 
 	phoronix-test-suite list-installed-tests | grep -q $test || die "$test is not installed"
 

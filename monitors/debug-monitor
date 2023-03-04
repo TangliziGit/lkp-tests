@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "arg#=$#"
 echo "arg0=$0"

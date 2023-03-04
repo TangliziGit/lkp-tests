@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - arrival_rate
 # - num_loop
 # - service_time

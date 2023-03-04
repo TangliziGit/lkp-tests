@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - sleep_time
 
 sleep $sleep_time

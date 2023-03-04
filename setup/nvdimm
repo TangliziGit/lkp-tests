@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - mode
 # - nr_dev
 # - nr_part

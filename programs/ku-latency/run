@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - runtime
 
 ## Measuring latency in the Linux network stack between kernel and user space.

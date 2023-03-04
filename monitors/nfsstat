@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - interval
 
 [ "${fs#*nfs}" != "$fs" ] || exit 0

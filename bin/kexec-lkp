@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Get a new job and kexec returned kernel to run lkp
 #

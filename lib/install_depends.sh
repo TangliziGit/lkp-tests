@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . $LKP_SRC/lib/detect-system.sh
 . $LKP_SRC/lib/install.sh

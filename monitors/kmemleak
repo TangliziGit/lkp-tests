@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - interval
 
 . $LKP_SRC/lib/kmemleak.sh

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # When using some options, you must follow the order specified in the usage below.
 # usage: git_clone_update https://github.com/pmem/valgrind.git [dir] [--branch master] [--recursive]

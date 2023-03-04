@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - oltp_tables_count
 # - oltp_table_size
 # - nr_threads

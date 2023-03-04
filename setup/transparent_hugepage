@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - thp_enabled
 # - thp_defrag
 # - shmem_enabled

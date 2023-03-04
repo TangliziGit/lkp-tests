@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nr_processes
 # - cpu_node_bind
 # - mem_node_bind

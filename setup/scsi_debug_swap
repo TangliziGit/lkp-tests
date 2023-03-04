@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - swap_size
 
 setup_swap_size()

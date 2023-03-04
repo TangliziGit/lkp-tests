@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # sshr_mapping_port
 # sshr_server_port
 # sshr_outer_port_len

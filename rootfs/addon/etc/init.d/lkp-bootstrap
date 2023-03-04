@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          lkp-bootstrap
 # Required-Start:    $all
@@ -42,6 +42,8 @@ read_kernel_cmdline_vars()
 	done
 	return 0
 }
+
+env | xargs -I{} echo "{}" >2
 
 read_kernel_cmdline_vars
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - message_threads
 # - worker_threads
 # - runtime

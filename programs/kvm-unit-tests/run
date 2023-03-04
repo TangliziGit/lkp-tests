@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Tests for x86 architecture are run as kernel images for qemu
 ## that supports multiboot format. Tests uses an infrastructure

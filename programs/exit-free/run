@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 strace -p $(cat $TMP/pid-bg-proc-eatmem) 2>&1 &
 begin=$(date +%s.%N)

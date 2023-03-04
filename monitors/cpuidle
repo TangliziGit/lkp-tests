@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - interval
 
 [ -f /sys/devices/system/cpu/cpu0/cpuidle/state0/name ] || exit 0

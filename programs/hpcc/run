@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## The mpirun command controls several aspects of program
 ## execution in Open MPI. mpirun uses the Open Run-Time

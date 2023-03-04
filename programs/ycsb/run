@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nr_processes
 # - ip_addr
 # - n_recordcount

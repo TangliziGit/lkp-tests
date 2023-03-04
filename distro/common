@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Normal users need sudo to install packages
 [ $(id -u) != 0 ] && SUDO=sudo

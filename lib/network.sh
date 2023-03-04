@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . $LKP_SRC/lib/http.sh
 . $LKP_SRC/lib/env.sh

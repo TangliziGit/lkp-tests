@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - block_queue_dev
 # - max_sectors_kb
 # - nr_requests

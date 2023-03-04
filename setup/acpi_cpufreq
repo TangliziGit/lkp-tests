@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - scaling_governor
 
 . $LKP_SRC/lib/reproduce-log.sh

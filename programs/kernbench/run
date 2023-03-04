@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - nr_loops
 # - nr_threads
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - eatmem_size
 # - eatmem_duration
 # - eatmem_nonuma

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - coremark
 
 . $LKP_SRC/lib/upload.sh

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 kmemleak_is_enabled()
 {

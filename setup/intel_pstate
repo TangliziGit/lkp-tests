@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - max_perf_pct
 # - min_perf_pct
 # - no_turbo

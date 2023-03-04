@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 scaling_governor=$1
 [ -n "$scaling_governor" ] || exit 0

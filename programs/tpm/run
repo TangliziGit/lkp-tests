@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 mkdir /sys/fs/cgroup/memory/test
 echo $$ > /sys/fs/cgroup/memory/test/tasks

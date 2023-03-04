@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This script is simplifed from detect_system from rvm, and to make it work with /bin/sh:
 # https://github.com/wayneeseguin/rvm/blob/master/scripts/functions/detect_system

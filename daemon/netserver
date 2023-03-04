@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - ip
 
 export PATH=$BENCHMARK_ROOT/netperf/bin:$PATH

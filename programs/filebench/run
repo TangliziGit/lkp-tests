@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . $LKP_SRC/lib/common.sh
 
 export PATH=$BENCHMARK_ROOT/filebench/bin:$PATH

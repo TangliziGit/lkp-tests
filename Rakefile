@@ -66,14 +66,14 @@ task :syntax do
 
   bash "grep -s -l '^#!/.*ruby$' #{executables} | xargs -n1 ruby -c >/dev/null"
   bash "grep -s -l '^#!/.*bash$' #{executables} | xargs -n1 bash -n"
-  bash "grep -s -l '^#!/bin/sh$' #{executables} | xargs -n1 dash -n"
+  bash "grep -s -l '^#!/bin/bash$' #{executables} | xargs -n1 dash -n"
 
   puts 'syntax OK'
 end
 
 desc 'Run shellcheck'
 task :shellcheck do
-  executables = `find -type f -executable ! -path "./.git*"  ! -path "./vendor*" ! -size +100k | xargs grep -s -l -e '^#!/.*bash$' -e '^#!/bin/sh$'`.split("\n").join(' ')
+  executables = `find -type f -executable ! -path "./.git*"  ! -path "./vendor*" ! -size +100k | xargs grep -s -l -e '^#!/.*bash$' -e '^#!/bin/bash$'`.split("\n").join(' ')
 
   format = ENV['format'] || 'tty'
 

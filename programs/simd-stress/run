@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - duration
 # - thread_count
 # - nop_per_loop

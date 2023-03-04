@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - runtime
 # - protocol
 ## iperf is a tool for active measurements of the maximum achievable

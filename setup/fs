@@ -246,7 +246,7 @@ esac
 
 cat > "$TMP_RESULT_ROOT/post-run.fs" <<EOF
 
-#!/bin/sh
+#!/bin/bash
 
 umount_fs() {
 	for mt in $nfs_mount_points $mount_points; do

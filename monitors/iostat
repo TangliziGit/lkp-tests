@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # no need to run iostat if no disk I/O
 [ -n "$disks" ] || [ -n "$raid_device" ] || exit 0

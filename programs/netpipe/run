@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - test
 
 ## NetPIPE is a protocol independent performance tool that encapsulates

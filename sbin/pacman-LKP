@@ -39,7 +39,7 @@ pack_deb() {
 	EOF
 	if have_function post_install; then
 		cat > "$INSTALL_DIR/DEBIAN/postinst" <<-EOF
-		#!/bin/sh
+		#!/bin/bash
 		. /var/lib/dpkg/info/$pkg_name-lkp.INSTALL
 		post_install
 	EOF

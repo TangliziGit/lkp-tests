@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # reference code: linux/kernel/latencytop.c
 

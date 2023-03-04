@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # wake those detached processes up to do read
 kill -USR1 $(cat $TMP/pidfile)

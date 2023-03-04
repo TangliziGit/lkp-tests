@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - bind_core
 # - numa_nodes
 # - nic_queues

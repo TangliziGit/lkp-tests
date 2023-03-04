@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - aggr_interval
 # - min_nr_regions
 # - max_nr_regions

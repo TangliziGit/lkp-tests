@@ -87,7 +87,7 @@ class Job2sh < Job
   end
 
   def shell_header
-    out_line '#!/bin/sh'
+    out_line '#!/bin/bash'
     out_line
   end
 

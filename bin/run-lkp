@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export job_file="$1"
 [ -z "$job_file" ] && echo "Usage: run-lkp job.yaml" 1>&2 && exit 1

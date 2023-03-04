@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 setup_threads_to_iterate()
 {

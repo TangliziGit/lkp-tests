@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - delay
 # - duration
 # - buffer_size_kb

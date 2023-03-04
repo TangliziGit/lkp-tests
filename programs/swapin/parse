@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -f $RESULT_ROOT/swapin-setup ]; then
 	echo "swapin-setup not created" >&2

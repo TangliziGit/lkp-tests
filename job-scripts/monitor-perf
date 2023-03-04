@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export_top_env()
 {

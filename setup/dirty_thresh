@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - dirty_ratio
 # - dirty_bytes
 # - dirty_background_ratio

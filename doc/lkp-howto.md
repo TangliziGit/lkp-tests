@@ -74,7 +74,7 @@ Let's describe step by step with an example: ebizzy.
  like following from "tests/ebizzy":
 
 ```
-		#!/bin/sh
+		#!/bin/bash
 		# - nr_threads
 		# - duration
 		# - iterations

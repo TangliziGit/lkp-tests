@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - cg_count
 # - cg_bind
 # - cpuset.cpus

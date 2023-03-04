@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # - test_cpulist
 # - pgrp1_pattern
 # - pgrp1_cpulist

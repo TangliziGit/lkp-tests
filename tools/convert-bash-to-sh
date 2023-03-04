@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ $# -ge 1 ]; then
 	files="$*"
@@ -7,7 +7,7 @@ else
 fi
 
 sed -r -i \
-	-e 's,^#!/bin/bash,#!/bin/sh,' \
+	-e 's,^#!/bin/bash,#!/bin/bash,' \
 	$files
 
 

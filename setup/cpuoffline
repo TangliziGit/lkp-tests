@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # - online_cpus
 # - online_cores
 # - noht

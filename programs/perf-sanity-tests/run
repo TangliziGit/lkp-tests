@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## perf began as a tool for using the performance counters subsystem in Linux,
 ## and this perf-sanity-tests are the built-in sanity tests from perf tool.

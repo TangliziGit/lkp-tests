@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 monitor=$1
 monitor_dir=$(dirname $0)
