@@ -1,7 +1,7 @@
 all: install
 
-wakeup:
-	$(MAKE) -C bin/event wakeup
+# wakeup:
+# 	$(MAKE) -C bin/event wakeup
 
 install:
 	bash sbin/install-dependencies.sh
