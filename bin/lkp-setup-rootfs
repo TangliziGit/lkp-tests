@@ -370,6 +370,19 @@ launch_monitor()
     MAC="$MAC" id="$id" $LKP_SRC/sbin/mci/monitor.rb &
 }
 
+my_install_depends() {
+    distro="$os"
+    suite_name="$1"
+    pkgs=""
+
+    while read pkg; do
+        pkgs="$pkgs $pkg"
+    done < "$LKP_SRC/distro/depends/$suite_name"
+
+    [[ "$distro" == "centos" ]] && yum install -y $pkgs
+    [[ "$distro" == "debian" ]] && apt install -y $pkgs
+}
+
 install_proxy || exit_with_job_state 'error:proxy'
 chmod_root_ssh
 
@@ -393,9 +406,10 @@ while true; do
 	# fi
 
 	# install lkp & test suite depends
-	test -n "${install_os_packages_all}" && install_depends "${install_os_packages_all}"
-	test -n "$install_pip_packages_all" && pip install $install_pip_packages_all
-	test -n "$install_gem_packages_all" && gem install $install_gem_packages_all
+    my_install_depends "$suite"
+	# test -n "${install_os_packages_all}" && install_depends "${install_os_packages_all}"
+	# test -n "$install_pip_packages_all" && pip install $install_pip_packages_all
+	# test -n "$install_gem_packages_all" && gem install $install_gem_packages_all
 
 	mkdir -p "$RESULT_ROOT"
 	echo_to_tty $LKP_DEBUG_PREFIX $LKP_SRC/bin/run-lkp
