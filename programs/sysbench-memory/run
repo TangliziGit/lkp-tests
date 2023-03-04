@@ -34,7 +34,7 @@ args="\
  --memory-total-size=$mem_total_size \
  --memory-scope=$mem_scope \
  --memory-hugetlb=$mem_hugetlb \
- --memory-oper=$mem_operation \
+ --memory-oper=$mem_opt \
  --memory-access-mode=$mem_access_mode \
 "
 

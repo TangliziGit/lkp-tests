@@ -5,7 +5,7 @@
 
 . "$LKP_SRC/lib/reproduce-log.sh"
 
-: "${runtime:=600}"
+: "${runtime:=60}"
 : "${nr_threads:=1}"
 : "${cpu_max_prime:=10000}"
 
